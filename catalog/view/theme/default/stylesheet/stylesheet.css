@@ -86,6 +86,7 @@ div.required .control-label:before {
 }
 #top .container {
 	padding: 0 20px;
+        padding-top: 10px;
 }
 #top #currency .currency-select {
 	text-align: left;
@@ -305,6 +306,12 @@ div.required .control-label:before {
 /* content */
 #content {
 	min-height: 600px;
+}
+/* logopay */
+.logopay{
+   background: linear-gradient(rgb(253, 253, 253), silver);
+   padding-top: 3px;
+   padding-bottom:  3px;
 }
 /* footer */
 footer {
