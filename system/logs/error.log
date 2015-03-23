@@ -262,3 +262,13 @@
 2015-03-23 10:37:57 - PHP Notice:  Undefined variable: product_id in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 94
 2015-03-23 10:37:57 - PHP Notice:  Undefined variable: product_id in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 97
 2015-03-23 14:45:26 - PHP Notice:  Undefined variable: option in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\search_home.tpl on line 10
+2015-03-23 19:14:11 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\common\home.php on line 21
+2015-03-23 19:14:11 - PHP Notice:  Undefined variable: option in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 2
+2015-03-23 19:15:21 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\common\home.php on line 21
+2015-03-23 19:15:40 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\common\home.php on line 21
+2015-03-23 19:25:04 - PHP Notice:  Undefined variable: text_select in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\search_home.tpl on line 21
+2015-03-23 21:01:04 - PHP Notice:  Use of undefined constant GET - assumed 'GET' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
+2015-03-23 21:01:04 - PHP Warning:  Illegal string offset 'route' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
+2015-03-23 21:21:46 - PHP Notice:  Undefined index: background in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 144
+2015-03-23 21:21:46 - PHP Notice:  Undefined variable: background in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
+2015-03-23 21:22:18 - PHP Notice:  Undefined variable: background in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88

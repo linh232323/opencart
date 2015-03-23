@@ -81,7 +81,6 @@ div.required .control-label:before {
 	background-color: #EEEEEE;
 	border-bottom: 1px solid #e2e2e2;
 	padding: 4px 0px 3px 0;
-	margin: 0 0 20px 0;
 	min-height: 40px;
 }
 #top .container {
@@ -205,6 +204,7 @@ div.required .control-label:before {
 }
 #menu .nav > li > a:hover, #menu .nav > li.open > a {
 	background-color: rgba(0, 0, 0, 0.1);
+        transition: 0.5s ease-in-out;
 }
 #menu .dropdown-menu {
 	padding-bottom: 0;
@@ -226,6 +226,7 @@ div.required .control-label:before {
 }
 #menu .dropdown-inner li a:hover {
 	color: #FFFFFF;
+        transition: 0.5s ease-in-out;
 }
 #menu .see-all {
 	display: block;
@@ -243,6 +244,7 @@ div.required .control-label:before {
 	background-color: #229ac8;
 	background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
 	background-repeat: repeat-x;
+        transition: 0.5s ease-in-out;
 }
 #menu #category {
 	float: left;
@@ -307,10 +309,11 @@ div.required .control-label:before {
 #content {
 	min-height: 600px;
 }
-/* logopay */
-.logopay{
+/* gradient */
+#gradient{
    background: linear-gradient(rgb(253, 253, 253), silver);
    padding-top: 3px;
+   min-height: 35px;
    padding-bottom:  3px;
 }
 /* footer */
@@ -537,7 +540,8 @@ footer h5 {
 	display: block;
 }
 .product-thumb .image a:hover {
-	opacity: 0.8;
+	opacity: 0.5;
+        transition: 0.5s ease-in-out;
 }
 .product-thumb .image img {
 	margin-left: auto;

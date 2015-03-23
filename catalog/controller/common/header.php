@@ -138,7 +138,13 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['class'] = 'common-home';
 		}
-
+                
+                // Background//
+                if((isset($_GET["route"]) == NULL) | (($_GET["route"])=="common/home")){
+                    $data['background']="true";
+                }  else {
+                    $data['background']="";
+                }
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {

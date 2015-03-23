@@ -37,6 +37,7 @@
         <script src="<?php echo $script; ?>" type="text/javascript"></script>
         <?php } ?>
         <!-- add script -->
+        <link href="catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen">
         <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
         <script src="catalog/view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
         <script src="catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
@@ -84,6 +85,10 @@
                 </div>
             </div>
         </nav>
+        <?php if($background){ ?>
+        <img src="http://cdn0.agoda.net/images/ABTest/ABTest5692/home-1920x560-oia-village-santorini-greece.jpg" class="img-absolute"/>
+        <div class="img-overlay"></div>
+        <?php }?>
         <header>
             <div class="container">
                 <div class="row">

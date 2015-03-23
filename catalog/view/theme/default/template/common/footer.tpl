@@ -1,5 +1,5 @@
 <footer>
-    <div class ="logopay">
+    <div id ="gradient">
         <div class="container">
             <div class="row">
                 <img src="catalog/view/theme/default/image/logopayment/payment-visa.png"/>
