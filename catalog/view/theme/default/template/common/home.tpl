@@ -24,4 +24,16 @@
         <?php echo $column_right; ?></div>
 </div>
 
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+    pickTime: false
+    });
+            $('.datetime').datetimepicker({
+    pickDate: true,
+            pickTime: true
+    });
+            $('.time').datetimepicker({
+    pickDate: false
+    });
+//--></script> 
 <?php echo $footer; ?>

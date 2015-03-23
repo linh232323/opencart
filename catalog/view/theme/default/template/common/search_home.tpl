@@ -9,7 +9,7 @@
         <div class="input-group date">
             <input type="text" name="option[219]" value="" data-date-format="YYYY-MM-DD" id="input-option219" class="form-control" />
             <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
             </span></div>
     </div>
 

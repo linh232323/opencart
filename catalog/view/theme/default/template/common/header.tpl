@@ -36,7 +36,13 @@
         <?php foreach ($scripts as $script) { ?>
         <script src="<?php echo $script; ?>" type="text/javascript"></script>
         <?php } ?>
-        <?php echo $google_analytics; ?>
+        <!-- add script -->
+        <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
+        <script src="catalog/view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
+        <script src="catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="//s7.addthis.com/static/r07/widget/css/widget020.top.svg.css" media="all">
+        <link rel="stylesheet" type="text/css" href="//s7.addthis.com/static/r07/plugins/counter015.css" media="all">
+        <link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" type="text/css" rel="stylesheet" media="screen">
     </head>
     <body class="<?php echo $class; ?>">
         <nav id="top">
