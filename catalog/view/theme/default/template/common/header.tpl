@@ -53,7 +53,7 @@
                 <div id="top-links" class="nav pull-right">
                     <ul class="list-inline">
                         <li><?php echo $currency; ?></li>
-                        <li><?php echo $currency; ?></li>
+                        <li><?php echo $language; ?></li>
                         <li class="dropdown" style="top: -12px;"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <?php if ($logged) { ?>
