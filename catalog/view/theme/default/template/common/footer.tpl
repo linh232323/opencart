@@ -1,13 +1,11 @@
 <footer>
     <div id ="gradient">
         <div class="container">
-            <div class="row">
                 <img src="catalog/view/theme/default/image/logopayment/payment-visa.png"/>
                 <img src="catalog/view/theme/default/image/logopayment/payment-paypal.png"/>
                 <img src="catalog/view/theme/default/image/logopayment/payment-master-card.png"/>
                 <img src="catalog/view/theme/default/image/logopayment/payment-jcb.png"/>
                 <img src="catalog/view/theme/default/image/logopayment/payment-american-express.png"/>
-            </div>
         </div>
     </div>
     <div class="container">

@@ -272,3 +272,5 @@
 2015-03-23 21:21:46 - PHP Notice:  Undefined index: background in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 144
 2015-03-23 21:21:46 - PHP Notice:  Undefined variable: background in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
 2015-03-23 21:22:18 - PHP Notice:  Undefined variable: background in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
+2015-03-24 11:14:11 - PHP Notice:  Undefined index: route in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 143
+2015-03-24 11:16:57 - PHP Notice:  Undefined index: route in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 143

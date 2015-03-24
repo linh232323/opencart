@@ -1,8 +1,9 @@
-<form action ="index?route=common/home" method="get" class="jumbotron ">
+<form action ="index?route=common/home" method="get" class="jumbotron " accept-charset="character_set">
     <div class="form-group required">
+        <input type="hidden" name="route" value="common%2Fhome"/>
         <label class="control-label" for="search">Search a city, hotel, landmark or destination:</label>
         <input type="text" name="search" value="<?php echo $search; ?>" placeholder="City, hotel, landmark or destination" class="form-control input-lg" />
-
+        
     </div>
 
     <div class="form-group required">
