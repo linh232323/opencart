@@ -274,3 +274,907 @@
 2015-03-23 21:22:18 - PHP Notice:  Undefined variable: background in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 88
 2015-03-24 11:14:11 - PHP Notice:  Undefined index: route in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 143
 2015-03-24 11:16:57 - PHP Notice:  Undefined index: route in C:\xampp\htdocs\opencart\catalog\controller\common\header.php on line 143
+2015-03-25 15:53:09 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 15:53:09 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 15:54:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 36
+2015-03-25 15:54:27 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 15:54:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 36
+2015-03-25 15:54:27 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 16:02:12 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:02:12 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:03:34 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:03:35 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:03:49 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:03:49 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:04:22 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:04:22 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 165
+2015-03-25 16:15:22 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 166
+2015-03-25 16:15:22 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 166
+2015-03-25 16:15:24 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 39
+2015-03-25 16:15:24 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 39
+2015-03-25 16:15:50 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 166
+2015-03-25 16:15:50 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 166
+2015-03-25 16:29:24 - PHP Notice:  Undefined variable: category in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 16:29:24 - PHP Notice:  Undefined variable: category in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 16:29:24 - PHP Notice:  Undefined variable: category in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 37
+2015-03-25 16:58:57 - PHP Warning:  Missing argument 3 for ModelToolImage::resize(), called in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163 and defined in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 3
+2015-03-25 16:58:57 - PHP Notice:  Undefined variable: height in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 11
+2015-03-25 16:58:57 - PHP Notice:  Undefined variable: height in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 30
+2015-03-25 16:58:57 - PHP Warning:  imagecreatetruecolor(): Invalid image dimensions in C:\xampp\htdocs\opencart\system\library\image.php on line 86
+2015-03-25 16:58:57 - PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 94
+2015-03-25 16:58:57 - PHP Warning:  imagefilledrectangle() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 97
+2015-03-25 16:58:57 - PHP Warning:  imagecopyresampled() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 99
+2015-03-25 16:58:57 - PHP Warning:  Missing argument 3 for ModelToolImage::resize(), called in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163 and defined in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 3
+2015-03-25 16:58:57 - PHP Notice:  Undefined variable: height in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 11
+2015-03-25 16:58:57 - PHP Notice:  Undefined variable: height in C:\xampp\htdocs\opencart\catalog\model\tool\image.php on line 30
+2015-03-25 16:58:57 - PHP Warning:  imagecreatetruecolor(): Invalid image dimensions in C:\xampp\htdocs\opencart\system\library\image.php on line 86
+2015-03-25 16:58:57 - PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 94
+2015-03-25 16:58:57 - PHP Warning:  imagefilledrectangle() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 97
+2015-03-25 16:58:57 - PHP Warning:  imagecopyresampled() expects parameter 1 to be resource, boolean given in C:\xampp\htdocs\opencart\system\library\image.php on line 99
+2015-03-25 17:00:15 - PHP Warning:  imagecreatetruecolor() expects parameter 1 to be long, string given in C:\xampp\htdocs\opencart\system\library\image.php on line 86
+2015-03-25 17:00:15 - PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 94
+2015-03-25 17:00:15 - PHP Warning:  imagefilledrectangle() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 97
+2015-03-25 17:00:15 - PHP Warning:  imagecopyresampled() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 99
+2015-03-25 17:00:15 - PHP Warning:  imagecreatetruecolor() expects parameter 1 to be long, string given in C:\xampp\htdocs\opencart\system\library\image.php on line 86
+2015-03-25 17:00:15 - PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 94
+2015-03-25 17:00:15 - PHP Warning:  imagefilledrectangle() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 97
+2015-03-25 17:00:15 - PHP Warning:  imagecopyresampled() expects parameter 1 to be resource, null given in C:\xampp\htdocs\opencart\system\library\image.php on line 99
+2015-03-25 17:05:26 - PHP Notice:  Undefined variable: categories1 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: price in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 197
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: tax_class_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 197
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: special in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 202
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: special in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 209
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: price in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 209
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 215
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 221
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 228
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 229
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: price in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 197
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: tax_class_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 197
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: special in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 202
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: special in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 209
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: price in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 209
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 215
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 221
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 228
+2015-03-25 17:33:28 - PHP Notice:  Undefined index: product_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 229
+2015-03-25 17:41:57 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:10:05 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:11:03 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:11:19 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:11:36 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:11:40 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:13:48 - PHP Notice:  Undefined variable: filter_data in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-25 18:13:48 - PHP Notice:  Undefined variable: filter_data in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 181
+2015-03-25 18:33:14 - PHP Notice:  Undefined index: category_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 217
+2015-03-25 18:33:15 - PHP Notice:  Undefined index: category_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 217
+2015-03-25 18:33:15 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:35:27 - PHP Notice:  Undefined index: category_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 217
+2015-03-25 18:35:27 - PHP Notice:  Undefined index: category_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 217
+2015-03-25 18:35:27 - PHP Notice:  Undefined index: category_id in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 217
+2015-03-25 18:35:28 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:37:30 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:37:31 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:38:16 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:40:50 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 3
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:53 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:49:54 - PHP Notice:  Undefined variable: tax in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 185
+2015-03-25 18:55:50 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:55:50 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:55:50 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:56:21 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:56:21 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:56:21 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 18:56:55 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 18:57:21 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 18:58:51 - PHP Notice:  Use of undefined constant id - assumed 'id' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 18:58:51 - PHP Notice:  Undefined index: id in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 18:58:51 - PHP Notice:  Undefined index:  in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 19:27:56 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:27:56 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:30:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:30:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:31:23 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:33:13 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:33:13 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:36:26 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:36:26 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:36:26 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:36:26 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:37:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:10 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 19:41:43 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:44:16 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:44:16 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:46:07 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 19:48:27 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:23:25 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:23:25 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:23:33 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:23:33 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:24:37 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:24:54 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:24:54 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:25:00 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:25:10 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:25:10 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:25:16 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:25:51 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:26:38 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:29:05 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:29:17 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:29:17 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:29:51 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:30:38 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:03 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:03 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:31:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:32:14 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:32:14 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:32:29 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:32:29 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:04 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 162
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:09 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:09 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:41 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:41 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 162
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:33:50 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:33:50 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:02 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:02 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:02 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:02 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:02 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:02 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:14 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:35 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:35 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:35 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:35 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 193
+2015-03-25 20:34:35 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:36 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:50 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:50 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:56 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:34:56 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:25 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:35:54 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:11 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:30 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:36:41 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:17 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: thumb in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 43
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 47
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: description in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 48
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:37:28 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: href in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:27 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 62
+2015-03-25 20:38:47 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:38:47 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:39:18 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:39:18 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:41:09 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:41:09 - PHP Notice:  Undefined index: namep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 50
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:44:42 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:46:48 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:46:48 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:47:21 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:49:04 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:49:25 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:51:31 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 20:51:31 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:51:31 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:51:31 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 59
+2015-03-25 20:52:36 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:36 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:36 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:36 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:36 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 60
+2015-03-25 20:52:56 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:56 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:56 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:56 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:52:56 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 61
+2015-03-25 20:53:28 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:53:28 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:53:28 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:53:28 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:53:28 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 61
+2015-03-25 20:56:31 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:56:31 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:56:31 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:56:31 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:11 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Warning:  Illegal string offset 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 20:57:11 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:11 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:32 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:32 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:32 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:57:32 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Notice:  Undefined index:  in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Notice:  Undefined variable: i in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Notice:  Undefined index:  in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 20:58:25 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:00:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:00:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:01:56 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:01:56 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:26 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 52
+2015-03-25 21:02:26 - PHP Notice:  Use of undefined constant product_total - assumed 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 51
+2015-03-25 21:02:43 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:02:43 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:03:18 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:03:18 - PHP Notice:  Undefined offset: 5 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:03:19 - PHP Notice:  Undefined offset: 9 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:03:19 - PHP Notice:  Undefined offset: 16 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:03:46 - PHP Notice:  Undefined offset: 4 in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:09:41 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 54
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant descriptionp - assumed 'descriptionp' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 55
+2015-03-25 21:10:08 - PHP Notice:  Use of undefined constant price - assumed 'price' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:10:57 - PHP Notice:  Use of undefined constant namep - assumed 'namep' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 53
+2015-03-25 21:22:20 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 5
+2015-03-25 21:56:25 - PHP Notice:  Use of undefined constant href - assumed 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 21:56:25 - PHP Notice:  Use of undefined constant href - assumed 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-25 21:56:25 - PHP Notice:  Use of undefined constant href - assumed 'href' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 49
+2015-03-26 0:02:02 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:02:07 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:02:11 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:18:11 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:18:18 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:18:18 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:18:18 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:18:18 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:18:18 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:03 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:19:03 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:03 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:03 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:03 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:44 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:19:44 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:44 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:44 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:19:44 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:20:07 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Notice:  Use of undefined constant category - assumed 'category' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:07 - PHP Warning:  Illegal string offset 'product_total' in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 56
+2015-03-26 0:20:37 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:21:20 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:21:34 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:21:35 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:21:45 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:21:50 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:22:39 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:22:44 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:23:31 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:26:26 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:26:27 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:26:44 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:26:46 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:27:48 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:27:50 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:28:59 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:29:00 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:29:49 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:29:53 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:29:58 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:30:13 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 4
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 0:51:12 - PHP Notice:  Undefined index: rating in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 201
+2015-03-26 1:03:51 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 93
+2015-03-26 1:07:06 - PHP Notice:  Undefined variable: aa in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 95
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:35 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:35 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:35 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 168
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:36 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:36 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:37 - PHP Notice:  Uninitialized string offset: 0 in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 163
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'image' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 167
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'name' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 178
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'category_id' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 179
+2015-03-26 1:13:37 - PHP Warning:  Illegal string offset 'description' in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 180
+2015-03-26 1:20:45 - PHP Notice:  Undefined variable: result in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 161
+2015-03-26 1:20:45 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 172
+2015-03-26 1:20:59 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 172
+2015-03-26 1:22:59 - PHP Notice:  Undefined index: image in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\category.tpl on line 95
+2015-03-26 1:27:11 - PHP Notice:  Undefined variable: result in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 162
+2015-03-26 1:28:17 - PHP Notice:  Undefined variable: result in C:\xampp\htdocs\opencart\catalog\controller\product\category.php on line 162
+2015-03-26 6:12:40 - PHP Notice:  Undefined variable: image in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\product.tpl on line 4
+2015-03-26 6:12:50 - PHP Notice:  Undefined variable: image in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\product.tpl on line 4
+2015-03-26 7:55:43 - PHP Notice:  Undefined variable: products in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\review.tpl on line 3
+2015-03-26 8:08:15 - PHP Notice:  Undefined variable: reviews in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\product.tpl on line 4
+2015-03-26 8:08:15 - PHP Notice:  Undefined variable: reviews in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\product.tpl on line 234
+2015-03-26 8:10:31 - PHP Notice:  Undefined index: author in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\review.tpl on line 10

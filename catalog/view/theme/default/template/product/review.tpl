@@ -1,3 +1,4 @@
+
 <?php if ($reviews) { ?>
 <?php foreach ($reviews as $review) { ?>
 <table class="table table-striped table-bordered">
