@@ -1,5 +1,4 @@
 <?php echo $header; ?>
-
 <div class="container">
     <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,66 +14,41 @@
         <?php $class = 'col-sm-12'; ?>
         <?php } ?>
         <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
-            <!--
             <h2><?php echo $heading_title; ?></h2>
             <?php if ($thumb || $description) { ?>
+
+            <?php if ($thumb) { ?>
             <div class="row">
-                <?php if ($thumb) { ?>
-                <div class="col-sm-2"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
-                <?php } ?>
-                <?php if ($description) { ?>
-                <div class="col-sm-10"><?php echo $description; ?></div>
-                <?php } ?>
+                <div class="col-md-8 col-md-offset-2"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
             </div>
+            <?php } ?>
+            <?php if ($description) { ?>
+            <div class="row">
+                <div class="col-sm-10"><?php echo $description; ?></div>
+            </div>
+            <?php } ?>
+
             <hr>
             <?php } ?>
-            -->
             <?php if ($categories) { ?>
             <h3><?php echo $text_refine; ?></h3>
-            <?php if (count($categories) <= 15) { ?>
+            <?php if (count($categories) <= 10) { ?>
             <div class="row">
-                <div>
-                    <?php foreach ($categories as $category) { ?>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="col-sm-12  product-thumb">
-                            <div class="image pull-left col-sm-4">
-                                <br />
-                                <a href="<?php echo $category['href']; ?>"><img src="<?php echo  $category['thumb']; ?>" alt="<?php echo $category['href']; ?>" title="<?php echo $category['name']; ?>" class="img-responsive" /></a>
-                                <br />
-                            </div>
-                            <div class ="caption">
+                <?php foreach ($categories as $category) { ?>
+                <div class="product-layout product-list col-xs-12">
+                    <div class="product-thumb">
+                        <div class="image">
+                            <a href="<?php echo $category['image']; ?>"><img src = "<?php echo $category['image']; ?>"/></a>
+                        </div>
+                        <div>
+                            <div class="caption">
                                 <h4><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></h4>
-                                <?php echo $category['description']; ?>
-                                <br />
-
+                                <p><?php echo $category['description']; ?></p>
                             </div>
-                            <?php if ((($part_count == 1) && ($category['product_total'])>=5) || (($part_count == 2) && ($category['product_total'])>=10)) { }else{ ?>
-                            <a href = '<?php echo $category["href"]?>' class="pull-right "><button type="button" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-book"></i> Book</button></a>
-                            <table class="table table-striped table-condensed table-hover">
-                                <?php  for ($i=0; $i < $category['product_total']; $i++){ ?>
-                                <tr>
-                                    <td><?php echo $category[$i]['namep']; ?></td>
-                                    <td><?php echo $category[$i]['descriptionp']; ?></td>
-                                    <?php if($category[$i]['quantity'] >= 5) { ?>
-                                    <td class="text-success"> <b>Available</b>
-                                    </td>
-                                    <?php }else{ if ($category[$i]['quantity'] == 1){ ?>
-                                    <td class="text-danger"> <b>Our last room !</b>
-                                    </td>
-                                    <?php }else{ ?>
-                                    <td class="text-warning"> <b>Our last <?php echo $category[$i]['quantity']?> room !</b>
-                                    </td>
-                                    <?php } ?>
-                                    <?php } ?>
-                                    <td><?php echo $category[$i]['price']; ?></td>
-                                </tr>
-                                <?php } ?>
-                            </table>
-                            <?php } ?>
                         </div>
                     </div>
-                    <?php } ?>
                 </div>
+                <?php } ?>
             </div>
             <?php } else { ?>
             <div class="row">
@@ -90,19 +64,7 @@
             </div>
             <?php } ?>
             <?php } ?>
-            <?php if ($products) { ?>
-            <h2><?php echo $heading_title;?></h2>
-            <div class="row">
-                <?php if ($description) { ?>
-                <div class="col-sm-10"><?php echo $description; ?></div>
-                <?php } ?>
-            </div>
-            <div class="row">
-                <?php if ($thumb) { ?>
-                <div class="col-sm-12"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
-                <?php } ?>
-            </div>
-            <hr>
+            <?php if ($proparents) { ?>
             <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
             <div class="row">
                 <div class="col-md-4">
@@ -142,18 +104,18 @@
             </div>
             <br />
             <div class="row">
-                <?php foreach ($products as $product) { ?>
+                <?php foreach ($proparents as $proparent) { ?>
                 <div class="product-layout product-list col-xs-12">
                     <div class="product-thumb">
-                        <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
+                        <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
                         <div>
                             <div class="caption">
-                                <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
-                                <p><?php echo $product['description']; ?></p>
-                                <?php if ($product['rating']) { ?>
+                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a></h4>
+                                <p><?php echo $proparent['descriptionp']; ?></p>
+                                <?php if ($proparent['ratingp']) { ?>
                                 <div class="rating">
                                     <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <?php if ($product['rating'] < $i) { ?>
+                                    <?php if ($proparent['ratingp'] < $i) { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                                     <?php } else { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -161,23 +123,46 @@
                                     <?php } ?>
                                 </div>
                                 <?php } ?>
-                                <?php if ($product['price']) { ?>
+                                <!--
+                                <?php if ($proparent['pricep']) { ?>
                                 <p class="price">
-                                    <?php if (!$product['special']) { ?>
-                                    <?php echo $product['price']; ?>
+                                    <?php if (!$proparent['specialp']) { ?>
+                                    <?php echo $proparent['pricep']; ?>
                                     <?php } else { ?>
-                                    <span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
+                                    <span class="price-new"><?php echo $proparent['specialp']; ?></span> <span class="price-old"><?php echo $proparent['pricep']; ?></span>
                                     <?php } ?>
-                                    <?php if ($product['tax']) { ?>
-                                    <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+                                    <?php if ($proparent['taxp']) { ?>
+                                    <span class="price-tax"><?php echo $text_tax; ?> <?php echo $proparent['taxp']; ?></span>
                                     <?php } ?>
                                 </p>
                                 <?php } ?>
+                                -->
                             </div>
-                            <div class="button-group">
-                                <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span></button>
-                                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-                                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                            <div class="col-xs-6 pull-right">
+                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                            </div>
+                            <div class = "col-xs-12" >
+                                <?php if ($proparent[0]) { ?>
+                                <table class="table table-responsive table-hover table-striped">
+                                    <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
+                                    <tr>
+                                        <td><a href="<?php echo $proparent[$i]['href'];?>" ><?php echo $proparent[$i]['name'];?></a></td>
+                                        <td class = "col-xs-6"><?php echo $proparent[$i]['description'];?></td>
+                                        <?php if ($proparent[$i]['quantity'] == 1){ ?>
+
+                                        <td class="text-danger"><strong>Our last room !!!</strong></td>
+                                        <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
+                                        <td class="text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></td>
+                                        <?php } else { ?>
+                                        <td class="text-success"><strong>Available</strong></td>
+                                        <?php } ?>
+                                        <?php } ?>
+
+                                        <td><strong><?php echo $proparent[$i]['price'];?></strong></td>
+                                    </tr>
+                                    <?php ; } ?>
+                                </table>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -189,7 +174,7 @@
                 <div class="col-sm-6 text-right"><?php echo $results; ?></div>
             </div>
             <?php } ?>
-            <?php if (!$categories && !$products) { ?>
+            <?php if (!$categories && !$proparents) { ?>
             <p><?php echo $text_empty; ?></p>
             <div class="buttons">
                 <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>

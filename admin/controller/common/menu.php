@@ -49,6 +49,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_opencart'] = $this->language->get('text_opencart');
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_product'] = $this->language->get('text_product');
+		$data['text_proparent'] = $this->language->get('text_proparent');
 		$data['text_reports'] = $this->language->get('text_reports');
 		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
 		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
@@ -67,6 +68,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_report_affiliate'] = $this->language->get('text_report_affiliate');
 		$data['text_report_affiliate_activity'] = $this->language->get('text_report_affiliate_activity');
 		$data['text_review'] = $this->language->get('text_review');
+		$data['text_pareview'] = $this->language->get('text_pareview');
 		$data['text_return'] = $this->language->get('text_return');
 		$data['text_return_action'] = $this->language->get('text_return_action');
 		$data['text_return_reason'] = $this->language->get('text_return_reason');
@@ -142,6 +144,7 @@ class ControllerCommonMenu extends Controller {
 		$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
 		$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');
+		$data['proparent'] = $this->url->link('catalog/proparent', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], 'SSL');
@@ -158,6 +161,7 @@ class ControllerCommonMenu extends Controller {
 		$data['report_affiliate'] = $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_affiliate_activity'] = $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], 'SSL');
 		$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'], 'SSL');
+		$data['pareview'] = $this->url->link('catalog/pareview', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL');

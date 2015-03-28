@@ -36,7 +36,7 @@ $_['column_action']				= 'Action';
 // Entry
 $_['entry_limit']				= 'Page limit';
 $_['entry_status']				= 'Status';
-$_['entry_keywords']			= 'Keywords';
+$_['entry_keywords']                            = 'Keywords';
 $_['entry_name']				= 'Product name';
 $_['entry_etsy_id']				= 'Etsy item ID';
 
@@ -45,5 +45,6 @@ $_['help_keywords']				= 'Keywords only apply with active listings';
 
 // Error
 $_['error_etsy']				= 'Error! Etsy API response: ';
-$_['error_product_id']			= 'Product ID required';
+$_['error_product_id']                          = 'Product ID required';
+$_['error_proparent_id']			= 'Proparent ID required';
 $_['error_etsy_id']				= 'Etsy item ID required';

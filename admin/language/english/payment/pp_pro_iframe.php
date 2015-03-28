@@ -25,6 +25,7 @@ $_['text_reauthorise']				= 'Reauthorise';
 $_['text_reauthorised']				= 'Transaction was reauthorised';
 $_['text_transaction']				= 'Transaction';
 $_['text_product_lines']			= 'Product lines';
+$_['text_proparent_lines']			= 'Proparent lines';
 $_['text_ebay_txn_id']				= 'eBay transaction ID';
 $_['text_name']						= 'Name';
 $_['text_qty']						= 'Quantity';

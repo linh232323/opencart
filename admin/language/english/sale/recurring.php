@@ -40,6 +40,7 @@ $_['entry_action']                         = 'Action';
 $_['entry_email']                          = 'Email';
 $_['entry_description']                    = 'Recurring Profile\'s description';
 $_['entry_product']                        = 'Product';
+$_['entry_proparent']                      = 'Proparent';
 $_['entry_quantity']                       = 'Quantity';
 $_['entry_amount']                         = 'Amount';
 $_['entry_recurring']                      = 'Recurring Profile';

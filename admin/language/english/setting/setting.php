@@ -7,6 +7,7 @@ $_['text_stores']                      = 'Stores';
 $_['text_success']                     = 'Success: You have modified settings!';
 $_['text_edit']                        = 'Edit Setting';
 $_['text_product']                     = 'Products';
+$_['text_proparent']                   = 'Proparents';
 $_['text_review']                      = 'Reviews';
 $_['text_voucher']                     = 'Vouchers';
 $_['text_tax']                         = 'Taxes';

@@ -31,6 +31,7 @@ class ControllerSettingSetting extends Controller {
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_product'] = $this->language->get('text_product');
+		$data['text_proparent'] = $this->language->get('text_proparent');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_tax'] = $this->language->get('text_tax');
@@ -70,8 +71,11 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$data['entry_product_limit'] = $this->language->get('entry_product_limit');
 		$data['entry_product_description_length'] = $this->language->get('entry_product_description_length');
+		$data['entry_proparent_limit'] = $this->language->get('entry_proparent_limit');
+		$data['entry_proparent_description_length'] = $this->language->get('entry_proparent_description_length');
 		$data['entry_limit_admin'] = $this->language->get('entry_limit_admin');
 		$data['entry_product_count'] = $this->language->get('entry_product_count');
+		$data['entry_proparent_count'] = $this->language->get('entry_proparent_count');
 		$data['entry_review'] = $this->language->get('entry_review');
 		$data['entry_review_guest'] = $this->language->get('entry_review_guest');
 		$data['entry_review_mail'] = $this->language->get('entry_review_mail');
@@ -112,6 +116,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_image_thumb'] = $this->language->get('entry_image_thumb');
 		$data['entry_image_popup'] = $this->language->get('entry_image_popup');
 		$data['entry_image_product'] = $this->language->get('entry_image_product');
+		$data['entry_image_proparent'] = $this->language->get('entry_image_proparent');
 		$data['entry_image_additional'] = $this->language->get('entry_image_additional');
 		$data['entry_image_related'] = $this->language->get('entry_image_related');
 		$data['entry_image_compare'] = $this->language->get('entry_image_compare');
@@ -162,8 +167,11 @@ class ControllerSettingSetting extends Controller {
 		$data['help_currency_auto'] = $this->language->get('help_currency_auto');
 		$data['help_product_limit'] = $this->language->get('help_product_limit');
 		$data['help_product_description_length'] = $this->language->get('help_product_description_length');
+		$data['help_proparent_limit'] = $this->language->get('help_proparent_limit');
+		$data['help_proparent_description_length'] = $this->language->get('help_proparent_description_length');
 		$data['help_limit_admin'] = $this->language->get('help_limit_admin');
 		$data['help_product_count'] = $this->language->get('help_product_count');
+		$data['help_proparent_count'] = $this->language->get('help_proparent_count');
 		$data['help_review'] = $this->language->get('help_review');
 		$data['help_review_guest'] = $this->language->get('help_review_guest');
 		$data['help_review_mail'] = $this->language->get('help_review_mail');
@@ -370,6 +378,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['error_image_product'] = '';
 		}
+                
+		if (isset($this->error['image_proparent'])) {
+			$data['error_image_proparent'] = $this->error['image_proparent'];
+		} else {
+			$data['error_image_proparent'] = '';
+		}
 
 		if (isset($this->error['image_additional'])) {
 			$data['error_image_additional'] = $this->error['image_additional'];
@@ -423,6 +437,17 @@ class ControllerSettingSetting extends Controller {
 			$data['error_product_description_length'] = $this->error['product_description_length'];
 		} else {
 			$data['error_product_description_length'] = '';
+		}
+		if (isset($this->error['proparent_limit'])) {
+			$data['error_proparent_limit'] = $this->error['proparent_limit'];
+		} else {
+			$data['error_proparent_limit'] = '';
+		}
+
+		if (isset($this->error['proparent_description_length'])) {
+			$data['error_proparent_description_length'] = $this->error['proparent_description_length'];
+		} else {
+			$data['error_proparent_description_length'] = '';
 		}
 
 		if (isset($this->error['limit_admin'])) {
@@ -673,6 +698,18 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_product_description_length'] = $this->config->get('config_product_description_length');
 		}
+                
+		if (isset($this->request->post['config_proparent_limit'])) {
+			$data['config_proparent_limit'] = $this->request->post['config_proparent_limit'];
+		} else {
+			$data['config_proparent_limit'] = $this->config->get('config_proparent_limit');
+		}
+
+		if (isset($this->request->post['config_proparent_description_length'])) {
+			$data['config_proparent_description_length'] = $this->request->post['config_proparent_description_length'];
+		} else {
+			$data['config_proparent_description_length'] = $this->config->get('config_proparent_description_length');
+		}
 
 		if (isset($this->request->post['config_limit_admin'])) {
 			$data['config_limit_admin'] = $this->request->post['config_limit_admin'];
@@ -684,6 +721,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_product_count'] = $this->request->post['config_product_count'];
 		} else {
 			$data['config_product_count'] = $this->config->get('config_product_count');
+		}
+
+		if (isset($this->request->post['config_proparent_count'])) {
+			$data['config_proparent_count'] = $this->request->post['config_proparent_count'];
+		} else {
+			$data['config_proparent_count'] = $this->config->get('config_proparent_count');
 		}
 
 		if (isset($this->request->post['config_review_status'])) {
@@ -1002,6 +1045,18 @@ class ControllerSettingSetting extends Controller {
 			$data['config_image_product_height'] = $this->request->post['config_image_product_height'];
 		} else {
 			$data['config_image_product_height'] = $this->config->get('config_image_product_height');
+		}
+                
+		if (isset($this->request->post['config_image_proparent_width'])) {
+			$data['config_image_proparent_width'] = $this->request->post['config_image_proparent_width'];
+		} else {
+			$data['config_image_proparent_width'] = $this->config->get('config_image_proparent_width');
+		}
+
+		if (isset($this->request->post['config_image_proparent_height'])) {
+			$data['config_image_proparent_height'] = $this->request->post['config_image_proparent_height'];
+		} else {
+			$data['config_image_proparent_height'] = $this->config->get('config_image_proparent_height');
 		}
 
 		if (isset($this->request->post['config_image_additional_width'])) {
@@ -1343,6 +1398,10 @@ class ControllerSettingSetting extends Controller {
 		if (!$this->request->post['config_image_product_width'] || !$this->request->post['config_image_product_height']) {
 			$this->error['image_product'] = $this->language->get('error_image_product');
 		}
+                
+		if (!$this->request->post['config_image_proparent_width'] || !$this->request->post['config_image_proparent_height']) {
+			$this->error['image_proparent'] = $this->language->get('error_image_proparent');
+		}
 
 		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
 			$this->error['image_additional'] = $this->language->get('error_image_additional');
@@ -1396,6 +1455,14 @@ class ControllerSettingSetting extends Controller {
 
 		if (!$this->request->post['config_product_description_length']) {
 			$this->error['product_description_length'] = $this->language->get('error_limit');
+		}
+
+		if (!$this->request->post['config_proparent_limit']) {
+			$this->error['proparent_limit'] = $this->language->get('error_limit');
+		}
+
+		if (!$this->request->post['config_proparent_description_length']) {
+			$this->error['proparent_description_length'] = $this->language->get('error_limit');
 		}
 
 		if (!$this->request->post['config_limit_admin']) {

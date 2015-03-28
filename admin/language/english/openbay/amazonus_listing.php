@@ -2,50 +2,54 @@
 // Heading
 $_['heading_title'] 				= 'New Amazon listing';
 $_['text_title_advanced'] 			= 'Advanced listing';
-$_['text_openbay'] 					= 'OpenBay Pro';
-$_['text_amazon'] 					= 'Amazon US';
+$_['text_openbay'] 				= 'OpenBay Pro';
+$_['text_amazon'] 				= 'Amazon US';
 
 // Buttons
-$_['button_new'] 					= 'Create new product';
+$_['button_new'] 				= 'Create new product';
 $_['button_amazon_price'] 			= 'Get Amazon price';
-$_['button_list'] 					= 'List on Amazon';
+$_['button_list'] 				= 'List on Amazon';
 $_['button_remove_error'] 			= 'Remove error messages';
 $_['button_save_upload'] 			= 'Save and upload';
 $_['button_browse'] 				= 'Browse';
-$_['button_saved_listings'] 		= 'View saved listings';
+$_['button_saved_listings']                     = 'View saved listings';
 $_['button_remove_links'] 			= "Remove links";
-$_['button_create_new_listing'] 	= "Create new listing";
+$_['button_create_new_listing']                 = "Create new listing";
 
 // Help
-$_['help_sku'] 						= "Unique product's ID assigned by the merchant";
+$_['help_sku'] 					= "Unique product's ID assigned by the merchant";
 $_['help_restock_date'] 			= "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
 $_['help_sale_price'] 				= "Sale Price must have a start and end date";
 
 //Text
 $_['text_products_sent'] 			= 'Products were sent for processing';
-$_['button_view_on_amazon'] 		= 'View on Amazon';
-$_['text_list'] 					= 'List on Amazon';
-$_['text_new'] 						= 'New';
+$_['text_proparents_sent'] 			= 'Proparents were sent for processing';
+$_['button_view_on_amazon']                     = 'View on Amazon';
+$_['text_list'] 				= 'List on Amazon';
+$_['text_new'] 					= 'New';
 $_['text_used_like_new'] 			= 'Used - Like New';
 $_['text_used_very_good'] 			= 'Used - Very Good';
 $_['text_used_good'] 				= 'Used - Good';
 $_['text_used_acceptable'] 			= 'Used - Acceptable';
-$_['text_collectible_like_new'] 	= 'Collectible - Like New';
-$_['text_collectible_very_good'] 	= 'Collectible - Very Good';
-$_['text_collectible_good'] 		= 'Collectible - Good';
-$_['text_collectible_acceptable'] 	= 'Collectible - Acceptable';
+$_['text_collectible_like_new']                 = 'Collectible - Like New';
+$_['text_collectible_very_good']                = 'Collectible - Very Good';
+$_['text_collectible_good']                     = 'Collectible - Good';
+$_['text_collectible_acceptable']               = 'Collectible - Acceptable';
 $_['text_refurbished'] 				= 'Refurbished';
-$_['text_product_not_sent'] 		= 'Product was not sent to Amazon. Reason: %s';
+$_['text_product_not_sent']                     = 'Product was not sent to Amazon. Reason: %s';
+$_['text_proparent_not_sent']                   = 'Product was not sent to Amazon. Reason: %s';
 $_['text_not_in_catalog'] 			= 'Or, if it is not in the catalog&nbsp;&nbsp;&nbsp;';
-$_['text_placeholder_search'] 		= 'Enter product name, UPC, EAN, ISBN or ASIN';
-$_['text_placeholder_condition'] 	= 'Use this box to describe the condition of your products.';
+$_['text_placeholder_search']                   = 'Enter product name, UPC, EAN, ISBN or ASIN';
+$_['text_placeholder_condition']                = 'Use this box to describe the condition of your products.';
 $_['text_characters'] 				= 'characters';
 $_['text_uploaded'] 				= 'Saved listing(s) uploaded!';
 $_['text_saved_local'] 				= 'Listing saved but not uploaded yet';
 $_['text_product_sent'] 			= 'Product was successfully sent to Amazon.';
+$_['text_proparent_sent'] 			= 'Proparent was successfully sent to Amazon.';
 $_['text_links_removed'] 			= 'Amazon product links deleted';
 $_['text_product_links'] 			= 'Product links';
-$_['text_has_saved_listings'] 		= 'This product has one or more saved listings that is not uploaded';
+$_['text_proparent_links'] 			= 'Product links';
+$_['text_has_saved_listings']                   = 'This product has one or more saved listings that is not uploaded';
 $_['text_edit_heading'] 			= 'Edit listing';
 
 // Columns

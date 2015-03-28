@@ -21,6 +21,7 @@ $_['text_description']              	= 'Description';
 $_['text_order_frequency']          	= 'Order import frequency';
 $_['text_bulk_listing']             	= 'Bulk Listing';
 $_['text_product_listings']         	= 'Listings per month';
+$_['text_proparent_listings']         	= 'Listings per month';
 
 // Columns
 $_['column_name']                     	= 'Name';
@@ -28,6 +29,7 @@ $_['column_description']              	= 'Description';
 $_['column_order_frequency']          	= 'Order import frequency';
 $_['column_bulk_listing']             	= 'Bulk Listing';
 $_['column_product_listings']         	= 'Listings per month';
+$_['column_proparent_listings']         	= 'Listings per month';
 $_['column_price']                    	= 'Price';
 
 // Buttons

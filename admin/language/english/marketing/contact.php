@@ -14,6 +14,7 @@ $_['text_customer']        = 'Customers';
 $_['text_affiliate_all']   = 'All Affiliates';
 $_['text_affiliate']       = 'Affiliates';
 $_['text_product']         = 'Products';
+$_['text_proparent']       = 'Proparents';
 
 // Entry
 $_['entry_store']          = 'From';
@@ -22,6 +23,7 @@ $_['entry_customer_group'] = 'Customer Group';
 $_['entry_customer']       = 'Customer';
 $_['entry_affiliate']      = 'Affiliate';
 $_['entry_product']        = 'Products';
+$_['entry_proparent']      = 'Proparent';
 $_['entry_subject']        = 'Subject';
 $_['entry_message']        = 'Message';
 
@@ -29,6 +31,7 @@ $_['entry_message']        = 'Message';
 $_['help_customer']       = 'Autocomplete';
 $_['help_affiliate']      = 'Autocomplete';
 $_['help_product']        = 'Send only to customers who have ordered products in the list. (Autocomplete)';
+$_['help_proparent']      = 'Send only to customers who have ordered proparents in the list. (Autocomplete)';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to send E-Mails!';

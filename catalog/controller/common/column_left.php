@@ -19,8 +19,8 @@ class ControllerCommonColumnLeft extends Controller {
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
 		}
 
-		if ($route == 'product/product' && isset($this->request->get['product_id'])) {
-			$this->load->model('catalog/product');
+		if ($route == 'product/proparent' && isset($this->request->get['proparent_id'])) {
+			$this->load->model('catalog/proparent');
 			
 			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
 		}
@@ -44,10 +44,10 @@ class ControllerCommonColumnLeft extends Controller {
 		$data['modules'] = array();
 
 		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_left');
-
+                
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
-			
+			$data['aa']=$part;
 			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
 				$data['modules'][] = $this->load->controller('module/' . $part[0]);
 			}

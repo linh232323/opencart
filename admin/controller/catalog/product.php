@@ -41,6 +41,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
+                        
+			if (isset($this->request->get['filter_maxadults'])) {
+				$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
+			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -92,6 +96,10 @@ class ControllerCatalogProduct extends Controller {
 
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+			}
+                        
+			if (isset($this->request->get['filter_maxadults'])) {
+				$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
 			}
 
 			if (isset($this->request->get['filter_status'])) {
@@ -147,6 +155,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
+                        
+			if (isset($this->request->get['filter_maxadults'])) {
+				$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
+			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -201,6 +213,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
+                        
+			if (isset($this->request->get['filter_maxadults'])) {
+				$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
+			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -249,6 +265,12 @@ class ControllerCatalogProduct extends Controller {
 			$filter_quantity = null;
 		}
 
+		if (isset($this->request->get['filter_maxadults'])) {
+			$filter_maxadults = $this->request->get['filter_maxadults'];
+		} else {
+			$filter_maxadults = null;
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
@@ -291,6 +313,10 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
 
+		if (isset($this->request->get['filter_maxadults'])) {
+			$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -330,6 +356,7 @@ class ControllerCatalogProduct extends Controller {
 			'filter_model'	  => $filter_model,
 			'filter_price'	  => $filter_price,
 			'filter_quantity' => $filter_quantity,
+			'filter_maxadults'=> $filter_maxadults,
 			'filter_status'   => $filter_status,
 			'sort'            => $sort,
 			'order'           => $order,
@@ -370,6 +397,7 @@ class ControllerCatalogProduct extends Controller {
 				'price'      => $result['price'],
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
+				'maxadults'   => $result['maxadults'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL')
 			);
@@ -388,6 +416,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_quantity'] = $this->language->get('column_quantity');
+		$data['column_maxadults'] = $this->language->get('column_maxadults');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_action'] = $this->language->get('column_action');
 
@@ -395,6 +424,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_price'] = $this->language->get('entry_price');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
+		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_copy'] = $this->language->get('button_copy');
@@ -443,6 +473,10 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
 
+		if (isset($this->request->get['filter_maxadults'])) {
+			$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -461,6 +495,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['sort_model'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
 		$data['sort_price'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.price' . $url, 'SSL');
 		$data['sort_quantity'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.quantity' . $url, 'SSL');
+		$data['sort_maxadults'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.maxadults' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
 		$data['sort_order'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
 
@@ -480,6 +515,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+		}
+
+		if (isset($this->request->get['filter_maxadults'])) {
+			$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -508,6 +547,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_model'] = $filter_model;
 		$data['filter_price'] = $filter_price;
 		$data['filter_quantity'] = $filter_quantity;
+		$data['filter_maxadults'] = $filter_maxadults;
 		$data['filter_status'] = $filter_status;
 
 		$data['sort'] = $sort;
@@ -556,6 +596,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_shipping'] = $this->language->get('entry_shipping');
 		$data['entry_date_available'] = $this->language->get('entry_date_available');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
+		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
@@ -573,7 +614,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
 		$data['entry_download'] = $this->language->get('entry_download');
-		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_proparent'] = $this->language->get('entry_proparent');
 		$data['entry_filter'] = $this->language->get('entry_filter');
 		$data['entry_related'] = $this->language->get('entry_related');
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
@@ -600,10 +641,11 @@ class ControllerCatalogProduct extends Controller {
 		$data['help_isbn'] = $this->language->get('help_isbn');
 		$data['help_mpn'] = $this->language->get('help_mpn');
 		$data['help_minimum'] = $this->language->get('help_minimum');
+		$data['help_maxadults'] = $this->language->get('help_maxadults');
 		$data['help_manufacturer'] = $this->language->get('help_manufacturer');
 		$data['help_stock_status'] = $this->language->get('help_stock_status');
 		$data['help_points'] = $this->language->get('help_points');
-		$data['help_category'] = $this->language->get('help_category');
+		$data['help_proparent'] = $this->language->get('help_proparent');
 		$data['help_filter'] = $this->language->get('help_filter');
 		$data['help_download'] = $this->language->get('help_download');
 		$data['help_related'] = $this->language->get('help_related');
@@ -685,6 +727,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+		}
+
+		if (isset($this->request->get['filter_maxadults'])) {
+			$url .= '&filter_maxadults=' . $this->request->get['filter_maxadults'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -901,6 +947,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['quantity'] = 1;
 		}
 
+		if (isset($this->request->post['maxadults'])) {
+			$data['maxadults'] = $this->request->post['maxadults'];
+		} elseif (!empty($product_info)) {
+			$data['maxadults'] = $product_info['maxadults'];
+		} else {
+			$data['maxadults'] = 1;
+		}
+
 		if (isset($this->request->post['minimum'])) {
 			$data['minimum'] = $this->request->post['minimum'];
 		} elseif (!empty($product_info)) {
@@ -1025,26 +1079,26 @@ class ControllerCatalogProduct extends Controller {
 			$data['manufacturer'] = '';
 		}
 
-		// Categories
-		$this->load->model('catalog/category');
+		// Product Parent
+		$this->load->model('catalog/proparent');
 
-		if (isset($this->request->post['product_category'])) {
-			$categories = $this->request->post['product_category'];
+		if (isset($this->request->post['product_proparent'])) {
+			$proparents = $this->request->post['product_proparent'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+			$proparents = $this->model_catalog_product->getProductProparents($this->request->get['product_id']);
 		} else {
-			$categories = array();
+			$proparents = array();
 		}
 
-		$data['product_categories'] = array();
+		$data['product_proparents'] = array();
 
-		foreach ($categories as $category_id) {
-			$category_info = $this->model_catalog_category->getCategory($category_id);
-
-			if ($category_info) {
-				$data['product_categories'][] = array(
-					'category_id' => $category_info['category_id'],
-					'name' => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
+		foreach ($proparents as $proparent_id) {
+			$proparent_info = $this->model_catalog_proparent->getProparent($proparent_id);
+                        
+			if ($proparent_info) {
+				$data['product_proparents'][] = array(
+					'proparent_id' => $proparent_info['proparent_id'],
+					'name' => $proparent_info['name']
 				);
 			}
 		}
@@ -1120,6 +1174,7 @@ class ControllerCatalogProduct extends Controller {
 						'product_option_value_id' => $product_option_value['product_option_value_id'],
 						'option_value_id'         => $product_option_value['option_value_id'],
 						'quantity'                => $product_option_value['quantity'],
+						'maxadults'               => $product_option_value['maxadults'],
 						'subtract'                => $product_option_value['subtract'],
 						'price'                   => $product_option_value['price'],
 						'price_prefix'            => $product_option_value['price_prefix'],
@@ -1170,6 +1225,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_discounts'][] = array(
 				'customer_group_id' => $product_discount['customer_group_id'],
 				'quantity'          => $product_discount['quantity'],
+				'maxadults'          => $product_discount['maxadults'],
 				'priority'          => $product_discount['priority'],
 				'price'             => $product_discount['price'],
 				'date_start'        => ($product_discount['date_start'] != '0000-00-00') ? $product_discount['date_start'] : '',

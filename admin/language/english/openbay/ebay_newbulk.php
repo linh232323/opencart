@@ -50,6 +50,7 @@ $_['text_bulk_plan_error']          = 'Your current plan does not allow for bulk
 $_['text_item_limit']               = 'You cannot list these items as you would exceed your plan limit, upgrade your plan <a href="%s">here</a>';
 $_['text_search_text']              = 'Enter some search text';
 $_['text_catalog_no_products']      = 'No catalog items found';
+$_['text_catalog_no_proparents']      = 'No catalog items found';
 $_['text_search_failed']            = 'Search failed';
 $_['text_esc_key']                  = 'The splash page has been hidden but may not have finished loading';
 $_['text_loading_categories']       = 'Loading categories';
@@ -67,6 +68,7 @@ $_['text_error_theme_profile']      = 'You need to have a default theme profile 
 $_['text_error_variants']           = 'Items with variations cannot be bulk listed and have been unselected';
 $_['text_error_stock']              = 'Some items are not in stock and have been removed';
 $_['text_error_no_product']         = 'There is no eligible products selected to use the bulk upload feature';
+$_['text_error_no_proparent']       = 'There is no eligible proparents selected to use the bulk upload feature';
 $_['text_error_reverify']           = 'There was an error, you should edit and re-verify the items';
 $_['error_missing_settings']   = 'You cannot bulk list items until you syncronise your eBay settings';
 $_['text_error_no_selection']   	= 'You must select at least 1 item to list';

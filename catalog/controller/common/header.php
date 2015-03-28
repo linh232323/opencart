@@ -83,6 +83,8 @@ class ControllerCommonHeader extends Controller {
 		$this->load->model('catalog/category');
 
 		$this->load->model('catalog/product');
+                
+		$this->load->model('catalog/proparent');
 
 		$data['categories'] = array();
 
@@ -100,9 +102,9 @@ class ControllerCommonHeader extends Controller {
 						'filter_category_id'  => $child['category_id'],
 						'filter_sub_category' => true
 					);
-
+                                        
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_proparent->getTotalProparents($filter_data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);
 				}

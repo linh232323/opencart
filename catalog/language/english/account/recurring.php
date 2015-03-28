@@ -4,6 +4,7 @@ $_['button_continue'] = 'Continue';
 $_['button_view'] = 'View';
 $_['text_empty'] = 'No recurring payments found';
 $_['text_product'] = 'Product: ';
+$_['text_proparent'] = 'Proparent: ';
 $_['text_order'] = 'Order: ';
 $_['text_quantity'] = 'Quantity: ';
 $_['text_account'] = 'Account';
@@ -18,6 +19,7 @@ $_['column_type'] = 'Type';
 $_['column_amount'] = 'Amount';
 $_['column_status'] = 'Status';
 $_['column_product'] = 'Product';
+$_['column_proparent'] = 'Proparentt';
 $_['column_action'] = 'Action';
 $_['column_recurring_id'] = 'Profile ID';
 

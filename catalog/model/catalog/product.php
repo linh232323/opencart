@@ -25,6 +25,7 @@ class ModelCatalogProduct extends Model {
 				'mpn'              => $query->row['mpn'],
 				'location'         => $query->row['location'],
 				'quantity'         => $query->row['quantity'],
+				'maxadults'        => $query->row['maxadults'],
 				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],
 				'manufacturer_id'  => $query->row['manufacturer_id'],
@@ -59,11 +60,11 @@ class ModelCatalogProduct extends Model {
 	public function getProducts($data = array()) {
 		$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
 
-		if (!empty($data['filter_category_id'])) {
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (cp.category_id = p2c.category_id)";
+		if (!empty($data['filter_proparent_id'])) {
+			if (!empty($data['filter_sub_proparent'])) {
+				$sql .= " FROM " . DB_PREFIX . "proparent_path cp LEFT JOIN " . DB_PREFIX . "product_to_proparent p2c ON (cp.proparent_id = p2c.proparent_id)";
 			} else {
-				$sql .= " FROM " . DB_PREFIX . "product_to_category p2c";
+				$sql .= " FROM " . DB_PREFIX . "product_to_proparent p2c";
 			}
 
 			if (!empty($data['filter_filter'])) {
@@ -77,11 +78,11 @@ class ModelCatalogProduct extends Model {
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-		if (!empty($data['filter_category_id'])) {
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
+		if (!empty($data['filter_proparent_id'])) {
+			if (!empty($data['filter_sub_proparent'])) {
+				$sql .= " AND cp.path_id = '" . (int)$data['filter_proparent_id'] . "'";
 			} else {
-				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+				$sql .= " AND p2c.proparent_id = '" . (int)$data['filter_proparent_id'] . "'";
 			}
 
 			if (!empty($data['filter_filter'])) {
@@ -149,6 +150,7 @@ class ModelCatalogProduct extends Model {
 			'pd.name',
 			'p.model',
 			'p.quantity',
+			'p.maxadults',
 			'p.price',
 			'rating',
 			'p.sort_order',
@@ -337,6 +339,7 @@ class ModelCatalogProduct extends Model {
 					'name'                    => $product_option_value['name'],
 					'image'                   => $product_option_value['image'],
 					'quantity'                => $product_option_value['quantity'],
+					'maxadults'               => $product_option_value['maxadults'],
 					'subtract'                => $product_option_value['subtract'],
 					'price'                   => $product_option_value['price'],
 					'price_prefix'            => $product_option_value['price_prefix'],
@@ -394,7 +397,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getCategories($product_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_proparent WHERE product_id = '" . (int)$product_id . "'");
 
 		return $query->rows;
 	}
@@ -402,11 +405,11 @@ class ModelCatalogProduct extends Model {
 	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total";
 
-		if (!empty($data['filter_category_id'])) {
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (cp.category_id = p2c.category_id)";
+		if (!empty($data['filter_proparent_id'])) {
+			if (!empty($data['filter_sub_proparent'])) {
+				$sql .= " FROM " . DB_PREFIX . "proparent_path cp LEFT JOIN " . DB_PREFIX . "product_to_proparent p2c ON (cp.proparent_id = p2c.proparent_id)";
 			} else {
-				$sql .= " FROM " . DB_PREFIX . "product_to_category p2c";
+				$sql .= " FROM " . DB_PREFIX . "product_to_proparent p2c";
 			}
 
 			if (!empty($data['filter_filter'])) {
@@ -420,11 +423,11 @@ class ModelCatalogProduct extends Model {
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-		if (!empty($data['filter_category_id'])) {
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
+		if (!empty($data['filter_proparent_id'])) {
+			if (!empty($data['filter_sub_proparent'])) {
+				$sql .= " AND cp.path_id = '" . (int)$data['filter_proparent_id'] . "'";
 			} else {
-				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+				$sql .= " AND p2c.proparent_id = '" . (int)$data['filter_proparent_id'] . "'";
 			}
 
 			if (!empty($data['filter_filter'])) {

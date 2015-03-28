@@ -31,6 +31,7 @@ class ControllerCommonHeader extends Controller {
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
+		$data['text_pareview'] = $this->language->get('text_pareview');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_front'] = $this->language->get('text_front');
@@ -102,6 +103,15 @@ class ControllerCommonHeader extends Controller {
 			$data['review_total'] = $review_total;
 
 			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
+
+			// Parent Reviews
+			$this->load->model('catalog/review');
+
+			$pareview_total = $this->model_catalog_review->getTotalPareviews(array('filter_status' => false));
+
+			$data['pareview_total'] = $pareview_total;
+
+			$data['pareview'] = $this->url->link('catalog/pareview', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
 
 			// Affliate
 			$this->load->model('marketing/affiliate');

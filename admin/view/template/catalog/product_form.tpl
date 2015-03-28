@@ -187,6 +187,12 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-maxadults"><span data-toggle="tooltip" title="<?php echo $help_maxadults; ?>"><?php echo $entry_maxadults; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="maxadults" value="<?php echo $maxadults; ?>" placeholder="<?php echo $entry_maxadults; ?>" id="input-maxadults" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-subtract"><?php echo $entry_subtract; ?></label>
                 <div class="col-sm-10">
                   <select name="subtract" id="input-subtract" class="form-control">
@@ -336,13 +342,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
+                <label class="col-sm-2 control-label" for="input-proparent"><span data-toggle="tooltip" title="<?php echo $help_proparent; ?>"><?php echo $entry_proparent; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
-                  <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                    <?php foreach ($product_categories as $product_category) { ?>
-                    <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
-                      <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
+                  <input type="text" name="proparent" value="" placeholder="<?php echo $entry_proparent; ?>" id="input-proparent" class="form-control" />
+                  <div id="product-proparent" class="well well-sm" style="height: 150px; overflow: auto;">
+                    <?php foreach ($product_proparents as $product_proparent) { ?>
+                    <div id="product-proparent<?php echo $product_proparent['proparent_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_proparent['name']; ?>
+                      <input type="hidden" name="product_proparent[]" value="<?php echo $product_proparent['proparent_id']; ?>" />
                     </div>
                     <?php } ?>
                   </div>
@@ -948,31 +954,31 @@ $('input[name=\'manufacturer\']').autocomplete({
 });
 
 // Category
-$('input[name=\'category\']').autocomplete({
+$('input[name=\'proparent\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/proparent/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['category_id']
+						value: item['proparent_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'category\']').val('');
+		$('input[name=\'proparent\']').val('');
 		
-		$('#product-category' + item['value']).remove();
+		$('#product-proparent' + item['value']).remove();
 		
-		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');	
+		$('#product-proparent').append('<div id="product-proparent' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_proparent[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 
-$('#product-category').delegate('.fa-minus-circle', 'click', function() {
+$('#product-proparent').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -1093,7 +1099,7 @@ function attributeautocomplete(attribute_row) {
 				success: function(json) {
 					response($.map(json, function(item) {
 						return {
-							category: item.attribute_group,
+							proparent: item.attribute_group,
 							label: item.name,
 							value: item.attribute_id
 						}
@@ -1123,7 +1129,7 @@ $('input[name=\'option\']').autocomplete({
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						category: item['category'],
+						proparent: item['proparent'],
 						label: item['name'],
 						value: item['option_id'],
 						type: item['type'],
