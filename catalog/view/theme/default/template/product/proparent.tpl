@@ -59,7 +59,7 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </td>
-                                <td class = " text-center">
+                                <td class = "text-center">
                                     <strong class="text-primary"><?php echo $product['price'];?></strong>
                                 </td>
                                 <td class="col-xs-2">

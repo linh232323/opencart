@@ -437,7 +437,7 @@
                         <input type="hidden" name="proparent_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $proparent_attribute['attribute_id']; ?>" /></td>
                       <td class="text-left"><?php foreach ($languages as $language) { ?>
                         <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                          <textarea name="proparent_attribute[<?php echo $attribute_row; ?>][proparent_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control"><?php echo isset($proparent_attribute['proparent_attribute_description'][$language['language_id']]) ? $proparent_attribute['proparent_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
+                          <textarea name="proparent_attribute[<?php echo $attribute_row; ?>][proparent_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"><?php echo isset($proparent_attribute['proparent_attribute_description'][$language['language_id']]) ? $proparent_attribute['proparent_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
                         </div>
                         <?php } ?></td>
                       <td class="text-left"><button type="button" onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -1071,7 +1071,7 @@ function addAttribute() {
 	html += '  <td class="text-left" style="width: 20%;"><input type="text" name="proparent_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="proparent_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
 	html += '  <td class="text-left">';
 	<?php foreach ($languages as $language) { ?>
-	html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="proparent_attribute[' + attribute_row + '][proparent_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
+	html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="proparent_attribute[' + attribute_row + '][proparent_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
     <?php } ?>
 	html += '  </td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

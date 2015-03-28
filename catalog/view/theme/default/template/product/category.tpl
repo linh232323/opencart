@@ -38,7 +38,7 @@
                 <div class="product-layout product-list col-xs-12">
                     <div class="product-thumb">
                         <div class="image">
-                            <a href="<?php echo $category['image']; ?>"><img src = "<?php echo $category['image']; ?>"/></a>
+                            <a href="<?php echo $category['href']; ?>"><img src = "<?php echo $category['image']; ?>" alt ="<?php echo $category['name']; ?>" title ="<?php echo $category['name']; ?>"/></a>
                         </div>
                         <div>
                             <div class="caption">
@@ -64,7 +64,7 @@
             </div>
             <?php } ?>
             <?php } ?>
-            <?php if ($proparents) { ?>
+            <?php if ($proparents && !$categories) { ?>
             <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
             <div class="row">
                 <div class="col-md-4">
@@ -138,31 +138,31 @@
                                 <?php } ?>
                                 -->
                             </div>
-                            <div class="col-xs-6 pull-right">
-                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
-                            </div>
                             <div class = "col-xs-12" >
                                 <?php if ($proparent[0]) { ?>
-                                <table class="table table-responsive table-hover table-striped">
+                                <div class="table table-responsive table-hover table-striped">
                                     <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
-                                    <tr>
-                                        <td><a href="<?php echo $proparent[$i]['href'];?>" ><?php echo $proparent[$i]['name'];?></a></td>
-                                        <td class = "col-xs-6"><?php echo $proparent[$i]['description'];?></td>
-                                        <?php if ($proparent[$i]['quantity'] == 1){ ?>
-
-                                        <td class="text-danger"><strong>Our last room !!!</strong></td>
-                                        <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
-                                        <td class="text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></td>
-                                        <?php } else { ?>
-                                        <td class="text-success"><strong>Available</strong></td>
-                                        <?php } ?>
-                                        <?php } ?>
-
-                                        <td><strong><?php echo $proparent[$i]['price'];?></strong></td>
-                                    </tr>
+                                    <div class="list-group">
+                                            <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
+                                                <span class="col-xs-3"><?php echo $proparent[$i]['name'];?></span>
+                                                <span class="col-xs-5"><?php echo $proparent[$i]['description'];?></span>
+                                                <?php if ($proparent[$i]['quantity'] == 1){ ?>
+                                                <span class="col-xs-2 text-danger"><strong>Our last room !!!</strong></span>
+                                                <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
+                                                <span class="col-xs-2 text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></span>
+                                                <?php } else { ?>
+                                                <span class="col-xs-2 text-success"><strong>Available</strong></span>
+                                                <?php } ?>
+                                                <?php } ?>
+                                                <span class="col-xs-2"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                            </a> 
+                                    </div>
                                     <?php ; } ?>
-                                </table>
+                                </div>
                                 <?php } ?>
+                            </div>
+                            <div class="col-xs-6 pull-right">
+                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
                             </div>
                         </div>
                     </div>

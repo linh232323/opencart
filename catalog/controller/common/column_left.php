@@ -22,7 +22,7 @@ class ControllerCommonColumnLeft extends Controller {
 		if ($route == 'product/proparent' && isset($this->request->get['proparent_id'])) {
 			$this->load->model('catalog/proparent');
 			
-			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
+			$layout_id = $this->model_catalog_proparent->getProparentLayoutId($this->request->get['proparent_id']);
 		}
 
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {
@@ -47,7 +47,7 @@ class ControllerCommonColumnLeft extends Controller {
                 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
-			$data['aa']=$part;
+			
 			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
 				$data['modules'][] = $this->load->controller('module/' . $part[0]);
 			}
