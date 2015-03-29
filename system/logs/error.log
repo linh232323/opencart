@@ -5535,3 +5535,149 @@
 2015-03-28 11:36:02 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '81' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
 2015-03-28 11:36:02 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
 2015-03-28 11:36:02 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-28 17:59:26 - PHP Notice:  Undefined variable: search in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 12
+2015-03-28 18:01:58 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:02:31 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:03:53 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:03:56 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:04:02 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:05:50 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:05:56 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:06:31 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:06:36 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:07:05 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:07:10 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 6
+2015-03-28 18:10:35 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 17
+2015-03-28 18:10:46 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 17
+2015-03-28 18:10:57 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 17
+2015-03-28 18:11:04 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 17
+2015-03-28 18:11:41 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 17
+2015-03-28 18:12:23 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:12:33 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:13:01 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:13:06 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:13:13 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:13:22 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-28 18:13:39 - PHP Notice:  Undefined variable: cart in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\home.tpl on line 16
+2015-03-29 9:31:49 - PHP Notice:  Undefined variable: text_labelname in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\search_home.tpl on line 5
+2015-03-29 9:31:49 - PHP Notice:  Undefined variable: text_labelname in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\search_home.tpl on line 6
+2015-03-29 9:31:49 - PHP Notice:  Undefined variable: text_labeldate in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\search_home.tpl on line 8
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:31 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:39:32 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '43' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:39:32 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:39:32 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:39:33 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:39:33 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:39:33 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:43:02 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:43:02 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:43:02 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:29 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:43:31 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:43:31 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:43:31 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:07 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:24 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:56:26 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:56:26 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:56:26 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:57:52 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:57:52 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:57:52 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:08 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:58:09 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:58:09 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:58:09 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:12 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\catalog\model\catalog\product.php on line 342
+2015-03-29 10:59:14 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '42' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 10:59:14 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 10:59:14 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 11:10:56 - PHP Notice:  Error: Unknown column 'r.proparent_id' in 'on clause'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN oc_proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '77' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 11:10:56 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 11:10:56 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 11:13:11 - PHP Notice:  Undefined variable: product_id in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 98
+2015-03-29 11:13:11 - PHP Notice:  Error: Unknown column 'p.product_id' in 'field list'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.product_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.product_id = p.product_id) LEFT JOIN oc_proparent_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '0' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 11:13:11 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 11:13:11 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 11:13:29 - PHP Notice:  Error: Unknown column 'p.product_id' in 'field list'<br />Error No: 1054<br />SELECT r.review_id, r.author, r.rating, r.text, p.product_id, pd.name, p.price, p.image, r.date_added FROM oc_review r LEFT JOIN oc_proparent p ON (r.product_id = p.product_id) LEFT JOIN oc_proparent_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '77' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '1' ORDER BY r.date_added DESC LIMIT 0,5 in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-03-29 11:13:29 - PHP Notice:  Trying to get property of non-object in C:\xampp\htdocs\opencart\catalog\model\catalog\review.php on line 100
+2015-03-29 11:13:29 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\product.php on line 584
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: results in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 216
+2015-03-29 12:01:52 - PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 216
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 423
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 430
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 430
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 430
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 430
+2015-03-29 12:01:52 - PHP Notice:  Undefined variable: product_total in C:\xampp\htdocs\opencart\catalog\controller\product\search.php on line 430

@@ -6,6 +6,8 @@ class ControllerProductSearch extends Controller {
 		$this->load->model('catalog/category');
 
 		$this->load->model('catalog/product');
+                
+		$this->load->model('catalog/proparent');
 
 		$this->load->model('tool/image');
 
@@ -194,7 +196,7 @@ class ControllerProductSearch extends Controller {
 			);
 		}
 
-		$data['products'] = array();
+		$data['proparents'] = array();
 
 		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
 			$filter_data = array(
@@ -209,9 +211,9 @@ class ControllerProductSearch extends Controller {
 				'limit'               => $limit
 			);
 
-			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+			$product_total = $this->model_catalog_proparent->getTotalProparents($filter_data);
 
-			$results = $this->model_catalog_product->getProducts($filter_data);
+			$results = $this->model_catalog_proparent->getProparents($filter_data);
 
 			foreach ($results as $result) {
 				if ($result['image']) {
@@ -244,8 +246,8 @@ class ControllerProductSearch extends Controller {
 					$rating = false;
 				}
 
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
+				$data['proparents'][] = array(
+					'proparent_id'  => $result['proparent_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
@@ -253,7 +255,7 @@ class ControllerProductSearch extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+					'href'        => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
 				);
 			}
 

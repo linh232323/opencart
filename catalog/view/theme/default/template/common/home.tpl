@@ -9,7 +9,11 @@
                     <h3 class="text-color-white">625,000+ hotels, villas, apartments and more...</h2>
                 </div>
                 <div class="row">
-                    <div class=" col-md-12"><?php echo $search_home; ?></div>
+                    <search>
+                        <div class="container">
+                            <div class=" col-md-6"><?php echo $search_home; ?></div>
+                        </div>
+                    </search>
                 </div>
             </div>
         </div> 
@@ -25,16 +29,18 @@
         <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?><?php echo $content_bottom; ?></div>
         <?php echo $column_right; ?></div>
 </div>
-<script type="text/javascript"><!--
+<script type="text/javascript">
+    <!--
 $('.date').datetimepicker({
-    pickTime: false
+        pickTime: false
     });
-            $('.datetime').datetimepicker({
-    pickDate: true,
-            pickTime: true
+    $('.datetime').datetimepicker({
+        pickDate: true,
+        pickTime: true
     });
-            $('.time').datetimepicker({
-    pickDate: false
+    $('.time').datetimepicker({
+        pickDate: false
     });
---></script>
+    -->
+</script>
 <?php echo $footer; ?>

@@ -4,6 +4,9 @@ class ControllerCommonSearchHome extends Controller {
 		$this->load->language('common/search_home');
 
 		$data['text_search'] = $this->language->get('text_search');
+		$data['text_labelname'] = $this->language->get('text_labelname');
+		$data['text_labeldate'] = $this->language->get('text_labeldate');
+		$data['text_labelguest'] = $this->language->get('text_labelguest');
 
 		if (isset($this->request->get['search'])) {
 			$data['search'] = $this->request->get['search'];
