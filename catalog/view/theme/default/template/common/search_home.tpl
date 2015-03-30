@@ -23,7 +23,7 @@
         <br />
         <div class="col-xs-12 input-group">
             <div class="form-group">
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="submit">Search</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="submit"><?php echo $text_search; ?></button>
             </div>
         </div>
     </div>

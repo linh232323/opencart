@@ -252,6 +252,10 @@ class ControllerProductProparent extends Controller {
             $data['text_loading'] = $this->language->get('text_loading');
             $data['text_limit'] = $this->language->get('text_limit');
             $data['text_sort'] = $this->language->get('text_sort');
+            $data['text_book'] = $this->language->get('text_book');
+            $data['text_room'] = $this->language->get('text_room');
+            $data['text_max_adults'] = $this->language->get('text_max_adults');
+            $data['text_rate'] = $this->language->get('text_rate');
 
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');

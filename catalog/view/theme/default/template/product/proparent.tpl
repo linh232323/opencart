@@ -75,9 +75,9 @@ print_r  ($pagination);?>
                     <div class="row"> 
                         <div class="product-layout product-list col-xs-12">
                             <table class="table table-bordered table-hover table-striped">
-                                <th class = "col-xs-3 text-center">Room</th>
-                                <th class = "col-xs-1 text-center">Max Adults</th>
-                                <th class = " text-center">Rate</th>
+                                <th class = "col-xs-3 text-center"><?php echo $text_room;?></th>
+                                <th class = "col-xs-1 text-center"><?php echo $text_max_adults;?></th>
+                                <th class = " text-center"><?php echo $text_rate;?></th>
                                 <th class = "col-xs-2"></th>
                             </table>
                             <?php foreach ($products as $product) { ?>
@@ -103,7 +103,7 @@ print_r  ($pagination);?>
                                             <strong class="text-primary"><?php echo $product['price'];?></strong>
                                         </td>
                                         <td class="col-xs-2">
-                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Book </button></a>
+                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> <?php echo $text_book; ?></button></a>
                                             <?php if ($product['quantity'] == 1){ ?>
                                             <strong class="text-danger">Our last room !!!</strong>
                                             <?php } else { if ($product['quantity'] <= 5) { ?>
