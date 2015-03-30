@@ -147,6 +147,12 @@ class ControllerProductProparent extends Controller {
             if (isset($this->request->get['limit'])) {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
+            
+            if (isset($this->request->get['path'])) {
+                $url .= '&path=' . $this->request->get['path'];
+            }else{
+                $part = "";
+            }
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_search'),
@@ -168,6 +174,7 @@ class ControllerProductProparent extends Controller {
             $url = '';
 
             if (isset($this->request->get['path'])) {
+                $part = $this->request->get['path'];
                 $url .= '&path=' . $this->request->get['path'];
             }
 
@@ -515,13 +522,13 @@ class ControllerProductProparent extends Controller {
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_default'),
                 'value' => 'p.sort_order-ASC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.sort_order&order=ASC' . $url)
+                'href' => $this->url->link('product/category', 'path=' . $part . '&sort=p.sort_order&order=ASC' . $url)
             );
 
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_price_asc'),
                 'value' => 'p.price-ASC',
-                'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . '&sort=p.price&order=ASC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
+                'href' => $this->url->link('product/proparent', 'path=' . $part . '&sort=p.price&order=ASC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
             );
 
             $url = '';
@@ -529,7 +536,7 @@ class ControllerProductProparent extends Controller {
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_price_desc'),
                 'value' => 'p.price-DESC',
-                'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
+                'href' => $this->url->link('product/proparent', 'path=' . $part . '&sort=p.price&order=DESC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
             );
 
             // Limit //
@@ -557,7 +564,7 @@ class ControllerProductProparent extends Controller {
                 $data['limits'][] = array(
                     'text' => $value,
                     'value' => $value,
-                    'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . $url . '&limit=' . $value . '&proparent_id=' . $this->request->get['proparent_id'])
+                    'href' => $this->url->link('product/proparent', 'path=' . $part . $url . '&limit=' . $value . '&proparent_id=' . $this->request->get['proparent_id'])
                 );
             }
 
@@ -599,7 +606,7 @@ class ControllerProductProparent extends Controller {
             $pagination->total = $product_total;
             $pagination->page = $page;
             $pagination->limit = $limit;
-            $pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
+            $pagination->url = $this->url->link('product/category', 'path=' . $part . $url . '&page={page}');
 
             $data['pagination'] = $pagination->render();
 
@@ -664,7 +671,7 @@ class ControllerProductProparent extends Controller {
                     'special' => $special,
                     'tax' => $tax,
                     'rating' => $product['rating'],
-                    'href' => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $product['product_id'] . $url)
+                    'href' => $this->url->link('product/product', 'path=' . $part . '&product_id=' . $product['product_id'] . $url)
                 );
             }
 

@@ -73,13 +73,13 @@
       <?php if ($proparents) { ?>
       <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
       <div class="row">
-        <div class="col-sm-3 hidden-xs">
+        <div class="col-sm-2 hidden-xs">
           <div class="btn-group">
             <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
             <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button>
           </div>
         </div>
-        <div class="col-sm-1 col-sm-offset-2 text-right">
+        <div class="col-sm-3 text-right">
           <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
         </div>
         <div class="col-sm-3 text-right">
@@ -93,7 +93,7 @@
             <?php } ?>
           </select>
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-2 text-right">
           <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
         </div>
         <div class="col-sm-2 text-right">

@@ -37,7 +37,7 @@ print_r  ($pagination);?>
                     <?php } ?>
                     <?php if ($products) { ?>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="btn-group hidden-xs">
                                 <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
                                 <!-- <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button> -->
