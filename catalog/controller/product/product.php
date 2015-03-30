@@ -225,6 +225,8 @@ class ControllerProductProduct extends Controller {
             $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
             $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
             $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+            $this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
+            $this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
 
             $data['heading_title'] = $product_info['name'];
 
@@ -271,7 +273,7 @@ class ControllerProductProduct extends Controller {
             $data['model'] = $product_info['model'];
             $data['reward'] = $product_info['reward'];
             $data['points'] = $product_info['points'];
-
+            
             if ($product_info['quantity'] <= 0) {
                 $data['stock'] = $product_info['stock_status'];
             } elseif ($this->config->get('config_stock_display')) {
@@ -588,7 +590,7 @@ class ControllerProductProduct extends Controller {
                 'rating' => (int) $result['rating'],
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
             );
-        } 
+        }
         $pagination = new Pagination();
         $pagination->total = $review_total;
         $pagination->page = $page;

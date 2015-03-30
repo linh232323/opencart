@@ -6,7 +6,11 @@ class ControllerProductProparent extends Controller {
 
     public function index() {
         $this->load->language('proparent/product');
-        
+
+        $this->load->language('product/category');
+
+        $this->load->language('proparent/category');
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -225,6 +229,8 @@ class ControllerProductProparent extends Controller {
             $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
             $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
             $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+            $this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
+            $this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
 
             $data['heading_title'] = $proparent_info['name'];
 
@@ -244,6 +250,8 @@ class ControllerProductProparent extends Controller {
             $data['text_tags'] = $this->language->get('text_tags');
             $data['text_related'] = $this->language->get('text_related');
             $data['text_loading'] = $this->language->get('text_loading');
+            $data['text_limit'] = $this->language->get('text_limit');
+            $data['text_sort'] = $this->language->get('text_sort');
 
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');
@@ -258,13 +266,15 @@ class ControllerProductProparent extends Controller {
             $data['button_compare'] = $this->language->get('button_compare');
             $data['button_upload'] = $this->language->get('button_upload');
             $data['button_continue'] = $this->language->get('button_continue');
+            $data['button_list'] = $this->language->get('button_list');
+            $data['button_grid'] = $this->language->get('button_grid');
 
             $this->load->model('catalog/review');
 
             $data['tab_description'] = $this->language->get('tab_description');
             $data['tab_attribute'] = $this->language->get('tab_attribute');
             $data['tab_pareview'] = sprintf($this->language->get('tab_pareview'), $proparent_info['pareviews']);
-            
+
             $data['proparent_id'] = (int) $this->request->get['proparent_id'];
             $data['manufacturer'] = $proparent_info['manufacturer'];
             $data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $proparent_info['manufacturer_id']);
@@ -289,9 +299,11 @@ class ControllerProductProparent extends Controller {
             }
 
             if ($proparent_info['image']) {
-                $data['thumb'] = $this->model_tool_image->resize($proparent_info['image'], 860, 540);
+                $data['thumb'] = $this->model_tool_image->resize($proparent_info['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
+                $data['thumbc'] = $this->model_tool_image->resize($proparent_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
             } else {
-                $data['thumb'] = $this->model_tool_image->resize('placeholder.png', 860, 540);
+                $data['thumb'] = "";
+                $data['thumbc'] = "";
             }
 
             $data['images'] = array();
@@ -300,15 +312,18 @@ class ControllerProductProparent extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
+                    $thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
+                    $thumb = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 }
                 $data['images'][] = array(
                     'popup' => $popup,
-                    'thumb' => $image
+                    'thumb' => $thumb,
+                    'image' => $image
                 );
             }
 
@@ -474,16 +489,135 @@ class ControllerProductProparent extends Controller {
             $data['footer'] = $this->load->controller('common/footer');
             $data['header'] = $this->load->controller('common/header');
 
-
             $filter_data = array(
                 'filter_proparent_id' => $this->request->get['proparent_id'],
                 'filter_sub_category' => true
             );
-
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-            $products = $this->model_catalog_product->getProducts($filter_data);
+            // Sort //
             
+            $url = '';
+
+            if (isset($this->request->get['filter'])) {
+                $url .= '&filter=' . $this->request->get['filter'];
+            }
+
+            if (isset($this->request->get['limit'])) {
+                $url .= '&limit=' . $this->request->get['limit'];
+            }
+            $data['sorts'] = array();
+
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_default'),
+                'value' => 'p.sort_order-ASC',
+                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.sort_order&order=ASC' . $url)
+            );
+
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_price_asc'),
+                'value' => 'p.price-ASC',
+                'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . '&sort=p.price&order=ASC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
+            );
+
+            $url = '';
+
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_price_desc'),
+                'value' => 'p.price-DESC',
+                'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . '&proparent_id=' . $this->request->get['proparent_id'] . $url)
+            );
+
+            // Limit //
+            $url = '';
+
+            if (isset($this->request->get['filter'])) {
+                $url .= '&filter=' . $this->request->get['filter'];
+            }
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            $data['limits'] = array();
+
+            $limits = array_unique(array($this->config->get('config_product_limit'), 25, 50, 75, 100));
+
+            sort($limits);
+
+            foreach ($limits as $value) {
+                $data['limits'][] = array(
+                    'text' => $value,
+                    'value' => $value,
+                    'href' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . $url . '&limit=' . $value . '&proparent_id=' . $this->request->get['proparent_id'])
+                );
+            }
+
+            // Pagination // 
+
+            $url = '';
+
+            if (isset($this->request->get['filter'])) {
+                $filter = $this->request->get['filter'];
+            } else {
+                $filter = '';
+            }
+
+            if (isset($this->request->get['sort'])) {
+                $sort = $this->request->get['sort'];
+            } else {
+                $sort = 'p.sort_order';
+            }
+
+            if (isset($this->request->get['order'])) {
+                $order = $this->request->get['order'];
+            } else {
+                $order = 'ASC';
+            }
+
+            if (isset($this->request->get['page'])) {
+                $page = $this->request->get['page'];
+            } else {
+                $page = 1;
+            }
+
+            if (isset($this->request->get['limit'])) {
+                $limit = $this->request->get['limit'];
+            } else {
+                $limit = $this->config->get('config_product_limit');
+            }
+
+            $pagination = new Pagination();
+            $pagination->total = $product_total;
+            $pagination->page = $page;
+            $pagination->limit = $limit;
+            $pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
+
+            $data['pagination'] = $pagination->render();
+
+            $data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+            $data['sort'] = $sort;
+            $data['order'] = $order;
+            $data['limit'] = $limit;
+
+
+            $filter_data = array(
+                'filter_proparent_id' => $this->request->get['proparent_id'],
+                'filter_sub_category' => true,
+                'filter_filter' => $filter,
+                'sort' => $sort,
+                'order' => $order,
+                'start' => ($page - 1) * $limit,
+                'limit' => $limit,
+            );
+
+            $products = $this->model_catalog_product->getProducts($filter_data);
+
             foreach ($products as $product) {
                 if ($product['image']) {
                     $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
@@ -590,6 +724,7 @@ class ControllerProductProparent extends Controller {
                 'text' => $this->language->get('text_error'),
                 'href' => $this->url->link('product/proparent', $url . '&proparent_id=' . $proparent_id)
             );
+
 
             $this->document->setTitle($this->language->get('text_error'));
 
@@ -726,7 +861,7 @@ class ControllerProductProparent extends Controller {
         $this->load->language('proparent/product');
 
         $json = array();
-        
+
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
                 $json['error'] = $this->language->get('error_name');

@@ -1,4 +1,6 @@
-<?php echo $header; ?>
+<?php echo $header; print "</pre>";
+print_r  ($pagination);?>
+
 <div class="container">
     <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -23,61 +25,105 @@
                 <?php $class = 'col-sm-8'; ?>
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
-                    <?php if ($thumb || $images) { ?>
-                    <ul class="thumbnails">
-                        <?php if ($thumb) { ?>
-                        <li><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
-                        <?php } ?>
-                        <?php if ($images) { ?>
-                        <?php foreach ($images as $image) { ?>
-                        <li class="image-additional"><a class="thumbnail" href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>"> <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
-                        <?php } ?>
-                        <?php } ?>
-                    </ul>
-                    <?php } ?>
-                    <?php if ($products) { ?>
-                    <div class="row"> 
-                        <table class="table table-bordered table-hover table-striped">
-                            <th class = " text-center">Room</th>
-                            <th class = " text-center">Max Adults</th>
-                            <th class = " text-center">Rate</th>
-                            <th></th>
-                            <?php foreach ($products as $product) { ?>
-                            <tr>
-                                <td class="col-xs-3">
-                                    <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
-                                    <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
-                                    <p><?php echo $product['description'];?></p>
-                                </td>
-                                <td class="col-xs-1 text-center">
-                                    <?php if ($product['maxadults'] == 1){ ?>
-                                    <i class="glyphicon glyphicon-user"></i> 
-                                    <?php } else { if ($product['maxadults'] == 2) { ?>
-                                    <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
-                                    <?php } else { ?>
-                                    <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
-                                    <?php } ?>
-                                    <?php } ?>
-                                </td>
-                                <td class = "text-center">
-                                    <strong class="text-primary"><?php echo $product['price'];?></strong>
-                                </td>
-                                <td class="col-xs-2">
-                                    <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Book </button></a>
-                                    <?php if ($product['quantity'] == 1){ ?>
-                                    <strong class="text-danger">Our last room !!!</strong>
-                                    <?php } else { if ($product['quantity'] <= 5) { ?>
-                                    <strong class="text-warning">Our last <?php echo $proparent[$i]['quantity'];?> room </strong>
-                                    <?php } else { ?>
-                                    <strong class="text-success">Available</strong>
-                                    <?php } ?>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </table>
+                    <?php if ($images || $thumb) { ?>
+                    <?php if ($images) { ?>
+                    <div id="sync1" class="owl-carousel">
+                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumb; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
+                    </div>
+                    <div id="sync2" class="owl-carousel">
+                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumbc; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
                     </div>
                     <?php } ?>
+                    <?php } ?>
+                    <?php if ($products) { ?>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="btn-group hidden-xs">
+                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
+                                <!-- <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button> -->
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <select id="input-sort" class="form-control" onchange="location = this.value;">
+                                <?php foreach ($sorts as $sorts) { ?>
+                                <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+                                <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <select id="input-limit" class="form-control" onchange="location = this.value;">
+                                <?php foreach ($limits as $limits) { ?>
+                                <?php if ($limits['value'] == $limit) { ?>
+                                <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="product-layout product-list col-xs-12">
+                            <table class="table table-bordered table-hover table-striped">
+                                <th class = "col-xs-3 text-center">Room</th>
+                                <th class = "col-xs-1 text-center">Max Adults</th>
+                                <th class = " text-center">Rate</th>
+                                <th class = "col-xs-2"></th>
+                            </table>
+                            <?php foreach ($products as $product) { ?>
+                            <div class="product-thumb">
+                                <table  class="table table-bordered table-hover table-striped">
+                                    <tr>
+                                        <td class="col-xs-3">
+                                            <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
+                                            <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
+                                            <p><?php echo $product['description'];?></p>
+                                        </td>
+                                        <td class="col-xs-1 text-center">
+                                            <?php if ($product['maxadults'] == 1){ ?>
+                                            <i class="glyphicon glyphicon-user"></i> 
+                                            <?php } else { if ($product['maxadults'] == 2) { ?>
+                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
+                                            <?php } else { ?>
+                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td class = "text-center">
+                                            <strong class="text-primary"><?php echo $product['price'];?></strong>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Book </button></a>
+                                            <?php if ($product['quantity'] == 1){ ?>
+                                            <strong class="text-danger">Our last room !!!</strong>
+                                            <?php } else { if ($product['quantity'] <= 5) { ?>
+                                            <strong class="text-warning">Our last <?php echo $proparent[$i]['quantity'];?> room </strong>
+                                            <?php } else { ?>
+                                            <strong class="text-success">Available</strong>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    </div>
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
                         <?php if ($attribute_groups) { ?>
@@ -623,6 +669,77 @@ $('#pareview').delegate('.pagination a', 'click', function(e) {
             enabled:true
             }
     });
+    });
+//--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function() {
+
+    var sync1 = $("#sync1");
+            var sync2 = $("#sync2");
+            sync1.owlCarousel({
+            singleItem : true,
+                    slideSpeed : 1000,
+                    navigation: true,
+                    pagination:false,
+                    afterAction : syncPosition,
+                    responsiveRefreshRate : 200,
+            });
+            sync2.owlCarousel({
+            items : 5,
+                    itemsDesktop      : [1199, 10],
+                    itemsDesktopSmall     : [979, 10],
+                    itemsTablet       : [768, 8],
+                    itemsMobile       : [479, 4],
+                    pagination:false,
+                    responsiveRefreshRate : 100,
+                    afterInit : function(el){
+                    el.find(".owl-item").eq(0).addClass("synced");
+                    }
+            });
+            function syncPosition(el){
+            var current = this.currentItem;
+                    $("#sync2")
+                    .find(".owl-item")
+                    .removeClass("synced")
+                    .eq(current)
+                    .addClass("synced")
+                    if ($("#sync2").data("owlCarousel") !== undefined){
+            center(current)
+            }
+            }
+
+    $("#sync2").on("click", ".owl-item", function(e){
+    e.preventDefault();
+            var number = $(this).data("owlItem");
+            sync1.trigger("owl.goTo", number);
+    });
+            function center(number){
+            var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+                    var num = number;
+                    var found = false;
+                    for (var i in sync2visible){
+            if (num === sync2visible[i]){
+            var found = true;
+            }
+            }
+
+            if (found === false){
+            if (num > sync2visible[sync2visible.length - 1]){
+            sync2.trigger("owl.goTo", num - sync2visible.length + 2)
+            } else{
+            if (num - 1 === - 1){
+            num = 0;
+            }
+            sync2.trigger("owl.goTo", num);
+            }
+            } else if (num === sync2visible[sync2visible.length - 1]){
+            sync2.trigger("owl.goTo", sync2visible[1])
+            } else if (num === sync2visible[0]){
+            sync2.trigger("owl.goTo", num - 1)
+            }
+
+            }
+
     });
 //--></script> 
 <?php echo $footer; ?>
