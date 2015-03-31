@@ -1,4 +1,4 @@
-<div id="search_home" class="panel jumbotron">
+<div id="search_home" class="search-panel jumbotron">
     <div class="form-group">
         <label class="control-label" for="search"><?php echo $text_labelname; ?></label>
         <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_labelname; ?>" class="form-control input" />

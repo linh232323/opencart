@@ -48,6 +48,9 @@ label {
 select.form-control, textarea.form-control, input[type="text"].form-control, input[type="password"].form-control, input[type="datetime"].form-control, input[type="datetime-local"].form-control, input[type="date"].form-control, input[type="month"].form-control, input[type="time"].form-control, input[type="week"].form-control, input[type="number"].form-control, input[type="email"].form-control, input[type="url"].form-control, input[type="search"].form-control, input[type="tel"].form-control, input[type="color"].form-control {
 	font-size: 12px;
 }
+.list-inline{
+    margin-bottom: 0px;
+}
 .input-group input, .input-group select, .input-group .dropdown-menu, .input-group .popover {
 	font-size: 12px;
 }
@@ -80,13 +83,11 @@ div.required .control-label:before {
 #top {
 	background-color: #fff;
 	border-bottom: 1px solid #e2e2e2;
-	padding: 4px 0px 3px 0;
 	min-height: 40px;
 	box-shadow:0 0 8px 2px rgba(0,0,0,.3)
 }
 #top .container {
 	padding: 0 20px;
-        padding-top: 10px;
 }
 #top #currency .currency-select {
 	text-align: left;
@@ -117,26 +118,54 @@ div.required .control-label:before {
         line-height: 14px;
 }
 #top-links {
-	padding-top: 6px;
+	padding-top: 0px;
 }
 #top-links a + a {
 	margin-left: 15px;
+}
+.nav .list-inline li{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.header-language{
+    border-left: 1px solid #d6d6d6;
+}
+.header-account{
+    border-right: 1px solid #d6d6d6;
+    border-left: 1px solid #d6d6d6;
+}
+.header-currency{
+    border-left: 1px solid #d6d6d6;
 }
 /* logo */
 #logo {
 	margin: 0 0 10px 0;
 }
-/* home */
-.panel-wrapper{
+/* panel */
+.search-panel-wrapper{
 	padding: 8px;
 	margin: 0 auto;
 	margin-top: 15px;
 	background: rgba(0,0,0,.2);
 	border-radius: 10px;
 }
-.panel{
+.search-panel{
 	border-radius: 10px;
 	background: #fff;
+}
+.panel-wrapper{
+	padding: 3px;
+	margin: 0 auto;
+	margin-top: 15px;
+	background: rgba(0,0,0,.2);
+	border-radius: 5px;
+}
+.panel{
+	border-radius: 5px;
+	background: #fff;
+}
+.box{
+    padding: 5px;
 }
 /* search */
 #search {

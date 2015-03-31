@@ -10,8 +10,8 @@
                 </div>
                 <div class="row">
                     <search>
-                        <div class="container">
-                            <div class="panel-wrapper col-md-7"><?php echo $search_home; ?></div>
+                        <div class="row">
+                            <div class="search-panel-wrapper col-md-12"><?php echo $search_home; ?></div>
                         </div>
                     </search>
                 </div>
