@@ -11,7 +11,7 @@
                 <div class="row">
                     <search>
                         <div class="container">
-                            <div class=" col-md-6"><?php echo $search_home; ?></div>
+                            <div class="panel-wrapper col-md-7"><?php echo $search_home; ?></div>
                         </div>
                     </search>
                 </div>

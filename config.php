@@ -1,9 +1,9 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://localhost/opencart/');
+define('HTTP_SERVER', 'http://localhost:88/opencart/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://localhost/opencart/');
+define('HTTPS_SERVER', 'http://localhost:88/opencart/');
 
 // DIR
 define('DIR_APPLICATION', 'C:\xampp\htdocs\opencart/catalog/');
