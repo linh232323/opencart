@@ -20,212 +20,7 @@
                 <?php } elseif ($column_left || $column_right) { ?>
                 <?php $class = 'col-sm-6'; ?>
                 <?php } else { ?>
-                <?php $class = 'col-sm-8'; ?>
-                <?php } ?>
-                <div class="<?php echo $class; ?>">
-                    <h1><?php echo $heading_title; ?>
-                            <span class="rating">
-                                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                            <?php if ($rating < $i) { ?>
-                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                            <?php } else { ?>
-                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                            <?php } ?>
-                            <?php } ?>
-                            </span></h1>
-                    <?php if ($images || $thumb) { ?>
-                    <?php if ($images) { ?>
-                    <div id="sync1" class="owl-carousel">
-                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumb; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
-                    </div>
-                    <div id="sync2" class="owl-carousel">
-                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumbc; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
-                    </div>
-                    <?php } ?>
-                    <?php } ?>
-                    <?php if ($products) { ?>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="btn-group hidden-xs">
-                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
-                                <!-- <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button> -->
-                            </div>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
-                        </div>
-                        <div class="col-md-3 text-right">
-                            <select id="input-sort" class="form-control" onchange="location = this.value;">
-                                <?php foreach ($sorts as $sorts) { ?>
-                                <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
-                                <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-md-1 text-right">
-                            <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <select id="input-limit" class="form-control" onchange="location = this.value;">
-                                <?php foreach ($limits as $limits) { ?>
-                                <?php if ($limits['value'] == $limit) { ?>
-                                <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row"> 
-                        <div class="product-layout product-list col-xs-12">
-                            <table class="table table-bordered table-striped">
-                                <th class = "col-xs-3 text-center"><?php echo $text_room;?></th>
-                                <th class = "col-xs-1 text-center"><?php echo $text_max_adults;?></th>
-                                <th class = " text-center"><?php echo $text_rate;?></th>
-                                <th class = "col-xs-2"></th>
-                            </table>
-                            <?php foreach ($products as $product) { ?>
-                            <div class="product-thumb">
-                                <table  class="table table-bordered table-hover">
-                                    <tr>
-                                        <td class="col-xs-3">
-                                            <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
-                                            <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
-                                            <p><?php echo $product['description'];?></p>
-                                        </td>
-                                        <td class="col-xs-1 text-center control-label">
-                                            <?php if ($product['maxadults'] == 1){ ?>
-                                            <i class="glyphicon glyphicon-user"></i> 
-                                            <?php } else { if ($product['maxadults'] == 2) { ?>
-                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
-                                            <?php } else { ?>
-                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-plus"></i> 
-                                            <?php } ?>
-                                            <?php } ?>
-                                        </td>
-                                        <td class = "text-center">
-                                            <strong class="text-primary"><?php echo $product['price'];?></strong>
-                                        </td>
-                                        <td class="col-xs-2">
-                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> <?php echo $text_book; ?></button></a>
-                                            <?php if ($product['quantity'] == 1){ ?>
-                                            <strong class="text-danger">Our last room !!!</strong>
-                                            <?php } else { if ($product['quantity'] <= 5) { ?>
-                                            <strong class="text-warning">Our last <?php echo $proparent[$i]['quantity'];?> room </strong>
-                                            <?php } else { ?>
-                                            <strong class="text-success">Available</strong>
-                                            <?php } ?>
-                                            <?php } ?>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <?php } ?>
-                    <div class="row">
-                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-                    </div>
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
-                        <?php if ($attribute_groups) { ?>
-                        <li><a href="#tab-specification" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
-                        <?php } ?>
-                        <?php if ($pareview_status) { ?>
-                        <li><a href="#tab-pareview" data-toggle="tab"><?php echo $tab_pareview; ?></a></li>
-                        <?php } ?>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
-                        <?php if ($attribute_groups) { ?>
-                        <div class="tab-pane" id="tab-specification">
-                            <table class="table table-bordered">
-                                <?php foreach ($attribute_groups as $attribute_group) { ?>
-                                <thead>
-                                    <tr>
-                                        <td colspan="2"><strong><?php echo $attribute_group['name']; ?></strong></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
-                                    <tr>
-                                        <td><strong><i class = "glyphicon glyphicon-ok-circle text-success" ></i></strong> <?php echo $attribute['name']; ?></td>
-                                        <td><?php echo $attribute['text']; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                                <?php } ?>
-                            </table>
-                        </div>
-                        <?php } ?>
-                        <?php if ($pareview_status) { ?>
-                        <div class="tab-pane" id="tab-pareview">
-                            <form class="form-horizontal">
-                                <div id="pareview"></div>
-                                <h2><?php echo $text_write; ?></h2>
-                                <?php if ($pareview_guest) { ?>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                        <input type="text" name="name" value="" id="input-name" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label class="control-label" for="input-pareview"><?php echo $entry_pareview; ?></label>
-                                        <textarea name="text" rows="5" id="input-pareview" class="form-control"></textarea>
-                                        <div class="help-block"><?php echo $text_note; ?></div>
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label class="control-label"><?php echo $entry_rating; ?></label>
-                                        &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
-                                        <input type="radio" name="rating" value="1" />
-                                        &nbsp;
-                                        <input type="radio" name="rating" value="2" />
-                                        &nbsp;
-                                        <input type="radio" name="rating" value="3" />
-                                        &nbsp;
-                                        <input type="radio" name="rating" value="4" />
-                                        &nbsp;
-                                        <input type="radio" name="rating" value="5" />
-                                        &nbsp;<?php echo $entry_good; ?></div>
-                                </div>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-                                        <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
-                                </div>
-                                <div class="buttons">
-                                    <div class="pull-right">
-                                        <button type="button" id="button-pareview" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
-                                    </div>
-                                </div>
-                                <?php } else { ?>
-                                <?php echo $text_login; ?>
-                                <?php } ?>
-                            </form>
-                        </div>
-                        <?php } ?>
-                    </div>
-                </div>
-                <?php if ($column_left && $column_right) { ?>
-                <?php $class = 'col-sm-6'; ?>
-                <?php } elseif ($column_left || $column_right) { ?>
-                <?php $class = 'col-sm-6'; ?>
-                <?php } else { ?>
-                <?php $class = 'col-sm-4'; ?>
+                <?php $class = 'col-sm-3'; ?>
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
                     <div class="btn-group">
@@ -439,6 +234,212 @@
                     </div>
                     <?php } ?>
                 </div>
+                <?php if ($column_left && $column_right) { ?>
+                <?php $class = 'col-sm-6'; ?>
+                <?php } elseif ($column_left || $column_right) { ?>
+                <?php $class = 'col-sm-6'; ?>
+                <?php } else { ?>
+                <?php $class = 'col-sm-9'; ?>
+                <?php } ?>
+                <div class="<?php echo $class; ?>">
+                    <h1><?php echo $heading_title; ?>
+                        <span class="rating">
+                            <?php for ($i = 1; $i <= 5; $i++) { ?>
+                            <?php if ($rating < $i) { ?>
+                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                            <?php } else { ?>
+                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                            <?php } ?>
+                            <?php } ?>
+                        </span></h1>
+                    <?php if ($images || $thumb) { ?>
+                    <?php if ($images) { ?>
+                    <div id="sync1" class="owl-carousel">
+                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumb; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
+                    </div>
+                    <div id="sync2" class="owl-carousel">
+                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumbc; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+                    <?php if ($products) { ?>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="btn-group hidden-xs">
+                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
+                                <!-- <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button> -->
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <select id="input-sort" class="form-control" onchange="location = this.value;">
+                                <?php foreach ($sorts as $sorts) { ?>
+                                <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+                                <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <select id="input-limit" class="form-control" onchange="location = this.value;">
+                                <?php foreach ($limits as $limits) { ?>
+                                <?php if ($limits['value'] == $limit) { ?>
+                                <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="product-layout product-list col-xs-12">
+                            <table class="table table-bordered table-striped">
+                                <th class = "col-xs-3 text-center"><?php echo $text_room;?></th>
+                                <th class = "col-xs-1 text-center"><?php echo $text_max_adults;?></th>
+                                <th class = " text-center"><?php echo $text_rate;?></th>
+                                <th class = "col-xs-2"></th>
+                            </table>
+                            <?php foreach ($products as $product) { ?>
+                            <div class="product-thumb">
+                                <table  class="table table-bordered table-hover">
+                                    <tr>
+                                        <td class="col-xs-3">
+                                            <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
+                                            <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
+                                            <p><?php echo $product['description'];?></p>
+                                        </td>
+                                        <td class="col-xs-1 text-center control-label">
+                                            <?php if ($product['maxadults'] == 1){ ?>
+                                            <i class="glyphicon glyphicon-user"></i> 
+                                            <?php } else { if ($product['maxadults'] == 2) { ?>
+                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
+                                            <?php } else { ?>
+                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-plus"></i> 
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td class = "text-center">
+                                            <strong class="text-primary"><?php echo $product['price'];?></strong>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-shopping-cart"></i> <?php echo $text_book; ?></button></a>
+                                            <?php if ($product['quantity'] == 1){ ?>
+                                            <strong class="text-danger">Our last room !!!</strong>
+                                            <?php } else { if ($product['quantity'] <= 5) { ?>
+                                            <strong class="text-warning">Our last <?php echo $proparent[$i]['quantity'];?> room </strong>
+                                            <?php } else { ?>
+                                            <strong class="text-success">Available</strong>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
+                        <?php if ($attribute_groups) { ?>
+                        <li><a href="#tab-specification" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
+                        <?php } ?>
+                        <?php if ($pareview_status) { ?>
+                        <li><a href="#tab-pareview" data-toggle="tab"><?php echo $tab_pareview; ?></a></li>
+                        <?php } ?>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
+                        <?php if ($attribute_groups) { ?>
+                        <div class="tab-pane" id="tab-specification">
+                            <table class="table table-bordered">
+                                <?php foreach ($attribute_groups as $attribute_group) { ?>
+                                <thead>
+                                    <tr>
+                                        <td colspan="2"><strong><?php echo $attribute_group['name']; ?></strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+                                    <tr>
+                                        <td><strong><i class = "glyphicon glyphicon-ok-circle text-success" ></i></strong> <?php echo $attribute['name']; ?></td>
+                                        <td><?php echo $attribute['text']; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                                <?php } ?>
+                            </table>
+                        </div>
+                        <?php } ?>
+                        <?php if ($pareview_status) { ?>
+                        <div class="tab-pane" id="tab-pareview">
+                            <form class="form-horizontal">
+                                <div id="pareview"></div>
+                                <h2><?php echo $text_write; ?></h2>
+                                <?php if ($pareview_guest) { ?>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+                                        <input type="text" name="name" value="" id="input-name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label" for="input-pareview"><?php echo $entry_pareview; ?></label>
+                                        <textarea name="text" rows="5" id="input-pareview" class="form-control"></textarea>
+                                        <div class="help-block"><?php echo $text_note; ?></div>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label"><?php echo $entry_rating; ?></label>
+                                        &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
+                                        <input type="radio" name="rating" value="1" />
+                                        &nbsp;
+                                        <input type="radio" name="rating" value="2" />
+                                        &nbsp;
+                                        <input type="radio" name="rating" value="3" />
+                                        &nbsp;
+                                        <input type="radio" name="rating" value="4" />
+                                        &nbsp;
+                                        <input type="radio" name="rating" value="5" />
+                                        &nbsp;<?php echo $entry_good; ?></div>
+                                </div>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
+                                        <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
+                                </div>
+                                <div class="buttons">
+                                    <div class="pull-right">
+                                        <button type="button" id="button-pareview" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
+                                    </div>
+                                </div>
+                                <?php } else { ?>
+                                <?php echo $text_login; ?>
+                                <?php } ?>
+                            </form>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                
             </div>
             <?php if ($proparents) { ?>
             <h3><?php echo $text_related; ?></h3>

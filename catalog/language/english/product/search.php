@@ -1,6 +1,7 @@
 <?php
 // Heading
 $_['heading_title']     = 'Search';
+$_['heading_title']     = 'Your Search Details';
 $_['heading_tag']		= 'Tag - ';
 
 // Text
@@ -28,6 +29,8 @@ $_['text_rating_desc']  = 'Rating (Highest)';
 $_['text_model_asc']    = 'Model (A - Z)';
 $_['text_model_desc']   = 'Model (Z - A)';
 $_['text_limit']        = 'Show:';
+$_['text_found']        = 'We found ';
+$_['text_hotelin']      = ' hotels with availability in ';
 
 // Entry
 $_['entry_search']      = 'Search Criteria';

@@ -105,7 +105,7 @@
             <br />
             <div class="row">
                 <?php foreach ($proparents as $proparent) { ?>
-                <div class="product-layout product-list col-xs-12">
+                <div id="product" class="product-layout product-list col-xs-12">
                     <div class="product-thumb">
                         <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
                         <div>
@@ -137,6 +137,9 @@
                                 </p>
                                 <?php } ?>
                                 -->
+                                 <div class="col-xs-4 pull-right">
+                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                            </div>
                             </div>
                             <div class = "col-xs-12" >
                                 <?php if ($proparent[0]) { ?>
@@ -161,9 +164,7 @@
                                 </div>
                                 <?php } ?>
                             </div>
-                            <div class="col-xs-4 pull-right">
-                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,9 @@ class ControllerProductSearch extends Controller {
         $this->load->model('catalog/proparent');
 
         $this->load->model('tool/image');
-
+        
+        $data['title_search'] =$this->request->get['search'];
+        
         if (isset($this->request->get['search'])) {
             $search = $this->request->get['search'];
         } else {
@@ -133,6 +135,7 @@ class ControllerProductSearch extends Controller {
             $data['heading_title'] = $this->language->get('heading_title');
         }
 
+        $data['title'] = $this->language->get('title');
         $data['text_empty'] = $this->language->get('text_empty');
         $data['text_search'] = $this->language->get('text_search');
         $data['text_keyword'] = $this->language->get('text_keyword');
@@ -147,6 +150,8 @@ class ControllerProductSearch extends Controller {
         $data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
         $data['text_sort'] = $this->language->get('text_sort');
         $data['text_limit'] = $this->language->get('text_limit');
+        $data['text_found'] = $this->language->get('text_found');
+        $data['text_hotelin'] = $this->language->get('text_hotelin');
 
         $data['entry_search'] = $this->language->get('entry_search');
         $data['entry_description'] = $this->language->get('entry_description');
@@ -467,7 +472,7 @@ class ControllerProductSearch extends Controller {
             $pagination->url = $this->url->link('product/search', $url . '&page={page}');
 
             $data['pagination'] = $pagination->render();
-
+            $data['total'] = $proparent_total;
             $data['results'] = sprintf($this->language->get('text_pagination'), ($proparent_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($proparent_total - $limit)) ? $proparent_total : ((($page - 1) * $limit) + $limit), $proparent_total, ceil($proparent_total / $limit));
         }
 

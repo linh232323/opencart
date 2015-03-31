@@ -16,66 +16,66 @@
         <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
             <div class="col-sm-3">
                 <div class="panel-wrapper">
-                <div class="panel">
-                    <div class="box">
-                <h1><?php echo $heading_title; ?></h1>
-                <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
-                <div class="form-group">
-                    <div class="row col-sm-12">
-                        <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
+                    <div class="box box-title">
+                        <h4 class="title"><strong> <?php echo $title; ?></strong></h4>
                     </div>
-                    <div class="row col-sm-12">
-                        <select name="category_id" class="form-control">
-                            <option value="0"><?php echo $text_category; ?></option>
-                            <?php foreach ($categories as $category_1) { ?>
-                            <?php if ($category_1['category_id'] == $category_id) { ?>
-                            <option value="<?php echo $category_1['category_id']; ?>" selected="selected"><?php echo $category_1['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $category_1['category_id']; ?>"><?php echo $category_1['name']; ?></option>
-                            <?php } ?>
-                            <?php foreach ($category_1['children'] as $category_2) { ?>
-                            <?php if ($category_2['category_id'] == $category_id) { ?>
-                            <option value="<?php echo $category_2['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $category_2['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-                            <?php } ?>
-                            <?php foreach ($category_2['children'] as $category_3) { ?>
-                            <?php if ($category_3['category_id'] == $category_id) { ?>
-                            <option value="<?php echo $category_3['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $category_3['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-                            <?php } ?>
-                            <?php } ?>
-                            <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="row col-sm-12">
-                        <label class="checkbox-inline">
-                            <?php if ($sub_category) { ?>
-                            <input type="checkbox" name="sub_category" value="1" checked="checked" />
-                            <?php } else { ?>
-                            <input type="checkbox" name="sub_category" value="1" />
-                            <?php } ?>
-                            <?php echo $text_sub_category; ?></label>
+                    <div class="box box-content form-group">
+                        <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
+                      
+                            <div class="form-group col-sm-12">
+                                <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
+                            </div>
+                            <br/>
+                            <div class="form-group col-sm-12">
+                                <select name="category_id" class="form-control">
+                                    <option value="0"><?php echo $text_category; ?></option>
+                                    <?php foreach ($categories as $category_1) { ?>
+                                    <?php if ($category_1['category_id'] == $category_id) { ?>
+                                    <option value="<?php echo $category_1['category_id']; ?>" selected="selected"><?php echo $category_1['name']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $category_1['category_id']; ?>"><?php echo $category_1['name']; ?></option>
+                                    <?php } ?>
+                                    <?php foreach ($category_1['children'] as $category_2) { ?>
+                                    <?php if ($category_2['category_id'] == $category_id) { ?>
+                                    <option value="<?php echo $category_2['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $category_2['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
+                                    <?php } ?>
+                                    <?php foreach ($category_2['children'] as $category_3) { ?>
+                                    <?php if ($category_3['category_id'] == $category_id) { ?>
+                                    <option value="<?php echo $category_3['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $category_3['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="checkbox-inline">
+                                    <?php if ($sub_category) { ?>
+                                    <input type="checkbox" name="sub_category" value="1" checked="checked" />
+                                    <?php } else { ?>
+                                    <input type="checkbox" name="sub_category" value="1" />
+                                    <?php } ?>
+                                    <?php echo $text_sub_category; ?></label>
+                            </div>
+                        <div class="col-sm-12">
+                            <label class="checkbox-inline">
+                                <?php if ($description) { ?>
+                                <input type="checkbox" name="description" value="1" id="description" checked="checked" />
+                                <?php } else { ?>
+                                <input type="checkbox" name="description" value="1" id="description" />
+                                <?php } ?>
+                                <?php echo $entry_description; ?></label>
+                        </div>
+                        <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
                     </div>
                 </div>
-                <p>
-                    <label class="checkbox-inline">
-                        <?php if ($description) { ?>
-                        <input type="checkbox" name="description" value="1" id="description" checked="checked" />
-                        <?php } else { ?>
-                        <input type="checkbox" name="description" value="1" id="description" />
-                        <?php } ?>
-                        <?php echo $entry_description; ?></label>
-                </p>
-                <input type="button" value="<?php echo $button_search; ?>" id="button-search" class="btn btn-primary" />
-            </div>
-            </div>
-            </div>
             </div>
             <div class="row col-sm-9">
-                <h2><?php echo $text_search; ?></h2>
+                <h3><?php echo $text_found; ?><strong class = "text-primary"><?php echo $total; ?></strong><?php echo $text_hotelin; ?><strong class = "text-primary"><?php echo $title_search; ?></strong>. <?php echo $results; ?></h3>
                 <?php if ($proparents) { ?>
                 <div class="row">
                     <div class="col-sm-2 hidden-xs">
@@ -116,7 +116,7 @@
                 <br />
                 <div class="row">
                     <?php foreach ($proparents as $proparent) { ?>
-                    <div class="product-layout product-list col-xs-12">
+                    <div id = "product" class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
                             <div>
@@ -148,6 +148,9 @@
                                     </p>
                                     <?php } ?>
                                     -->
+                                    <div class="col-xs-4 pull-right">
+                                    <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                                </div>
                                 </div>
                                 <div class = "col-xs-12" >
                                     <?php if ($proparent[0]) { ?>
@@ -172,9 +175,7 @@
                                     </div>
                                     <?php } ?>
                                 </div>
-                                <div class="col-xs-4 pull-right">
-                                    <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

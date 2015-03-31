@@ -1,6 +1,7 @@
 <?php
 // Heading
 $_['heading_title']     = 'Tìm Kiếm';
+$_['title']             = 'Chi Tiết Tìm Kiếm';
  
 // Text
 $_['text_search']       = 'Sản phẩm thỏa điều kiện tìm kiếm';
@@ -31,6 +32,8 @@ $_['text_rating_desc']  = 'Bình chọn (Cao nhất)';
 $_['text_model_asc']    = 'Kiểu (A - Z)';
 $_['text_model_desc']   = 'Kiểu (Z - A)';
 $_['text_limit']        = 'Hiển thị:';
+$_['text_found']        = 'Tìm thấy ';
+$_['text_hotelin']      = ' khách sạn ở ';
 
 // Entry
 $_['entry_search']      = 'Tìm kiếm:';
