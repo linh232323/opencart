@@ -112,6 +112,7 @@ class ControllerProductCategory extends Controller {
             $data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
             $data['text_sort'] = $this->language->get('text_sort');
             $data['text_limit'] = $this->language->get('text_limit');
+            $data['text_readmore'] = $this->language->get('text_readmore');
 
             $data['button_cart'] = $this->language->get('button_cart');
             $data['button_wishlist'] = $this->language->get('button_wishlist');
@@ -330,19 +331,7 @@ class ControllerProductCategory extends Controller {
                 'value' => 'pd.name-DESC',
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC' . $url)
             );
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_price_asc'),
-                'value' => 'p.price-ASC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=ASC' . $url)
-            );
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_price_desc'),
-                'value' => 'p.price-DESC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
-            );
-
+            
             if ($this->config->get('config_review_status')) {
                 $data['sorts'][] = array(
                     'text' => $this->language->get('text_rating_desc'),
@@ -356,19 +345,6 @@ class ControllerProductCategory extends Controller {
                     'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
                 );
             }
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_model_asc'),
-                'value' => 'p.model-ASC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.model&order=ASC' . $url)
-            );
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_model_desc'),
-                'value' => 'p.model-DESC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.model&order=DESC' . $url)
-            );
-
             $url = '';
 
             if (isset($this->request->get['filter'])) {

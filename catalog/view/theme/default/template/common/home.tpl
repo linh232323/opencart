@@ -5,8 +5,8 @@
         <div class="container">
             <div class="center-block center">
                 <div class="text-center text-color-white">
-                    <h1 class="text-color-white">I go to [ Genui ]</h1>
-                    <h3 class="text-color-white">625,000+ hotels, villas, apartments and more...</h2>
+                    <h1 class="text-color-white"><?php echo $text_title;?></h1>
+                    <h3 class="text-color-white"><?php echo $text_description;?></h3>
                 </div>
                 <div class="row">
                     <search>

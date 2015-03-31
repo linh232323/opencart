@@ -139,15 +139,9 @@ $(document).ready(function() {
 		// What a shame bootstrap does not take into account dynamically loaded columns
 		cols = $('#column-right, #column-left').length;
 
-		if (cols == 2) {
+		
 			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
-		} else if (cols == 1) {
-			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12');
-		} else {
-			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12');
-		}
-
-		 localStorage.setItem('display', 'grid');
+		
 	});
 
 	if (localStorage.getItem('display') == 'list') {

@@ -3,10 +3,10 @@
 <?php foreach ($pareviews as $pareview) { ?>
 <table class="table table-striped table-bordered">
   <tr>
-    <td style="width: 50%;"><strong><?php echo $pareview['author']; ?></strong></td>
+      <td style="width: 50%;" class="text-primary"><strong><?php echo $pareview['author']; ?></strong></td>
     <td class="text-right"><?php echo $pareview['date_added']; ?></td>
   </tr>
-  <tr>
+  <tr class="rating">
     <td colspan="2"><p><?php echo $pareview['text']; ?></p>
       <?php for ($i = 1; $i <= 5; $i++) { ?>
       <?php if ($pareview['rating'] < $i) { ?>

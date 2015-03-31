@@ -26,4 +26,5 @@ $_['text_rating_desc']  = 'Đánh giá (Cao nhất)';
 $_['text_model_asc']    = 'Kiểu (A - Z)';
 $_['text_model_desc']   = 'Kiểu (Z - A)';
 $_['text_limit']        = 'Hiển thị:';
+$_['text_readmore']     = 'Xem thêm ...';
 ?>

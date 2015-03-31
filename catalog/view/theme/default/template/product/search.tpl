@@ -71,7 +71,6 @@
       <div class="row col-sm-9">
       <h2><?php echo $text_search; ?></h2>
       <?php if ($proparents) { ?>
-      <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
       <div class="row">
         <div class="col-sm-2 hidden-xs">
           <div class="btn-group">
@@ -110,46 +109,71 @@
       </div>
       <br />
       <div class="row">
-        <?php foreach ($proparents as $proparent) { ?>
-        <div class="product-layout proparent-list col-xs-12">
-          <div class="product-thumb">
-            <div class="image"><a href="<?php echo $proparent['href']; ?>"><img src="<?php echo $proparent['thumb']; ?>" alt="<?php echo $proparent['name']; ?>" title="<?php echo $proparent['name']; ?>" class="img-responsive" /></a></div>
-            <div class="caption">
-              <h4><a href="<?php echo $proparent['href']; ?>"><?php echo $proparent['name']; ?></a></h4>
-              <p><?php echo $proparent['description']; ?></p>
-              <?php if ($proparent['price']) { ?>
-              <p class="price">
-                <?php if (!$proparent['special']) { ?>
-                <?php echo $proparent['price']; ?>
-                <?php } else { ?>
-                <span class="price-new"><?php echo $proparent['special']; ?></span> <span class="price-old"><?php echo $proparent['price']; ?></span>
+                <?php foreach ($proparents as $proparent) { ?>
+                <div class="product-layout product-list col-xs-12">
+                    <div class="product-thumb">
+                        <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
+                        <div>
+                            <div class="caption">
+                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
+                                    <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                    <?php if ($proparent['ratingp'] < $i) { ?>
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    <?php } else { ?>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </span></h4>
+                                <p><?php echo $proparent['descriptionp']; ?></p>
+                                <?php if ($proparent['ratingp']) { ?>
+                                
+                                <?php } ?>
+                                <!--
+                                <?php if ($proparent['pricep']) { ?>
+                                <p class="price">
+                                    <?php if (!$proparent['specialp']) { ?>
+                                    <?php echo $proparent['pricep']; ?>
+                                    <?php } else { ?>
+                                    <span class="price-new"><?php echo $proparent['specialp']; ?></span> <span class="price-old"><?php echo $proparent['pricep']; ?></span>
+                                    <?php } ?>
+                                    <?php if ($proparent['taxp']) { ?>
+                                    <span class="price-tax"><?php echo $text_tax; ?> <?php echo $proparent['taxp']; ?></span>
+                                    <?php } ?>
+                                </p>
+                                <?php } ?>
+                                -->
+                            </div>
+                            <div class = "col-xs-12" >
+                                <?php if ($proparent[0]) { ?>
+                                <div class="table table-responsive table-hover table-striped">
+                                    <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
+                                    <div class="list-group">
+                                            <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
+                                                <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
+                                                <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
+                                                <?php if ($proparent[$i]['quantity'] == 1){ ?>
+                                                <span class="col-xs-3 text-danger"><strong>Our last room !!!</strong></span>
+                                                <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
+                                                <span class="col-xs-3 text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></span>
+                                                <?php } else { ?>
+                                                <span class="col-xs-3 text-success"><strong>Available</strong></span>
+                                                <?php } ?>
+                                                <?php } ?>
+                                                <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                            </a> 
+                                    </div>
+                                    <?php ; } ?>
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php } ?>
-                <?php if ($proparent['tax']) { ?>
-                <span class="price-tax"><?php echo $text_tax; ?> <?php echo $proparent['tax']; ?></span>
-                <?php } ?>
-              </p>
-              <?php } ?>
-              <?php if ($proparent['rating']) { ?>
-              <div class="rating">
-                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                <?php if ($proparent['rating'] < $i) { ?>
-                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                <?php } else { ?>
-                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                <?php } ?>
-                <?php } ?>
-              </div>
-              <?php } ?>
             </div>
-            <div class="button-group">
-              <button type="button" onclick="cart.add('<?php echo $proparent['proparent_id']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $proparent['proparent_id']; ?>');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $proparent['proparent_id']; ?>');"><i class="fa fa-exchange"></i></button>
-            </div>
-          </div>
-        </div>
-        <?php } ?>
-      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

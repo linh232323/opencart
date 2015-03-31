@@ -46,6 +46,7 @@
                                 <p><?php echo $category['description']; ?></p>
                             </div>
                         </div>
+                        <span class="col-xs-2 pull-right"><h4><a href="<?php echo $category['href']; ?>"><?php echo $text_readmore; ?></a></h4></span>
                     </div>
                 </div>
                 <?php } ?>
@@ -65,9 +66,8 @@
             <?php } ?>
             <?php } ?>
             <?php if ($proparents && !$categories) { ?>
-            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="btn-group hidden-xs">
                         <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
                         <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button>
@@ -87,7 +87,7 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="col-md-1 text-right">
+                <div class="col-md-2 text-right">
                     <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
                 </div>
                 <div class="col-md-2 text-right">
@@ -110,10 +110,7 @@
                         <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
                         <div>
                             <div class="caption">
-                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a></h4>
-                                <p><?php echo $proparent['descriptionp']; ?></p>
-                                <?php if ($proparent['ratingp']) { ?>
-                                <div class="rating">
+                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
                                     <?php for ($i = 1; $i <= 5; $i++) { ?>
                                     <?php if ($proparent['ratingp'] < $i) { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -121,7 +118,10 @@
                                     <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                     <?php } ?>
                                     <?php } ?>
-                                </div>
+                                </span></h4>
+                                <p><?php echo $proparent['descriptionp']; ?></p>
+                                <?php if ($proparent['ratingp']) { ?>
+                                
                                 <?php } ?>
                                 <!--
                                 <?php if ($proparent['pricep']) { ?>
@@ -144,24 +144,24 @@
                                     <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
                                     <div class="list-group">
                                             <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
-                                                <span class="col-xs-3"><?php echo $proparent[$i]['name'];?></span>
-                                                <span class="col-xs-5"><?php echo $proparent[$i]['description'];?></span>
+                                                <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
+                                                <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
                                                 <?php if ($proparent[$i]['quantity'] == 1){ ?>
-                                                <span class="col-xs-2 text-danger"><strong>Our last room !!!</strong></span>
+                                                <span class="col-xs-3 text-danger"><strong>Our last room !!!</strong></span>
                                                 <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
-                                                <span class="col-xs-2 text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></span>
+                                                <span class="col-xs-3 text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></span>
                                                 <?php } else { ?>
-                                                <span class="col-xs-2 text-success"><strong>Available</strong></span>
+                                                <span class="col-xs-3 text-success"><strong>Available</strong></span>
                                                 <?php } ?>
                                                 <?php } ?>
-                                                <span class="col-xs-2"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                                <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
                                             </a> 
                                     </div>
                                     <?php ; } ?>
                                 </div>
                                 <?php } ?>
                             </div>
-                            <div class="col-xs-6 pull-right">
+                            <div class="col-xs-4 pull-right">
                                 <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-lg btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
                             </div>
                         </div>

@@ -1,6 +1,4 @@
-<?php echo $header; print "</pre>";
-print_r  ($pagination);?>
-
+<?php echo $header;?>
 <div class="container">
     <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -25,6 +23,16 @@ print_r  ($pagination);?>
                 <?php $class = 'col-sm-8'; ?>
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
+                    <h1><?php echo $heading_title; ?>
+                            <span class="rating">
+                                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                            <?php if ($rating < $i) { ?>
+                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                            <?php } else { ?>
+                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                            <?php } ?>
+                            <?php } ?>
+                            </span></h1>
                     <?php if ($images || $thumb) { ?>
                     <?php if ($images) { ?>
                     <div id="sync1" class="owl-carousel">
@@ -74,7 +82,7 @@ print_r  ($pagination);?>
                     </div>
                     <div class="row"> 
                         <div class="product-layout product-list col-xs-12">
-                            <table class="table table-bordered table-hover table-striped">
+                            <table class="table table-bordered table-striped">
                                 <th class = "col-xs-3 text-center"><?php echo $text_room;?></th>
                                 <th class = "col-xs-1 text-center"><?php echo $text_max_adults;?></th>
                                 <th class = " text-center"><?php echo $text_rate;?></th>
@@ -82,20 +90,20 @@ print_r  ($pagination);?>
                             </table>
                             <?php foreach ($products as $product) { ?>
                             <div class="product-thumb">
-                                <table  class="table table-bordered table-hover table-striped">
+                                <table  class="table table-bordered table-hover">
                                     <tr>
                                         <td class="col-xs-3">
                                             <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
                                             <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
                                             <p><?php echo $product['description'];?></p>
                                         </td>
-                                        <td class="col-xs-1 text-center">
+                                        <td class="col-xs-1 text-center control-label">
                                             <?php if ($product['maxadults'] == 1){ ?>
                                             <i class="glyphicon glyphicon-user"></i> 
                                             <?php } else { if ($product['maxadults'] == 2) { ?>
                                             <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
                                             <?php } else { ?>
-                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> 
+                                            <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-plus"></i> 
                                             <?php } ?>
                                             <?php } ?>
                                         </td>
@@ -147,7 +155,7 @@ print_r  ($pagination);?>
                                 <tbody>
                                     <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
                                     <tr>
-                                        <td><?php echo $attribute['name']; ?></td>
+                                        <td><strong><i class = "glyphicon glyphicon-ok-circle text-success" ></i></strong> <?php echo $attribute['name']; ?></td>
                                         <td><?php echo $attribute['text']; ?></td>
                                     </tr>
                                     <?php } ?>
@@ -685,7 +693,7 @@ $(document).ready(function() {
                     responsiveRefreshRate : 200,
             });
             sync2.owlCarousel({
-            items : 5,
+            items : 7,
                     itemsDesktop      : [1199, 10],
                     itemsDesktopSmall     : [979, 10],
                     itemsTablet       : [768, 8],

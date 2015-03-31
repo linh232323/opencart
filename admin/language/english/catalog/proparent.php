@@ -17,7 +17,7 @@ $_['text_amount']            = 'Fixed Amount';
 
 // Column
 $_['column_name']            = 'Proparent Name';
-$_['column_model']           = 'Model';
+$_['column_model']           = 'Category';
 $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
@@ -31,7 +31,7 @@ $_['entry_meta_title'] 	     = 'Meta Tag Title';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_keyword']          = 'SEO Keyword';
-$_['entry_model']            = 'Model';
+$_['entry_model']            = 'Category';
 $_['entry_sku']              = 'SKU';
 $_['entry_upc']              = 'UPC';
 $_['entry_ean']              = 'EAN';

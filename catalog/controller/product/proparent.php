@@ -323,11 +323,11 @@ class ControllerProductProparent extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
+                    $image = $this->model_tool_image->resize($result['image'], 740,400);
                     $thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
+                    $image = $this->model_tool_image->resize('placeholder.png',  740,400);
                     $thumb = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 }
@@ -431,7 +431,7 @@ class ControllerProductProparent extends Controller {
 
             $results = $this->model_catalog_proparent->getProparentRelated($this->request->get['proparent_id']);
 
-            foreach ($results as $result) {
+             foreach ($results as $result) {
                 if ($result['image']) {
                     $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
                 } else {

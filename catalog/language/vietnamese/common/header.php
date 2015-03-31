@@ -12,4 +12,5 @@ $_['text_account']  = 'Tài khoản';
 $_['text_checkout'] = 'Thanh toán';
 $_['text_language'] = 'Ngôn ngữ';
 $_['text_currency'] = 'Tiền tệ';
+$_['text_all']      = 'Xem tất cả';
 ?>

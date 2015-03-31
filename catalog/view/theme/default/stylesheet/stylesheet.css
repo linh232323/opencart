@@ -528,7 +528,7 @@ footer h5 {
 	font-family: FontAwesome;
 }
 #sync1 .item{
-    background: #0c83e7;
+    background: transparent;
     padding: 80px 0px;
     margin: 5px;
     color: #FFF;
@@ -538,7 +538,7 @@ footer h5 {
     text-align: center;
 }
 #sync2 .item{
-    background: #C9C9C9;
+    background: transparent;
     padding: 10px 0px;
     margin: 5px;
     color: #FFF;
