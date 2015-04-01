@@ -56,7 +56,7 @@
                         <li class="header-currency"><?php echo $currency; ?></li>
                         <li class="header-account dropdown">
                             <div class="pull-left">
-                                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="currency">
+                                <form action="" method="post" enctype="multipart/form-data" id="currency">
                                     <div class="btn-group">
                                         <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                                             <i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span>

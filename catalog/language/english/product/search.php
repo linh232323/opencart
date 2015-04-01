@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']     = 'Search';
-$_['heading_title']     = 'Your Search Details';
+$_['title']             = 'Your Search Details';
 $_['heading_tag']		= 'Tag - ';
 
 // Text
@@ -33,5 +33,5 @@ $_['text_found']        = 'We found ';
 $_['text_hotelin']      = ' hotels with availability in ';
 
 // Entry
-$_['entry_search']      = 'Search Criteria';
+$_['entry_search']      = 'Where would you like to go?';
 $_['entry_description'] = 'Search in product descriptions';

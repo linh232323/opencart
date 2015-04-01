@@ -149,7 +149,7 @@
                                     <?php } ?>
                                     -->
                                     <div class="col-xs-4 pull-right">
-                                    <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                                        <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i><strong> Book </strong></button></a>
                                 </div>
                                 </div>
                                 <div class = "col-xs-12" >

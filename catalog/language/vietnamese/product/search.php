@@ -36,6 +36,6 @@ $_['text_found']        = 'Tìm thấy ';
 $_['text_hotelin']      = ' khách sạn ở ';
 
 // Entry
-$_['entry_search']      = 'Tìm kiếm:';
+$_['entry_search']      = 'Bạn đang tìm khách sạn ở đâu?';
 $_['entry_description'] = 'Tìm trong phần miêu tả sản phẩm';
 ?>
