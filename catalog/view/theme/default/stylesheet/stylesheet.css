@@ -1,4 +1,4 @@
-body {
+    body {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
 	color: #666;
@@ -23,7 +23,7 @@ h3 {
 	font-size: 21px;
 }
 h4 {
-	font-size: 15px;
+	font-size: 16px;
 }
 h5 {
 	font-size: 12px;
@@ -88,6 +88,7 @@ div.required .control-label:before {
 }
 #top .container {
 	padding: 0 20px;
+        padding-top:10px;
 }
 #top #currency .currency-select {
         font-size: 12px;
@@ -127,8 +128,7 @@ div.required .control-label:before {
 	margin-left: 15px;
 }
 .nav .list-inline li{
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding: 10px;
 }
 .header-language{
     border-left: 1px solid #d6d6d6;
@@ -177,7 +177,7 @@ div.required .control-label:before {
     background: #fffedf;
 }
 .box-title{
-    padding-left: 20px;
+    padding: 11px 13px 11px;
     background: #f4f4f4;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -190,6 +190,15 @@ div.required .control-label:before {
 }
 #content .box.form-group{
     margin-bottom: 0px;
+}
+.title{
+    margin: 0px;
+}
+#form-search div{
+    padding-bottom: 5px;
+}
+#form-search .form-group{
+    padding-left: 0px;
 }
 /* search */
 #search {
@@ -335,6 +344,12 @@ div.required .control-label:before {
 #menu .btn-navbar:hover, #menu .btn-navbar:focus, #menu .btn-navbar:active, #menu .btn-navbar.disabled, #menu .btn-navbar[disabled] {
 	color: #ffffff;
 	background-color: #229ac8;
+}
+/* search page */
+#search-result h3{
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 300;
 }
 @media (min-width: 768px) {
 	#menu .dropdown:hover .dropdown-menu {
@@ -569,16 +584,20 @@ footer h5 {
 }
 /* list group */
 .list-group a {
-	border-top: 1px solid #DDDDDD;
+	border-top: 1px dotted #dedede;
         border-left: none;
         border-right: none;
 	color: #888888;
 	padding: 8px 12px;
 }
+.list-group:first-child a {
+	border-top: 1px solid #DDDDDD;
+	color: #888888;
+	padding: 8px 12px;
+}
 .list-group a.active, .list-group a.active:hover, .list-group a:hover {
 	color: #444444;
-	background: #eeeeee;
-	border: 1px solid #DDDDDD;
+	background: #fff;
 	text-shadow: 0 1px 0 #FFF;
 }
 /* carousel */
@@ -646,6 +665,7 @@ footer h5 {
 .product-thumb .image img {
 	margin-left: auto;
 	margin-right: auto;
+        padding: 10px;
 }
 .product-grid .product-thumb .image {
 	float: none;

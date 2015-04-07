@@ -19,7 +19,7 @@
                     <div class="box box-title">
                         <h4 class="title"><strong> <?php echo $title; ?></strong></h4>
                     </div>
-                    <div class="box box-content form-group">
+                    <div id="form-search"  class="box box-content form-group">
                         <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
                       
                             <div class="form-group col-sm-12">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row col-sm-9">
+            <div id="search-result" class="row col-sm-9">
                 <h3><?php echo $text_found; ?><strong class = "text-primary"><?php echo $total; ?></strong><?php echo $text_hotelin; ?><strong class = "text-primary"><?php echo $title_search; ?></strong>. <?php echo $results; ?></h3>
                 <?php if ($proparents) { ?>
                 <div class="row">
