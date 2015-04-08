@@ -372,6 +372,10 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 		
+		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
+			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
+		}
+		
 		$sql .= " GROUP BY p.product_id";
 
 		$sort_data = array(
@@ -381,7 +385,8 @@ class ModelCatalogProduct extends Model {
 			'p.quantity',
 			'p.maxadults',
 			'p.status',
-			'p.sort_order'
+			'p.sort_order',
+                        'p.author_id'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

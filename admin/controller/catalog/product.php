@@ -241,6 +241,13 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	protected function getList() {
+            
+            	$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_id'];
+                
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -358,6 +365,7 @@ class ControllerCatalogProduct extends Controller {
 			'filter_quantity' => $filter_quantity,
 			'filter_maxadults'=> $filter_maxadults,
 			'filter_status'   => $filter_status,
+                        'filter_user_id'  => $user_id,
 			'sort'            => $sort,
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),

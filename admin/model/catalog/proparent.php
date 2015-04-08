@@ -367,6 +367,11 @@ class ModelCatalogProParent extends Model {
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
+                
+                
+		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
+			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
+		}
 		
 		$sql .= " GROUP BY p.proparent_id";
 
@@ -376,7 +381,8 @@ class ModelCatalogProParent extends Model {
 			'p.price',
 			'p.quantity',
 			'p.status',
-			'p.sort_order'
+			'p.sort_order',
+			'p.filter_user_id'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

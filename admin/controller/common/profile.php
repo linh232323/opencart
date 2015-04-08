@@ -7,7 +7,7 @@ class ControllerCommonProfile extends Controller {
 
 		$this->load->model('tool/image');
 
-		$user_info = $this->model_user_user->getUser($this->user->getId());
+		$data['aa']=$user_info = $this->model_user_user->getUser($this->user->getId());
 
 		if ($user_info) {
 			$data['firstname'] = $user_info['firstname'];
