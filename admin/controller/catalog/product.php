@@ -18,7 +18,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/product');
-
+                
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_product->addProduct($this->request->post);
 
@@ -74,9 +74,15 @@ class ControllerCatalogProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/product');
+                
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_id'];
+                
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+			$this->model_catalog_product->editProduct($user_id,$this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -371,7 +377,7 @@ class ControllerCatalogProduct extends Controller {
 			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'           => $this->config->get('config_limit_admin')
 		);
-
+     
 		$this->load->model('tool/image');
 
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
@@ -683,6 +689,14 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
 
+                $this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_id'];
+                
+                $data['author_id'] = $user_id;
+                
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -1,4 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+<?php
+echo "<pre>";
+print_r ($author_id);
+echo "</pre>";
+?><?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -190,6 +194,7 @@
                 <label class="col-sm-2 control-label" for="input-maxadults"><span data-toggle="tooltip" title="<?php echo $help_maxadults; ?>"><?php echo $entry_maxadults; ?></span></label>
                 <div class="col-sm-10">
                   <input type="text" name="maxadults" value="<?php echo $maxadults; ?>" placeholder="<?php echo $entry_maxadults; ?>" id="input-maxadults" class="form-control" />
+                  <input type="hidden" name="author_id" value="<?php echo $author_id; ?>" />
                 </div>
               </div>
               <div class="form-group">

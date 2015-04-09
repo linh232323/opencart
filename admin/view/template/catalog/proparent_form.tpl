@@ -178,6 +178,7 @@
                 <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                  <input type="hidden" name="author_id" value="<?php echo $author_id; ?>" />
                 </div>
               </div>
               <div class="form-group">
