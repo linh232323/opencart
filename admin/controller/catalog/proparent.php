@@ -70,7 +70,18 @@ class ControllerCatalogProParent extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/proparent');
-
+                
+                $this->load->model('user/user');
+                 
+                $user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_id'];
+               
+		$product = $this->model_catalog_proparent->getProparent($this->request->get['proparent_id']);
+                echo "<pre>";
+                print_r($product);
+                echo "</pre>";
+                if(isset($product['author_id']) == $user_id){
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_proparent->editProparent($this->request->get['proparent_id'], $this->request->post);
 
@@ -114,6 +125,7 @@ class ControllerCatalogProParent extends Controller {
 		}
 
 		$this->getForm();
+                }
 	}
 
 	public function delete() {

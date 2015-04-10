@@ -9480,3 +9480,13 @@
 2015-04-09 12:47:39 - PHP Notice:  Error: Unknown column 'author_id' in 'where clause'<br />Error No: 1054<br />DELETE FROM oc_product_description WHERE product_id = '87' AND author_id = '3' in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
 2015-04-09 12:47:39 - PHP Notice:  Error: Duplicate entry '87-2' for key 'PRIMARY'<br />Error No: 1062<br />INSERT INTO oc_product_description SET product_id = '87', language_id = '2', name = 'Room ', description = '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', tag = '', meta_title = 'Room normalRoom normalRoom normal', meta_description = '', meta_keyword = '' in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
 2015-04-09 12:47:39 - PHP Notice:  Error: Duplicate entry '87-1' for key 'PRIMARY'<br />Error No: 1062<br />INSERT INTO oc_product_description SET product_id = '87', language_id = '1', name = 'Rooasdasd', description = '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', tag = '', meta_title = 'Room normalRoom normalRoom normal', meta_description = '', meta_keyword = '' in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 40
+2015-04-10 2:43:26 - PHP Notice:  Undefined variable: filter_data in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 87
+2015-04-10 6:41:50 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 84
+2015-04-10 6:41:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 508
+2015-04-10 6:41:50 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 508
+2015-04-10 6:42:05 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 508
+2015-04-10 6:42:05 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 508
+2015-04-10 6:50:52 - PHP Notice:  Use of undefined constant window - assumed 'window' in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 135
+2015-04-10 6:56:06 - PHP Notice:  Undefined index: author_id in C:\xampp\htdocs\opencart\admin\controller\catalog\proparent.php on line 82
+2015-04-10 7:02:48 - PHP Notice:  Undefined index: author_id in C:\xampp\htdocs\opencart\admin\controller\catalog\proparent.php on line 82
+2015-04-10 7:03:29 - PHP Notice:  Undefined index: author_id in C:\xampp\htdocs\opencart\admin\controller\catalog\proparent.php on line 84

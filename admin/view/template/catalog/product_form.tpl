@@ -1,8 +1,4 @@
-<?php
-echo "<pre>";
-print_r ($author_id);
-echo "</pre>";
-?><?php echo $header; ?><?php echo $column_left; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
