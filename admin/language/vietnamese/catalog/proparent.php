@@ -26,6 +26,8 @@ $_['column_action']          = 'Thao tác';
 
 // Entry
 $_['entry_name']             = 'Tên sản phẩm:';
+$_['entry_wifi']             = 'Wifi:';
+$_['entry_address']          = 'Địa chỉ:';
 $_['entry_meta_keyword']     = 'Từ khóa:';
 $_['entry_meta_description'] = 'Mô tả từ khóa:';
 $_['entry_description']      = 'Mô tả sản phẩm:';
@@ -37,6 +39,7 @@ $_['entry_upc']              = 'UPC:';
 $_['entry_location']         = 'Địa điểm:';
 $_['entry_manufacturer']     = 'Hãng sản xuất:';
 $_['entry_shipping']         = 'Yêu cầu Vận chuyển:'; 
+$_['entry_star']             = 'Sao:'; 
 $_['entry_date_available']   = 'Ngày cập nhật:';
 $_['entry_quantity']         = 'Số lượng:';
 $_['entry_minimum']          = 'Số lượng tối thiểu:<br/><span class="help">Số lượng ít nhất khi đặt hàng</span>';

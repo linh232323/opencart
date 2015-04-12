@@ -9,12 +9,16 @@ class ModelCatalogProparent extends Model {
 
 		if ($query->num_rows) {
 			return array(
-				'proparent_id'       => $query->row['proparent_id'],
+				'proparent_id'     => $query->row['proparent_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
+				'address'          => $query->row['address'],
+				'short_description'=> $query->row['short_description'],
 				'meta_title'       => $query->row['meta_title'],
 				'meta_description' => $query->row['meta_description'],
 				'meta_keyword'     => $query->row['meta_keyword'],
+				'star'             => $query->row['star'],
+				'wifi'             => $query->row['wifi'],
 				'tag'              => $query->row['tag'],
 				'model'            => $query->row['model'],
 				'sku'              => $query->row['sku'],
@@ -148,6 +152,7 @@ class ModelCatalogProparent extends Model {
 		$sort_data = array(
 			'pd.name',
 			'p.model',
+			'p.star',
 			'p.quantity',
 			'p.price',
 			'rating',

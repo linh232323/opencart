@@ -3,7 +3,7 @@ class ModelCatalogProParent extends Model {
 	public function addProparent($data) {
 		$this->event->trigger('pre.admin.proparent.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "proparent SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', author_id = '" . (int)$data['author_id'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "proparent SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', author_id = '" . (int)$data['author_id'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', star = '" . (int)$data['star'] . "', wifi = '" . (int)$data['wifi'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
 
 		$proparent_id = $this->db->getLastId();
 
@@ -12,9 +12,9 @@ class ModelCatalogProParent extends Model {
 		}
 
 		foreach ($data['proparent_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "proparent_description SET proparent_id = '" . (int)$proparent_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "proparent_description SET proparent_id = '" . (int)$proparent_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', address = '" . $this->db->escape($value['address']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) .  "', short_description = '" . $this->db->escape($value['short_description']) . "'");
 		}
-
+                
 		if (isset($data['proparent_store'])) {
 			foreach ($data['proparent_store'] as $store_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "proparent_to_store SET proparent_id = '" . (int)$proparent_id . "', store_id = '" . (int)$store_id . "'");
@@ -128,7 +128,7 @@ class ModelCatalogProParent extends Model {
 	public function editProparent($proparent_id, $data) {
 		$this->event->trigger('pre.admin.proparent.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "proparent SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE proparent_id = '" . (int)$proparent_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "proparent SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', wifi = '" . (int)$data['wifi'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', star = '" . (int)$data['star'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE proparent_id = '" . (int)$proparent_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "proparent SET image = '" . $this->db->escape($data['image']) . "' WHERE proparent_id = '" . (int)$proparent_id . "'");
@@ -137,9 +137,9 @@ class ModelCatalogProParent extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "proparent_description WHERE proparent_id = '" . (int)$proparent_id . "'");
 
 		foreach ($data['proparent_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "proparent_description SET proparent_id = '" . (int)$proparent_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "proparent_description SET proparent_id = '" . (int)$proparent_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', address = '" . $this->db->escape($value['address']) . "', description = '" . $this->db->escape($value['description']) . "', short_description = '" . $this->db->escape($value['short_description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
-
+                
 		$this->db->query("DELETE FROM " . DB_PREFIX . "proparent_to_store WHERE proparent_id = '" . (int)$proparent_id . "'");
 
 		if (isset($data['proparent_store'])) {
@@ -291,10 +291,11 @@ class ModelCatalogProParent extends Model {
 			$data['viewed'] = '0';
 			$data['keyword'] = '';
 			$data['status'] = '0';
+			$data['star'] = '0';
 
 			$data = array_merge($data, array('proparent_attribute' => $this->getProparentAttributes($proparent_id)));
 			$data = array_merge($data, array('proparent_description' => $this->getProparentDescriptions($proparent_id)));
-			$data = array_merge($data, array('proparent_discount' => $this->getProparentDiscounts($proparent_id)));
+                        $data = array_merge($data, array('proparent_discount' => $this->getProparentDiscounts($proparent_id)));
 			$data = array_merge($data, array('proparent_filter' => $this->getProparentFilters($proparent_id)));
 			$data = array_merge($data, array('proparent_image' => $this->getProparentImages($proparent_id)));
 			$data = array_merge($data, array('proparent_option' => $this->getProparentOptions($proparent_id)));
@@ -368,6 +369,9 @@ class ModelCatalogProParent extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
                 
+		if (isset($data['filter_star']) && !is_null($data['filter_star'])) {
+			$sql .= " AND p.star = '" . (int)$data['filter_star'] . "'";
+		}
                 
 		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
 			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
@@ -380,6 +384,7 @@ class ModelCatalogProParent extends Model {
 			'p.model',
 			'p.price',
 			'p.quantity',
+			'p.star',
 			'p.status',
 			'p.sort_order',
 			'p.filter_user_id'
@@ -428,7 +433,9 @@ class ModelCatalogProParent extends Model {
 		foreach ($query->rows as $result) {
 			$proparent_description_data[$result['language_id']] = array(
 				'name'             => $result['name'],
+				'address'          => $result['address'],
 				'description'      => $result['description'],
+				'short_description'=> $result['short_description'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
@@ -438,7 +445,7 @@ class ModelCatalogProParent extends Model {
 
 		return $proparent_description_data;
 	}
-
+        
 	public function getProparentCategories($proparent_id) {
 		$proparent_category_data = array();
 

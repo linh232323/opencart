@@ -4,6 +4,8 @@ class ControllerProductSearch extends Controller {
 
     public function index() {
         $this->load->language('product/search');
+        
+        $this->load->language('proparent/search');
 
         $this->load->model('catalog/category');
 
@@ -152,6 +154,13 @@ class ControllerProductSearch extends Controller {
         $data['text_limit'] = $this->language->get('text_limit');
         $data['text_found'] = $this->language->get('text_found');
         $data['text_hotelin'] = $this->language->get('text_hotelin');
+        $data['text_book'] = $this->language->get('text_book');
+        $data['text_ourlast'] = $this->language->get('text_ourlast');
+        $data['text_ourlastroom'] = $this->language->get('text_ourlastroom');
+        $data['text_rooms'] = $this->language->get('text_rooms');
+        $data['text_available'] = $this->language->get('text_available');
+        $data['text_freewifi'] = $this->language->get('text_freewifi');
+        $data['text_nowifi'] = $this->language->get('text_nowifi');
 
         $data['entry_search'] = $this->language->get('entry_search');
         $data['entry_description'] = $this->language->get('entry_description');
@@ -273,6 +282,7 @@ class ControllerProductSearch extends Controller {
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
                     'namep' => $result['name'],
+                    'wifi' => $result['wifi'],
                     'descriptionp' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                     'price' => $price,
                     'special' => $special,

@@ -10,6 +10,8 @@ class ControllerProductProparent extends Controller {
         $this->load->language('product/category');
 
         $this->load->language('proparent/category');
+        
+        $this->load->language('proparent/search');
 
         $data['breadcrumbs'] = array();
 
@@ -123,6 +125,14 @@ class ControllerProductProparent extends Controller {
             if (isset($this->request->get['description'])) {
                 $url .= '&description=' . $this->request->get['description'];
             }
+            
+            if (isset($this->request->get['star'])) {
+                $url .= '&star=' . $this->request->get['star'];
+            }
+            
+            if (isset($this->request->get['address'])) {
+                $url .= '&address=' . $this->request->get['address'];
+            }
 
             if (isset($this->request->get['category_id'])) {
                 $url .= '&category_id=' . $this->request->get['category_id'];
@@ -198,6 +208,14 @@ class ControllerProductProparent extends Controller {
                 $url .= '&description=' . $this->request->get['description'];
             }
 
+            if (isset($this->request->get['star'])) {
+                $url .= '&star=' . $this->request->get['star'];
+            }
+            
+            if (isset($this->request->get['star'])) {
+                $url .= '&address=' . $this->request->get['address'];
+            }
+
             if (isset($this->request->get['category_id'])) {
                 $url .= '&category_id=' . $this->request->get['category_id'];
             }
@@ -263,7 +281,14 @@ class ControllerProductProparent extends Controller {
             $data['text_room'] = $this->language->get('text_room');
             $data['text_max_adults'] = $this->language->get('text_max_adults');
             $data['text_rate'] = $this->language->get('text_rate');
-
+            $data['text_info'] = $this->language->get('text_info');
+            $data['text_features'] = $this->language->get('text_features');
+            $data['text_ourlast'] = $this->language->get('text_ourlast');
+            $data['text_ourlastroom'] = $this->language->get('text_ourlastroom');
+            $data['text_rooms'] = $this->language->get('text_rooms');
+            $data['text_available'] = $this->language->get('text_available');
+            $data['text_wifi'] = $this->language->get('text_wifi');
+            
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');
             $data['entry_pareview'] = $this->language->get('entry_pareview');
@@ -283,6 +308,7 @@ class ControllerProductProparent extends Controller {
             $this->load->model('catalog/review');
 
             $data['tab_description'] = $this->language->get('tab_description');
+            $data['tab_short_description'] = $this->language->get('tab_short_description');
             $data['tab_attribute'] = $this->language->get('tab_attribute');
             $data['tab_pareview'] = sprintf($this->language->get('tab_pareview'), $proparent_info['pareviews']);
 
@@ -291,6 +317,8 @@ class ControllerProductProparent extends Controller {
             $data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $proparent_info['manufacturer_id']);
             $data['model'] = $proparent_info['model'];
             $data['reward'] = $proparent_info['reward'];
+            $data['star'] = $proparent_info['star'];
+            $data['address'] = $proparent_info['address'];
             $data['points'] = $proparent_info['points'];
 
             if ($proparent_info['quantity'] <= 0) {
@@ -425,6 +453,7 @@ class ControllerProductProparent extends Controller {
             $data['pareviews'] = sprintf($this->language->get('text_pareviews'), (int) $proparent_info['pareviews']);
             $data['rating'] = (int) $proparent_info['rating'];
             $data['description'] = html_entity_decode($proparent_info['description'], ENT_QUOTES, 'UTF-8');
+            $data['short_description'] = html_entity_decode($proparent_info['short_description'], ENT_QUOTES, 'UTF-8');
             $data['attribute_groups'] = $this->model_catalog_proparent->getProparentAttributes($this->request->get['proparent_id']);
 
             $data['proparents'] = array();
@@ -467,7 +496,9 @@ class ControllerProductProparent extends Controller {
                     'thumb' => $image,
                     'name' => $result['name'],
                     'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_proparent_description_length')) . '..',
+                    'short_description' => utf8_substr(strip_tags(html_entity_decode($result['short_description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_proparent_description_length')) . '..',
                     'price' => $price,
+                    'wifi' => $wifi,
                     'special' => $special,
                     'tax' => $tax,
                     'rating' => $rating,
@@ -631,9 +662,9 @@ class ControllerProductProparent extends Controller {
 
             foreach ($products as $product) {
                 if ($product['image']) {
-                    $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                    $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {

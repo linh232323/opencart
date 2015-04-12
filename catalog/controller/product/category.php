@@ -4,6 +4,8 @@ class ControllerProductCategory extends Controller {
 
     public function index() {
         $this->load->language('product/category');
+        
+        $this->load->language('proparent/category');
 
         $this->load->model('catalog/category');
 
@@ -113,7 +115,14 @@ class ControllerProductCategory extends Controller {
             $data['text_sort'] = $this->language->get('text_sort');
             $data['text_limit'] = $this->language->get('text_limit');
             $data['text_readmore'] = $this->language->get('text_readmore');
-
+            $data['text_book'] = $this->language->get('text_book');
+            $data['text_ourlast'] = $this->language->get('text_ourlast');
+            $data['text_ourlastroom'] = $this->language->get('text_ourlastroom');
+            $data['text_rooms'] = $this->language->get('text_rooms');
+            $data['text_available'] = $this->language->get('text_available');
+            $data['text_freewifi'] = $this->language->get('text_freewifi');
+            $data['text_nowifi'] = $this->language->get('text_nowifi');
+ 
             $data['button_cart'] = $this->language->get('button_cart');
             $data['button_wishlist'] = $this->language->get('button_wishlist');
             $data['button_compare'] = $this->language->get('button_compare');
@@ -173,6 +182,7 @@ class ControllerProductCategory extends Controller {
                 $data['categories'][] = array(
                     'name' => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_proparent->getTotalProparents($filter_data) . ')' : ''),
                     'image' => $image,
+                    'wifi' => $result['wifi'],
                     'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                     'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
                 );
@@ -241,11 +251,13 @@ class ControllerProductCategory extends Controller {
                 $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
                 $products = $this->model_catalog_product->getProducts($filter_data);
-                
+               
                 $data['proparents'][] = array(
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
                     'namep' => $result['name'],
+                    'wifi' => $result['wifi'],
+                    'star' => $result['star'],
                     'descriptionp' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                     'pricep' => $price,
                     'specialp' => $special,
@@ -330,6 +342,18 @@ class ControllerProductCategory extends Controller {
                 'text' => $this->language->get('text_name_desc'),
                 'value' => 'pd.name-DESC',
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC' . $url)
+            );
+            
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_star_asc'),
+                'value' => 'p.star-ASC',
+                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=ASC' . $url)
+            );
+
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_star_desc'),
+                'value' => 'p.star-DESC',
+                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=DESC' . $url)
             );
             
             if ($this->config->get('config_review_status')) {

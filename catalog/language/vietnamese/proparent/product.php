@@ -29,6 +29,7 @@ $_['text_error']        = 'Không có sản phẩm!';
 // Entry
 $_['entry_name']        = 'Tên bạn:';
 $_['entry_review']      = 'Đánh giá của bạn:';
+$_['entry_address']     = 'Địa chỉ:';
 $_['entry_rating']      = 'Bình chọn:';
 $_['entry_good']        = 'Tốt';
 $_['entry_bad']         = 'Xấu';
@@ -36,6 +37,8 @@ $_['entry_captcha']     = 'Nhập mã kiểm tra vào ô bên dưới:';
 
 // Tabs
 $_['tab_description']   = 'Mô tả';
+$_['tab_address']        = 'Địa chỉ';
+$_['tab_short_description']   = 'Mô tả khách sạn';
 $_['tab_attribute']     = 'Đặc tính';
 $_['tab_review']        = 'Đánh giá (%s)';
 $_['tab_pareview']      = 'Đánh giá (%s)';

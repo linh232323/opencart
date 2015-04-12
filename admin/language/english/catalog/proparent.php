@@ -26,9 +26,12 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Proparent Name';
+$_['entry_wifi']             = 'Wifi';
+$_['entry_address']          = 'Address';
 $_['entry_description']      = 'Description';
+$_['entry_short_description']= 'Short Description';
 $_['entry_meta_title'] 	     = 'Meta Tag Title';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_keyword']          = 'SEO Keyword';
 $_['entry_model']            = 'Category';
@@ -40,6 +43,7 @@ $_['entry_isbn']             = 'ISBN';
 $_['entry_mpn']              = 'MPN';
 $_['entry_location']         = 'Location';
 $_['entry_shipping']         = 'Requires Shipping';
+$_['entry_star']             = 'Star';
 $_['entry_manufacturer']     = 'Manufacturer';
 $_['entry_store']            = 'Stores';
 $_['entry_date_available']   = 'Date Available';

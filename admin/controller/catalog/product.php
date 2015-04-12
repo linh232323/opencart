@@ -83,9 +83,9 @@ class ControllerCatalogProduct extends Controller {
                
 		$product = $this->model_catalog_product->getProduct($this->request->get['product_id']);
                 
-                if(isset($product['author_id']) == $user_id){
+                if($product['author_id'] == $user_id){
                     if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-                            $this->model_catalog_product->editProduct($user_id,$this->request->get['product_id'], $this->request->post);
+                            $this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
                             $this->session->data['success'] = $this->language->get('text_success');
 

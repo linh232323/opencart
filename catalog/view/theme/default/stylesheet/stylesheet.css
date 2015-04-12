@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* Override the bootstrap defaults */
 h1 {
-	font-size: 33px;
+	font-size: x-large;
 }
 h2 {
 	font-size: 27px;
@@ -129,6 +129,8 @@ div.required .control-label:before {
 }
 .nav .list-inline li{
     padding: 10px;
+    padding-bottom: 35px;
+    padding-top: 30px;
 }
 .header-language{
     border-left: 1px solid #d6d6d6;
@@ -143,6 +145,9 @@ div.required .control-label:before {
 /* logo */
 #logo {
 	margin: 0 0 10px 0;
+}
+#logo img {
+    height: 100px;
 }
 /* panel */
 .search-panel-wrapper{
@@ -511,6 +516,15 @@ footer h5 {
 	background-repeat: repeat-x;
 	border-color: #1f90bb #1f90bb #145e7a;
 }
+.btn-blue{
+        border-color: #109fff;
+        background: #228fdf;
+        background: -moz-linear-gradient(top,#77c5fd,#016ec0);
+        background: -webkit-linear-gradient(top,#77c5fd,#016ec0);
+        background: -o-linear-gradient(top,#77c5fd,#016ec0);
+        background: -ms-linear-gradient(top,#77c5fd,#016ec0);
+        background: linear-gradient(top,#77c5fd,#016ec0);
+}
 .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
 	background-color: #1f90bb;
 }
@@ -645,7 +659,6 @@ footer h5 {
         padding-bottom: 10px;
 }
 .product-thumb {
-	border-bottom:  1px solid #ddd;
 	margin-bottom: 0px;
 	overflow: auto;
 }
@@ -681,10 +694,11 @@ footer h5 {
 }
 .product-thumb .caption {
 	padding: 0 20px;
-	min-height: 180px;
+	min-height: 230px;
 }
 .product-list .product-thumb .caption {
 	margin-left: 230px;
+        position: relative;
 }
 @media (max-width: 1200px) {
 .product-grid .product-thumb .caption {
@@ -833,4 +847,48 @@ h2.price {
     #content + #column-right .product-layout .col-md-3{
        width: 100%;
     }
+}
+/* box-hightlight */
+.header-box-hightlight{
+    background: rgba(212,210,212,1);
+    background: -moz-linear-gradient(top, rgba(212,210,212,1) 0%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 38%, rgba(237,237,237,1) 52%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(212,210,212,1)), color-stop(22%, rgba(255,255,255,1)), color-stop(38%, rgba(255,255,255,1)), color-stop(52%, rgba(237,237,237,1)), color-stop(100%, rgba(237,237,237,1)));
+    background: -webkit-linear-gradient(top, rgba(212,210,212,1) 0%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 38%, rgba(237,237,237,1) 52%, rgba(237,237,237,1) 100%);
+    background: -o-linear-gradient(top, rgba(212,210,212,1) 0%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 38%, rgba(237,237,237,1) 52%, rgba(237,237,237,1) 100%);
+    background: -ms-linear-gradient(top, rgba(212,210,212,1) 0%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 38%, rgba(237,237,237,1) 52%, rgba(237,237,237,1) 100%);
+    background: linear-gradient(to bottom, rgba(212,210,212,1) 0%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 38%, rgba(237,237,237,1) 52%, rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d2d4', endColorstr='#ededed', GradientType=0 );
+    padding: 7px;
+    padding-left: 15px;
+    font-size: 15px;
+    border: 1px solid #cdcdcd;
+    border-bottom: 0px;
+    border-top-left-radius:  10px;
+    border-top-right-radius:  10px;
+}
+.content-box-hightlight{
+    padding: 10px;
+    border: 1px solid #cdcdcd;
+    border-bottom-left-radius:  10px;
+    border-bottom-right-radius:  10px;
+}
+#tab-specification tr:first-child td{
+    border-top: 0px;
+}
+/* table product */
+.product-layout .product-thumb{
+    border-top:  1px solid #CECECE;
+}
+#product-layout div table tr td{
+    border-bottom: 0px;
+}
+#product-layout div:last-child table tr td{
+    border-bottom: 1px solid #CECECE;
+}
+
+#product-layout .table-header tr th{
+    border-bottom: 0px;
+}
+#product-layout .table-bordered{
+    border:0px;
 }

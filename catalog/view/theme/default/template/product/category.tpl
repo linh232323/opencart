@@ -112,17 +112,20 @@
                             <div class="caption">
                                 <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
                                     <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <?php if ($proparent['ratingp'] < $i) { ?>
+                                    <?php if ($proparent['star'] < $i) { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                                     <?php } else { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                     <?php } ?>
                                     <?php } ?>
                                 </span></h4>
-                                <p><?php echo $proparent['descriptionp']; ?></p>
-                                <?php if ($proparent['ratingp']) { ?>
-                                
+                                <p><strong><?php if ($proparent['wifi'] == 1) { ?>
+                                    <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
+                                <?php } else { ?>
+                                <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
                                 <?php } ?>
+                                    </strong></p>
+                                <p><?php echo $proparent['descriptionp']; ?></p>
                                 <!--
                                 <?php if ($proparent['pricep']) { ?>
                                 <p class="price">
@@ -137,31 +140,33 @@
                                 </p>
                                 <?php } ?>
                                 -->
-                                 <div class="col-xs-4 pull-right">
-                                <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Book </button></a>
+                                 <div class="col-xs-4 pull-bottom-right">
+                                     <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> <strong><?php echo $text_book;?></strong> </button></a>
                             </div>
                             </div>
                             <div class = "col-xs-12" >
-                                <?php if ($proparent[0]) { ?>
-                                <div class="table table-responsive table-hover table-striped">
-                                    <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
-                                    <div class="list-group">
-                                            <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
-                                                <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
-                                                <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
-                                                <?php if ($proparent[$i]['quantity'] == 1){ ?>
-                                                <span class="col-xs-3 text-danger"><strong>Our last room !!!</strong></span>
-                                                <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
-                                                <span class="col-xs-3 text-warning"><strong>Our last <?php echo $proparent[$i]['quantity'];?> room </strong></span>
-                                                <?php } else { ?>
-                                                <span class="col-xs-3 text-success"><strong>Available</strong></span>
-                                                <?php } ?>
-                                                <?php } ?>
-                                                <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
-                                            </a> 
+                                <?php if (isset($proparent[0])) { ?>
+                                    <?php if ($proparent[0]) { ?>
+                                    <div class="table table-responsive table-hover table-striped">
+                                        <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
+                                        <div class="list-group">
+                                                <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
+                                                    <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
+                                                    <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
+                                                    <?php if ($proparent[$i]['quantity'] == 1){ ?>
+                                                    <span class="col-xs-3 text-danger"><strong><?php echo $text_ourlastroom; ?></strong></span>
+                                                    <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
+                                                    <span class="col-xs-3 text-warning"><strong><?php echo $text_ourlast; ?> <?php echo $proparent[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong></span>
+                                                    <?php } else { ?>
+                                                    <span class="col-xs-3 text-success"><strong><?php echo $text_available; ?></strong></span>
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                    <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                                </a> 
+                                        </div>
+                                        <?php ; } ?>
                                     </div>
-                                    <?php ; } ?>
-                                </div>
+                                    <?php } ?>
                                 <?php } ?>
                             </div>
                            

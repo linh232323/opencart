@@ -78,53 +78,53 @@ class ControllerCatalogProParent extends Controller {
                 $user_id = $user_info['user_id'];
                
 		$product = $this->model_catalog_proparent->getProparent($this->request->get['proparent_id']);
-                echo "<pre>";
-                print_r($product);
-                echo "</pre>";
-                if(isset($product['author_id']) == $user_id){
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_proparent->editProparent($this->request->get['proparent_id'], $this->request->post);
+                
+                if(isset($product['author_id'])){
+                    if($product['author_id'] == $user_id){
+                        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+                                $this->model_catalog_proparent->editProparent($this->request->get['proparent_id'], $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+                                $this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
+                                $url = '';
 
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
+                                if (isset($this->request->get['filter_name'])) {
+                                        $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+                                }
 
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
+                                if (isset($this->request->get['filter_model'])) {
+                                        $url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+                                }
 
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
+                                if (isset($this->request->get['filter_price'])) {
+                                        $url .= '&filter_price=' . $this->request->get['filter_price'];
+                                }
 
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
+                                if (isset($this->request->get['filter_quantity'])) {
+                                        $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+                                }
 
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
+                                if (isset($this->request->get['filter_status'])) {
+                                        $url .= '&filter_status=' . $this->request->get['filter_status'];
+                                }
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
+                                if (isset($this->request->get['sort'])) {
+                                        $url .= '&sort=' . $this->request->get['sort'];
+                                }
 
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
+                                if (isset($this->request->get['order'])) {
+                                        $url .= '&order=' . $this->request->get['order'];
+                                }
 
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+                                if (isset($this->request->get['page'])) {
+                                        $url .= '&page=' . $this->request->get['page'];
+                                }
 
-			$this->response->redirect($this->url->link('catalog/proparent', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
+                                $this->response->redirect($this->url->link('catalog/proparent', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                        }
 
-		$this->getForm();
+                        $this->getForm();
+                    }
                 }
 	}
 
@@ -559,7 +559,10 @@ class ControllerCatalogProParent extends Controller {
 		$data['text_amount'] = $this->language->get('text_amount');
 
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_wifi'] = $this->language->get('entry_wifi');
+		$data['entry_address'] = $this->language->get('entry_address');
 		$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_short_description'] = $this->language->get('entry_short_description');
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
@@ -574,6 +577,7 @@ class ControllerCatalogProParent extends Controller {
 		$data['entry_location'] = $this->language->get('entry_location');
 		$data['entry_minimum'] = $this->language->get('entry_minimum');
 		$data['entry_shipping'] = $this->language->get('entry_shipping');
+		$data['entry_star'] = $this->language->get('entry_star');
 		$data['entry_date_available'] = $this->language->get('entry_date_available');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
@@ -665,6 +669,12 @@ class ControllerCatalogProParent extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
+		}
+                
+		if (isset($this->error['address'])) {
+			$data['error_address'] = $this->error['address'];
+		} else {
+			$data['error_address'] = '';
 		}
 
 		if (isset($this->error['name'])) {
@@ -768,7 +778,7 @@ class ControllerCatalogProParent extends Controller {
 		} else {
 			$data['proparent_description'] = array();
 		}
-
+                
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($proparent_info)) {
@@ -795,6 +805,14 @@ class ControllerCatalogProParent extends Controller {
 			$data['model'] = $proparent_info['model'];
 		} else {
 			$data['model'] = '';
+		}
+                
+		if (isset($this->request->post['address'])) {
+			$data['address'] = $this->request->post['address'];
+		} elseif (!empty($proparent_info)) {
+			$data['address'] = $proparent_info['address'];
+		} else {
+			$data['address'] = '';
 		}
 
 		if (isset($this->request->post['sku'])) {
@@ -844,6 +862,14 @@ class ControllerCatalogProParent extends Controller {
 		} else {
 			$data['mpn'] = '';
 		}
+                
+		if (isset($this->request->post['wifi'])) {
+			$data['wifi'] = $this->request->post['wifi'];
+		} elseif (!empty($proparent_info)) {
+			$data['wifi'] = $proparent_info['wifi'];
+		} else {
+			$data['wifi'] = 0;
+		}
 
 		if (isset($this->request->post['location'])) {
 			$data['location'] = $this->request->post['location'];
@@ -879,6 +905,14 @@ class ControllerCatalogProParent extends Controller {
 			$data['shipping'] = $proparent_info['shipping'];
 		} else {
 			$data['shipping'] = 1;
+		}
+                
+		if (isset($this->request->post['star'])) {
+			$data['star'] = $this->request->post['star'];
+		} elseif (!empty($proparent_info)) {
+			$data['star'] = $proparent_info['star'];
+		} else {
+			$data['star'] = 0;
 		}
 
 		if (isset($this->request->post['price'])) {
@@ -1346,7 +1380,8 @@ class ControllerCatalogProParent extends Controller {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
-
+                
+		
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
 		}

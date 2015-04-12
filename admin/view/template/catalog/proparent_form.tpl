@@ -58,9 +58,21 @@
                     </div>
                   </div>
                   <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-address<?php echo $language['language_id']; ?>"><?php echo $entry_address; ?></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="proparent_description[<?php echo $language['language_id']; ?>][address]" placeholder="<?php echo $entry_address; ?>" id="input-address<?php echo $language['language_id']; ?>" value="<?php echo isset($proparent_description[$language['language_id']]) ? $proparent_description[$language['language_id']]['address'] : ''; ?>" class = "form-control"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
                     <div class="col-sm-10">
                       <textarea name="proparent_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($proparent_description[$language['language_id']]) ? $proparent_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-short-description<?php echo $language['language_id']; ?>"><?php echo $entry_short_description; ?></label>
+                    <div class="col-sm-10">
+                      <textarea name="proparent_description[<?php echo $language['language_id']; ?>][short_description]" placeholder="<?php echo $entry_short_description; ?>" id="input-short-description<?php echo $language['language_id']; ?>"><?php echo isset($proparent_description[$language['language_id']]) ? $proparent_description[$language['language_id']]['short_description'] : ''; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group required">
@@ -174,6 +186,53 @@
                   </select>
                 </div>
               </div>
+                <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_star; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($star == 0) { ?>
+                    <input type="radio" name="star" value="0" checked="checked" /> 0
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="0" /> 0
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if ($star == 1) { ?>
+                    <input type="radio" name="star" value="1" checked="checked" /> 1<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="1" /> 1<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if ($star == 2) { ?>
+                    <input type="radio" name="star" value="2" checked="checked" /> 2<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="2" /> 2<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if ($star == 3) { ?>
+                    <input type="radio" name="star" value="3" checked="checked" /> 3<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="3" /> 3<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if ($star == 4) { ?>
+                    <input type="radio" name="star" value="4" checked="checked" /> 4<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="4" /> 4<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if ($star == 5) { ?>
+                    <input type="radio" name="star" value="5" checked="checked" /> 5<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } else { ?>
+                    <input type="radio" name="star" value="5" /> 5<span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span><span class="rating fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <?php } ?>
+                  </label>
+                </div>
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                 <div class="col-sm-10">
@@ -185,6 +244,29 @@
                 <label class="col-sm-2 control-label" for="input-minimum"><span data-toggle="tooltip" title="<?php echo $help_minimum; ?>"><?php echo $entry_minimum; ?></span></label>
                 <div class="col-sm-10">
                   <input type="text" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" id="input-minimum" class="form-control" />
+                </div>
+              </div>
+                <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_wifi; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($wifi) { ?>
+                    <input type="radio" name="wifi" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="wifi" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$wifi) { ?>
+                    <input type="radio" name="wifi" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="wifi" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
                 </div>
               </div>
               <div class="form-group">
@@ -918,6 +1000,11 @@
   <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 $('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
+<?php } ?>
+//--></script> 
+  <script type="text/javascript"><!--
+<?php foreach ($languages as $language) { ?>
+$('#input-short-description<?php echo $language['language_id']; ?>').summernote({height: 300});
 <?php } ?>
 //--></script> 
   <script type="text/javascript"><!--

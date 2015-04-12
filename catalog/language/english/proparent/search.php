@@ -28,6 +28,13 @@ $_['text_rating_desc']  = 'Rating (Highest)';
 $_['text_model_asc']    = 'Model (A - Z)';
 $_['text_model_desc']   = 'Model (Z - A)';
 $_['text_limit']        = 'Show:';
+$_['text_ourlast']      = 'Our last';
+$_['text_ourlastroom']  = 'Our last room !!!';
+$_['text_rooms']        = 'rooms';
+$_['text_book']         = 'Book now';
+$_['text_available']    = 'Available';
+$_['text_freewifi']     = 'Free Wi-Fi';
+$_['text_nowifi']       = 'No Wi-Fi';
 
 // Entry
 $_['entry_search']      = 'Search Criteria';

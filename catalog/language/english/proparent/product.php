@@ -36,8 +36,9 @@ $_['text_year']                = 'year';
 // Entry
 $_['entry_qty']                = 'Qty';
 $_['entry_name']               = 'Your Name';
+$_['entry_address']            = 'Address';
 $_['entry_review']             = 'Your Review';
-$_['entry_pareview']             = 'Your Review';
+$_['entry_pareview']           = 'Your Review';
 $_['entry_rating']             = 'Rating';
 $_['entry_good']               = 'Good';
 $_['entry_bad']                = 'Bad';
@@ -45,6 +46,8 @@ $_['entry_captcha']            = 'Enter the code in the box below';
 
 // Tabs
 $_['tab_description']          = 'Description';
+$_['tab_address']             = 'Address';
+$_['tab_short_description']    = 'Hotel Description';
 $_['tab_attribute']            = 'Specification';
 $_['tab_review']               = 'Reviews (%s)';
 $_['tab_pareview']               = 'Reviews (%s)';

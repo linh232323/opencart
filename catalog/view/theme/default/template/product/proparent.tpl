@@ -20,7 +20,7 @@
                 <?php } elseif ($column_left || $column_right) { ?>
                 <?php $class = 'col-sm-6'; ?>
                 <?php } else { ?>
-                <?php $class = 'col-sm-3'; ?>
+                <?php $class = 'col-sm-4'; ?>
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
                     <div class="btn-group">
@@ -239,30 +239,31 @@
                 <?php } elseif ($column_left || $column_right) { ?>
                 <?php $class = 'col-sm-6'; ?>
                 <?php } else { ?>
-                <?php $class = 'col-sm-9'; ?>
+                <?php $class = 'col-sm-8'; ?>
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
                     <h1><?php echo $heading_title; ?>
                         <span class="rating">
                             <?php for ($i = 1; $i <= 5; $i++) { ?>
-                            <?php if ($rating < $i) { ?>
+                            <?php if ($star < $i) { ?>
                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                             <?php } else { ?>
                             <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
                             <?php } ?>
                             <?php } ?>
                         </span></h1>
+                    <p><em><?php echo $address ?></em></p>
                     <?php if ($images || $thumb) { ?>
                     <?php if ($images) { ?>
                     <div id="sync1" class="owl-carousel">
-                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumb; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
+                        <?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
                     </div>
                     <div id="sync2" class="owl-carousel">
-                        <?php if ($thumb) { ?><div class="item"><img src="<?php echo $thumbc; ?>"/></div><?php } ?><?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
+                        <?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
                     </div>
                     <?php } ?>
                     <?php } ?>
-                    <?php if ($products) { ?>
+                    <?php if (isset($products)) { ?>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="btn-group hidden-xs">
@@ -300,21 +301,21 @@
                         </div>
                     </div>
                     <div class="row"> 
-                        <div class="product-layout product-list col-xs-12">
-                            <table class="table table-bordered table-striped">
-                                <th class = "col-xs-3 text-center"><?php echo $text_room;?></th>
+                        <div class="product-layout product-list col-xs-12" id="product-layout">
+                            <table class="table table-bordered table-striped table-header">
+                                <th class = "col-xs-5 text-center"><?php echo $text_room;?></th>
                                 <th class = "col-xs-1 text-center"><?php echo $text_max_adults;?></th>
                                 <th class = " text-center"><?php echo $text_rate;?></th>
-                                <th class = "col-xs-2"></th>
+                                <th class = "col-xs-3"></th>
                             </table>
                             <?php foreach ($products as $product) { ?>
                             <div class="product-thumb">
                                 <table  class="table table-bordered table-hover">
                                     <tr>
-                                        <td class="col-xs-3">
+                                        <td class="col-xs-5">
                                             <strong><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></strong>
                                             <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" class="img-responsive"></a>
-                                            <p><?php echo $product['description'];?></p>
+                                            <p><a href="<?php echo $product['href'];?>"><?php echo $text_info;?></a></p>
                                         </td>
                                         <td class="col-xs-1 text-center control-label">
                                             <?php if ($product['maxadults'] == 1){ ?>
@@ -329,16 +330,20 @@
                                         <td class = "text-center">
                                             <strong class="text-primary"><?php echo $product['price'];?></strong>
                                         </td>
-                                        <td class="col-xs-2">
-                                            <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-shopping-cart"></i> <?php echo $text_book; ?></button></a>
+                                        <td class="col-xs-3">
+                                            <div class="center-block">
+                                                <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-block btn-blue center-block" style="width: auto;"><i class="fa fa-shopping-cart"></i> <strong><?php echo $text_book; ?></strong></button></a>
+                                            </div>
+                                            <p class = "text-center" >
                                             <?php if ($product['quantity'] == 1){ ?>
-                                            <strong class="text-danger">Our last room !!!</strong>
+                                            <strong class="text-danger"><?php echo $text_ourlastroom; ?></strong>
                                             <?php } else { if ($product['quantity'] <= 5) { ?>
-                                            <strong class="text-warning">Our last <?php echo $proparent[$i]['quantity'];?> room </strong>
+                                            <strong class="text-warning"><?php echo $text_ourlast; ?> <?php echo $proparent[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong>
                                             <?php } else { ?>
-                                            <strong class="text-success">Available</strong>
+                                            <strong class="text-success"><?php echo $text_available; ?></strong>
                                             <?php } ?>
                                             <?php } ?>
+                                            </p>
                                         </td>
                                     </tr>
                                 </table>
@@ -351,8 +356,9 @@
                         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
                         <div class="col-sm-6 text-right"><?php echo $results; ?></div>
                     </div>
+                    <?php echo $description; ?>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
+                        <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_short_description; ?></a></li>
                         <?php if ($attribute_groups) { ?>
                         <li><a href="#tab-specification" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <?php } ?>
@@ -361,26 +367,25 @@
                         <?php } ?>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
+                        <div class="tab-pane active" id="tab-description"><?php echo $short_description; ?></div>
                         <?php if ($attribute_groups) { ?>
+                       
                         <div class="tab-pane" id="tab-specification">
-                            <table class="table table-bordered">
-                                <?php foreach ($attribute_groups as $attribute_group) { ?>
-                                <thead>
-                                    <tr>
-                                        <td colspan="2"><strong><?php echo $attribute_group['name']; ?></strong></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
-                                    <tr>
-                                        <td><strong><i class = "glyphicon glyphicon-ok-circle text-success" ></i></strong> <?php echo $attribute['name']; ?></td>
-                                        <td><?php echo $attribute['text']; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                                <?php } ?>
-                            </table>
+                            <div class = "header-box-hightlight">
+                                <strong><?php echo $text_features;?> <?php echo $heading_title; ?></strong>
+                            </div>
+                            <div class = "content-box-hightlight">
+                                <table class="table">
+                                    <tbody>
+                                        <?php foreach ($attribute_groups as $attribute_group) { ?>
+                                        <tr>
+                                            <td><strong><?php echo $attribute_group['name']; ?></strong></td>
+                                            <td class="pull-left col-sm-12"><?php foreach ($attribute_group['attribute'] as $attribute) { ?><div class="col-md-4"><strong><i class = "glyphicon glyphicon-ok text-success" ></i></strong> <?php echo $attribute['name']; ?></div><?php } ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <?php } ?>
                         <?php if ($pareview_status) { ?>
