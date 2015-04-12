@@ -10133,3 +10133,236 @@
 2015-04-11 20:33:31 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
 2015-04-11 20:34:24 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
 2015-04-11 20:35:26 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:01:16 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:01:25 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:01:30 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:03:28 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:13:40 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:13:54 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:14:40 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:15:32 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:17:29 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:18:09 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:18:46 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:21:13 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:22:32 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:23:31 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 16:24:23 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:34:14 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:35:01 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:37:28 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:41:00 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:49:39 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:53:11 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:53:14 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:53:14 - PHP Notice:  Undefined variable: search_home in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\hotel.tpl on line 14
+2015-04-12 17:53:32 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:53:58 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:53:59 - PHP Notice:  Error: Could not load template C:\xampp\htdocs\opencart/catalog/view/theme/default/template/common/home.tpl! in C:\xampp\htdocs\opencart\system\engine\loader.php on line 45
+2015-04-12 17:54:10 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:54:24 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:55:57 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:56:04 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:56:37 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:56:42 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:57:38 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:58:17 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:58:20 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 17:59:47 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:01:33 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:01:35 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:02:57 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:02:57 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:03:23 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:03:33 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:03:48 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:03:56 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:51:08 - PHP Notice:  Undefined variable: redirect in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\common\header.tpl on line 77
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 18:51:08 - PHP Notice:  Undefined index: pricep in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\search.tpl on line 144
+2015-04-12 19:17:56 - PHP Notice:  Undefined variable: tab_price in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 33
+2015-04-12 19:39:09 - PHP Notice:  Undefined variable: entry_date in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 471
+2015-04-12 19:39:09 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:39:48 - PHP Notice:  Undefined variable: entry_date in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 471
+2015-04-12 19:39:48 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:41:27 - PHP Notice:  Undefined variable: entry_date in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 471
+2015-04-12 19:41:27 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:42:08 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:42:28 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:43:23 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:43:39 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 494
+2015-04-12 19:46:31 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 19:49:53 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 19:51:53 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:00:20 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:01:20 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:01:58 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:03:57 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:06:41 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:07:11 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:08:02 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:09:31 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 20:13:56 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:05:08 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:13:21 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:40 - PHP Notice:  Undefined index: maxadults in C:\xampp\htdocs\opencart\admin\model\catalog\product.php on line 559
+2015-04-12 21:13:44 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:15:13 - PHP Notice:  Undefined index: product_price in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:15:13 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:15:46 - PHP Notice:  Undefined index: product_price in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:15:46 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:16:02 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 1203
+2015-04-12 21:16:02 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:16:02 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:16:02 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:16:02 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:16:02 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:16:02 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:16:02 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:16:02 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:17:37 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 1203
+2015-04-12 21:17:37 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:17:37 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:17:37 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:17:37 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:17:37 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:17:37 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:17:37 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:17:37 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:17:42 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 1203
+2015-04-12 21:17:42 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:17:42 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:17:42 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:17:42 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:17:42 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:17:42 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:17:42 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:17:42 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:17:50 - PHP Notice:  Undefined index: product_price in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:17:50 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:18:10 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:18:10 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:18:10 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:18:10 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:18:10 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:18:10 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:18:10 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:18:10 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:18:55 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:18:55 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:18:55 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:18:55 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:18:55 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:18:55 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:18:55 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:18:55 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:19:30 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:19:30 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:19:30 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:19:30 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:19:30 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:19:30 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:19:30 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:19:30 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:19:48 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:19:48 - PHP Notice:  Undefined index: name in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:19:48 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:19:48 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:19:48 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:19:48 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:19:48 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:19:48 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:20:39 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:20:39 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:20:39 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:20:39 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:20:39 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:20:39 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:20:39 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:20:39 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:20:54 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:20:54 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:21:08 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:21:08 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:21:08 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:21:08 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:21:08 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:21:08 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:21:08 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:21:08 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:22:58 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:22:58 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:22:58 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:22:58 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:22:58 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:22:58 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:22:58 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:22:58 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:29:03 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:29:03 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:29:03 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:29:03 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:29:03 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:29:03 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:29:03 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:29:51 - PHP Notice:  Undefined index: product_price_value in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:29:51 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:29:51 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:29:51 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:29:51 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:29:51 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:29:51 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:30:44 - PHP Notice:  Array to string conversion in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:30:44 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:30:44 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:30:44 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:30:44 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:30:44 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:30:44 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:31:11 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:31:11 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:31:11 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:31:11 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:31:11 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:31:11 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:33:20 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:34:42 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:34:55 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:34:55 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:34:55 - PHP Notice:  Use of undefined constant date_form - assumed 'date_form' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 484
+2015-04-12 21:34:55 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:34:55 - PHP Notice:  Use of undefined constant date_to - assumed 'date_to' in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 487
+2015-04-12 21:34:55 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:39:09 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 480
+2015-04-12 21:39:09 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:39:14 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 497
+2015-04-12 21:40:15 - PHP Notice:  Undefined index: product_price in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:40:15 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:40:26 - PHP Notice:  Undefined index: date_form in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 1201
+2015-04-12 21:40:26 - PHP Notice:  Undefined index: date_to in C:\xampp\htdocs\opencart\admin\controller\catalog\product.php on line 1202
+2015-04-12 21:40:26 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:40:26 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:41:11 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:41:11 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:42:08 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:42:08 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:42:42 - PHP Notice:  Undefined index: price_id in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 481
+2015-04-12 21:42:42 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498
+2015-04-12 21:43:05 - PHP Notice:  Undefined index: product_attribute in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 2
+2015-04-12 21:43:05 - PHP Notice:  Undefined variable: button_price_add in C:\xampp\htdocs\opencart\admin\view\template\catalog\product_form.tpl on line 498

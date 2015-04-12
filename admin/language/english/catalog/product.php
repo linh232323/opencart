@@ -81,6 +81,8 @@ $_['entry_tag']          	 = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_price']            = 'Price';
+$_['entry_date']             = 'Date';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
@@ -95,11 +97,14 @@ $_['help_minimum']           = 'Force a minimum ordered amount';
 $_['help_maxadults']         = 'Force a maximum adults';
 $_['help_stock_status']      = 'Status shown when a product is out of stock';
 $_['help_points']            = 'Number of points needed to buy this item. If you don\'t want this product to be purchased with points leave as 0.';
-$_['help_proparent']          = '(Autocomplete)';
+$_['help_proparent']         = '(Autocomplete)';
 $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
-$_['help_tag']          	 = 'comma separated';
+$_['help_tag']               = 'comma separated';
+
+// Tab
+$_['tab_price']              = 'Price';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

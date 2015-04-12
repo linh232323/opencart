@@ -32,6 +32,18 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
+                
+		if (isset($data['product_price'])) {
+			foreach ($data['product_price'] as $product_price) {
+				if ($product_price['price_id']) {
+					$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+
+					foreach ($product_price['product_price_value'] as $date_id => $product_price_value) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_id = '" . (int)$date_id . "', price = '" .  $this->db->escape($product_price_value['price']) . "'");
+					}
+				}
+			}
+		}
 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
@@ -159,6 +171,18 @@ class ModelCatalogProduct extends Model {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
 					}
 				}
+			}
+		}
+                
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "'");
+
+		if (!empty($data['product_price'])) {
+			foreach ($data['product_price'] as $product_price) {
+					$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+
+					foreach ($product_price['product_price_value'] as $date_id => $product_price_value) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_id = '" . (int)$date_id . "', price = '" .  $this->db->escape($product_price_value['price']) . "'");
+					}
 			}
 		}
 
@@ -293,6 +317,7 @@ class ModelCatalogProduct extends Model {
 			$data['status'] = '0';
 
 			$data = array_merge($data, array('product_attribute' => $this->getProductAttributes($product_id)));
+			$data = array_merge($data, array('product_price' => $this->getProductPrices($product_id)));
 			$data = array_merge($data, array('product_description' => $this->getProductDescriptions($product_id)));
 			$data = array_merge($data, array('product_discount' => $this->getProductDiscounts($product_id)));
 			$data = array_merge($data, array('product_filter' => $this->getProductFilters($product_id)));
@@ -316,6 +341,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "'");
@@ -488,6 +514,29 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_attribute_data;
+	}
+        
+	public function getProductPrices($product_id) {
+		$product_price_data = array();
+
+		$product_price_query = $this->db->query("SELECT price_id FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' GROUP BY price_id");
+
+		foreach ($product_price_query->rows as $product_price) {
+			$product_price_value_data = array();
+
+			$product_price_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+
+			foreach ($product_price_value_query->rows as $product_price_value) {
+				$product_price_value_data[$product_price_value['date_id']] = array('text' => $product_price_value['price']);
+			}
+
+			$product_price_data[] = array(
+				'price_id'                  => $product_price['price_id'],
+				'product_price_value'       => $product_price_value_data
+			);
+		}
+
+		return $product_price_data;
 	}
 
 	public function getProductOptions($product_id) {
@@ -691,6 +740,12 @@ class ModelCatalogProduct extends Model {
 
 	public function getTotalProductsByAttributeId($attribute_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_attribute WHERE attribute_id = '" . (int)$attribute_id . "'");
+
+		return $query->row['total'];
+	}
+        
+	public function getTotalProductsByPriceId($price_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_price WHERE price_id = '" . (int)$price_id . "'");
 
 		return $query->row['total'];
 	}

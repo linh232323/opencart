@@ -443,6 +443,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_date'] = $this->language->get('entry_date');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -619,6 +620,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_date'] = $this->language->get('entry_date');
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_points'] = $this->language->get('entry_points');
 		$data['entry_option_points'] = $this->language->get('entry_option_points');
@@ -685,6 +687,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
+		$data['tab_price'] = $this->language->get('tab_price');
 		$data['tab_option'] = $this->language->get('tab_option');
 		$data['tab_recurring'] = $this->language->get('tab_recurring');
 		$data['tab_discount'] = $this->language->get('tab_discount');
@@ -1178,6 +1181,27 @@ class ControllerCatalogProduct extends Controller {
 					'product_attribute_description' => $product_attribute['product_attribute_description']
 				);
 			}
+		}
+                
+		// Price
+		$this->load->model('catalog/price');
+
+		if (isset($this->request->post['product_price'])) {
+			$product_prices = $this->request->post['product_price'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$product_prices = $this->model_catalog_product->getProductPrices($this->request->get['product_id']);
+		} else {
+			$product_prices = array();
+		}
+
+		$data['product_prices'] = array();
+
+		foreach ($product_prices as $product_price) {
+			$data['product_prices'][] = array(
+				'1'                  => $product_price['1'],
+				'2'                  => $product_price['2'],
+				'product_price_value'        => $product_price['product_price_value']
+			);
 		}
 
 		// Options

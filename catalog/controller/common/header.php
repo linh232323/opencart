@@ -142,7 +142,7 @@ class ControllerCommonHeader extends Controller {
 		}
                 
                 // Background //
-                if((isset($_GET["route"]) == NULL) || (($_GET["route"])=="common/home")){
+                if((isset($_GET["route"]) == NULL) || (($_GET["route"])=="common/home") || (($_GET["route"])=="common/hotel")){
                     $data['background']=TRUE;
                 }  else {
                     $data['background']=FALSE;

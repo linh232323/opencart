@@ -1,4 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
+<?php print_r ($_POST['product_attribute']); ?>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -30,6 +31,7 @@
             <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
             <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
             <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
+            <li><a href="#tab-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
             <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
             <li><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
             <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
@@ -456,6 +458,44 @@
                     <tr>
                       <td colspan="2"></td>
                       <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="<?php echo $button_attribute_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-price">
+              <div class="table-responsive">
+                <table id="price" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left"><?php echo $entry_price; ?></td>
+                      <td class="text-left"><?php echo $entry_date; ?></td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $price_row = 0; ?>
+                    <?php foreach ($product_prices as $product_price) { ?>
+                    <tr id="price-row<?php echo $price_row; ?>">
+                      <td class="text-left" style="width: 40%;"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_value]" value="<?php echo $product_price['product_price_value']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" />
+                        <input type="hidden" name="product_price[<?php echo $price_row; ?>][price_id]" value="<?php echo $product_price['price_id']; ?>" /></td>
+                      <td class="text-left">
+                        <div class="input-group"><span class="input-group-addon">Date_form</span>
+                          <input type="date" name="product_price[<?php echo $price_row; ?>][1]" rows="1" class="form-control" value="<?php echo isset($product_price[1]) ? $product_price[1] : ''; ?>"/>
+                        </div>
+                        <div class="input-group"><span class="input-group-addon">Date_to  </span>
+                        <input type="date" name="product_price[<?php echo $price_row; ?>][2]" rows="1" class="form-control" value="<?php echo isset($product_price[2]) ? $product_price[2] : ''; ?>"/>  
+                        </div>
+                      </td>
+                      <td class="text-left"><button type="button" onclick="$('#price-row<?php echo $price_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    </tr>
+                    <?php $price_row++; ?>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td class="text-left"><button type="button" onclick="addPrice();" data-toggle="tooltip" title="<?php echo $button_price_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1117,6 +1157,54 @@ function attributeautocomplete(attribute_row) {
 
 $('#attribute tbody tr').each(function(index, element) {
 	attributeautocomplete(index);
+});
+//--></script> 
+  <script type="text/javascript"><!--
+var price_row = <?php echo $price_row; ?>;
+
+function addPrice() {
+    html  = '<tr id="price-row' + price_row + '">';
+	html += '  <td class="text-left" style="width: 20%;"><input type="text" name="product_price[' + price_row + '][product_price_value]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /><input type="hidden" name="product_price[' + price_row + '][price_id]" value="" /></td>';
+	html += '  <td class="text-left">';
+	html += '<div class="input-group"><span class="input-group-addon">Date_form</span><input type="date" name="product_price[' + price_row + '][1]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
+	html += '<div class="input-group"><span class="input-group-addon">Date_to</span><input type="date" name="product_price[' + price_row + '][2]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
+	html += '  </td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#price-row' + price_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+	
+	$('#price tbody').append(html);
+	
+	priceautocomplete(price_row);
+	
+	price_row++;
+}
+
+function priceautocomplete(price_row) {
+	$('input[name=\'product_price[' + price_row + '][name]\']').autocomplete({
+		'source': function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/price/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',			
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							proparent: item.price_group,
+							label: item.name,
+							value: item.price_id
+						}
+					}));
+				}
+			});
+		},
+		'select': function(item) {
+			$('input[name=\'product_price[' + price_row + '][name]\']').val(item['label']);
+			$('input[name=\'product_price[' + price_row + '][price_id]\']').val(item['value']);
+		}
+	});
+}
+
+$('#price tbody tr').each(function(index, element) {
+	priceautocomplete(index);
 });
 //--></script> 
   <script type="text/javascript"><!--	
