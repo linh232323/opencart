@@ -676,6 +676,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_attribute_add'] = $this->language->get('button_attribute_add');
+		$data['button_price_add'] = $this->language->get('button_price_add');
 		$data['button_option_add'] = $this->language->get('button_option_add');
 		$data['button_option_value_add'] = $this->language->get('button_option_value_add');
 		$data['button_discount_add'] = $this->language->get('button_discount_add');
@@ -712,6 +713,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->error['product_price_value'])) {
+			$data['error_product_price_value'] = $this->error['product_price_value'];
+		} else {
+			$data['error_product_price_value'] = array();
+		}
+                
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
@@ -1195,11 +1202,11 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$data['product_prices'] = array();
-
+                
 		foreach ($product_prices as $product_price) {
 			$data['product_prices'][] = array(
-				'1'                  => $product_price['1'],
-				'2'                  => $product_price['2'],
+				'price_id'                   => $product_price['price_id'],
+				'product_date'               => $product_price['product_date'],
 				'product_price_value'        => $product_price['product_price_value']
 			);
 		}
@@ -1424,6 +1431,12 @@ class ControllerCatalogProduct extends Controller {
 
 			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+			}
+		}
+                
+		foreach ($this->request->post['product_price'] as $value) {
+			if (!is_numeric($value['product_price_value'])) {
+				$this->error['product_price_value'] = $this->language->get('error_product_price_value');
 			}
 		}
 

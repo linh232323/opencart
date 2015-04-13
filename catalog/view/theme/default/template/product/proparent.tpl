@@ -328,7 +328,23 @@
                                             <?php } ?>
                                         </td>
                                         <td class = "text-center">
-                                            <strong class="text-primary"><?php echo $product['price'];?></strong>
+                                            <strong class="text-primary">
+                                                <?php $date_in = strtotime(date('y-m-d')); ?>
+                                                <?php if (isset($product_prices)) { ?>
+                                                <?php foreach ($product_prices as $product_price) { ?>
+                                                <?php if ($product['product_id'] == $product_price['product_id']) { ?>
+                                                <?php if (($date_in>=strtotime($product_price['product_date']['1']['date']))&&($date_in<=strtotime($product_price['product_date']['2']['date']))) { ?>
+                                                <?php $cost = $product_price['product_price_value']; ?>
+                                                <?php } ?>
+                                                <?php } else { ?>
+                                                <?php $cost ='' ?>
+                                                <?php } ?>
+                                                <?php } ?>
+                                                <?php } else { ?>
+                                                <?php $cost = ''; ?>
+                                                <?php } ?>
+                                                <?php echo $cost; ?>
+                                            </strong>
                                         </td>
                                         <td class="col-xs-3">
                                             <div class="center-block">

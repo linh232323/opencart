@@ -157,9 +157,20 @@ class ControllerProductProduct extends Controller {
         }
 
         $this->load->model('catalog/product');
-
+        
+        
+        $product_prices = $this->model_catalog_product->getProductPrices($product_id);  
+        
+        
         $product_info = $this->model_catalog_product->getProduct($product_id);
-
+        
+        foreach ($product_prices as $value) {
+            $data['product_prices'][] =array(
+             'product_price_value'   => $this->currency->format($this->tax->calculate($value['product_price_value'], $product_info['tax_class_id'], $this->config->get('config_tax'))),
+             'product_date'          => $value['product_date']
+            ); 
+        }
+        
         if ($product_info) {
             $url = '';
 
@@ -313,7 +324,7 @@ class ControllerProductProduct extends Controller {
                     'thumb' => $image
                 );
             }
-
+            
             if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
                 $data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
             } else {

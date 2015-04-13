@@ -691,6 +691,16 @@ class ControllerProductProparent extends Controller {
                     $rating = false;
                 }
 
+                $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
+
+                foreach ($product_prices as $value) {
+                    $data['product_prices'][] =array(
+                     'product_price_value'   => $this->currency->format($this->tax->calculate($value['product_price_value'], $proparent_info['tax_class_id'], $this->config->get('config_tax'))),
+                     'product_date'          => $value['product_date'],
+                     'product_id'            => $value['product_id']
+                    ); 
+                }
+
                 $data['products'][] = array(
                     'product_id' => $product['product_id'],
                     'thumb' => $image,
@@ -863,7 +873,7 @@ class ControllerProductProparent extends Controller {
 
         $proparent_info = $this->model_catalog_proparent->getProparent($proparent_id);
         $recurring_info = $this->model_catalog_proparent->getProfile($proparent_id, $recurring_id);
-
+        
         $json = array();
 
         if ($proparent_info && $recurring_info) {

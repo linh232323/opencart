@@ -146,34 +146,23 @@
             <?php } ?>
             <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
           </ul>
-          <?php if ($price) { ?>
-          <ul class="list-unstyled">
-            <?php if (!$special) { ?>
-            <li>
-              <h2><?php echo $price; ?></h2>
-            </li>
-            <?php } else { ?>
-            <li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>
-            <li>
-              <h2><?php echo $special; ?></h2>
-            </li>
-            <?php } ?>
-            <?php if ($tax) { ?>
-            <li><?php echo $text_tax; ?> <?php echo $tax; ?></li>
-            <?php } ?>
-            <?php if ($points) { ?>
-            <li><?php echo $text_points; ?> <?php echo $points; ?></li>
-            <?php } ?>
-            <?php if ($discounts) { ?>
-            <li>
-              <hr>
-            </li>
-            <?php foreach ($discounts as $discount) { ?>
-            <li><?php echo $discount['quantity']; ?><?php echo $text_discount; ?><?php echo $discount['price']; ?></li>
-            <?php } ?>
-            <?php } ?>
-          </ul>
+          <?php $date_in = strtotime(date('y-m-d')); ?>
+          <?php if (isset($product_prices)) { ?>
+                  <?php foreach ($product_prices as $product_price) { ?>
+                  <?php if (($date_in>=strtotime($product_price['product_date']['1']['date']))&&($date_in<=strtotime($product_price['product_date']['2']['date']))) { ?>
+                  <?php $cost = $product_price['product_price_value']; ?>
+                  <?php } else { ?>
+                  <?php $cost = ''; ?>
+                  <?php } ?>
+                  <?php } ?>
+          <?php } else { ?>
+                  <?php $cost = ''; ?>
           <?php } ?>
+          <ul class="list-unstyled">
+            <li>
+              <h2><?php echo $cost; ?></h2>
+            </li>
+          </ul>
           <div id="product">
             <?php if ($options) { ?>
             <hr>

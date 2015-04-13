@@ -321,7 +321,16 @@ class ControllerProductSearch extends Controller {
                     } else {
                         $rating = false;
                     }
+                    
+                    $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
 
+                    foreach ($product_prices as $value) {
+                        $data['product_prices'][] =array(
+                         'product_price_value'   => $this->currency->format($this->tax->calculate($value['product_price_value'], $proparent_info['tax_class_id'], $this->config->get('config_tax'))),
+                         'product_date'          => $value['product_date'],
+                         'product_id'            => $value['product_id']
+                        ); 
+                    }
                     $data['proparents'][$i][] = array(
                         'product_id' => $product['product_id'],
                         'thumb' => $image,

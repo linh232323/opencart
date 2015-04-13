@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-<?php print_r ($_POST['product_attribute']); ?>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -465,6 +464,11 @@
             </div>
             <div class="tab-pane" id="tab-price">
               <div class="table-responsive">
+                  <div class="col-sm-10">
+                  <?php if ($error_product_price_value) { ?>
+                  <div class="text-danger"><?php echo ($error_product_price_value) ?></div>
+                  <?php } ?>
+                </div>
                 <table id="price" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
@@ -481,10 +485,10 @@
                         <input type="hidden" name="product_price[<?php echo $price_row; ?>][price_id]" value="<?php echo $product_price['price_id']; ?>" /></td>
                       <td class="text-left">
                         <div class="input-group"><span class="input-group-addon">Date_form</span>
-                          <input type="date" name="product_price[<?php echo $price_row; ?>][1]" rows="1" class="form-control" value="<?php echo isset($product_price[1]) ? $product_price[1] : ''; ?>"/>
+                          <input type="date" name="product_price[<?php echo $price_row; ?>][product_date][1][date]" rows="1" class="form-control" value="<?php echo isset($product_price['product_date']['1']['date']) ? $product_price['product_date']['1']['date'] : ''; ?>"/>
                         </div>
                         <div class="input-group"><span class="input-group-addon">Date_to  </span>
-                        <input type="date" name="product_price[<?php echo $price_row; ?>][2]" rows="1" class="form-control" value="<?php echo isset($product_price[2]) ? $product_price[2] : ''; ?>"/>  
+                        <input type="date" name="product_price[<?php echo $price_row; ?>][product_date][2][date]" rows="1" class="form-control" value="<?php echo isset($product_price['product_date']['2']['date']) ? $product_price['product_date']['2']['date'] : ''; ?>"/>  
                         </div>
                       </td>
                       <td class="text-left"><button type="button" onclick="$('#price-row<?php echo $price_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -650,7 +654,7 @@
                                   <option value="-">-</option>
                                   <?php } ?>
                                 </select>
-                                <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][price]" value="<?php echo $product_option_value['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
+                                <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][date]" value="<?php echo $product_option_value['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
                               <td class="text-right"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][points_prefix]" class="form-control">
                                   <?php if ($product_option_value['points_prefix'] == '+') { ?>
                                   <option value="+" selected="selected">+</option>
@@ -1166,8 +1170,8 @@ function addPrice() {
     html  = '<tr id="price-row' + price_row + '">';
 	html += '  <td class="text-left" style="width: 20%;"><input type="text" name="product_price[' + price_row + '][product_price_value]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /><input type="hidden" name="product_price[' + price_row + '][price_id]" value="" /></td>';
 	html += '  <td class="text-left">';
-	html += '<div class="input-group"><span class="input-group-addon">Date_form</span><input type="date" name="product_price[' + price_row + '][1]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
-	html += '<div class="input-group"><span class="input-group-addon">Date_to</span><input type="date" name="product_price[' + price_row + '][2]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
+	html += '<div class="input-group"><span class="input-group-addon">Date_form</span><input type="date" name="product_price[' + price_row + '][product_date][1][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
+	html += '<div class="input-group"><span class="input-group-addon">Date_to</span><input type="date" name="product_price[' + price_row + '][product_date][2][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
 	html += '  </td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#price-row' + price_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';

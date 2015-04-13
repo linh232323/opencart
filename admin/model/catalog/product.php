@@ -35,13 +35,11 @@ class ModelCatalogProduct extends Model {
                 
 		if (isset($data['product_price'])) {
 			foreach ($data['product_price'] as $product_price) {
-				if ($product_price['price_id']) {
-					$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+				
+				$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
 
-					foreach ($product_price['product_price_value'] as $date_id => $product_price_value) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_id = '" . (int)$date_id . "', price = '" .  $this->db->escape($product_price_value['price']) . "'");
-					}
-				}
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price = '" .  $this->db->escape($product_price['product_price_value']) . "'");
+					
 			}
 		}
 
@@ -180,9 +178,8 @@ class ModelCatalogProduct extends Model {
 			foreach ($data['product_price'] as $product_price) {
 					$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
 
-					foreach ($product_price['product_price_value'] as $date_id => $product_price_value) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_id = '" . (int)$date_id . "', price = '" .  $this->db->escape($product_price_value['price']) . "'");
-					}
+					$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price = '" .  $this->db->escape($product_price['product_price_value']) . "'");
+				
 			}
 		}
 
@@ -522,17 +519,21 @@ class ModelCatalogProduct extends Model {
 		$product_price_query = $this->db->query("SELECT price_id FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' GROUP BY price_id");
 
 		foreach ($product_price_query->rows as $product_price) {
-			$product_price_value_data = array();
+			$product_date_data = array();
 
-			$product_price_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
-
-			foreach ($product_price_value_query->rows as $product_price_value) {
-				$product_price_value_data[$product_price_value['date_id']] = array('text' => $product_price_value['price']);
-			}
+			$product_date_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+                        
+                        foreach ($product_date_query->rows as $product_date) {
+                                $product_date_data['1'] = array('date' => $product_date['date_form']);
+                                $product_date_data['2'] = array('date' => $product_date['date_to']);
+                        }
+			
+			
 
 			$product_price_data[] = array(
 				'price_id'                  => $product_price['price_id'],
-				'product_price_value'       => $product_price_value_data
+				'product_price_value'       => $product_date['price'],
+				'product_date'              => $product_date_data
 			);
 		}
 

@@ -197,6 +197,34 @@ class ModelCatalogProduct extends Model {
 
 		return $product_data;
 	}
+        
+        public function getProductPrices($product_id) {
+		$product_price_data = array();
+
+		$product_price_query = $this->db->query("SELECT price_id FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' GROUP BY price_id");
+
+		foreach ($product_price_query->rows as $product_price) {
+			$product_date_data = array();
+
+			$product_date_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+                        
+                        foreach ($product_date_query->rows as $product_date) {
+                                $product_date_data['1'] = array('date' => $product_date['date_form']);
+                                $product_date_data['2'] = array('date' => $product_date['date_to']);
+                        }
+			
+			
+
+			$product_price_data[] = array(
+				'price_id'                  => $product_price['price_id'],
+				'product_id'                => $product_date['product_id'],
+				'product_price_value'       => $product_date['price'],
+				'product_date'              => $product_date_data
+			);
+		}
+
+		return $product_price_data;
+	}
 
 	public function getProductSpecials($data = array()) {
 		$sql = "SELECT DISTINCT ps.product_id, (SELECT AVG(rating) FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = ps.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) GROUP BY ps.product_id";

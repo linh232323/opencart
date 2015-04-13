@@ -174,7 +174,25 @@
                                                 <span class="col-xs-3 text-success"><strong><?php echo $text_available; ?></strong></span>
                                                 <?php } ?>
                                                 <?php } ?>
-                                                <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                                <span class="col-xs-3 text-right">
+                                                    <strong> 
+                                                <?php $date_in = strtotime(date('y-m-d')); ?>
+                                                <?php if (isset($product_prices)) { ?>
+                                                <?php foreach ($product_prices as $product_price) { ?>
+                                                <?php if ($product['product_id'] == $product_price['product_id']) { ?>
+                                                <?php if (($date_in>=strtotime($product_price['product_date']['1']['date']))&&($date_in<=strtotime($product_price['product_date']['2']['date']))) { ?>
+                                                <?php $cost = $product_price['product_price_value']; ?>
+                                                <?php } ?>
+                                                <?php } else { ?>
+                                                <?php $cost ='' ?>
+                                                <?php } ?>
+                                                <?php } ?>
+                                                <?php } else { ?>
+                                                <?php $cost = ''; ?>
+                                                <?php } ?>
+                                                <?php echo $cost; ?>
+                                                    </strong>
+                                                </span>
                                             </a> 
                                         </div>
                                         <?php ; } ?>
