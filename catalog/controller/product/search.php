@@ -6,6 +6,10 @@ class ControllerProductSearch extends Controller {
         $this->load->language('product/search');
         
         $this->load->language('proparent/search');
+        
+        $this->load->language('proparent/category');
+        
+        $this->load->language('proparent/product');
 
         $this->load->model('catalog/category');
 
@@ -15,12 +19,42 @@ class ControllerProductSearch extends Controller {
 
         $this->load->model('tool/image');
         
-        $data['title_search'] =$this->request->get['search'];
+        $this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
+        $this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+        $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+
+        if (isset($this->request->get['search'])) {
+            $data['title_search'] = $this->request->get['search'];
+        } else {
+            $data['title_search'] = '';
+        }
         
         if (isset($this->request->get['search'])) {
             $search = $this->request->get['search'];
         } else {
             $search = '';
+        }
+        
+        if (isset($this->request->get['date'])) {
+            $data['date'] = $this->request->get['date'];
+        } else {
+            $data['date'] = date('Y-m-d');
+        }
+        
+        if (isset($this->request->get['date-out'])) {
+            $data['date_out'] = $this->request->get['date-out'];
+        } else {
+            $date2=date('d')+2;
+            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+        }
+        
+        
+        if (isset($this->request->get['adults'])) {
+            $data['adults'] = $this->request->get['adults'];
+        } else {
+            $data['adults'] = '1';
         }
 
         if (isset($this->request->get['tag'])) {
@@ -125,12 +159,14 @@ class ControllerProductSearch extends Controller {
         if (isset($this->request->get['limit'])) {
             $url .= '&limit=' . $this->request->get['limit'];
         }
-
+        
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('product/search', $url)
         );
-
+        
+        $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+        
         if (isset($this->request->get['search'])) {
             $data['heading_title'] = $this->language->get('heading_title') . ' - ' . $this->request->get['search'];
         } else {
@@ -161,6 +197,14 @@ class ControllerProductSearch extends Controller {
         $data['text_available'] = $this->language->get('text_available');
         $data['text_freewifi'] = $this->language->get('text_freewifi');
         $data['text_nowifi'] = $this->language->get('text_nowifi');
+        $data['text_rate_superb'] = $this->language->get('text_rate_superb');
+        $data['text_rate_fantastic'] = $this->language->get('text_rate_fantastic');
+        $data['text_rate_verygood'] = $this->language->get('text_rate_verygood');
+        $data['text_rate_good'] = $this->language->get('text_rate_good');
+        $data['text_rate_bad'] = $this->language->get('text_rate_bad');
+        $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
+        $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
+        $data['text_labelguest'] = $this->language->get('text_labelguest');
 
         $data['entry_search'] = $this->language->get('entry_search');
         $data['entry_description'] = $this->language->get('entry_description');
@@ -277,7 +321,7 @@ class ControllerProductSearch extends Controller {
                 $product_total = $this->model_catalog_product->getTotalProducts($filter_dataa);
 
                 $products = $this->model_catalog_product->getProducts($filter_dataa);
-
+                
                 $data['proparents'][] = array(
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
@@ -288,6 +332,7 @@ class ControllerProductSearch extends Controller {
                     'special' => $special,
                     'tax' => $tax,
                     'ratingp' => $result['rating'],
+                    'pareviews' => sprintf($this->language->get('text_pareviews'), (int) $result['pareviews']),
                     'product_total' => $product_total,
                     'hrefp' => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
                 );
@@ -323,14 +368,21 @@ class ControllerProductSearch extends Controller {
                     }
                     
                     $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
-
+                    
                     foreach ($product_prices as $value) {
-                        $data['product_prices'][] =array(
-                         'product_price_value'   => $this->currency->format($this->tax->calculate($value['product_price_value'], $proparent_info['tax_class_id'], $this->config->get('config_tax'))),
-                         'product_date'          => $value['product_date'],
-                         'product_id'            => $value['product_id']
-                        ); 
+                    if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                        $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
+                    }else{
+                        $price_cost='';
                     }
+                    $data['product_prices'][] =array(
+                     'product_price_value'   => $price_cost,
+                     'product_date'          => $value['product_date'],
+                     'product_id'            => $value['product_id']
+                    ); 
+                }
+
+                    
                     $data['proparents'][$i][] = array(
                         'product_id' => $product['product_id'],
                         'thumb' => $image,
@@ -372,7 +424,9 @@ class ControllerProductSearch extends Controller {
             if (isset($this->request->get['limit'])) {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
-
+            
+            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+        
             $data['sorts'] = array();
 
             $data['sorts'][] = array(
@@ -435,7 +489,9 @@ class ControllerProductSearch extends Controller {
             if (isset($this->request->get['order'])) {
                 $url .= '&order=' . $this->request->get['order'];
             }
-
+             
+            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+        
             $data['limits'] = array();
 
             $limits = array_unique(array($this->config->get('config_product_limit'), 25, 50, 75, 100));
@@ -483,7 +539,9 @@ class ControllerProductSearch extends Controller {
             if (isset($this->request->get['limit'])) {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
- $data['aa'] = $proparent_total;
+            
+            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+        
             $pagination = new Pagination();
             $pagination->total = $proparent_total;
             $pagination->page = $page;

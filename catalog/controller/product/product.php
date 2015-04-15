@@ -6,7 +6,31 @@ class ControllerProductProduct extends Controller {
 
     public function index() {
         $this->load->language('product/product');
-
+        
+        $this->load->language('product/search');
+        
+        $this->load->language('product/category');
+        
+         if (isset($this->request->get['date'])) {
+            $data['date'] = $this->request->get['date'];
+        } else {
+            $data['date'] = date('Y-m-d');
+        }
+        
+        if (isset($this->request->get['date-out'])) {
+            $data['date_out'] = $this->request->get['date-out'];
+        } else {
+            $date2=date('d')+2;
+            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+        }
+        
+        
+        if (isset($this->request->get['adults'])) {
+            $data['adults'] = $this->request->get['adults'];
+        } else {
+            $data['adults'] = '1';
+        }
+        
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -165,11 +189,17 @@ class ControllerProductProduct extends Controller {
         $product_info = $this->model_catalog_product->getProduct($product_id);
         
         foreach ($product_prices as $value) {
-            $data['product_prices'][] =array(
-             'product_price_value'   => $this->currency->format($this->tax->calculate($value['product_price_value'], $product_info['tax_class_id'], $this->config->get('config_tax'))),
-             'product_date'          => $value['product_date']
-            ); 
-        }
+                    if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                         $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+                    }else{
+                         $price_cost='';
+                    }
+                    $data['product_prices'][] =array(
+                     'product_price_value'   => $price_cost,
+                     'product_date'          => $value['product_date'],
+                     'product_id'            => $value['product_id']
+                    ); 
+                }
         
         if ($product_info) {
             $url = '';
@@ -257,6 +287,10 @@ class ControllerProductProduct extends Controller {
             $data['text_tags'] = $this->language->get('text_tags');
             $data['text_related'] = $this->language->get('text_related');
             $data['text_loading'] = $this->language->get('text_loading');
+            $data['text_search'] = $this->language->get('text_search');
+            $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
+            $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
+            $data['text_labelguest'] = $this->language->get('text_labelguest');
 
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');

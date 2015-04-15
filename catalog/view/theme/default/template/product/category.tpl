@@ -110,7 +110,8 @@
                         <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
                         <div>
                             <div class="caption">
-                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
+                                <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a>
+                                    <span class="rating">
                                     <?php for ($i = 1; $i <= 5; $i++) { ?>
                                     <?php if ($proparent['star'] < $i) { ?>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -118,7 +119,43 @@
                                     <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                     <?php } ?>
                                     <?php } ?>
-                                </span></h4>
+                                </span>
+                                </h4>
+                                 <div class="pull-right text-right text-primary">
+                                     <h4 class ="text-primary">
+                                         <?php if ($proparent['ratingp']) { ?>
+                                    <?php
+                                        switch ($proparent['ratingp']) {
+                                            case "10":
+                                                $text_rating = $text_rate_superb;
+                                                break;
+                                            case "9":
+                                                $text_rating = $text_rate_superb;
+                                                break;
+                                            case "8":
+                                                $text_rating = $text_rate_fantastic;
+                                                break;
+                                            case "7":
+                                                $text_rating = $text_rate_verygood;
+                                                break;
+                                            case "6":
+                                                $text_rating = $text_rate_good;
+                                                break;
+                                            case "0":
+                                                $text_rating = '';
+                                                $rating = '';
+                                                break;
+                                            default:
+                                                $text_rating = $text_rate_bad;
+                                        }
+                                        ?>
+                                    <?php echo $text_rating.' '.$proparent['ratingp']; ?>
+                                    <?php } ?>
+                                </h4>
+                                     <div>
+                                         <?php echo $proparent['pareviews']; ?>
+                                     </div>
+                                 </div>
                                 <p><strong><?php if ($proparent['wifi'] == 1) { ?>
                                     <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
                                 <?php } else { ?>
@@ -161,7 +198,21 @@
                                                     <span class="col-xs-3 text-success"><strong><?php echo $text_available; ?></strong></span>
                                                     <?php } ?>
                                                     <?php } ?>
-                                                    <span class="col-xs-3 text-right"><strong><?php echo $proparent[$i]['price'];?></strong></span>
+                                                    <span class="col-xs-3 text-right">
+                                                        <strong>
+                                                            <?php if (isset($product_prices)) { ?>
+                                                            <?php foreach ($product_prices as $product_price) { ?>
+                                                            <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
+                                                            <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
+                                                            <?php } else { ?>
+                                                            <?php $cost = ''; ?>
+                                                            <?php } ?>
+                                                            <?php } ?>
+                                                            <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                                                            <?php $price_cost = ''; ?>
+                                                            <?php } ?>
+                                                        </strong>
+                                                    </span>
                                                 </a> 
                                         </div>
                                         <?php ; } ?>

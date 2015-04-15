@@ -102,6 +102,51 @@
                 5
                 <?php } ?>
               </label>
+              <label class="radio-inline">
+                <?php if ($rating == 6) { ?>
+                <input type="radio" name="rating" value="6" checked="checked" />
+                6
+                <?php } else { ?>
+                <input type="radio" name="rating" value="6" />
+                6
+                <?php } ?>
+              </label>
+              <label class="radio-inline">
+                <?php if ($rating == 7) { ?>
+                <input type="radio" name="rating" value="7" checked="checked" />
+                7
+                <?php } else { ?>
+                <input type="radio" name="rating" value="7" />
+                7
+                <?php } ?>
+              </label>
+              <label class="radio-inline">
+                <?php if ($rating == 8) { ?>
+                <input type="radio" name="rating" value="8" checked="checked" />
+                8
+                <?php } else { ?>
+                <input type="radio" name="rating" value="8" />
+                8
+                <?php } ?>
+              </label>
+              <label class="radio-inline">
+                <?php if ($rating == 9) { ?>
+                <input type="radio" name="rating" value="9" checked="checked" />
+                9
+                <?php } else { ?>
+                <input type="radio" name="rating" value="9" />
+                9
+                <?php } ?>
+              </label>
+              <label class="radio-inline">
+                <?php if ($rating == 10) { ?>
+                <input type="radio" name="rating" value="10" checked="checked" />
+                10
+                <?php } else { ?>
+                <input type="radio" name="rating" value="10" />
+                10
+                <?php } ?>
+              </label>
               <?php if ($error_rating) { ?>
               <div class="text-danger"><?php echo $error_rating; ?></div>
               <?php } ?>

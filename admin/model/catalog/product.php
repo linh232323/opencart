@@ -35,11 +35,15 @@ class ModelCatalogProduct extends Model {
                 
 		if (isset($data['product_price'])) {
 			foreach ($data['product_price'] as $product_price) {
-				
+				  
+                                $product_price_gross = $this->db->escape($product_price['product_price_net']) + (($this->db->escape($product_price['product_price_net'])/100) * $this->db->escape($product_price['product_price_percent']));
+                
+                                $product_extra_gross = $this->db->escape($product_price['product_extra_net']) + (($this->db->escape($product_price['product_extra_net'])/100) * $this->db->escape($product_price['product_extra_percent']));
+
 				$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
 
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price = '" .  $this->db->escape($product_price['product_price_value']) . "'");
-					
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price_net = '" .  $this->db->escape($product_price['product_price_net']) . "', price_percent = '" .  $this->db->escape($product_price['product_price_percent']) . "', price_gross = '" .  $product_price_gross . "', extra_net = '" .  $this->db->escape($product_price['product_extra_net']) . "', extra_percent = '" .  $this->db->escape($product_price['product_extra_percent']) . "', extra_gross = '" .  $product_extra_gross . "', discount = '" .  $this->db->escape($product_price['product_price_discount']) . "'");
+				
 			}
 		}
 
@@ -176,9 +180,14 @@ class ModelCatalogProduct extends Model {
 
 		if (!empty($data['product_price'])) {
 			foreach ($data['product_price'] as $product_price) {
-					$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+					
+                                $product_price_gross = $this->db->escape($product_price['product_price_net']) + (($this->db->escape($product_price['product_price_net'])/100) * $this->db->escape($product_price['product_price_percent']));
+                
+                                $product_extra_gross = $this->db->escape($product_price['product_extra_net']) + (($this->db->escape($product_price['product_extra_net'])/100) * $this->db->escape($product_price['product_extra_percent']));
 
-					$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price = '" .  $this->db->escape($product_price['product_price_value']) . "'");
+				$this->db->query("DELETE FROM " . DB_PREFIX . "product_price WHERE product_id = '" . (int)$product_id . "' AND price_id = '" . (int)$product_price['price_id'] . "'");
+
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_price SET product_id = '" . (int)$product_id . "', price_id = '" . (int)$product_price['price_id'] . "', date_form = '" . $product_price['product_date']['1']['date'] . "', date_to = '" . $product_price['product_date']['2']['date'] . "', price_net = '" .  $this->db->escape($product_price['product_price_net']) . "', price_percent = '" .  $this->db->escape($product_price['product_price_percent']) . "', price_gross = '" .  $product_price_gross . "', extra_net = '" .  $this->db->escape($product_price['product_extra_net']) . "', extra_percent = '" .  $this->db->escape($product_price['product_extra_percent']) . "', extra_gross = '" .  $product_extra_gross . "', discount = '" .  $this->db->escape($product_price['product_price_discount']) . "'");
 				
 			}
 		}
@@ -395,7 +404,7 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 		
-		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
+		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id']) && $data['filter_user_id'] != 1) {
 			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
 		}
 		
@@ -532,7 +541,14 @@ class ModelCatalogProduct extends Model {
 
 			$product_price_data[] = array(
 				'price_id'                  => $product_price['price_id'],
-				'product_price_value'       => $product_date['price'],
+				'product_id'                => $product_date['product_id'],
+				'product_price_net'         => $product_date['price_net'],
+				'product_price_percent'     => $product_date['price_percent'],
+				'product_price_gross'       => $product_date['price_gross'],
+				'product_price_discount'    => $product_date['discount'],
+				'product_extra_net'         => $product_date['extra_net'],
+				'product_extra_percent'     => $product_date['extra_percent'],
+				'product_extra_gross'       => $product_date['extra_gross'],
 				'product_date'              => $product_date_data
 			);
 		}
@@ -694,7 +710,7 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
+		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id']) && $data['filter_user_id'] != 1) {
 			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
 		}
 

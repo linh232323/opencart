@@ -1,14 +1,3 @@
-Skip to content
-Sign up Sign in This repository
-Explore
-Features
-Enterprise
-Blog
- Watch 1  Star 0  Fork 0 linh232323/opencart
- branch: master  opencart/catalog/view/javascript/common.js
-@linh232323linh232323 13 days ago fix language
-1 contributor
-RawBlameHistory     Executable File  480 lines (379 sloc)  12.212 kb
 function getURLVar(key) {
 	var value = [];
 
@@ -101,10 +90,17 @@ $(document).ready(function() {
 			url += '&search=' + encodeURIComponent(value);
 		}
                 
-		var date = $('search input[name=\'date\']').val();
+		var datein = $('search input[name=\'date-in\']').val();
 
-		if (date) {
-			url += '&date=' + encodeURIComponent(date);
+		if (datein) {
+			url += '&date=' + encodeURIComponent(datein);
+		}
+                
+                
+		var dateout = $('search input[name=\'date-out\']').val();
+
+		if (dateout) {
+			url += '&date-out=' + encodeURIComponent(dateout);
 		}
                 
 		var adults = $('search select[name=\'adults\']').val();
@@ -489,5 +485,3 @@ $(document).delegate('.agree', 'click', function(e) {
 		});
 	}
 })(window.jQuery);
-Status API Training Shop Blog About
-© 2015 GitHub, Inc. Terms Privacy Security Contact

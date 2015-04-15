@@ -5,7 +5,8 @@ class ControllerCommonSearchHotel extends Controller {
 
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_labelname'] = $this->language->get('text_labelname');
-		$data['text_labeldate'] = $this->language->get('text_labeldate');
+		$data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
+		$data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
 		$data['text_labelguest'] = $this->language->get('text_labelguest');
 
 		if (isset($this->request->get['search'])) {

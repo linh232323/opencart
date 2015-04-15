@@ -75,12 +75,12 @@ class ControllerCatalogProParent extends Controller {
                  
                 $user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                
 		$product = $this->model_catalog_proparent->getProparent($this->request->get['proparent_id']);
                 
                 if(isset($product['author_id'])){
-                    if($product['author_id'] == $user_id){
+                    if($product['author_id'] == $user_id || $user_id == 1){
                         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
                                 $this->model_catalog_proparent->editProparent($this->request->get['proparent_id'], $this->request->post);
 
@@ -242,7 +242,7 @@ class ControllerCatalogProParent extends Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                 
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -661,7 +661,7 @@ class ControllerCatalogProParent extends Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                 
                 $data['author_id'] = $user_id;
                 

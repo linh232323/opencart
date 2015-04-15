@@ -40,4 +40,9 @@ $_['text_rooms']        = 'phòng';
 $_['text_available']    = 'Còn phòng';
 $_['text_freewifi']     = 'Wi-Fi Miễn phí';
 $_['text_nowifi']       = 'Không Wi-Fi';
+$_['text_rate_superb']  = 'Xuất sắc';
+$_['text_rate_fantastic']= 'Tuyệt vời';
+$_['text_rate_verygood']= 'Rất tốt';
+$_['text_rate_good']    = 'Tốt';
+$_['text_rate_bad']     = 'Tệ';
 ?>

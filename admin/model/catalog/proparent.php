@@ -373,7 +373,7 @@ class ModelCatalogProParent extends Model {
 			$sql .= " AND p.star = '" . (int)$data['filter_star'] . "'";
 		}
                 
-		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id'])) {
+		if (isset($data['filter_user_id']) && !is_null($data['filter_user_id']) && $data['filter_user_id'] != 1) {
 			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
 		}
 		
@@ -621,8 +621,10 @@ class ModelCatalogProParent extends Model {
 
 		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
-                $sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
-
+                if (isset($data['filter_user_id']) && !is_null($data['filter_user_id']) && $data['filter_user_id'] != 1) {
+			$sql .= " AND p.author_id = '" . (int)$data['filter_user_id'] . "'";
+		}
+                
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}

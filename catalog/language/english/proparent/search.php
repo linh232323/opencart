@@ -4,7 +4,6 @@ $_['heading_title']     = 'Search';
 $_['heading_tag']		= 'Tag - ';
 
 // Text
-$_['text_search']       = 'Proparents meeting the search criteria';
 $_['text_keyword']      = 'Keywords';
 $_['text_category']     = 'All Categories';
 $_['text_sub_category'] = 'Search in subcategories';
@@ -23,6 +22,8 @@ $_['text_name_asc']     = 'Name (A - Z)';
 $_['text_name_desc']    = 'Name (Z - A)';
 $_['text_price_asc']    = 'Price (Low &gt; High)';
 $_['text_price_desc']   = 'Price (High &gt; Low)';
+$_['text_maxadults_asc']= 'Max Adults (Low &gt; High)';
+$_['text_maxadults_desc']= 'Max Adults (High &gt; Low)';
 $_['text_rating_asc']   = 'Rating (Lowest)';
 $_['text_rating_desc']  = 'Rating (Highest)';
 $_['text_model_asc']    = 'Model (A - Z)';
@@ -35,6 +36,9 @@ $_['text_book']         = 'Book now';
 $_['text_available']    = 'Available';
 $_['text_freewifi']     = 'Free Wi-Fi';
 $_['text_nowifi']       = 'No Wi-Fi';
+$_['text_labeldate_in'] = 'Check in:';
+$_['text_labeldate_out'] = 'Check out:';
+$_['text_labelguest'] = 'Max:';
 
 // Entry
 $_['entry_search']      = 'Search Criteria';

@@ -465,24 +465,36 @@
             <div class="tab-pane" id="tab-price">
               <div class="table-responsive">
                   <div class="col-sm-10">
-                  <?php if ($error_product_price_value) { ?>
-                  <div class="text-danger"><?php echo ($error_product_price_value) ?></div>
+                  <?php if ($error_product_price_net) { ?>
+                  <div class="text-danger"><?php echo ($error_product_price_net) ?></div>
                   <?php } ?>
                 </div>
                 <table id="price" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left"><?php echo $entry_price; ?></td>
-                      <td class="text-left"><?php echo $entry_date; ?></td>
-                      <td></td>
+                      <td class="text-left"><?php echo $entry_price_net; ?></td>
+                      <td class="text-left col-md-1"><?php echo $entry_price_percent; ?></td>
+                      <td class="text-left"><?php echo $entry_price_gross; ?></td>
+                      <td class="text-left"><?php echo $entry_extra_net; ?></td>
+                      <td class="text-left col-md-1"><?php echo $entry_extra_percent; ?></td>
+                      <td class="text-left"><?php echo $entry_extra_gross; ?></td>
+                      <td class="text-left col-md-1"><?php echo $entry_discount; ?></td>
+                      <td class="text-left col-md-3"><?php echo $entry_date; ?></td>
+                      <td width="40px"></td>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $price_row = 0; ?>
                     <?php foreach ($product_prices as $product_price) { ?>
                     <tr id="price-row<?php echo $price_row; ?>">
-                      <td class="text-left" style="width: 40%;"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_value]" value="<?php echo $product_price['product_price_value']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" />
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_net]" value="<?php echo $product_price['product_price_net']; ?>" placeholder="<?php echo $entry_price_net; ?>" class="form-control" />
                         <input type="hidden" name="product_price[<?php echo $price_row; ?>][price_id]" value="<?php echo $product_price['price_id']; ?>" /></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_percent]" value="<?php echo $product_price['product_price_percent']; ?>" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" /></td>
+                      <td class="text-left"><input type="text" placeholder="<?php echo $product_price['product_price_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_extra_net]" value="<?php echo $product_price['product_extra_net']; ?>" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_extra_percent]" value="<?php echo $product_price['product_extra_percent']; ?>" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" /></td>
+                      <td class="text-left"><input type="text" placeholder="<?php echo $product_price['product_extra_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_discount]" value="<?php echo $product_price['product_price_discount']; ?>" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>
                       <td class="text-left">
                         <div class="input-group"><span class="input-group-addon">Date_form</span>
                           <input type="date" name="product_price[<?php echo $price_row; ?>][product_date][1][date]" rows="1" class="form-control" value="<?php echo isset($product_price['product_date']['1']['date']) ? $product_price['product_date']['1']['date'] : ''; ?>"/>
@@ -498,7 +510,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="2"></td>
+                      <td colspan="8"></td>
                       <td class="text-left"><button type="button" onclick="addPrice();" data-toggle="tooltip" title="<?php echo $button_price_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
@@ -1168,10 +1180,16 @@ var price_row = <?php echo $price_row; ?>;
 
 function addPrice() {
     html  = '<tr id="price-row' + price_row + '">';
-	html += '  <td class="text-left" style="width: 20%;"><input type="text" name="product_price[' + price_row + '][product_price_value]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /><input type="hidden" name="product_price[' + price_row + '][price_id]" value="" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_net]" value="" placeholder="<?php echo $entry_price_net; ?>" class="form-control" /><input type="hidden" name="product_price[' + price_row + '][price_id]" value="" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_percent]" value="" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_gross]" value="" placeholder="<?php echo $entry_price_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_net]" value="" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_percent]" value="" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_gross]" value="" placeholder="<?php echo $entry_extra_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_discount]" value="" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left">';
 	html += '<div class="input-group"><span class="input-group-addon">Date_form</span><input type="date" name="product_price[' + price_row + '][product_date][1][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
-	html += '<div class="input-group"><span class="input-group-addon">Date_to</span><input type="date" name="product_price[' + price_row + '][product_date][2][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
+	html += '<div class="input-group"><span class="input-group-addon">&nbsp;&nbsp;Date_to&nbsp;&nbsp;&nbsp;</span><input type="date" name="product_price[' + price_row + '][product_date][2][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
 	html += '  </td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#price-row' + price_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';

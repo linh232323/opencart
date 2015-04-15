@@ -15,7 +15,7 @@ $_['text_no']               = 'Không';
 $_['text_none']             = ' --- Không --- ';
 $_['text_select']           = ' --- Chọn --- ';
 $_['text_all_zones']        = 'Tất cả các khu vực';
-$_['text_pagination']       = 'Hiển thị {start} đến {end} trong {total} ({pages} Trang)';
+$_['text_pagination']       = 'Hiển thị %d đến %d trong %d (%d Trang)';
 $_['text_separator']        = ' &raquo; ';
 
 // Buttons

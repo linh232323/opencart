@@ -79,11 +79,11 @@ class ControllerCatalogProduct extends Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                
 		$product = $this->model_catalog_product->getProduct($this->request->get['product_id']);
                 
-                if($product['author_id'] == $user_id){
+                if($product['author_id'] == $user_id || $user_id == 1){
                     if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
                             $this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
@@ -258,7 +258,7 @@ class ControllerCatalogProduct extends Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                 
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -442,11 +442,11 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_price'] = $this->language->get('entry_price');
 		$data['entry_date'] = $this->language->get('entry_date');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_price'] = $this->language->get('entry_price');
 
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_add'] = $this->language->get('button_add');
@@ -654,6 +654,14 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
+		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_price_net'] = $this->language->get('entry_price_net');
+		$data['entry_price_percent'] = $this->language->get('entry_price_percent');
+		$data['entry_price_gross'] = $this->language->get('entry_price_gross');
+		$data['entry_extra_net'] = $this->language->get('entry_extra_net');
+		$data['entry_extra_percent'] = $this->language->get('entry_extra_percent');
+		$data['entry_extra_gross'] = $this->language->get('entry_extra_gross');
+		$data['entry_discount'] = $this->language->get('entry_discount');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -703,7 +711,7 @@ class ControllerCatalogProduct extends Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
                 
-                $user_id = $user_info['user_id'];
+                $user_id = $user_info['user_group_id'];
                 
                 $data['author_id'] = $user_id;
                 
@@ -713,10 +721,28 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['product_price_value'])) {
-			$data['error_product_price_value'] = $this->error['product_price_value'];
+		if (isset($this->error['product_price_net'])) {
+			$data['error_product_price_net'] = $this->error['product_price_net'];
 		} else {
-			$data['error_product_price_value'] = array();
+			$data['error_product_price_net'] = array();
+		}
+                
+		if (isset($this->error['product_extra_percent'])) {
+			$data['error_product_extra_percent'] = $this->error['product_extra_percent'];
+		} else {
+			$data['error_product_extra_percent'] = array();
+		}
+                
+		if (isset($this->error['product_price_percent'])) {
+			$data['error_product_price_percent'] = $this->error['product_price_percent'];
+		} else {
+			$data['error_product_price_percent'] = array();
+		}
+                
+		if (isset($this->error['product_price_discount'])) {
+			$data['error_product_price_discount'] = $this->error['product_price_discount'];
+		} else {
+			$data['error_product_price_discount'] = array();
 		}
                 
 		if (isset($this->error['name'])) {
@@ -1203,11 +1229,22 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['product_prices'] = array();
                 
-		foreach ($product_prices as $product_price) {
+                foreach ($product_prices as $product_price) {
+                    
+                    $product_extra_gross = (int)$product_price['product_extra_net'] + (((int)$product_price['product_extra_net']/100) * (int)$product_price['product_extra_percent']);
+                    
+                    $product_price_gross = (int)$product_price['product_price_net'] + (((int)$product_price['product_price_net']/100) * (int)$product_price['product_price_percent']);
+
 			$data['product_prices'][] = array(
 				'price_id'                   => $product_price['price_id'],
 				'product_date'               => $product_price['product_date'],
-				'product_price_value'        => $product_price['product_price_value']
+				'product_price_net'          => $product_price['product_price_net'],
+				'product_price_percent'      => $product_price['product_price_percent'],
+				'product_price_gross'        => $product_price_gross,
+				'product_extra_net'          => $product_price['product_extra_net'],
+				'product_extra_percent'      => $product_price['product_extra_percent'],
+				'product_extra_gross'        => $product_extra_gross,
+				'product_price_discount'     => $product_price['product_price_discount']
 			);
 		}
 
@@ -1435,8 +1472,8 @@ class ControllerCatalogProduct extends Controller {
 		}
                 
 		foreach ($this->request->post['product_price'] as $value) {
-			if (!is_numeric($value['product_price_value'])) {
-				$this->error['product_price_value'] = $this->language->get('error_product_price_value');
+			if (!is_numeric($value['product_price_net'])) {
+				$this->error['product_price_net'] = $this->language->get('error_product_price_net');
 			}
 		}
 

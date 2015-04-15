@@ -4,9 +4,17 @@
         <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_labelname; ?>" class="form-control input" />
 		<br />
 		<div class="col-xs-12 form-group">
-            <label class="control-label" for="input-option219"><?php echo $text_labeldate; ?></label>
+            <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
             <div class="col-xs-6 input-group date">
-                <input type="text" name="date" value="" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                <input type="text" name="date-in" value="" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <br/>
+            <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
+            <div class="col-xs-6 input-group date">
+                <input type="text" name="date-out" value="" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                 </span>

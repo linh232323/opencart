@@ -570,7 +570,7 @@ class ControllerCatalogPaReview extends Controller {
 			$this->error['text'] = $this->language->get('error_text');
 		}
 
-		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
+		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 10) {
 			$this->error['rating'] = $this->language->get('error_rating');
 		}
 

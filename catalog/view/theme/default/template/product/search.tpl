@@ -21,7 +21,6 @@
                     </div>
                     <div id="form-search"  class="box box-content form-group">
                         <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
-                      
                             <div class="form-group col-sm-12">
                                 <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
                             </div>
@@ -70,6 +69,36 @@
                                 <?php } ?>
                                 <?php echo $entry_description; ?></label>
                         </div>
+                            <div id="search_home" class="form-group col-sm-12">
+                                <div class="form-group">
+                                    <div class="">
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
+                                        <div class="col-xs-12 input-group date">
+                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                        <br />
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
+                                        <div class="col-xs-12 input-group date">
+                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 form-group">
+                                        <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
+                                                    <select name="adults" class="form-control ">
+                                            <option value="">--- Please Select ---</option>
+                                            <?php for($i=1;$i<=3;$i++) { ?>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
                     </div>
                 </div>
@@ -130,6 +159,41 @@
                                             <?php } ?>
                                             <?php } ?>
                                         </span></h4>
+                                    <div class="pull-right text-right text-primary">
+                                     <h4 class ="text-primary">
+                                         <?php if ($proparent['ratingp']) { ?>
+                                    <?php
+                                        switch ($proparent['ratingp']) {
+                                            case "10":
+                                                $text_rating = $text_rate_superb;
+                                                break;
+                                            case "9":
+                                                $text_rating = $text_rate_superb;
+                                                break;
+                                            case "8":
+                                                $text_rating = $text_rate_fantastic;
+                                                break;
+                                            case "7":
+                                                $text_rating = $text_rate_verygood;
+                                                break;
+                                            case "6":
+                                                $text_rating = $text_rate_good;
+                                                break;
+                                            case "0":
+                                                $text_rating = '';
+                                                $rating = '';
+                                                break;
+                                            default:
+                                                $text_rating = $text_rate_bad;
+                                        }
+                                        ?>
+                                    <?php echo $text_rating.' '.$proparent['ratingp']; ?>
+                                    <?php } ?>
+                                </h4>
+                                     <div>
+                                         <?php echo $proparent['pareviews']; ?>
+                                     </div>
+                                 </div>
                                     <p><strong><?php if ($proparent['wifi'] == 1) { ?>
                                     <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
                                     <?php } else { ?>
@@ -176,21 +240,17 @@
                                                 <?php } ?>
                                                 <span class="col-xs-3 text-right">
                                                     <strong> 
-                                                <?php $date_in = strtotime(date('y-m-d')); ?>
                                                 <?php if (isset($product_prices)) { ?>
                                                 <?php foreach ($product_prices as $product_price) { ?>
-                                                <?php if ($product['product_id'] == $product_price['product_id']) { ?>
-                                                <?php if (($date_in>=strtotime($product_price['product_date']['1']['date']))&&($date_in<=strtotime($product_price['product_date']['2']['date']))) { ?>
-                                                <?php $cost = $product_price['product_price_value']; ?>
-                                                <?php } ?>
-                                                <?php } else { ?>
-                                                <?php $cost ='' ?>
-                                                <?php } ?>
-                                                <?php } ?>
+                                                <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
+                                                <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
                                                 <?php } else { ?>
                                                 <?php $cost = ''; ?>
                                                 <?php } ?>
-                                                <?php echo $cost; ?>
+                                                <?php } ?>
+                                                <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                                                <?php $price_cost = ''; ?>
+                                                <?php } ?>
                                                     </strong>
                                                 </span>
                                             </a> 
@@ -224,6 +284,24 @@ $('#button-search').bind('click', function () {
 
         if (search) {
             url += '&search=' + encodeURIComponent(search);
+        }
+        
+        var date = $('#content input[name=\'date-in\']').prop('value');
+
+        if (date) {
+            url += '&date=' + encodeURIComponent(date);
+        }
+        
+        var dateout = $('#content input[name=\'date-out\']').prop('value');
+
+        if (dateout) {
+            url += '&date-out=' + encodeURIComponent(dateout);
+        }
+        
+        var adults = $('#content select[name=\'adults\']').prop('value');
+
+        if (adults) {
+            url += '&adults=' + encodeURIComponent(adults);
         }
 
         var category_id = $('#content select[name=\'category_id\']').prop('value');
@@ -263,4 +341,18 @@ $('#button-search').bind('click', function () {
 
     $('select[name=\'category_id\']').trigger('change');
     --></script> 
+<script type="text/javascript">
+    <!--
+$('.date').datetimepicker({
+        pickTime: false
+    });
+    $('.datetime').datetimepicker({
+        pickDate: true,
+        pickTime: true
+    });
+    $('.time').datetimepicker({
+        pickDate: false
+    });
+    -->
+</script>
 <?php echo $footer; ?> 

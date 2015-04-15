@@ -4,7 +4,6 @@ $_['heading_title']     = 'Tìm Kiếm';
 $_['title']             = 'Chi Tiết Tìm Kiếm';
  
 // Text
-$_['text_search']       = 'Sản phẩm thỏa điều kiện tìm kiếm';
 $_['text_keyword']      = 'Từ khóa';
 $_['text_category']     = 'Tất cả danh mục';
 $_['text_sub_category'] = 'Tìm trong danh mục con';
@@ -34,6 +33,10 @@ $_['text_model_desc']   = 'Kiểu (Z - A)';
 $_['text_limit']        = 'Hiển thị:';
 $_['text_found']        = 'Tìm thấy ';
 $_['text_hotelin']      = ' khách sạn ở ';
+$_['text_labeldate_in'] = 'Ngày nhận phòng:';
+$_['text_labeldate_out']= 'Ngày trả phòng:';
+$_['text_labelguest']   = 'Tối đa :';
+
 
 // Entry
 $_['entry_search']      = 'Bạn đang tìm khách sạn ở đâu?';

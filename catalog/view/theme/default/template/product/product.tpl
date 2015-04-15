@@ -5,24 +5,11 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="row"><?php echo $column_left; ?>
-    <?php if ($column_left && $column_right) { ?>
-    <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
-    <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
-    <?php $class = 'col-sm-12'; ?>
-    <?php } ?>
-    <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
+  <div class="row">
+    <div id="content" class="col-sm-12"><?php echo $content_top; ?>
       <div class="row">
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } else { ?>
-        <?php $class = 'col-sm-8'; ?>
-        <?php } ?>
-        <div class="<?php echo $class; ?>">
+        <div class="col-sm-9">
+            <h1><?php echo $heading_title; ?></h1>
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
@@ -123,19 +110,29 @@
             <?php } ?>
           </div>
         </div>
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } else { ?>
-        <?php $class = 'col-sm-4'; ?>
-        <?php } ?>
-        <div class="<?php echo $class; ?>">
-          <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
-          </div>
-          <h1><?php echo $heading_title; ?></h1>
+        <div class="col-sm-3">
+          <div class="control-group">
+                <div class = "header-box-hightlight">
+                     <strong><i class="glyphicon glyphicon-search text-primary"></i> <?php echo $text_search;?></strong>
+                </div>
+                <div class = "content-box-hightlight">
+                    <table>
+                    <tr>
+                        <td><i class="glyphicon glyphicon-home text-primary"></i></td><td><?php echo substr($heading_title,0,18)."..."; ?></td>
+                    </tr>
+                    <tr>
+                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_in; ?> <?php echo $date; ?></td>
+                    </tr>
+                    <tr>
+                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_out; ?> <?php echo $date_out; ?></td>
+                    </tr>
+                    <tr>
+                        <td><i class="glyphicon glyphicon-user text-primary"></i><i class="glyphicon glyphicon-user text-warning"></i></td><td><?php echo $text_labelguest; ?> <?php echo $adults; ?></td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+            <br/>
           <ul class="list-unstyled">
             <?php if ($manufacturer) { ?>
             <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
@@ -146,21 +143,17 @@
             <?php } ?>
             <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
           </ul>
-          <?php $date_in = strtotime(date('y-m-d')); ?>
-          <?php if (isset($product_prices)) { ?>
-                  <?php foreach ($product_prices as $product_price) { ?>
-                  <?php if (($date_in>=strtotime($product_price['product_date']['1']['date']))&&($date_in<=strtotime($product_price['product_date']['2']['date']))) { ?>
-                  <?php $cost = $product_price['product_price_value']; ?>
-                  <?php } else { ?>
-                  <?php $cost = ''; ?>
-                  <?php } ?>
-                  <?php } ?>
-          <?php } else { ?>
-                  <?php $cost = ''; ?>
-          <?php } ?>
+            
           <ul class="list-unstyled">
             <li>
-              <h2><?php echo $cost; ?></h2>
+              <h2><?php if (isset($product_prices)) { ?>
+                <?php foreach ($product_prices as $product_price) { ?>
+                    <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
+                    <?php } ?>
+                    <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                <?php $price_cost = ''; ?>
+                <?php } ?>
+              </h2>
             </li>
           </ul>
           <div id="product">
@@ -312,24 +305,6 @@
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
             <?php } ?>
           </div>
-          <?php if ($review_status) { ?>
-          <div class="rating">
-            <p>
-              <?php for ($i = 1; $i <= 5; $i++) { ?>
-              <?php if ($rating < $i) { ?>
-              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-              <?php } else { ?>
-              <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-              <?php } ?>
-              <?php } ?>
-              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a></p>
-            <hr>
-            <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
-            <!-- AddThis Button END --> 
-          </div>
-          <?php } ?>
         </div>
       </div>
       <?php if ($products) { ?>
@@ -337,14 +312,7 @@
       <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
-        <?php } else { ?>
-        <?php $class = 'col-lg-3 col-md-3 col-sm-6 col-xs-12'; ?>
-        <?php } ?>
-        <div class="<?php echo $class; ?>">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
           <div class="product-thumb transition">
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
@@ -381,9 +349,9 @@
             </div>
           </div>
         </div>
-        <?php if (($column_left && $column_right) && ($i % 2 == 0)) { ?>
+        <?php if (($i % 2 == 0)) { ?>
         <div class="clearfix visible-md visible-sm"></div>
-        <?php } elseif (($column_left || $column_right) && ($i % 3 == 0)) { ?>
+        <?php } elseif (($i % 3 == 0)) { ?>
         <div class="clearfix visible-md"></div>
         <?php } elseif ($i % 4 == 0) { ?>
         <div class="clearfix visible-md"></div>
@@ -404,7 +372,7 @@
       </p>
       <?php } ?>
       <?php echo $content_bottom; ?></div>
-    <?php echo $column_right; ?></div>
+   </div>
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){

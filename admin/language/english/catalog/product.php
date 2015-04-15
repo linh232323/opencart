@@ -77,12 +77,20 @@ $_['entry_proparent']        = 'Proparents';
 $_['entry_filter']           = 'Filters';
 $_['entry_download']         = 'Downloads';
 $_['entry_related']          = 'Related Products';
-$_['entry_tag']          	 = 'Product Tags';
+$_['entry_tag']              = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
 $_['entry_price']            = 'Price';
 $_['entry_date']             = 'Date';
+$_['entry_price']            = 'Price';
+$_['entry_price_net']        = 'Price net';
+$_['entry_price_percent']    = 'Price percent';
+$_['entry_price_gross']      = 'Price gross';
+$_['entry_extra_net']        = 'Extra net';
+$_['entry_extra_percent']    = 'Extra percent';
+$_['entry_extra_gross']      = 'Extra gross';
+$_['entry_discount']         = 'Discount';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';

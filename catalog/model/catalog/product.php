@@ -218,7 +218,13 @@ class ModelCatalogProduct extends Model {
 			$product_price_data[] = array(
 				'price_id'                  => $product_price['price_id'],
 				'product_id'                => $product_date['product_id'],
-				'product_price_value'       => $product_date['price'],
+				'product_price_net'         => $product_date['price_net'],
+				'product_price_percent'     => $product_date['price_percent'],
+				'product_price_gross'       => $product_date['price_gross'],
+				'product_price_discount'    => $product_date['discount'],
+				'product_extra_net'         => $product_date['extra_net'],
+				'product_extra_percent'     => $product_date['extra_percent'],
+				'product_extra_gross'       => $product_date['extra_gross'],
 				'product_date'              => $product_date_data
 			);
 		}

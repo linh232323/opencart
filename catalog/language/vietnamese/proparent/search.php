@@ -3,7 +3,6 @@
 $_['heading_title']     = 'Tìm Kiếm';
  
 // Text
-$_['text_search']       = 'Sản phẩm thỏa điều kiện tìm kiếm';
 $_['text_keyword']      = 'Từ khóa';
 $_['text_category']     = 'Tất cả danh mục';
 $_['text_sub_category'] = 'Tìm trong danh mục con';
@@ -26,6 +25,8 @@ $_['text_name_asc']     = 'Tên (A - Z)';
 $_['text_name_desc']    = 'Tên (Z - A)';
 $_['text_price_asc']    = 'Giá (Thấp &gt; Cao)';
 $_['text_price_desc']   = 'Giá (Cao &gt; Thấp)';
+$_['text_maxadults_asc']    = 'Tối đa (Thấp &gt; Cao)';
+$_['text_maxadults_desc']   = 'Tối đa (Cao &gt; Thấp)';
 $_['text_rating_asc']   = 'Bình chọn (Thấp nhất)';
 $_['text_rating_desc']  = 'Bình chọn (Cao nhất)';
 $_['text_model_asc']    = 'Kiểu (A - Z)';
@@ -38,6 +39,9 @@ $_['text_rooms']        = 'phòng';
 $_['text_available']    = 'Còn phòng';
 $_['text_freewifi']     = 'Wi-Fi Miễn phí';
 $_['text_nowifi']       = 'Không Wi-Fi';
+$_['text_labeldate_in'] = 'Ngày nhận phòng:';
+$_['text_labeldate_out']= 'Ngày trả phòng:';
+$_['text_labelguest']   = 'Tối đa :';
 
 // Entry
 $_['entry_search']      = 'Tìm kiếm:';

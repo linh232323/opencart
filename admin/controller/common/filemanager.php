@@ -48,10 +48,19 @@ class ControllerCommonFileManager extends Controller {
 
 		// Split the array based on current page number and max number of items per page of 10
 		$images = array_splice($images, ($page - 1) * 16, 16);
+                
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $data['author_id'] = $user_id;
+                
 		foreach ($images as $image) {
+                    $user_name =basename($image);
+                    if($user_name == $user_id || $user_id == 1 || !is_numeric($user_name)){
 			$name = str_split(basename($image), 14);
-
 			if (is_dir($image)) {
 				$url = '';
 
@@ -86,6 +95,7 @@ class ControllerCommonFileManager extends Controller {
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 				);
 			}
+                    }
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -308,7 +318,7 @@ class ControllerCommonFileManager extends Controller {
 			$folder = str_replace(array('../', '..\\', '..'), '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
-			if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {
+			if ((utf8_strlen($folder) < 1) || (utf8_strlen($folder) > 128)) {
 				$json['error'] = $this->language->get('error_folder');
 			}
 
