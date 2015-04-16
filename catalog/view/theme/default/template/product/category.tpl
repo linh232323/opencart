@@ -5,15 +5,53 @@
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
     </ul>
-    <div class="row"><?php echo $column_left; ?>
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-sm-9'; ?>
-        <?php } else { ?>
-        <?php $class = 'col-sm-12'; ?>
-        <?php } ?>
-        <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
+    <div class="row">
+         <div class="col-sm-3">
+                <div class="panel-wrapper">
+                    <div class="box box-title">
+                        <h4 class="title"><strong> <?php echo $entry_search; ?></strong></h4>
+                    </div>
+                    <div id="form-search"  class="box box-content form-group">
+                        <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
+                            <div class="form-group col-sm-12">
+                                <input type="text" name="search" value="" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
+                            </div>
+                            <br/>
+                            <div id="search_home" class="form-group col-sm-12">
+                                <div class="form-group">
+                                    <div class="">
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
+                                        <div class="col-xs-12 input-group date">
+                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                        <br />
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
+                                        <div class="col-xs-12 input-group date">
+                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 form-group">
+                                        <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
+                                                    <select name="adults" class="form-control ">
+                                            <option value="">--- Please Select ---</option>
+                                            <?php for($i=1;$i<=3;$i++) { ?>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                    </div>
+                </div>
+            </div>
+        <div id="content" class="col-sm-9"><?php echo $content_top; ?>
             <h2><?php echo $heading_title; ?></h2>
             <?php if ($thumb || $description) { ?>
 

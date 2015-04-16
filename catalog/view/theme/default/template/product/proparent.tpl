@@ -143,6 +143,47 @@
                         <?php } ?>
                         <?php } ?>
                     </div>
+                    <div class="row">
+                         <div id="search_home" class="form-group col-sm-12">
+                            <div class="form-group">
+                                <h4 class="col-xs-12">
+                                    <?php echo $text_labeldate_in; ?> <?php echo $date; ?> - <?php echo $text_labeldate_out; ?> <?php echo $date_out; ?>
+                                </h4>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-3 pull-left">
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
+                                        <div class="input-group date">
+                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
+                                        <div class="input-group date">
+                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 form-group">
+                                        <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
+                                                    <select name="adults" class="form-control ">
+                                            <option value="">--- Please Select ---</option>
+                                            <?php for($i=1;$i<=3;$i++) { ?>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-3 pull-right">
+                                        <button type="button"id="button-search" class="btn btn-primary btn-block" style="height: 73px;"><strong><?php echo $button_search; ?></strong></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php if (isset($products)) { ?>
                     <div class="row">
                         <div class="col-md-3">
@@ -651,6 +692,67 @@ $('#button-search').bind('click', function () {
         if (search) {
             url += '&search=' + encodeURIComponent(search);
         }
+        
+        var date = $('#content input[name=\'date-in\']').prop('value');
+
+        if (date) {
+            url += '&date=' + encodeURIComponent(date);
+        }
+        
+        var dateout = $('#content input[name=\'date-out\']').prop('value');
+
+        if (dateout) {
+            url += '&date-out=' + encodeURIComponent(dateout);
+        }
+        
+        var adults = $('#content select[name=\'adults\']').prop('value');
+
+        if (adults) {
+            url += '&adults=' + encodeURIComponent(adults);
+        }
+
+        var category_id = $('#content select[name=\'category_id\']').prop('value');
+
+        if (category_id > 0) {
+            url += '&category_id=' + encodeURIComponent(category_id);
+        }
+
+        var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+
+        if (sub_category) {
+            url += '&sub_category=true';
+        }
+
+        var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+
+        if (filter_description) {
+            url += '&description=true';
+        }
+
+        location = url;
+    });
+
+    $('#content input[name=\'search\']').bind('keydown', function (e) {
+        if (e.keyCode == 13) {
+            $('#button-search').trigger('click');
+        }
+    });
+
+    $('select[name=\'category_id\']').on('change', function () {
+        if (this.value == '0') {
+            $('input[name=\'sub_category\']').prop('disabled', true);
+        } else {
+            $('input[name=\'sub_category\']').prop('disabled', false);
+        }
+    });
+
+    $('select[name=\'category_id\']').trigger('change');
+    --></script> 
+<script type="text/javascript"><!--
+$('#button-search').bind('click', function () {
+        url = 'index.php?route=product/search';
+
+
         
         var date = $('#content input[name=\'date-in\']').prop('value');
 

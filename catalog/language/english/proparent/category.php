@@ -1,5 +1,6 @@
 <?php
 // Text
+$_['text_keyword']      = 'Keywords';
 $_['text_refine']       = 'Refine Search';
 $_['text_proparent']      = 'Proparents';
 $_['text_error']        = 'Category not found!';
@@ -39,5 +40,10 @@ $_['text_ourlast']      = 'Our last';
 $_['text_ourlastroom']  = 'Our last room !!!';
 $_['text_rooms']        = 'rooms';
 $_['text_available']    = 'Available';
-$_['text_freewifi']         = 'Free Wi-Fi';
-$_['text_nowifi']         = 'No Wi-Fi';
+$_['text_freewifi']     = 'Free Wi-Fi';
+$_['text_nowifi']       = 'No Wi-Fi';
+$_['text_labeldate_in'] = 'Check in:';
+$_['text_labeldate_out'] = 'Check out:';
+$_['text_labelguest'] = 'Max:';
+
+$_['entry_search']      = 'Search';

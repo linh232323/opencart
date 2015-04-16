@@ -44,12 +44,12 @@ $(document).ready(function() {
 	});
 		
 	// Currency
-	$('#currency .currency-select').on('click', function(e) {
+	$('.header-currency #currency .currency-select').on('click', function(e) {
 		e.preventDefault();
 
-		$('#currency input[name=\'code\']').attr('value', $(this).attr('name'));
+		$('.header-currency #currency input[name=\'code\']').attr('value', $(this).attr('name'));
 
-		$('#currency').submit();
+		$('.header-currency #currency').submit();
 	});
 
 	// Language

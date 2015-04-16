@@ -510,12 +510,17 @@ footer h5 {
 	border-color: #dddddd #dddddd #b3b3b3 #b7b7b7;
 }
 .btn-primary {
-	color: #ffffff;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #229ac8;
-	background-image: -webkit-linear-gradient(top,#77c5fd,#016ec0);
-	background-repeat: repeat-x;
-	border-color: #1f90bb #1f90bb #145e7a;
+	color: #fff;
+        cursor: pointer;
+        font-size: 24px;
+        font-weight: 700;
+        height: 55px;
+        padding: 0 10px;
+        text-align: center;
+        background-color: #0283df;
+        border-radius: 7px;
+        background: -webkit-gradient(linear,left top,left bottom,from(#44b2ff),to(#006dbf));
+        border: solid 3px #109fff;
 }
 .btn-blue{
         border-color: #109fff;
@@ -527,7 +532,7 @@ footer h5 {
         background: linear-gradient(top,#77c5fd,#016ec0);
 }
 .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
-	background-color: #1f90bb;
+	border: solid 3px #1971ef;
 }
 .btn-warning {
 	color: #ffffff;

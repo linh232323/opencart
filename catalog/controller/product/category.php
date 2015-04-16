@@ -130,6 +130,8 @@ class ControllerProductCategory extends Controller {
 
             $data['text_refine'] = $this->language->get('text_refine');
             $data['text_empty'] = $this->language->get('text_empty');
+            $data['text_search'] = $this->language->get('text_search');
+            $data['text_keyword'] = $this->language->get('text_keyword');
             $data['text_quantity'] = $this->language->get('text_quantity');
             $data['text_manufacturer'] = $this->language->get('text_manufacturer');
             $data['text_model'] = $this->language->get('text_model');
@@ -153,13 +155,19 @@ class ControllerProductCategory extends Controller {
             $data['text_rate_good'] = $this->language->get('text_rate_good');
             $data['text_rate_bad'] = $this->language->get('text_rate_bad');
             $data['text_pareviews'] = $this->language->get('text_pareviews');
+            $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
+            $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
+            $data['text_labelguest'] = $this->language->get('text_labelguest');
  
+            $data['entry_search'] = $this->language->get('entry_search');
+        
             $data['button_cart'] = $this->language->get('button_cart');
             $data['button_wishlist'] = $this->language->get('button_wishlist');
             $data['button_compare'] = $this->language->get('button_compare');
             $data['button_continue'] = $this->language->get('button_continue');
             $data['button_list'] = $this->language->get('button_list');
             $data['button_grid'] = $this->language->get('button_grid');
+            $data['button_search'] = $this->language->get('button_search');
 
             // Set the last category breadcrumb
             $data['breadcrumbs'][] = array(

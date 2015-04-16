@@ -10,18 +10,18 @@
       <div class="row">
         <div class="col-sm-9">
             <h1><?php echo $heading_title; ?></h1>
-          <?php if ($thumb || $images) { ?>
-          <ul class="thumbnails">
-            <?php if ($thumb) { ?>
-            <li><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
-            <?php } ?>
-            <?php if ($images) { ?>
-            <?php foreach ($images as $image) { ?>
-            <li class="image-additional"><a class="thumbnail" href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>"> <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
-            <?php } ?>
-            <?php } ?>
-          </ul>
-          <?php } ?>
+                 <div class ='row thumb'>
+                    <?php if ($images || $thumb) { ?>
+                    <?php if ($images) { ?>
+                    <div id="sync1" class="owl-carousel">
+                        <?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['image']; ?>"/></div><?php } ?>
+                    </div>
+                    <div id="sync2" class="owl-carousel">
+                        <?php foreach ($images as $image) { ?><div class="item"><img src="<?php echo $image['thumb']; ?>"/></div><?php } ?>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+                </div>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
             <?php if ($attribute_groups) { ?>
@@ -35,23 +35,21 @@
             <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
             <?php if ($attribute_groups) { ?>
             <div class="tab-pane" id="tab-specification">
-              <table class="table table-bordered">
-                <?php foreach ($attribute_groups as $attribute_group) { ?>
-                <thead>
-                  <tr>
-                    <td colspan="2"><strong><?php echo $attribute_group['name']; ?></strong></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
-                  <tr>
-                    <td><?php echo $attribute['name']; ?></td>
-                    <td><?php echo $attribute['text']; ?></td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
-                <?php } ?>
-              </table>
+              <div class = "header-box-hightlight">
+                                <strong><?php echo $text_features;?> <?php echo $heading_title; ?></strong>
+                            </div>
+                            <div class = "content-box-hightlight">
+                                <table class="table">
+                                    <tbody>
+                                        <?php foreach ($attribute_groups as $attribute_group) { ?>
+                                        <tr>
+                                            <td><strong><?php echo $attribute_group['name']; ?></strong></td>
+                                            <td class="pull-left col-sm-12"><?php foreach ($attribute_group['attribute'] as $attribute) { ?><div class="col-md-4"><strong><i class = "glyphicon glyphicon-ok text-success" ></i></strong> <?php echo $attribute['name']; ?></div><?php } ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
             </div>
             <?php } ?>
             <?php if ($review_status) { ?>
@@ -148,9 +146,10 @@
             <li>
               <h2><?php if (isset($product_prices)) { ?>
                 <?php foreach ($product_prices as $product_price) { ?>
-                    <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
+                    <?php if (!empty($product_price['product_price_value'])){ ?> 
+                    <?php $price_cost = $product_price['product_price_value'];} ?>
                     <?php } ?>
-                    <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                    <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $product_price['product_price_null'];} ?>
                 <?php $price_cost = ''; ?>
                 <?php } ?>
               </h2>
@@ -563,4 +562,75 @@ $(document).ready(function() {
 	});
 });
 //--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function() {
+
+    var sync1 = $("#sync1");
+            var sync2 = $("#sync2");
+            sync1.owlCarousel({
+            singleItem : true,
+                    slideSpeed : 1000,
+                    navigation: true,
+                    pagination:false,
+                    afterAction : syncPosition,
+                    responsiveRefreshRate : 200,
+            });
+            sync2.owlCarousel({
+            items : 7,
+                    itemsDesktop      : [1199, 10],
+                    itemsDesktopSmall     : [979, 10],
+                    itemsTablet       : [768, 8],
+                    itemsMobile       : [479, 4],
+                    pagination:false,
+                    responsiveRefreshRate : 100,
+                    afterInit : function(el){
+                    el.find(".owl-item").eq(0).addClass("synced");
+                    }
+            });
+            function syncPosition(el){
+            var current = this.currentItem;
+                    $("#sync2")
+                    .find(".owl-item")
+                    .removeClass("synced")
+                    .eq(current)
+                    .addClass("synced")
+                    if ($("#sync2").data("owlCarousel") !== undefined){
+            center(current)
+            }
+            }
+
+    $("#sync2").on("click", ".owl-item", function(e){
+    e.preventDefault();
+            var number = $(this).data("owlItem");
+            sync1.trigger("owl.goTo", number);
+    });
+            function center(number){
+            var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+                    var num = number;
+                    var found = false;
+                    for (var i in sync2visible){
+            if (num === sync2visible[i]){
+            var found = true;
+            }
+            }
+
+            if (found === false){
+            if (num > sync2visible[sync2visible.length - 1]){
+            sync2.trigger("owl.goTo", num - sync2visible.length + 2)
+            } else{
+            if (num - 1 === - 1){
+            num = 0;
+            }
+            sync2.trigger("owl.goTo", num);
+            }
+            } else if (num === sync2visible[sync2visible.length - 1]){
+            sync2.trigger("owl.goTo", sync2visible[1])
+            } else if (num === sync2visible[0]){
+            sync2.trigger("owl.goTo", num - 1)
+            }
+
+            }
+
+    });
+//--></script>
 <?php echo $footer; ?>

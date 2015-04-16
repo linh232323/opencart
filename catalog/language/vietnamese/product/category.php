@@ -1,5 +1,6 @@
 <?php
 // Text
+$_['text_keyword']      = 'Từ khóa';
 $_['text_refine']       = 'Lọc tìm kiếm';
 $_['text_product']      = 'Sản phẩm';
 $_['text_error']        = 'Danh mục không tồn tại!';
@@ -27,4 +28,9 @@ $_['text_model_asc']    = 'Kiểu (A - Z)';
 $_['text_model_desc']   = 'Kiểu (Z - A)';
 $_['text_limit']        = 'Hiển thị:';
 $_['text_readmore']     = 'Xem thêm ...';
+$_['text_labeldate_in'] = 'Ngày nhận phòng:';
+$_['text_labeldate_out']= 'Ngày trả phòng:';
+$_['text_labelguest']   = 'Tối đa :';
+
+$_['entry_search']      = 'Tìm kiếm';
 ?>

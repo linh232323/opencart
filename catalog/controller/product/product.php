@@ -11,6 +11,8 @@ class ControllerProductProduct extends Controller {
         
         $this->load->language('product/category');
         
+        $this->load->language('proparent/category');
+        
          if (isset($this->request->get['date'])) {
             $data['date'] = $this->request->get['date'];
         } else {
@@ -190,15 +192,22 @@ class ControllerProductProduct extends Controller {
         
         foreach ($product_prices as $value) {
                     if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
-                         $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+                         $price = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+                         $dbprice = $value['product_price_gross'];
                     }else{
-                         $price_cost='';
+                         $price='';
                     }
+                    $dbprice_null = 0.0000;
+                    $price_null = $this->currency->format(0, $product_info['tax_class_id'], $this->config->get('config_tax'));
+                    if(!empty($dbprice)){$cost=$dbprice;}else{$cost=$dbprice_null;}
+                    $this->model_catalog_product->updatePrice($product_id,$cost);
                     $data['product_prices'][] =array(
-                     'product_price_value'   => $price_cost,
+                     'product_price_value'   => $price,
+                     'product_price_null'    => $price_null,
                      'product_date'          => $value['product_date'],
                      'product_id'            => $value['product_id']
                     ); 
+                    $price='';
                 }
         
         if ($product_info) {
@@ -291,6 +300,7 @@ class ControllerProductProduct extends Controller {
             $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
             $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
             $data['text_labelguest'] = $this->language->get('text_labelguest');
+            $data['text_features'] = $this->language->get('text_features');
 
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');
@@ -347,15 +357,18 @@ class ControllerProductProduct extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resize($result['image'], 740,400);
+                    $thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resize('placeholder.png',  740,400);
+                    $thumb = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
                     $popup = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
                 }
                 $data['images'][] = array(
                     'popup' => $popup,
-                    'thumb' => $image
+                    'thumb' => $thumb,
+                    'image' => $image
                 );
             }
             

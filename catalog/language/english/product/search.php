@@ -32,7 +32,7 @@ $_['text_found']        = 'We found ';
 $_['text_hotelin']      = ' hotels with availability in ';
 $_['text_labeldate_in'] = 'Check in:';
 $_['text_labeldate_out'] = 'Check out:';
-$_['text_labelguest'] = 'Max:';
+$_['text_labelguest']   = 'Max:';
 
 // Entry
 $_['entry_search']      = 'Where would you like to go?';
