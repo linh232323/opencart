@@ -321,11 +321,16 @@ class ControllerProductSearch extends Controller {
 
                 $products = $this->model_catalog_product->getProducts($filter_dataa);
                 
-                $data['proparents'][] = array(
+                if ($products== null){
+                    continue;
+                }
+                
+                $data['proparents'][$i] = array(
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
                     'namep' => $result['name'],
                     'wifi' => $result['wifi'],
+                    'star' => $result['star'],
                     'descriptionp' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                     'price' => $price,
                     'special' => $special,
@@ -335,7 +340,15 @@ class ControllerProductSearch extends Controller {
                     'product_total' => $product_total,
                     'hrefp' => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
                 );
+                
+                $product_total = 0 ;
+                
                 foreach ($products as $product) {
+                    
+                    if ($this->session->data['adults'] >= $product['maxadults']){
+                        continue;
+                    }
+
                     if ($product['image']) {
                         $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
                     } else {
@@ -368,19 +381,25 @@ class ControllerProductSearch extends Controller {
                     
                     $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
                     
+                    $had_price = FALSE;
+                    
                     foreach ($product_prices as $value) {
-                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
-                        $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
-                    }else{
-                        $price_cost='';
+                        if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
+                            $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
+                            $had_price = TRUE;
+                        }else{
+                            $price_cost='';
+                        }
+                        $data['product_prices'][] =array(
+                         'product_price_value'   => $price_cost,
+                         'product_date'          => $value['product_date'],
+                         'product_id'            => $value['product_id']
+                        ); 
                     }
-                    $data['product_prices'][] =array(
-                     'product_price_value'   => $price_cost,
-                     'product_date'          => $value['product_date'],
-                     'product_id'            => $value['product_id']
-                    ); 
-                }
-
+                    
+                    if ($this->session->data['adults'] > $product['maxadults'] || $had_price == FALSE){
+                        continue;
+                    }
                     
                     $data['proparents'][$i][] = array(
                         'product_id' => $product['product_id'],
@@ -389,15 +408,22 @@ class ControllerProductSearch extends Controller {
                         'description' => utf8_substr(strip_tags(html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
                         'quantity' => $product['quantity'],
+                        'maxadults' => $product['maxadults'],
                         'special' => $special,
                         'tax' => $tax,
                         'rating' => $product['rating'],
                         'href' => $this->url->link('product/product',  '&product_id=' . $product['product_id'] . $url)
                     );
+                    $product_total++;
                 }
-                ++$i;
+                $data['proparents'][$i]['product_total'] = $product_total;
+                if($product_total == 0){
+                    unset($data['proparents'][$i]);
+                }else{
+                    ++$i;
+                }
             }
-
+            
             $url = '';
 
             if (isset($this->request->post['search'])) {
@@ -535,7 +561,7 @@ class ControllerProductSearch extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-          
+            $proparent_total = count($data['proparents']);
             $pagination = new Pagination();
             $pagination->total = $proparent_total;
             $pagination->page = $page;

@@ -284,37 +284,47 @@ class ControllerProductCategory extends Controller {
                 }
 
                 
-                $filter_data = array(
+                
+                $filter_dataa = array(
                     'filter_proparent_id' => $result['proparent_id'],
-                    'filter_filter' => $filter,
                     'sort' => $sort,
                     'order' => $order,
                     'start' => ($page - 1) * $limit,
-                    'limit' => $limit,
-                    'filter_sub_category' => true
+                    'limit' => $limit
                 );
+                
+                $product_total = $this->model_catalog_product->getTotalProducts($filter_dataa);
 
-                $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-
-                $products = $this->model_catalog_product->getProducts($filter_data);
-               
-                $data['proparents'][] = array(
+                $products = $this->model_catalog_product->getProducts($filter_dataa);
+                
+                if ($products== null){
+                    continue;
+                }
+                
+                $data['proparents'][$i] = array(
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
                     'namep' => $result['name'],
                     'wifi' => $result['wifi'],
                     'star' => $result['star'],
                     'descriptionp' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-                    'pricep' => $price,
-                    'specialp' => $special,
-                    'taxp' => $tax,
+                    'price' => $price,
+                    'special' => $special,
+                    'tax' => $tax,
                     'ratingp' => $result['rating'],
                     'pareviews' => sprintf($this->language->get('text_pareviews'), (int) $result['pareviews']),
                     'product_total' => $product_total,
-                    'hrefp' => $this->url->link('product/proparent', 'path=' . $this->request->get['path'] . '&proparent_id=' . $result['proparent_id'] . $url)
+                    'hrefp' => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
                 );
-
+                
+                $product_total = 0 ;
+                
                 foreach ($products as $product) {
+                    
+                    if ($this->session->data['adults'] >= $product['maxadults']){
+                        continue;
+                    }
+
                     if ($product['image']) {
                         $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
                     } else {
@@ -346,10 +356,13 @@ class ControllerProductCategory extends Controller {
                     }
                     
                     $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
-
+                    
+                    $had_price = FALSE;
+                    
                     foreach ($product_prices as $value) {
                         if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                             $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
+                            $had_price = TRUE;
                         }else{
                             $price_cost='';
                         }
@@ -360,6 +373,10 @@ class ControllerProductCategory extends Controller {
                         ); 
                     }
                     
+                    if ($this->session->data['adults'] > $product['maxadults'] || $had_price == FALSE){
+                        continue;
+                    }
+                    
                     $data['proparents'][$i][] = array(
                         'product_id' => $product['product_id'],
                         'thumb' => $image,
@@ -367,13 +384,20 @@ class ControllerProductCategory extends Controller {
                         'description' => utf8_substr(strip_tags(html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
                         'quantity' => $product['quantity'],
+                        'maxadults' => $product['maxadults'],
                         'special' => $special,
                         'tax' => $tax,
                         'rating' => $product['rating'],
-                        'href' => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $product['product_id'] . $url)
+                        'href' => $this->url->link('product/product',  '&product_id=' . $product['product_id'] . $url)
                     );
+                    $product_total++;
                 }
-                ++$i;
+                $data['proparents'][$i]['product_total'] = $product_total;
+                if($product_total == 0){
+                    unset($data['proparents'][$i]);
+                }else{
+                    ++$i;
+                }
             }
 
             $url = '';
@@ -482,7 +506,7 @@ class ControllerProductCategory extends Controller {
             }
             
             
-            
+            $proparent_total = count($data['proparents']);
             $pagination = new Pagination();
             $pagination->total = $proparent_total;
             $pagination->page = $page;

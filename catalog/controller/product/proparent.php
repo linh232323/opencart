@@ -600,8 +600,6 @@ class ControllerProductProparent extends Controller {
                 'filter_proparent_id' => $this->request->get['proparent_id'],
                 'filter_sub_category' => true
             );
-            $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-
             // Sort //
             
             $url = '';
@@ -742,21 +740,6 @@ class ControllerProductProparent extends Controller {
             }
             
             
-            
-            $pagination = new Pagination();
-            $pagination->total = $product_total;
-            $pagination->page = $page;
-            $pagination->limit = $limit;
-            $pagination->url = $this->url->link('product/category', 'path=' . $part . $url . '&page={page}');
-
-            $data['pagination'] = $pagination->render();
-
-            $data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
-
-            $data['sort'] = $sort;
-            $data['order'] = $order;
-            $data['limit'] = $limit;
-
 
             $filter_data = array(
                 'filter_proparent_id' => $this->request->get['proparent_id'],
@@ -802,10 +785,13 @@ class ControllerProductProparent extends Controller {
                 }
 
                 $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
+                
+                $had_price = FALSE;
 
                 foreach ($product_prices as $value) {
                     if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                          $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $proparent_info['tax_class_id'], $this->config->get('config_tax')));
+                         $had_price = TRUE;
                     }else{
                          $price_cost='';
                     }
@@ -814,6 +800,10 @@ class ControllerProductProparent extends Controller {
                      'product_date'          => $value['product_date'],
                      'product_id'            => $value['product_id']
                     ); 
+                }
+
+                if ($this->session->data['adults'] > $product['maxadults'] || $had_price == FALSE){
+                    continue;
                 }
 
                 $data['products'][] = array(
@@ -830,6 +820,24 @@ class ControllerProductProparent extends Controller {
                     'href' => $this->url->link('product/product', 'path=' . $part . '&product_id=' . $product['product_id'] . $url)
                 );
             }
+            
+            
+            $product_total = count($data['products']);
+            
+            $pagination = new Pagination();
+            $pagination->total = $product_total;
+            $pagination->page = $page;
+            $pagination->limit = $limit;
+            $pagination->url = $this->url->link('product/category', 'path=' . $part . $url . '&page={page}');
+
+            $data['pagination'] = $pagination->render();
+
+            $data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+            $data['sort'] = $sort;
+            $data['order'] = $order;
+            $data['limit'] = $limit;
+
 
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/proparent.tpl')) {
                 $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/proparent.tpl', $data));

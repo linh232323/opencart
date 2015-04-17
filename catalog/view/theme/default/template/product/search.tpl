@@ -14,7 +14,7 @@
                     </div>
                     <div id="form-search"  class="box box-content form-group">
                         <form method="POST" action="index.php?route=product/search">
-                        <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
+                            <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
                             <div class="form-group col-sm-12">
                                 <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
                             </div>
@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="col-xs-6 form-group">
                                         <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
-                                                    <select name="adults" class="form-control ">
+                                        <select name="adults" class="form-control ">
                                             <option value="">--- Please Select ---</option>
                                             <?php for($i=1;$i<=3;$i++) { ?>
                                             <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
@@ -49,8 +49,8 @@
                                     </div>
                                 </div>
                             </div>
-                        <button type="submit" id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
-                    </form>
+                            <button type="submit" id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -96,6 +96,7 @@
                 <br />
                 <div class="row">
                     <?php foreach ($proparents as $proparent) { ?>
+                    <?php if (isset($proparent[0])) { ?>
                     <div id = "product" class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
@@ -103,7 +104,7 @@
                                 <div class="caption">
                                     <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
                                             <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <?php if ($proparent['ratingp'] < $i) { ?>
+                                            <?php if ($proparent['star'] < $i) { ?>
                                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                                             <?php } else { ?>
                                             <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -111,46 +112,46 @@
                                             <?php } ?>
                                         </span></h4>
                                     <div class="pull-right text-right text-primary">
-                                     <h4 class ="text-primary">
-                                         <?php if ($proparent['ratingp']) { ?>
-                                    <?php
-                                        switch ($proparent['ratingp']) {
+                                        <h4 class ="text-primary">
+                                            <?php if ($proparent['ratingp']) { ?>
+                                            <?php
+                                            switch ($proparent['ratingp']) {
                                             case "10":
-                                                $text_rating = $text_rate_superb;
-                                                break;
+                                            $text_rating = $text_rate_superb;
+                                            break;
                                             case "9":
-                                                $text_rating = $text_rate_superb;
-                                                break;
+                                            $text_rating = $text_rate_superb;
+                                            break;
                                             case "8":
-                                                $text_rating = $text_rate_fantastic;
-                                                break;
+                                            $text_rating = $text_rate_fantastic;
+                                            break;
                                             case "7":
-                                                $text_rating = $text_rate_verygood;
-                                                break;
+                                            $text_rating = $text_rate_verygood;
+                                            break;
                                             case "6":
-                                                $text_rating = $text_rate_good;
-                                                break;
+                                            $text_rating = $text_rate_good;
+                                            break;
                                             case "0":
-                                                $text_rating = '';
-                                                $rating = '';
-                                                break;
+                                            $text_rating = '';
+                                            $rating = '';
+                                            break;
                                             default:
-                                                $text_rating = $text_rate_bad;
-                                        }
-                                        ?>
-                                    <?php echo $text_rating.' '.$proparent['ratingp']; ?>
-                                    <?php } ?>
-                                </h4>
-                                     <div>
-                                         <?php echo $proparent['pareviews']; ?>
-                                     </div>
-                                 </div>
+                                            $text_rating = $text_rate_bad;
+                                            }
+                                            ?>
+                                            <?php echo $text_rating.' '.$proparent['ratingp']; ?>
+                                            <?php } ?>
+                                        </h4>
+                                        <div>
+                                            <?php echo $proparent['pareviews']; ?>
+                                        </div>
+                                    </div>
                                     <p><strong><?php if ($proparent['wifi'] == 1) { ?>
-                                    <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
-                                    <?php } else { ?>
-                                    <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
-                                    <?php } ?>
-                                    </strong></p>
+                                            <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
+                                            <?php } else { ?>
+                                            <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
+                                            <?php } ?>
+                                        </strong></p>
                                     <p><?php echo $proparent['descriptionp']; ?></p>
                                     <?php if ($proparent['ratingp']) { ?>
 
@@ -171,7 +172,7 @@
                                     -->
                                     <div class="col-xs-4 pull-bottom-right">
                                         <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i><strong> <?php echo $text_book; ?> </strong></button></a>
-                                </div>
+                                    </div>
                                 </div>
                                 <div class = "col-xs-12" >
                                     <?php if (isset($proparent[0])) { ?>
@@ -191,17 +192,17 @@
                                                 <?php } ?>
                                                 <span class="col-xs-3 text-right">
                                                     <strong> 
-                                                <?php if (isset($product_prices)) { ?>
-                                                <?php foreach ($product_prices as $product_price) { ?>
-                                                <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
-                                                <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
-                                                <?php } else { ?>
-                                                <?php $cost = ''; ?>
-                                                <?php } ?>
-                                                <?php } ?>
-                                                <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
-                                                <?php $price_cost = ''; ?>
-                                                <?php } ?>
+                                                        <?php if (isset($product_prices)) { ?>
+                                                        <?php foreach ($product_prices as $product_price) { ?>
+                                                        <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
+                                                        <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
+                                                        <?php } else { ?>
+                                                        <?php $cost = ''; ?>
+                                                        <?php } ?>
+                                                        <?php } ?>
+                                                        <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                                                        <?php $price_cost = ''; ?>
+                                                        <?php } ?>
                                                     </strong>
                                                 </span>
                                             </a> 
@@ -210,10 +211,11 @@
                                     </div>
                                     <?php } ?>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                     <?php } ?>
                 </div>
                 <div class="row">
@@ -228,8 +230,7 @@
         <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript">
-    <!--
-$('.date').datetimepicker({
+    $('.date').datetimepicker({
         pickTime: false
     });
     $('.datetime').datetimepicker({
@@ -239,6 +240,5 @@ $('.date').datetimepicker({
     $('.time').datetimepicker({
         pickDate: false
     });
-    -->
 </script>
 <?php echo $footer; ?> 

@@ -6,51 +6,51 @@
         <?php } ?>
     </ul>
     <div class="row">
-         <div class="col-sm-3">
-                <div class="panel-wrapper">
-                    <div class="box box-title">
-                        <h4 class="title"><strong> <?php echo $entry_search; ?></strong></h4>
+        <div class="col-sm-3">
+            <div class="panel-wrapper">
+                <div class="box box-title">
+                    <h4 class="title"><strong> <?php echo $entry_search; ?></strong></h4>
+                </div>
+                <div id="form-search"  class="box box-content">
+                    <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
+                    <div class="form-group col-sm-12">
+                        <input type="text" name="search" value="" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
                     </div>
-                    <div id="form-search"  class="box box-content form-group">
-                        <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
-                            <div class="form-group col-sm-12">
-                                <input type="text" name="search" value="" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
-                            </div>
-                            <br/>
-                            <div id="search_home" class="form-group col-sm-12">
-                                <div class="form-group">
-                                    <div class="">
-                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
-                                        <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                        </div>
-                                        <br />
-                                        <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
-                                        <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 form-group">
-                                        <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
-                                                    <select name="adults" class="form-control ">
-                                            <option value="">--- Please Select ---</option>
-                                            <?php for($i=1;$i<=3;$i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                    <br/>
+                    <div id="search_home" class="form-group col-sm-12">
+                        <div class="form-group">
+                            <div class="">
+                                <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
+                                <div class="col-xs-12 input-group date">
+                                    <input type="text" name="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                                <br />
+                                <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
+                                <div class="col-xs-12 input-group date">
+                                    <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
+                                    </span>
                                 </div>
                             </div>
-                        <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                            <div class="col-xs-6 form-group">
+                                <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
+                                <select name="adults" class="form-control ">
+                                    <option value="">--- Please Select ---</option>
+                                    <?php for($i=1;$i<=3;$i++) { ?>
+                                    <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+                    <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
                 </div>
             </div>
+        </div>
         <div id="content" class="col-sm-9"><?php echo $content_top; ?>
             <h2><?php echo $heading_title; ?></h2>
             <?php if ($thumb || $description) { ?>
@@ -143,6 +143,7 @@
             <br />
             <div class="row">
                 <?php foreach ($proparents as $proparent) { ?>
+                <?php if (isset($proparent[0])) { ?>
                 <div id="product" class="product-layout product-list col-xs-12">
                     <div class="product-thumb">
                         <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
@@ -150,55 +151,55 @@
                             <div class="caption">
                                 <h4><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a>
                                     <span class="rating">
-                                    <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <?php if ($proparent['star'] < $i) { ?>
-                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    <?php } else { ?>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    <?php } ?>
-                                    <?php } ?>
-                                </span>
+                                        <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                        <?php if ($proparent['star'] < $i) { ?>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <?php } else { ?>
+                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                        <?php } ?>
+                                        <?php } ?>
+                                    </span>
                                 </h4>
-                                 <div class="pull-right text-right text-primary">
-                                     <h4 class ="text-primary">
-                                         <?php if ($proparent['ratingp']) { ?>
-                                    <?php
+                                <div class="pull-right text-right text-primary">
+                                    <h4 class ="text-primary">
+                                        <?php if ($proparent['ratingp']) { ?>
+                                        <?php
                                         switch ($proparent['ratingp']) {
-                                            case "10":
-                                                $text_rating = $text_rate_superb;
-                                                break;
-                                            case "9":
-                                                $text_rating = $text_rate_superb;
-                                                break;
-                                            case "8":
-                                                $text_rating = $text_rate_fantastic;
-                                                break;
-                                            case "7":
-                                                $text_rating = $text_rate_verygood;
-                                                break;
-                                            case "6":
-                                                $text_rating = $text_rate_good;
-                                                break;
-                                            case "0":
-                                                $text_rating = '';
-                                                $rating = '';
-                                                break;
-                                            default:
-                                                $text_rating = $text_rate_bad;
+                                        case "10":
+                                        $text_rating = $text_rate_superb;
+                                        break;
+                                        case "9":
+                                        $text_rating = $text_rate_superb;
+                                        break;
+                                        case "8":
+                                        $text_rating = $text_rate_fantastic;
+                                        break;
+                                        case "7":
+                                        $text_rating = $text_rate_verygood;
+                                        break;
+                                        case "6":
+                                        $text_rating = $text_rate_good;
+                                        break;
+                                        case "0":
+                                        $text_rating = '';
+                                        $rating = '';
+                                        break;
+                                        default:
+                                        $text_rating = $text_rate_bad;
                                         }
                                         ?>
-                                    <?php echo $text_rating.' '.$proparent['ratingp']; ?>
-                                    <?php } ?>
-                                </h4>
-                                     <div>
-                                         <?php echo $proparent['pareviews']; ?>
-                                     </div>
-                                 </div>
+                                        <?php echo $text_rating.' '.$proparent['ratingp']; ?>
+                                        <?php } ?>
+                                    </h4>
+                                    <div>
+                                        <?php echo $proparent['pareviews']; ?>
+                                    </div>
+                                </div>
                                 <p><strong><?php if ($proparent['wifi'] == 1) { ?>
-                                    <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
-                                <?php } else { ?>
-                                <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
-                                <?php } ?>
+                                        <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
+                                        <?php } else { ?>
+                                        <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
+                                        <?php } ?>
                                     </strong></p>
                                 <p><?php echo $proparent['descriptionp']; ?></p>
                                 <!--
@@ -215,53 +216,54 @@
                                 </p>
                                 <?php } ?>
                                 -->
-                                 <div class="col-xs-4 pull-bottom-right">
-                                     <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> <strong><?php echo $text_book;?></strong> </button></a>
-                            </div>
+                                <div class="col-xs-4 pull-bottom-right">
+                                    <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class = "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> <strong><?php echo $text_book;?></strong> </button></a>
+                                </div>
                             </div>
                             <div class = "col-xs-12" >
                                 <?php if (isset($proparent[0])) { ?>
-                                    <?php if ($proparent[0]) { ?>
-                                    <div class="table table-responsive table-hover table-striped">
-                                        <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
-                                        <div class="list-group">
-                                                <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
-                                                    <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
-                                                    <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
-                                                    <?php if ($proparent[$i]['quantity'] == 1){ ?>
-                                                    <span class="col-xs-3 text-danger"><strong><?php echo $text_ourlastroom; ?></strong></span>
-                                                    <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
-                                                    <span class="col-xs-3 text-warning"><strong><?php echo $text_ourlast; ?> <?php echo $proparent[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong></span>
+                                <?php if ($proparent[0]) { ?>
+                                <div class="table table-responsive table-hover table-striped">
+                                    <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
+                                    <div class="list-group">
+                                        <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
+                                            <span class="col-xs-2 text-primary"><?php echo $proparent[$i]['name'];?></span>
+                                            <span class="col-xs-4 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
+                                            <?php if ($proparent[$i]['quantity'] == 1){ ?>
+                                            <span class="col-xs-3 text-danger"><strong><?php echo $text_ourlastroom; ?></strong></span>
+                                            <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
+                                            <span class="col-xs-3 text-warning"><strong><?php echo $text_ourlast; ?> <?php echo $proparent[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong></span>
+                                            <?php } else { ?>
+                                            <span class="col-xs-3 text-success"><strong><?php echo $text_available; ?></strong></span>
+                                            <?php } ?>
+                                            <?php } ?>
+                                            <span class="col-xs-3 text-right">
+                                                <strong>
+                                                    <?php if (isset($product_prices)) { ?>
+                                                    <?php foreach ($product_prices as $product_price) { ?>
+                                                    <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
+                                                    <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
                                                     <?php } else { ?>
-                                                    <span class="col-xs-3 text-success"><strong><?php echo $text_available; ?></strong></span>
+                                                    <?php $cost = ''; ?>
                                                     <?php } ?>
                                                     <?php } ?>
-                                                    <span class="col-xs-3 text-right">
-                                                        <strong>
-                                                            <?php if (isset($product_prices)) { ?>
-                                                            <?php foreach ($product_prices as $product_price) { ?>
-                                                            <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
-                                                            <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
-                                                            <?php } else { ?>
-                                                            <?php $cost = ''; ?>
-                                                            <?php } ?>
-                                                            <?php } ?>
-                                                            <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
-                                                            <?php $price_cost = ''; ?>
-                                                            <?php } ?>
-                                                        </strong>
-                                                    </span>
-                                                </a> 
-                                        </div>
-                                        <?php ; } ?>
+                                                    <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                                                    <?php $price_cost = ''; ?>
+                                                    <?php } ?>
+                                                </strong>
+                                            </span>
+                                        </a> 
                                     </div>
-                                    <?php } ?>
+                                    <?php ; } ?>
+                                </div>
+                                <?php } ?>
                                 <?php } ?>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <?php } ?>
             </div>
             <div class="row">
