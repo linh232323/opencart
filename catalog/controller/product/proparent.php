@@ -13,24 +13,29 @@ class ControllerProductProparent extends Controller {
         
         $this->load->language('proparent/search');
         
-        if (isset($this->request->get['date'])) {
-            $data['date'] = $this->request->get['date'];
-        } else {
-            $data['date'] = date('Y-m-d');
+        if (isset($this->request->post['date-in'])){
+            $this->session->data['date']=$this->request->post['date-in'];
+        }else{
+             if (empty($this->session->data['date'])){
+                  $this->session->data['date'] = date('Y-m-d');
+             }
         }
         
-        if (isset($this->request->get['date-out'])) {
-            $data['date_out'] = $this->request->get['date-out'];
-        } else {
-            $date2=date('d')+2;
-            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+        if (isset($this->request->post['date-out'])){
+            $this->session->data['date-out']=$this->request->post['date-out'];
+        }else{
+             if (empty($this->session->data['date-out'])){
+                $date2=date('d')+2;
+                $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+             }
         }
         
-        
-        if (isset($this->request->get['adults'])) {
-            $data['adults'] = $this->request->get['adults'];
-        } else {
-            $data['adults'] = '1';
+        if (isset($this->request->post['adults'])){
+            $this->session->data['adults']=$this->request->post['adults'];
+        }else{
+             if (empty($this->session->data['adults'])){
+                  $this->session->data['adults'] = 1;
+             }
         }
         
         $data['breadcrumbs'] = array();
@@ -71,6 +76,9 @@ class ControllerProductProparent extends Controller {
 
             if ($category_info) {
                 $url = '';
+                if (isset($this->request->get['search'])) {
+                    $url .= '&search=' . $this->request->get['search'];
+                }
 
                 if (isset($this->request->get['sort'])) {
                     $url .= '&sort=' . $this->request->get['sort'];
@@ -88,7 +96,7 @@ class ControllerProductProparent extends Controller {
                     $url .= '&limit=' . $this->request->get['limit'];
                 }
                 
-                $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+                
                         
                 $data['breadcrumbs'][] = array(
                     'text' => $category_info['name'],
@@ -106,6 +114,10 @@ class ControllerProductProparent extends Controller {
             );
 
             $url = '';
+            
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
 
             if (isset($this->request->get['sort'])) {
                 $url .= '&sort=' . $this->request->get['sort'];
@@ -123,7 +135,7 @@ class ControllerProductProparent extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
         
             $manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 
@@ -188,7 +200,7 @@ class ControllerProductProparent extends Controller {
                 $part = "";
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
         
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_search'),
@@ -266,7 +278,7 @@ class ControllerProductProparent extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
         
             $data['breadcrumbs'][] = array(
                 'text' => $proparent_info['name'],
@@ -284,6 +296,7 @@ class ControllerProductProparent extends Controller {
             $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
             $this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
             $this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
+            $this->document->addScript('http://maps.google.com/maps/api/js?sensor=false');
 
             $data['heading_title'] = $proparent_info['name'];
 
@@ -325,6 +338,7 @@ class ControllerProductProparent extends Controller {
             $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
             $data['text_labelguest'] = $this->language->get('text_labelguest');
             $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
+            $data['text_change_date'] = $this->language->get('text_change_date');
             
             $data['entry_qty'] = $this->language->get('entry_qty');
             $data['entry_name'] = $this->language->get('entry_name');
@@ -475,6 +489,18 @@ class ControllerProductProparent extends Controller {
                 $data['minimum'] = 1;
             }
 
+            if ($proparent_info['maps_apir']) {
+                $data['maps_apir'] = $proparent_info['maps_apir'];
+            } else {
+                $data['maps_apir'] = '';
+            }
+            
+            if ($proparent_info['maps_apil']) {
+                $data['maps_apil'] = $proparent_info['maps_apil'];
+            } else {
+                $data['maps_apil'] = '';
+            }
+
             $data['pareview_status'] = $this->config->get('config_review_status');
 
             if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
@@ -579,6 +605,10 @@ class ControllerProductProparent extends Controller {
             // Sort //
             
             $url = '';
+            
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
 
             if (isset($this->request->get['filter'])) {
                 $url .= '&filter=' . $this->request->get['filter'];
@@ -588,7 +618,7 @@ class ControllerProductProparent extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['sorts'] = array();
 
@@ -606,7 +636,11 @@ class ControllerProductProparent extends Controller {
             
             $url = '';
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
+
+            
             
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_price_desc'),
@@ -622,7 +656,11 @@ class ControllerProductProparent extends Controller {
             
             $url = '';
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
+
+            
             
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_maxadults_desc'),
@@ -632,6 +670,10 @@ class ControllerProductProparent extends Controller {
 
             // Limit //
             $url = '';
+            
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
 
             if (isset($this->request->get['filter'])) {
                 $url .= '&filter=' . $this->request->get['filter'];
@@ -645,7 +687,7 @@ class ControllerProductProparent extends Controller {
                 $url .= '&order=' . $this->request->get['order'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['limits'] = array();
 
@@ -664,6 +706,10 @@ class ControllerProductProparent extends Controller {
             // Pagination // 
 
             $url = '';
+            
+            if (isset($this->request->get['search'])) {
+                $url .= '&search=' . $this->request->get['search'];
+            }
 
             if (isset($this->request->get['filter'])) {
                 $filter = $this->request->get['filter'];
@@ -695,7 +741,7 @@ class ControllerProductProparent extends Controller {
                 $limit = $this->config->get('config_product_limit');
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $pagination = new Pagination();
             $pagination->total = $product_total;
@@ -758,7 +804,7 @@ class ControllerProductProparent extends Controller {
                 $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
 
                 foreach ($product_prices as $value) {
-                    if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                          $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $proparent_info['tax_class_id'], $this->config->get('config_tax')));
                     }else{
                          $price_cost='';
@@ -841,7 +887,7 @@ class ControllerProductProparent extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_error'),

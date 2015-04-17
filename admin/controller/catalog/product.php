@@ -727,6 +727,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_product_price_net'] = array();
 		}
                 
+		if (isset($this->error['product_extra_net'])) {
+			$data['error_product_extra_net'] = $this->error['product_extra_net'];
+		} else {
+			$data['error_product_extra_net'] = array();
+		}
+                
 		if (isset($this->error['product_extra_percent'])) {
 			$data['error_product_extra_percent'] = $this->error['product_extra_percent'];
 		} else {
@@ -1230,11 +1236,16 @@ class ControllerCatalogProduct extends Controller {
 		$data['product_prices'] = array();
                 
                 foreach ($product_prices as $product_price) {
-                    
+                    if(!isset($product_price['product_extra_percent'])){
+                        $product_price['product_extra_percent'] = 0;
+                    }
                     $product_extra_gross = (int)$product_price['product_extra_net'] + (((int)$product_price['product_extra_net']/100) * (int)$product_price['product_extra_percent']);
                     
+                    if(!isset($product_price['product_price_percent'])){
+                        $product_price['product_price_percent'] =0;
+                    }
                     $product_price_gross = (int)$product_price['product_price_net'] + (((int)$product_price['product_price_net']/100) * (int)$product_price['product_price_percent']);
-
+                    
 			$data['product_prices'][] = array(
 				'price_id'                   => $product_price['price_id'],
 				'product_date'               => $product_price['product_date'],
@@ -1475,6 +1486,24 @@ class ControllerCatalogProduct extends Controller {
 			if (!is_numeric($value['product_price_net'])) {
 				$this->error['product_price_net'] = $this->language->get('error_product_price_net');
 			}
+                        if(isset($value['product_price_percent'])){
+                            if (!is_numeric($value['product_price_percent'])) {
+                                    $this->error['product_price_net'] = $this->language->get('error_product_price_percent');
+                            }
+                        }
+			if (!is_numeric($value['product_extra_net'])) {
+				$this->error['product_extra_net'] = $this->language->get('error_product_extra_net');
+			}
+                        if(isset($value['product_extra_percent'])){
+                            if (!is_numeric($value['product_extra_percent'])) {
+                                    $this->error['product_extra_percent'] = $this->language->get('error_product_extra_percent');
+                            }
+                        }
+                        if(isset($value['product_price_discount'])){
+                            if (!is_numeric($value['product_price_discount'])) {
+                                    $this->error['product_price_discount'] = $this->language->get('error_product_price_discount');
+                            }
+                        }
 		}
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {

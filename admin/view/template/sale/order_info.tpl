@@ -166,6 +166,14 @@
                 <td><?php echo $text_date_modified; ?></td>
                 <td><?php echo $date_modified; ?></td>
               </tr>
+              <tr>
+                <td><?php echo $text_check_in; ?></td>
+                <td><?php echo $date; ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_check_out; ?></td>
+                <td><?php echo $date_out; ?></td>
+              </tr>
             </table>
           </div>
           <div class="tab-pane" id="tab-payment">

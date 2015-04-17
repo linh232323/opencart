@@ -467,6 +467,18 @@
                   <div class="col-sm-10">
                   <?php if ($error_product_price_net) { ?>
                   <div class="text-danger"><?php echo ($error_product_price_net) ?></div>
+                  <?php } ?> 
+                  <?php if ($error_product_extra_net) { ?>
+                  <div class="text-danger"><?php echo ($error_product_extra_net) ?></div>
+                  <?php } ?> 
+                  <?php if ($error_product_price_percent) { ?>
+                  <div class="text-danger"><?php echo ($error_product_price_percent) ?></div>
+                  <?php } ?> 
+                  <?php if ($error_product_extra_percent) { ?>
+                  <div class="text-danger"><?php echo ($error_product_extra_percent) ?></div>
+                  <?php } ?>
+                  <?php if ($error_product_price_discount) { ?>
+                  <div class="text-danger"><?php echo ($error_product_price_discount) ?></div>
                   <?php } ?>
                 </div>
                 <table id="price" class="table table-striped table-bordered table-hover">
@@ -489,10 +501,10 @@
                     <tr id="price-row<?php echo $price_row; ?>">
                       <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_net]" value="<?php echo $product_price['product_price_net']; ?>" placeholder="<?php echo $entry_price_net; ?>" class="form-control" />
                         <input type="hidden" name="product_price[<?php echo $price_row; ?>][price_id]" value="<?php echo $product_price['price_id']; ?>" /></td>
-                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_percent]" value="<?php echo $product_price['product_price_percent']; ?>" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" /></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_percent]" value="<?php echo $product_price['product_price_percent']; ?>" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
                       <td class="text-left"><input type="text" placeholder="<?php echo $product_price['product_price_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
                       <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_extra_net]" value="<?php echo $product_price['product_extra_net']; ?>" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>
-                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_extra_percent]" value="<?php echo $product_price['product_extra_percent']; ?>" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" /></td>
+                      <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_extra_percent]" value="<?php echo $product_price['product_extra_percent']; ?>" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
                       <td class="text-left"><input type="text" placeholder="<?php echo $product_price['product_extra_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
                       <td class="text-left"><input type="text" name="product_price[<?php echo $price_row; ?>][product_price_discount]" value="<?php echo $product_price['product_price_discount']; ?>" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>
                       <td class="text-left">
@@ -1181,10 +1193,10 @@ var price_row = <?php echo $price_row; ?>;
 function addPrice() {
     html  = '<tr id="price-row' + price_row + '">';
 	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_net]" value="" placeholder="<?php echo $entry_price_net; ?>" class="form-control" /><input type="hidden" name="product_price[' + price_row + '][price_id]" value="" /></td>';
-	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_percent]" value="" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_percent]" value="" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
 	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_gross]" value="" placeholder="<?php echo $entry_price_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
 	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_net]" value="" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_percent]" value="" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_percent]" value="" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
 	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_extra_gross]" value="" placeholder="<?php echo $entry_extra_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
 	html += '  <td class="text-left" ><input type="text" name="product_price[' + price_row + '][product_price_discount]" value="" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left">';

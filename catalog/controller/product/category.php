@@ -18,24 +18,29 @@ class ControllerProductCategory extends Controller {
         $this->load->model('tool/image');
         
         
-        if (isset($this->request->get['date'])) {
-            $data['date'] = $this->request->get['date'];
-        } else {
-            $data['date'] = date('Y-m-d');
+        if (isset($this->request->post['date-in'])){
+            $this->session->data['date']=$this->request->post['date-in'];
+        }else{
+             if (empty($this->session->data['date'])){
+                  $this->session->data['date'] = date('Y-m-d');
+             }
         }
         
-        if (isset($this->request->get['date-out'])) {
-            $data['date_out'] = $this->request->get['date-out'];
-        } else {
-            $date2=date('d')+2;
-            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+        if (isset($this->request->post['date-out'])){
+            $this->session->data['date-out']=$this->request->post['date-out'];
+        }else{
+             if (empty($this->session->data['date-out'])){
+                $date2=date('d')+2;
+                $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+             }
         }
         
-        
-        if (isset($this->request->get['adults'])) {
-            $data['adults'] = $this->request->get['adults'];
-        } else {
-            $data['adults'] = '1';
+        if (isset($this->request->post['adults'])){
+            $this->session->data['adults']=$this->request->post['adults'];
+        }else{
+             if (empty($this->session->data['adults'])){
+                  $this->session->data['adults'] = 1;
+             }
         }
         
         if (isset($this->request->get['filter'])) {
@@ -90,7 +95,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
         
             $path = '';
 
@@ -202,7 +207,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['categories'] = array();
 
@@ -343,7 +348,7 @@ class ControllerProductCategory extends Controller {
                     $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
 
                     foreach ($product_prices as $value) {
-                        if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                        if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                             $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
                         }else{
                             $price_cost='';
@@ -381,7 +386,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['sorts'] = array();
 
@@ -442,7 +447,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&order=' . $this->request->get['order'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['limits'] = array();
 
@@ -476,7 +481,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $pagination = new Pagination();
             $pagination->total = $proparent_total;
@@ -533,7 +538,7 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
+            
             
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_error'),

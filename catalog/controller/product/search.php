@@ -25,42 +25,42 @@ class ControllerProductSearch extends Controller {
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-        if (isset($this->request->get['search'])) {
-            $data['title_search'] = $this->request->get['search'];
+        if (isset($this->request->post['search'])) {
+            $data['title_search'] = $this->request->post['search'];
         } else {
             $data['title_search'] = '';
         }
         
-        if (isset($this->request->get['search'])) {
-            $search = $this->request->get['search'];
+        if (isset($this->request->post['search'])) {
+            $search = $this->request->post['search'];
         } else {
             $search = '';
         }
         
-        if (isset($this->request->get['date'])) {
-            $data['date'] = $this->request->get['date'];
-        } else {
-            $data['date'] = date('Y-m-d');
+        if (empty($this->request->post['date-in'])) {
+            $this->session->data['date']=date('Y-m-d');
+        }else{
+            $this->session->data['date']=$this->request->post['date-in'];
         }
         
-        if (isset($this->request->get['date-out'])) {
-            $data['date_out'] = $this->request->get['date-out'];
-        } else {
+        if (empty($this->request->post['date-out'])) {
             $date2=date('d')+2;
-            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+            $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+        }else{
+            $this->session->data['date-out'] = $this->request->post['date-out'];
         }
         
         
-        if (isset($this->request->get['adults'])) {
-            $data['adults'] = $this->request->get['adults'];
-        } else {
-            $data['adults'] = '1';
+        if (empty($this->request->post['adults'])) {
+            $this->session->data['adults'] = '1';
+        }else{
+            $this->session->data['adults'] = $this->request->post['adults'];
         }
 
         if (isset($this->request->get['tag'])) {
             $tag = $this->request->get['tag'];
-        } elseif (isset($this->request->get['search'])) {
-            $tag = $this->request->get['search'];
+        } elseif (isset($this->request->post['search'])) {
+            $tag = $this->request->post['search'];
         } else {
             $tag = '';
         }
@@ -107,8 +107,8 @@ class ControllerProductSearch extends Controller {
             $limit = $this->config->get('config_product_limit');
         }
 
-        if (isset($this->request->get['search'])) {
-            $this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->request->get['search']);
+        if (isset($this->request->post['search'])) {
+            $this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->request->post['search']);
         } elseif (isset($this->request->get['tag'])) {
             $this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
         } else {
@@ -124,8 +124,8 @@ class ControllerProductSearch extends Controller {
 
         $url = '';
 
-        if (isset($this->request->get['search'])) {
-            $url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
+        if (isset($this->request->post['search'])) {
+            $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['tag'])) {
@@ -165,10 +165,9 @@ class ControllerProductSearch extends Controller {
             'href' => $this->url->link('product/search', $url)
         );
         
-        $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
         
-        if (isset($this->request->get['search'])) {
-            $data['heading_title'] = $this->language->get('heading_title') . ' - ' . $this->request->get['search'];
+        if (isset($this->request->post['search'])) {
+            $data['heading_title'] = $this->language->get('heading_title') . ' - ' . $this->request->post['search'];
         } else {
             $data['heading_title'] = $this->language->get('heading_title');
         }
@@ -258,7 +257,7 @@ class ControllerProductSearch extends Controller {
 
         $data['proparents'] = array();
 
-        if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
+        if (isset($this->request->post['search']) || isset($this->request->get['tag'])) {
             $filter_data = array(
                 'filter_name' => $search,
                 'filter_tag' => $tag,
@@ -370,7 +369,7 @@ class ControllerProductSearch extends Controller {
                     $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
                     
                     foreach ($product_prices as $value) {
-                    if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                         $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
                     }else{
                         $price_cost='';
@@ -401,8 +400,8 @@ class ControllerProductSearch extends Controller {
 
             $url = '';
 
-            if (isset($this->request->get['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($this->request->post['search'])) {
+                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {
@@ -425,8 +424,6 @@ class ControllerProductSearch extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
-        
             $data['sorts'] = array();
 
             $data['sorts'][] = array(
@@ -462,8 +459,8 @@ class ControllerProductSearch extends Controller {
             }
             $url = '';
 
-            if (isset($this->request->get['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($this->request->post['search'])) {
+                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {
@@ -490,8 +487,6 @@ class ControllerProductSearch extends Controller {
                 $url .= '&order=' . $this->request->get['order'];
             }
              
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
-        
             $data['limits'] = array();
 
             $limits = array_unique(array($this->config->get('config_product_limit'), 25, 50, 75, 100));
@@ -508,8 +503,8 @@ class ControllerProductSearch extends Controller {
 
             $url = '';
 
-            if (isset($this->request->get['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($this->request->post['search'])) {
+                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {
@@ -540,8 +535,7 @@ class ControllerProductSearch extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $url .= "&date=".$data['date']."&date-out=".$data['date_out']."&adults=".$data['adults'];
-        
+          
             $pagination = new Pagination();
             $pagination->total = $proparent_total;
             $pagination->page = $page;

@@ -80,44 +80,6 @@ $(document).ready(function() {
 		}
 	});
 
-	/* Search Home */
-	$('#search_home input[name=\'search\']').parent().find('#submit').on('click', function() {
-		url = $('base').attr('href') + 'index.php?route=product/search';
-
-		var value = $('search input[name=\'search\']').val();
-
-		if (value) {
-			url += '&search=' + encodeURIComponent(value);
-		}
-                
-		var datein = $('search input[name=\'date-in\']').val();
-
-		if (datein) {
-			url += '&date=' + encodeURIComponent(datein);
-		}
-                
-                
-		var dateout = $('search input[name=\'date-out\']').val();
-
-		if (dateout) {
-			url += '&date-out=' + encodeURIComponent(dateout);
-		}
-                
-		var adults = $('search select[name=\'adults\']').val();
-
-		if (adults) {
-			url += '&adults=' + encodeURIComponent(adults);
-		}
-
-		location = url;
-	});
-
-	$('#search_home input[name=\'search\']').on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			$('search input[name=\'search\']').parent().find('#submit').trigger('click');
-		}
-	});
-
 	// Menu
 	$('#menu .dropdown-menu').each(function() {
 		var menu = $('#menu').offset();

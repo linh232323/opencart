@@ -942,6 +942,8 @@ class ControllerSaleOrder extends Controller {
 			$data['text_accept_language'] = $this->language->get('text_accept_language');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
+			$data['text_check_in'] = $this->language->get('text_check_in');
+			$data['text_check_out'] = $this->language->get('text_check_out');
 			$data['text_firstname'] = $this->language->get('text_firstname');
 			$data['text_lastname'] = $this->language->get('text_lastname');
 			$data['text_company'] = $this->language->get('text_company');
@@ -1275,6 +1277,8 @@ class ControllerSaleOrder extends Controller {
 			$data['accept_language'] = $order_info['accept_language'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
+			$data['date'] = date($this->language->get('date_format_short'), strtotime($order_info['check_in']));
+			$data['date_out'] = date($this->language->get('date_format_short'), strtotime($order_info['check_out']));
 			
 			// Payment
 			$data['payment_firstname'] = $order_info['payment_firstname'];

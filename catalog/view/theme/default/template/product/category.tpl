@@ -22,7 +22,7 @@
                                     <div class="">
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -30,7 +30,7 @@
                                         <br />
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -41,7 +41,7 @@
                                                     <select name="adults" class="form-control ">
                                             <option value="">--- Please Select ---</option>
                                             <?php for($i=1;$i<=3;$i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>

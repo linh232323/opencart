@@ -11,27 +11,28 @@
                 <div class="col-sm-3">
                     <div class="control-group">
                         <div class = "header-box-hightlight">
-                             <strong><i class="glyphicon glyphicon-search text-primary"></i> <?php echo $text_search;?></strong>
+                            <strong><i class="glyphicon glyphicon-search text-primary"></i> <?php echo $text_search;?></strong>
                         </div>
                         <div class = "content-box-hightlight">
                             <table>
-                            <tr>
-                                <td><i class="glyphicon glyphicon-home text-primary"></i></td><td><?php echo substr($heading_title,0,18)."..."; ?></td>
-                            </tr>
-                            <tr>
-                                <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_in; ?> <?php echo $date; ?></td>
-                            </tr>
-                            <tr>
-                                <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_out; ?> <?php echo $date_out; ?></td>
-                            </tr>
-                            <tr>
-                                <td><i class="glyphicon glyphicon-user text-primary"></i><i class="glyphicon glyphicon-user text-warning"></i></td><td><?php echo $text_labelguest; ?> <?php echo $adults; ?></td>
-                            </tr>
+                                <tr>
+                                    <td><i class="glyphicon glyphicon-home text-primary"></i></td><td><?php echo substr($heading_title,0,18)."..."; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_in; ?> <?php echo $_SESSION['date']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_out; ?> <?php echo $_SESSION['date-out']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="glyphicon glyphicon-user text-primary"></i><i class="glyphicon glyphicon-user text-warning"></i></td><td><?php echo $text_labelguest; ?> <?php echo $_SESSION['adults']; ?></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
                     <br/>
                     <div class="control-group">
+                        <form method="POST" action="index.php?route=product/proparent<?php echo '&proparent_id='.$_GET['proparent_id'].'&search='.$_GET['search']?>">
                         <div class="header-box-hightlight">
                             <h4 class="title"><strong> <?php echo $text_search; ?></strong></h4>
                         </div>
@@ -46,7 +47,7 @@
                                     <div class="">
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -54,7 +55,7 @@
                                         <br />
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -62,19 +63,20 @@
                                     </div>
                                     <div class="col-xs-6 form-group">
                                         <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
-                                                    <select name="adults" class="form-control ">
+                                        <select name="adults" class="form-control ">
                                             <option value="">--- Please Select ---</option>
                                             <?php for($i=1;$i<=3;$i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                                <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                            <button type="submit"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
                         </div>
+                    </form>
+                    </div>
                 </div>
-            </div>
                 <?php if ($column_left && $column_right) { ?>
                 <?php $class = 'col-sm-6'; ?>
                 <?php } elseif ($column_left || $column_right) { ?>
@@ -84,53 +86,56 @@
                 <?php } ?>
                 <div class="<?php echo $class; ?>">
                     <h1><?php echo $heading_title; ?>
-                    <span class ="pull-right text-right text-primary">
+                        <span class ="pull-right text-right text-primary">
                             <?php if ($pareview_status) { ?>
                             <?php
-                                switch ($rating) {
-                                    case "10":
-                                        $text_rating = $text_rate_superb;
-                                        break;
-                                    case "9":
-                                        $text_rating = $text_rate_superb;
-                                        break;
-                                    case "8":
-                                        $text_rating = $text_rate_fantastic;
-                                        break;
-                                    case "7":
-                                        $text_rating = $text_rate_verygood;
-                                        break;
-                                    case "6":
-                                        $text_rating = $text_rate_good;
-                                        break;
-                                    case "0":
-                                        $text_rating = '';
-                                        $rating = '';
-                                        break;
-                                    default:
-                                        $text_rating = $text_rate_bad;
-                                }
-                                ?>
+                            switch ($rating) {
+                            case "10":
+                            $text_rating = $text_rate_superb;
+                            break;
+                            case "9":
+                            $text_rating = $text_rate_superb;
+                            break;
+                            case "8":
+                            $text_rating = $text_rate_fantastic;
+                            break;
+                            case "7":
+                            $text_rating = $text_rate_verygood;
+                            break;
+                            case "6":
+                            $text_rating = $text_rate_good;
+                            break;
+                            case "0":
+                            $text_rating = '';
+                            $rating = '';
+                            break;
+                            default:
+                            $text_rating = $text_rate_bad;
+                            }
+                            ?>
                             <?php echo $text_rating.' '.$rating; ?>
                             <?php } ?>
-                             </span>
-                    </h1>
-                    
-                    <div class ="pull-right text-primary">
-                         <?php echo $pareviews; ?>
-                    </div>
-                   
-                    <span class="rating">
-                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                            <?php if ($star < $i) { ?>
-                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                            <?php } else { ?>
-                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                            <?php } ?>
-                            <?php } ?>
                         </span>
+                    </h1>
+                    <div class ="pull-right text-primary">
+                        <?php echo $pareviews; ?>
+                    </div>
+                    <br />
+                    <div class="pull-right">
+                        <button id="button-maps" class="btn btn-success" onclick="toggleContent()"><i class="glyphicon glyphicon-map-marker"></i>Maps</button>
+                    </div>
+                    <span class="rating">
+                        <?php for ($i = 1; $i <= 5; $i++) { ?>
+                        <?php if ($star < $i) { ?>
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                        <?php } else { ?>
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                        <?php } ?>
+                        <?php } ?>
+                    </span>
                     <p><em><?php echo $address ?></em></p>
                     <br />
+                    <div id="map" class="col-xs-12" style="height: 500px; position: absolute; z-index: 1000;"></div>
                     <div class ='row thumb'>
                         <?php if ($images || $thumb) { ?>
                         <?php if ($images) { ?>
@@ -144,16 +149,22 @@
                         <?php } ?>
                     </div>
                     <div class="row">
-                         <div id="search_home" class="form-group col-sm-12">
+                        <div id="change_date" class="form-group col-sm-12">
                             <div class="form-group">
-                                <h4 class="col-xs-12">
-                                    <?php echo $text_labeldate_in; ?> <?php echo $date; ?> - <?php echo $text_labeldate_out; ?> <?php echo $date_out; ?>
-                                </h4>
-                                <div class="col-xs-12">
+                                <div class="row">
+                                    <h5 class="col-xs-8">
+                                        <?php echo $text_labeldate_in; ?> <?php echo $_SESSION['date']; ?> - <?php echo $text_labeldate_out; ?> <?php echo $_SESSION['date-out']; ?>
+                                    </h5>
+                                    <span class="col-xs-3 pull-right">
+                                        <button id="search-change" class="btn btn-default"><?php echo $text_change_date; ?></button>
+                                    </span>
+                                </div>
+                                <div class="row col-xs-12" id="change" style="display: none;">
+                                    <form method="POST" action="index.php?route=product/proparent<?php echo '&proparent_id='.$_GET['proparent_id'].'&search='.$_GET['search']?>">
                                     <div class="col-xs-3 pull-left">
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
                                         <div class="input-group date">
-                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -162,7 +173,7 @@
                                     <div class="col-xs-3">
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
                                         <div class="input-group date">
-                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -170,16 +181,17 @@
                                     </div>
                                     <div class="col-xs-2 form-group">
                                         <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
-                                                    <select name="adults" class="form-control ">
+                                        <select name="adults" class="form-control ">
                                             <option value="">--- Please Select ---</option>
                                             <?php for($i=1;$i<=3;$i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                     <div class="col-xs-3 pull-right">
-                                        <button type="button"id="button-search" class="btn btn-primary btn-block" style="height: 73px;"><strong><?php echo $button_search; ?></strong></button>
+                                        <button type="submit" id="button-change" class="btn btn-primary btn-block" style="height: 73px;"><strong><?php echo $button_search; ?></strong></button>
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -268,14 +280,14 @@
                                                 <a href="<?php echo $product['href'];?>"><button type="button" class="btn btn-primary btn-block btn-blue center-block" style="width: auto;"><i class="fa fa-shopping-cart"></i> <strong><?php echo $text_book; ?></strong></button></a>
                                             </div>
                                             <p class = "text-center" >
-                                            <?php if ($product['quantity'] == 1){ ?>
-                                            <strong class="text-danger"><?php echo $text_ourlastroom; ?></strong>
-                                            <?php } else { if ($product['quantity'] <= 5) { ?>
-                                            <strong class="text-warning"><?php echo $text_ourlast; ?> <?php echo $product['quantity'];?> <?php echo $text_rooms; ?> </strong>
-                                            <?php } else { ?>
-                                            <strong class="text-success"><?php echo $text_available; ?></strong>
-                                            <?php } ?>
-                                            <?php } ?>
+                                                <?php if ($product['quantity'] == 1){ ?>
+                                                <strong class="text-danger"><?php echo $text_ourlastroom; ?></strong>
+                                                <?php } else { if ($product['quantity'] <= 5) { ?>
+                                                <strong class="text-warning"><?php echo $text_ourlast; ?> <?php echo $product['quantity'];?> <?php echo $text_rooms; ?> </strong>
+                                                <?php } else { ?>
+                                                <strong class="text-success"><?php echo $text_available; ?></strong>
+                                                <?php } ?>
+                                                <?php } ?>
                                             </p>
                                         </td>
                                     </tr>
@@ -302,7 +314,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-description"><?php echo $short_description; ?></div>
                         <?php if ($attribute_groups) { ?>
-                       
+
                         <div class="tab-pane" id="tab-specification">
                             <div class = "header-box-hightlight">
                                 <strong><?php echo $text_features;?> <?php echo $heading_title; ?></strong>
@@ -371,7 +383,7 @@
                         <?php } ?>
                     </div>
                 </div>
-                
+
             </div>
             <?php if ($proparents) { ?>
             <h3><?php echo $text_related; ?></h3>
@@ -448,369 +460,71 @@
         <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
-    $.ajax({
-    url: 'index.php?route=product/proparent/getRecurringDescription',
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function () {
+        $.ajax({
+            url: 'index.php?route=product/proparent/getRecurringDescription',
             type: 'post',
             data: $('input[name=\'proparent_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
             dataType: 'json',
-            beforeSend: function() {
-            $('#recurring-description').html('');
+            beforeSend: function () {
+                $('#recurring-description').html('');
             },
-            success: function(json) {
-            $('.alert, .text-danger').remove();
-                    if (json['success']) {
-            $('#recurring-description').html(json['success']);
+            success: function (json) {
+                $('.alert, .text-danger').remove();
+                if (json['success']) {
+                    $('#recurring-description').html(json['success']);
+                }
             }
-            }
-    });
+        });
     });
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-cart').on('click', function() {
-    $.ajax({
-    url: 'index.php?route=checkout/cart/add',
+$('#button-cart').on('click', function () {
+        $.ajax({
+            url: 'index.php?route=checkout/cart/add',
             type: 'post',
             data: $('#proparent input[type=\'text\'], #proparent input[type=\'hidden\'], #proparent input[type=\'radio\']:checked, #proparent input[type=\'checkbox\']:checked, #proparent select, #proparent textarea'),
             dataType: 'json',
-            beforeSend: function() {
-            $('#button-cart').button('loading');
+            beforeSend: function () {
+                $('#button-cart').button('loading');
             },
-            complete: function() {
-            $('#button-cart').button('reset');
+            complete: function () {
+                $('#button-cart').button('reset');
             },
-            success: function(json) {
-            $('.alert, .text-danger').remove();
-                    $('.form-group').removeClass('has-error');
-                    if (json['error']) {
-            if (json['error']['option']) {
-            for (i in json['error']['option']) {
-            var element = $('#input-option' + i.replace('_', '-'));
-                    if (element.parent().hasClass('input-group')) {
-            element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-            } else {
-            element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-            }
-            }
-            }
-
-            if (json['error']['recurring']) {
-            $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
-            }
-
-            // Highlight any found errors
-            $('.text-danger').parent().addClass('has-error');
-            }
-
-            if (json['success']) {
-            $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    $('#cart-total').html(json['total']);
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-                    $('#cart > ul').load('index.php?route=common/cart/info ul li');
-            }
-            }
-    });
-    });
-//--></script> 
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-    pickTime: false
-    });
-            $('.datetime').datetimepicker({
-    pickDate: true,
-            pickTime: true
-    });
-            $('.time').datetimepicker({
-    pickDate: false
-    });
-            $('button[id^=\'button-upload\']').on('click', function() {
-    var node = this;
-            $('#form-upload').remove();
-            $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-            $('#form-upload input[name=\'file\']').trigger('click');
-            timer = setInterval(function() {
-            if ($('#form-upload input[name=\'file\']').val() != '') {
-            clearInterval(timer);
-                    $.ajax({
-                    url: 'index.php?route=tool/upload',
-                            type: 'post',
-                            dataType: 'json',
-                            data: new FormData($('#form-upload')[0]),
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            beforeSend: function() {
-                            $(node).button('loading');
-                            },
-                            complete: function() {
-                            $(node).button('reset');
-                            },
-                            success: function(json) {
-                            $('.text-danger').remove();
-                                    if (json['error']) {
-                            $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+            success: function (json) {
+                $('.alert, .text-danger').remove();
+                $('.form-group').removeClass('has-error');
+                if (json['error']) {
+                    if (json['error']['option']) {
+                        for (i in json['error']['option']) {
+                            var element = $('#input-option' + i.replace('_', '-'));
+                            if (element.parent().hasClass('input-group')) {
+                                element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+                            } else {
+                                element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
                             }
-
-                            if (json['success']) {
-                            alert(json['success']);
-                                    $(node).parent().find('input').attr('value', json['code']);
-                            }
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                    });
-            }
-            }, 500);
-    });
-//--></script> 
-<script type="text/javascript"><!--
-$('#pareview').delegate('.pagination a', 'click', function(e) {
-    e.preventDefault();
-            $('#pareview').fadeOut('slow');
-            $('#pareview').load(this.href);
-            $('#pareview').fadeIn('slow');
-    });
-            $('#pareview').load('index.php?route=product/proparent/pareview&proparent_id=<?php echo $proparent_id; ?>');
-            $('#button-pareview').on('click', function() {
-    $.ajax({
-    url: 'index.php?route=product/proparent/write&proparent_id=<?php echo $proparent_id; ?>',
-            type: 'post',
-            dataType: 'json',
-            data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
-            beforeSend: function() {
-            $('#button-pareview').button('loading');
-            },
-            complete: function() {
-            $('#button-pareview').button('reset');
-                    $('#captcha').attr('src', 'index.php?route=tool/captcha#' + new Date().getTime());
-                    $('input[name=\'captcha\']').val('');
-            },
-            success: function(json) {
-            $('.alert-success, .alert-danger').remove();
-                    if (json['error']) {
-            $('#pareview').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-            }
-
-            if (json['success']) {
-            $('#pareview').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                    $('input[name=\'name\']').val('');
-                    $('textarea[name=\'text\']').val('');
-                    $('input[name=\'rating\']:checked').prop('checked', false);
-                    $('input[name=\'captcha\']').val('');
-            }
-            }
-    });
-    });
-            $(document).ready(function() {
-    $('.thumbnails').magnificPopup({
-    type:'image',
-            delegate: 'a',
-            gallery: {
-            enabled:true
-            }
-    });
-    });
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-
-    var sync1 = $("#sync1");
-            var sync2 = $("#sync2");
-            sync1.owlCarousel({
-            singleItem : true,
-                    slideSpeed : 1000,
-                    navigation: true,
-                    pagination:false,
-                    afterAction : syncPosition,
-                    responsiveRefreshRate : 200,
-            });
-            sync2.owlCarousel({
-            items : 7,
-                    itemsDesktop      : [1199, 10],
-                    itemsDesktopSmall     : [979, 10],
-                    itemsTablet       : [768, 8],
-                    itemsMobile       : [479, 4],
-                    pagination:false,
-                    responsiveRefreshRate : 100,
-                    afterInit : function(el){
-                    el.find(".owl-item").eq(0).addClass("synced");
+                        }
                     }
-            });
-            function syncPosition(el){
-            var current = this.currentItem;
-                    $("#sync2")
-                    .find(".owl-item")
-                    .removeClass("synced")
-                    .eq(current)
-                    .addClass("synced")
-                    if ($("#sync2").data("owlCarousel") !== undefined){
-            center(current)
-            }
-            }
 
-    $("#sync2").on("click", ".owl-item", function(e){
-    e.preventDefault();
-            var number = $(this).data("owlItem");
-            sync1.trigger("owl.goTo", number);
+                    if (json['error']['recurring']) {
+                        $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+                    }
+
+                    // Highlight any found errors
+                    $('.text-danger').parent().addClass('has-error');
+                }
+
+                if (json['success']) {
+                    $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#cart-total').html(json['total']);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
+                    $('#cart > ul').load('index.php?route=common/cart/info ul li');
+                }
+            }
+        });
     });
-            function center(number){
-            var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
-                    var num = number;
-                    var found = false;
-                    for (var i in sync2visible){
-            if (num === sync2visible[i]){
-            var found = true;
-            }
-            }
-
-            if (found === false){
-            if (num > sync2visible[sync2visible.length - 1]){
-            sync2.trigger("owl.goTo", num - sync2visible.length + 2)
-            } else{
-            if (num - 1 === - 1){
-            num = 0;
-            }
-            sync2.trigger("owl.goTo", num);
-            }
-            } else if (num === sync2visible[sync2visible.length - 1]){
-            sync2.trigger("owl.goTo", sync2visible[1])
-            } else if (num === sync2visible[0]){
-            sync2.trigger("owl.goTo", num - 1)
-            }
-
-            }
-
-    });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
-$('#button-search').bind('click', function () {
-        url = 'index.php?route=product/search';
-
-        var search = $('#content input[name=\'search\']').prop('value');
-
-        if (search) {
-            url += '&search=' + encodeURIComponent(search);
-        }
-        
-        var date = $('#content input[name=\'date-in\']').prop('value');
-
-        if (date) {
-            url += '&date=' + encodeURIComponent(date);
-        }
-        
-        var dateout = $('#content input[name=\'date-out\']').prop('value');
-
-        if (dateout) {
-            url += '&date-out=' + encodeURIComponent(dateout);
-        }
-        
-        var adults = $('#content select[name=\'adults\']').prop('value');
-
-        if (adults) {
-            url += '&adults=' + encodeURIComponent(adults);
-        }
-
-        var category_id = $('#content select[name=\'category_id\']').prop('value');
-
-        if (category_id > 0) {
-            url += '&category_id=' + encodeURIComponent(category_id);
-        }
-
-        var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
-
-        if (sub_category) {
-            url += '&sub_category=true';
-        }
-
-        var filter_description = $('#content input[name=\'description\']:checked').prop('value');
-
-        if (filter_description) {
-            url += '&description=true';
-        }
-
-        location = url;
-    });
-
-    $('#content input[name=\'search\']').bind('keydown', function (e) {
-        if (e.keyCode == 13) {
-            $('#button-search').trigger('click');
-        }
-    });
-
-    $('select[name=\'category_id\']').on('change', function () {
-        if (this.value == '0') {
-            $('input[name=\'sub_category\']').prop('disabled', true);
-        } else {
-            $('input[name=\'sub_category\']').prop('disabled', false);
-        }
-    });
-
-    $('select[name=\'category_id\']').trigger('change');
-    --></script> 
-<script type="text/javascript"><!--
-$('#button-search').bind('click', function () {
-        url = 'index.php?route=product/search';
-
-
-        
-        var date = $('#content input[name=\'date-in\']').prop('value');
-
-        if (date) {
-            url += '&date=' + encodeURIComponent(date);
-        }
-        
-        var dateout = $('#content input[name=\'date-out\']').prop('value');
-
-        if (dateout) {
-            url += '&date-out=' + encodeURIComponent(dateout);
-        }
-        
-        var adults = $('#content select[name=\'adults\']').prop('value');
-
-        if (adults) {
-            url += '&adults=' + encodeURIComponent(adults);
-        }
-
-        var category_id = $('#content select[name=\'category_id\']').prop('value');
-
-        if (category_id > 0) {
-            url += '&category_id=' + encodeURIComponent(category_id);
-        }
-
-        var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
-
-        if (sub_category) {
-            url += '&sub_category=true';
-        }
-
-        var filter_description = $('#content input[name=\'description\']:checked').prop('value');
-
-        if (filter_description) {
-            url += '&description=true';
-        }
-
-        location = url;
-    });
-
-    $('#content input[name=\'search\']').bind('keydown', function (e) {
-        if (e.keyCode == 13) {
-            $('#button-search').trigger('click');
-        }
-    });
-
-    $('select[name=\'category_id\']').on('change', function () {
-        if (this.value == '0') {
-            $('input[name=\'sub_category\']').prop('disabled', true);
-        } else {
-            $('input[name=\'sub_category\']').prop('disabled', false);
-        }
-    });
-
-    $('select[name=\'category_id\']').trigger('change');
-    --></script> 
-<script type="text/javascript">
-    <!--
 $('.date').datetimepicker({
         pickTime: false
     });
@@ -821,6 +535,224 @@ $('.date').datetimepicker({
     $('.time').datetimepicker({
         pickDate: false
     });
-    -->
+    $('button[id^=\'button-upload\']').on('click', function () {
+        var node = this;
+        $('#form-upload').remove();
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+        $('#form-upload input[name=\'file\']').trigger('click');
+        timer = setInterval(function () {
+            if ($('#form-upload input[name=\'file\']').val() != '') {
+                clearInterval(timer);
+                $.ajax({
+                    url: 'index.php?route=tool/upload',
+                    type: 'post',
+                    dataType: 'json',
+                    data: new FormData($('#form-upload')[0]),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $(node).button('loading');
+                    },
+                    complete: function () {
+                        $(node).button('reset');
+                    },
+                    success: function (json) {
+                        $('.text-danger').remove();
+                        if (json['error']) {
+                            $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+                        }
+
+                        if (json['success']) {
+                            alert(json['success']);
+                            $(node).parent().find('input').attr('value', json['code']);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }
+        }, 500);
+    });
+//--></script> 
+<script type="text/javascript"><!--
+$('#pareview').delegate('.pagination a', 'click', function (e) {
+        e.preventDefault();
+        $('#pareview').fadeOut('slow');
+        $('#pareview').load(this.href);
+        $('#pareview').fadeIn('slow');
+    });
+    $('#pareview').load('index.php?route=product/proparent/pareview&proparent_id=<?php echo $proparent_id; ?>');
+    $('#button-pareview').on('click', function () {
+        $.ajax({
+            url: 'index.php?route=product/proparent/write&proparent_id=<?php echo $proparent_id; ?>',
+            type: 'post',
+            dataType: 'json',
+            data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
+            beforeSend: function () {
+                $('#button-pareview').button('loading');
+            },
+            complete: function () {
+                $('#button-pareview').button('reset');
+                $('#captcha').attr('src', 'index.php?route=tool/captcha#' + new Date().getTime());
+                $('input[name=\'captcha\']').val('');
+            },
+            success: function (json) {
+                $('.alert-success, .alert-danger').remove();
+                if (json['error']) {
+                    $('#pareview').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+                }
+
+                if (json['success']) {
+                    $('#pareview').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                    $('input[name=\'name\']').val('');
+                    $('textarea[name=\'text\']').val('');
+                    $('input[name=\'rating\']:checked').prop('checked', false);
+                    $('input[name=\'captcha\']').val('');
+                }
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('.thumbnails').magnificPopup({
+            type: 'image',
+            delegate: 'a',
+            gallery: {
+                enabled: true
+            }
+        });
+    });
+//--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function () {
+
+        var sync1 = $("#sync1");
+        var sync2 = $("#sync2");
+        sync1.owlCarousel({
+            singleItem: true,
+            slideSpeed: 1000,
+            navigation: true,
+            pagination: false,
+            afterAction: syncPosition,
+            responsiveRefreshRate: 200,
+        });
+        sync2.owlCarousel({
+            items: 7,
+            itemsDesktop: [1199, 10],
+            itemsDesktopSmall: [979, 10],
+            itemsTablet: [768, 8],
+            itemsMobile: [479, 4],
+            pagination: false,
+            responsiveRefreshRate: 100,
+            afterInit: function (el) {
+                el.find(".owl-item").eq(0).addClass("synced");
+            }
+        });
+        function syncPosition(el) {
+            var current = this.currentItem;
+            $("#sync2")
+                    .find(".owl-item")
+                    .removeClass("synced")
+                    .eq(current)
+                    .addClass("synced")
+            if ($("#sync2").data("owlCarousel") !== undefined) {
+                center(current)
+            }
+        }
+
+        $("#sync2").on("click", ".owl-item", function (e) {
+            e.preventDefault();
+            var number = $(this).data("owlItem");
+            sync1.trigger("owl.goTo", number);
+        });
+        function center(number) {
+            var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+            var num = number;
+            var found = false;
+            for (var i in sync2visible) {
+                if (num === sync2visible[i]) {
+                    var found = true;
+                }
+            }
+
+            if (found === false) {
+                if (num > sync2visible[sync2visible.length - 1]) {
+                    sync2.trigger("owl.goTo", num - sync2visible.length + 2)
+                } else {
+                    if (num - 1 === -1) {
+                        num = 0;
+                    }
+                    sync2.trigger("owl.goTo", num);
+                }
+            } else if (num === sync2visible[sync2visible.length - 1]) {
+                sync2.trigger("owl.goTo", sync2visible[1])
+            } else if (num === sync2visible[0]) {
+                sync2.trigger("owl.goTo", num - 1)
+            }
+
+        }
+
+    });
+//--></script>
+<script type="text/javascript">
+            <!--
+$('.date').datetimepicker({
+    pickTime: false
+    });
+            $('.datetime').datetimepicker({
+        pickDate: true,
+        pickTime: true
+    });
+    $('.time').datetimepicker({
+        pickDate: false
+    });
+   -->
+</script>
+<script type="text/javascript">
+    var locations = [
+      ['<?php echo $heading_title; ?>', <?php echo $maps_apil; ?>, <?php echo $maps_apir; ?>]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng(<?php echo $maps_apil; ?>, <?php echo $maps_apir; ?>),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+<script type="text/javascript">
+    $("#map").animate({ left: "-200%" }, 0);
+    function toggleContent() {
+        // Get the DOM reference
+        var contentId = document.getElementById("map");
+        // Toggle 
+        contentId.style.left == "-200%" ? $("#map").animate({ left: "0px" }, 1200) : 
+        $("#map").animate({ left: "-200%" }, 1200); 
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#search-change").click(function(){
+        $("#change").toggle();
+    });
+});
 </script>
 <?php echo $footer; ?>

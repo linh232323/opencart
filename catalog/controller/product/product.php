@@ -13,24 +13,29 @@ class ControllerProductProduct extends Controller {
         
         $this->load->language('proparent/category');
         
-         if (isset($this->request->get['date'])) {
-            $data['date'] = $this->request->get['date'];
-        } else {
-            $data['date'] = date('Y-m-d');
+        if (isset($this->request->post['date-in'])){
+            $this->session->data['date']=$this->request->post['date-in'];
+        }else{
+             if (empty($this->session->data['date'])){
+                  $this->session->data['date'] = date('Y-m-d');
+             }
         }
         
-        if (isset($this->request->get['date-out'])) {
-            $data['date_out'] = $this->request->get['date-out'];
-        } else {
-            $date2=date('d')+2;
-            $data['date_out'] = date('Y').'-'.date('m').'-'.$date2;
+        if (isset($this->request->post['date-out'])){
+            $this->session->data['date-out']=$this->request->post['date-out'];
+        }else{
+             if (empty($this->session->data['date-out'])){
+                $date2=date('d')+2;
+                $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+             }
         }
         
-        
-        if (isset($this->request->get['adults'])) {
-            $data['adults'] = $this->request->get['adults'];
-        } else {
-            $data['adults'] = '1';
+        if (isset($this->request->post['adults'])){
+            $this->session->data['adults']=$this->request->post['adults'];
+        }else{
+             if (empty($this->session->data['adults'])){
+                  $this->session->data['adults'] = 1;
+             }
         }
         
         $data['breadcrumbs'] = array();
@@ -191,16 +196,15 @@ class ControllerProductProduct extends Controller {
         $product_info = $this->model_catalog_product->getProduct($product_id);
         
         foreach ($product_prices as $value) {
-                    if ((strtotime($data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($data['date'])<=strtotime($value['product_date']['2']['date']))){
+                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
                          $price = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-                         $dbprice = $value['product_price_gross'];
+                         $price_session = $value['product_price_gross'];
                     }else{
                          $price='';
                     }
-                    $dbprice_null = 0.0000;
                     $price_null = $this->currency->format(0, $product_info['tax_class_id'], $this->config->get('config_tax'));
-                    if(!empty($dbprice)){$cost=$dbprice;}else{$cost=$dbprice_null;}
-                    $this->model_catalog_product->updatePrice($product_id,$cost);
+                    $price_session_null = '';
+                    if (!empty($price_session)){ $this->session->data['price'] = $price_session; } else { $this->session->data['price'] = $price_session_null; }
                     $data['product_prices'][] =array(
                      'product_price_value'   => $price,
                      'product_price_null'    => $price_null,

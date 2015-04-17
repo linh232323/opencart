@@ -53,7 +53,9 @@ class ModelCatalogProparent extends Model {
 				'status'           => $query->row['status'],
 				'date_added'       => $query->row['date_added'],
 				'date_modified'    => $query->row['date_modified'],
-				'viewed'           => $query->row['viewed']
+				'viewed'           => $query->row['viewed'],
+				'maps_apil'         => $query->row['maps_apil'],
+				'maps_apir'         => $query->row['maps_apir']
 			);
 		} else {
 			return false;

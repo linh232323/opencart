@@ -13,61 +13,18 @@
                         <h4 class="title"><strong> <?php echo $title; ?></strong></h4>
                     </div>
                     <div id="form-search"  class="box box-content form-group">
+                        <form method="POST" action="index.php?route=product/search">
                         <label class="control-label" for="input-search"><?php echo $entry_search; ?></label>
                             <div class="form-group col-sm-12">
                                 <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" id="input-search" class="form-control" />
                             </div>
                             <br/>
-                            <div class="form-group col-sm-12">
-                                <select name="category_id" class="form-control">
-                                    <option value="0"><?php echo $text_category; ?></option>
-                                    <?php foreach ($categories as $category_1) { ?>
-                                    <?php if ($category_1['category_id'] == $category_id) { ?>
-                                    <option value="<?php echo $category_1['category_id']; ?>" selected="selected"><?php echo $category_1['name']; ?></option>
-                                    <?php } else { ?>
-                                    <option value="<?php echo $category_1['category_id']; ?>"><?php echo $category_1['name']; ?></option>
-                                    <?php } ?>
-                                    <?php foreach ($category_1['children'] as $category_2) { ?>
-                                    <?php if ($category_2['category_id'] == $category_id) { ?>
-                                    <option value="<?php echo $category_2['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-                                    <?php } else { ?>
-                                    <option value="<?php echo $category_2['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-                                    <?php } ?>
-                                    <?php foreach ($category_2['children'] as $category_3) { ?>
-                                    <?php if ($category_3['category_id'] == $category_id) { ?>
-                                    <option value="<?php echo $category_3['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-                                    <?php } else { ?>
-                                    <option value="<?php echo $category_3['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-                                    <?php } ?>
-                                    <?php } ?>
-                                    <?php } ?>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="checkbox-inline">
-                                    <?php if ($sub_category) { ?>
-                                    <input type="checkbox" name="sub_category" value="1" checked="checked" />
-                                    <?php } else { ?>
-                                    <input type="checkbox" name="sub_category" value="1" />
-                                    <?php } ?>
-                                    <?php echo $text_sub_category; ?></label>
-                            </div>
-                        <div class="col-sm-12">
-                            <label class="checkbox-inline">
-                                <?php if ($description) { ?>
-                                <input type="checkbox" name="description" value="1" id="description" checked="checked" />
-                                <?php } else { ?>
-                                <input type="checkbox" name="description" value="1" id="description" />
-                                <?php } ?>
-                                <?php echo $entry_description; ?></label>
-                        </div>
                             <div id="search_home" class="form-group col-sm-12">
                                 <div class="form-group">
                                     <div class="">
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_in; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-in" value="<?php echo $date; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-in" id ="date-in" value="<?php echo $_SESSION['date']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -75,7 +32,7 @@
                                         <br />
                                         <label class="control-label" for="input-option219"><?php echo $text_labeldate_out; ?></label>
                                         <div class="col-xs-12 input-group date">
-                                            <input type="text" name="date-out" value="<?php echo $date_out; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
+                                            <input type="text" name="date-out" value="<?php echo $_SESSION['date-out']; ?>" data-date-format="YYYY-MM-DD" placeholder="<?php echo date('Y-m-d');?>" class="form-control" />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button" id="date"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -86,13 +43,14 @@
                                                     <select name="adults" class="form-control ">
                                             <option value="">--- Please Select ---</option>
                                             <?php for($i=1;$i<=3;$i++) { ?>
-                                            <option value="<?php echo $i; ?>" <?php if($i==$adults) { echo 'selected'; } ?>><?php echo $i; ?></option>
+                                            <option value="<?php echo $i; ?>" <?php if($i==$_SESSION['adults']) { echo 'selected'; } ?>><?php echo $i; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                        <button type="button"id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                        <button type="submit" id="button-search" class="btn btn-primary btn-block" ><strong><?php echo $button_search; ?></strong></button>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -269,71 +227,6 @@
             <?php echo $content_bottom; ?></div>
         <?php echo $column_right; ?></div>
 </div>
-<script type="text/javascript"><!--
-$('#button-search').bind('click', function () {
-        url = 'index.php?route=product/search';
-
-        var search = $('#content input[name=\'search\']').prop('value');
-
-        if (search) {
-            url += '&search=' + encodeURIComponent(search);
-        }
-        
-        var date = $('#content input[name=\'date-in\']').prop('value');
-
-        if (date) {
-            url += '&date=' + encodeURIComponent(date);
-        }
-        
-        var dateout = $('#content input[name=\'date-out\']').prop('value');
-
-        if (dateout) {
-            url += '&date-out=' + encodeURIComponent(dateout);
-        }
-        
-        var adults = $('#content select[name=\'adults\']').prop('value');
-
-        if (adults) {
-            url += '&adults=' + encodeURIComponent(adults);
-        }
-
-        var category_id = $('#content select[name=\'category_id\']').prop('value');
-
-        if (category_id > 0) {
-            url += '&category_id=' + encodeURIComponent(category_id);
-        }
-
-        var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
-
-        if (sub_category) {
-            url += '&sub_category=true';
-        }
-
-        var filter_description = $('#content input[name=\'description\']:checked').prop('value');
-
-        if (filter_description) {
-            url += '&description=true';
-        }
-
-        location = url;
-    });
-
-    $('#content input[name=\'search\']').bind('keydown', function (e) {
-        if (e.keyCode == 13) {
-            $('#button-search').trigger('click');
-        }
-    });
-
-    $('select[name=\'category_id\']').on('change', function () {
-        if (this.value == '0') {
-            $('input[name=\'sub_category\']').prop('disabled', true);
-        } else {
-            $('input[name=\'sub_category\']').prop('disabled', false);
-        }
-    });
-
-    $('select[name=\'category_id\']').trigger('change');
-    --></script> 
 <script type="text/javascript">
     <!--
 $('.date').datetimepicker({

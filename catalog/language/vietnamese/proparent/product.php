@@ -26,6 +26,7 @@ $_['text_upload']       = 'Tập tin của bạn đã tải lên thành công!';
 $_['text_wait']         = 'Vui lòng đợi!';
 $_['text_tags']         = 'Tag:';
 $_['text_error']        = 'Không có sản phẩm!';
+$_['text_change_date']  = 'Thay đổi ngày';
 
 // Entry
 $_['entry_name']        = 'Tên bạn:';

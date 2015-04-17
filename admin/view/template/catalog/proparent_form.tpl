@@ -30,6 +30,7 @@
             <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
             <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
             <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
+            <li><a href="#tab-maps" data-toggle="tab"><?php echo $tab_maps; ?></a></li>
             <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
             <li><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
             <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
@@ -535,6 +536,22 @@
                     </tr>
                   </tfoot>
                 </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-maps">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <?php if ($error_maps_api) { ?>
+                        <div class="text-danger"><?php echo $error_maps_api; ?></div>
+                    <?php } ?> 
+                    <label class="col-sm-2 control-label" for="input-maps-title"><?php echo $entry_maps_api; ?></label>
+                    <div class="col-sm-4">
+                        <input type="text" name="maps_apil" value="<?php echo $maps_apil; ?>" placeholder="<?php echo $entry_maps_api; ?>" id="input-maps-apil" class="form-control" />
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" name="maps_apir" value="<?php echo $maps_apir; ?>" placeholder="<?php echo $entry_maps_api; ?>" id="input-maps-apir" class="form-control" />
+                    </div>
+                </div>
               </div>
             </div>
             <div class="tab-pane" id="tab-option">

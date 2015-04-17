@@ -79,10 +79,11 @@ $_['entry_category']         = 'Categories';
 $_['entry_filter']           = 'Filters';
 $_['entry_download']         = 'Downloads';
 $_['entry_related']          = 'Related Proparents';
-$_['entry_tag']          	 = 'Proparent Tags';
+$_['entry_tag']              = 'Proparent Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_maps_api']         = 'API';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
@@ -108,4 +109,8 @@ $_['error_permission']       = 'Warning: You do not have permission to modify pr
 $_['error_name']             = 'Proparent Name must be greater than 3 and less than 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Proparent Model must be greater than 1 and less than 64 characters!';
+$_['error_maps_api']         = 'API must be a number!';
 $_['error_keyword']          = 'SEO keyword already in use!';
+
+// Tab
+$_['tab_maps']               = 'Maps';

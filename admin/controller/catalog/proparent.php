@@ -615,6 +615,7 @@ class ControllerCatalogProParent extends Controller {
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
+		$data['entry_maps_api'] = $this->language->get('entry_maps_api');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -656,6 +657,7 @@ class ControllerCatalogProParent extends Controller {
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
+		$data['tab_maps'] = $this->language->get('tab_maps');
                 
                 $this->load->model('user/user');
 
@@ -705,6 +707,12 @@ class ControllerCatalogProParent extends Controller {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
 			$data['error_keyword'] = '';
+		}
+		
+		if (isset($this->error['maps_api'])) {
+			$data['error_maps_api'] = $this->error['maps_api'];
+		} else {
+			$data['error_maps_api'] = '';
 		}
 		
 		$url = '';
@@ -1159,7 +1167,26 @@ class ControllerCatalogProParent extends Controller {
 				);
 			}
 		}
+                
+                // Google Maps
+                
 
+		if (isset($this->request->post['maps_apil'])) {
+			$data['maps_apil'] = $this->request->post['maps_apil'];
+		} elseif (!empty($proparent_info)) {
+			$data['maps_apil'] = $proparent_info['maps_apil'];
+		} else {
+			$data['maps_apil'] = '';
+		}
+
+		if (isset($this->request->post['maps_apir'])) {
+			$data['maps_apir'] = $this->request->post['maps_apir'];
+		} elseif (!empty($proparent_info)) {
+			$data['maps_apir'] = $proparent_info['maps_apir'];
+		} else {
+			$data['maps_apir'] = '';
+		}
+                
 		// Options
 		$this->load->model('catalog/option');
 
@@ -1381,6 +1408,9 @@ class ControllerCatalogProParent extends Controller {
 			}
 		}
                 
+		if ((!is_numeric($this->request->post['maps_apil'])) || (!is_numeric($this->request->post['maps_apir']))) {
+			$this->error['maps_api'] = $this->language->get('error_maps_api');
+		}
 		
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');

@@ -119,13 +119,13 @@
                         <td><i class="glyphicon glyphicon-home text-primary"></i></td><td><?php echo substr($heading_title,0,18)."..."; ?></td>
                     </tr>
                     <tr>
-                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_in; ?> <?php echo $date; ?></td>
+                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_in; ?> <?php echo $_SESSION['date']; ?></td>
                     </tr>
                     <tr>
-                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_out; ?> <?php echo $date_out; ?></td>
+                        <td><i class="glyphicon glyphicon-calendar text-primary"></i></td><td><?php echo $text_labeldate_out; ?> <?php echo $_SESSION['date-out']; ?></td>
                     </tr>
                     <tr>
-                        <td><i class="glyphicon glyphicon-user text-primary"></i><i class="glyphicon glyphicon-user text-warning"></i></td><td><?php echo $text_labelguest; ?> <?php echo $adults; ?></td>
+                        <td><i class="glyphicon glyphicon-user text-primary"></i><i class="glyphicon glyphicon-user text-warning"></i></td><td><?php echo $text_labelguest; ?> <?php echo $_SESSION['adults']; ?></td>
                     </tr>
                     </table>
                 </div>
@@ -440,6 +440,8 @@ $('#button-cart').on('click', function() {
 				
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
+                        window.location.assign("index.php?route=checkout/checkout")
+
 		}
 	});
 });
