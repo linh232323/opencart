@@ -26,7 +26,7 @@ $_['error_permission']   = 'Cảnh báo: Bạn không có quyền sửa đổi c
 $_['error_name']         = 'Tên Banner phải có từ 3 đến 64 ký tự!';
 $_['error_title']        = 'Tiêu đề Banner phải có từ 3 đến 64 ký tự!';
 $_['error_default']      = 'Cảnh báo: cách trình bày này không thể bị xóa khi nó hiện thời được gán mặc định cửa hàng.!';
-$_['error_product']      = 'Cảnh báo: cách trình bày này không thể bị xóa khi nó hiện thời được gán Tới %s Sản phẩm.s!';
+$_['error_room']      = 'Cảnh báo: cách trình bày này không thể bị xóa khi nó hiện thời được gán Tới %s Sản phẩm.s!';
 $_['error_category']     = 'Cảnh báo: cách trình bày này không thể bị xóa khi nó hiện thời được gán Tới %s Danh mục!';
 $_['error_information']  = 'Cảnh báo: cách trình bày này không thể bị xóa khi nó hiện thời được gán Tới %s Trang thông tin!';
 ?>

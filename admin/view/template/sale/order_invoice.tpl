@@ -65,7 +65,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td><b><?php echo $column_product; ?></b></td>
+          <td><b><?php echo $column_room; ?></b></td>
           <td><b><?php echo $column_model; ?></b></td>
           <td class="text-right"><b><?php echo $column_quantity; ?></b></td>
           <td class="text-right"><b><?php echo $column_price; ?></b></td>
@@ -73,17 +73,17 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($order['product'] as $product) { ?>
+        <?php foreach ($order['room'] as $room) { ?>
         <tr>
-          <td><?php echo $product['name']; ?>
-            <?php foreach ($product['option'] as $option) { ?>
+          <td><?php echo $room['name']; ?>
+            <?php foreach ($room['option'] as $option) { ?>
             <br />
             &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
             <?php } ?></td>
-          <td><?php echo $product['model']; ?></td>
-          <td class="text-right"><?php echo $product['quantity']; ?></td>
-          <td class="text-right"><?php echo $product['price']; ?></td>
-          <td class="text-right"><?php echo $product['total']; ?></td>
+          <td><?php echo $room['model']; ?></td>
+          <td class="text-right"><?php echo $room['quantity']; ?></td>
+          <td class="text-right"><?php echo $room['price']; ?></td>
+          <td class="text-right"><?php echo $room['total']; ?></td>
         </tr>
         <?php } ?>
         <?php foreach ($order['voucher'] as $voucher) { ?>

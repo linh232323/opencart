@@ -72,9 +72,9 @@ class Customer {
 
 				$wishlist = unserialize($customer_query->row['wishlist']);
 
-				foreach ($wishlist as $product_id) {
-					if (!in_array($product_id, $this->session->data['wishlist'])) {
-						$this->session->data['wishlist'][] = $product_id;
+				foreach ($wishlist as $room_id) {
+					if (!in_array($room_id, $this->session->data['wishlist'])) {
+						$this->session->data['wishlist'][] = $room_id;
 					}
 				}
 			}

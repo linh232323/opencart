@@ -5,17 +5,15 @@ class ControllerProductSearch extends Controller {
     public function index() {
         $this->load->language('product/search');
         
-        $this->load->language('proparent/search');
+        $this->load->language('product/room');
         
-        $this->load->language('proparent/category');
+        $this->load->language('product/category');
         
-        $this->load->language('proparent/product');
-
         $this->load->model('catalog/category');
 
-        $this->load->model('catalog/product');
+        $this->load->model('catalog/room');
 
-        $this->load->model('catalog/proparent');
+        $this->load->model('catalog/hotel');
 
         $this->load->model('tool/image');
         
@@ -247,7 +245,7 @@ class ControllerProductSearch extends Controller {
         $data['button_list'] = $this->language->get('button_list');
         $data['button_grid'] = $this->language->get('button_grid');
 
-        $data['compare'] = $this->url->link('product/compare');
+        $data['compare'] = $this->url->link('room/compare');
 
         $this->load->model('catalog/category');
 
@@ -287,7 +285,7 @@ class ControllerProductSearch extends Controller {
             );
         }
 
-        $data['proparents'] = array();
+        $data['hotels'] = array();
 
         if (isset($this->request->post['search']) || isset($this->request->get['tag'])) {
             $filter_data = array(
@@ -302,9 +300,9 @@ class ControllerProductSearch extends Controller {
                 'limit' => $limit
             );
 
-            $proparent_total = $this->model_catalog_proparent->getTotalProparents($filter_data);
+            $hotel_total = $this->model_catalog_hotel->getTotalhotels($filter_data);
            
-            $results = $this->model_catalog_proparent->getProparents($filter_data);
+            $results = $this->model_catalog_hotel->gethotels($filter_data);
 
             $i = 0;
 
@@ -342,22 +340,22 @@ class ControllerProductSearch extends Controller {
                 
                 
                 $filter_dataa = array(
-                    'filter_proparent_id' => $result['proparent_id'],
+                    'filter_hotel_id' => $result['hotel_id'],
                     'sort' => $sort,
                     'order' => $order,
                     'start' => ($page - 1) * $limit,
                     'limit' => $limit
                 );
                 
-                $product_total = $this->model_catalog_product->getTotalProducts($filter_dataa);
+                $room_total = $this->model_catalog_room->getTotalRooms($filter_dataa);
 
-                $products = $this->model_catalog_product->getProducts($filter_dataa);
+                $rooms = $this->model_catalog_room->getRooms($filter_dataa);
                 
-                if ($products== null){
+                if ($rooms== null){
                     continue;
                 }
-                $data['proparents'][$i] = array(
-                    'proparent_id' => $result['proparent_id'],
+                $data['hotels'][$i] = array(
+                    'hotel_id' => $result['hotel_id'],
                     'thumbp' => $image,
                     'namep' => $result['name'],
                     'wifi' => $result['wifi'],
@@ -367,93 +365,93 @@ class ControllerProductSearch extends Controller {
                     'special' => $special,
                     'tax' => $tax,
                     'ratingp' => $result['rating'],
-                    'pareviews' => sprintf($this->language->get('text_pareviews'), (int) $result['pareviews']),
-                    'product_total' => $product_total,
-                    'hrefp' => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
+                    'hotelreviews' => sprintf($this->language->get('text_hotelreviews'), (int) $result['hotelreviews']),
+                    'room_total' => $room_total,
+                    'hrefp' => $this->url->link('product/hotel', 'hotel_id=' . $result['hotel_id'] . $url)
                 );
                 $data['maps'][]= array(
                     'namep' => $result['name'],
                     'maps_apil' => $result['maps_apil'],
                     'maps_apir' => $result['maps_apir']
                 );
-                $product_total = 0 ;
+                $room_total = 0 ;
                 
-                foreach ($products as $product) {
+                foreach ($rooms as $room) {
                     
-                    if ($this->session->data['adults'] > $product['maxadults']){
+                    if ($this->session->data['adults'] > $room['maxadults']){
                         continue;
                     }
 
-                    if ($product['image']) {
-                        $image = $this->model_tool_image->resizetoWidth($product['image'], $this->config->get('config_image_product_width'));
+                    if ($room['image']) {
+                        $image = $this->model_tool_image->resizetoWidth($room['image'], $this->config->get('config_image_product_width'));
                     } else {
                         $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_product_width'));
                     }
 
                     if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                        $price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+                        $price = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')));
                     } else {
                         $price = false;
                     }
 
-                    if ((float) $product['special']) {
-                        $special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+                    if ((float) $room['special']) {
+                        $special = $this->currency->format($this->tax->calculate($room['special'], $room['tax_class_id'], $this->config->get('config_tax')));
                     } else {
                         $special = false;
                     }
 
                     if ($this->config->get('config_tax')) {
-                        $tax = $this->currency->format((float) $product['special'] ? $product['special'] : $product['price']);
+                        $tax = $this->currency->format((float) $room['special'] ? $room['special'] : $room['price']);
                     } else {
                         $tax = false;
                     }
 
                     if ($this->config->get('config_review_status')) {
-                        $rating = (int) $product['rating'];
+                        $rating = (int) $room['rating'];
                     } else {
                         $rating = false;
                     }
                     
-                    $product_prices = $this->model_catalog_product->getProductPrices($product['product_id']);  
+                    $room_prices = $this->model_catalog_room->getRoomPrices($room['room_id']);  
                     
                     $had_price = FALSE;
                     
-                    foreach ($product_prices as $value) {
-                        if ((strtotime($this->session->data['check_in'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['check_in'])<=strtotime($value['product_date']['2']['date']))){
-                            $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
+                    foreach ($room_prices as $value) {
+                        if ((strtotime($this->session->data['check_in'])>=strtotime($value['room_date']['1']['date']))&&(strtotime($this->session->data['check_in'])<=strtotime($value['room_date']['2']['date']))){
+                            $price_cost = $this->currency->format($this->tax->calculate($value['room_price_gross'], $room['tax_class_id'], $this->config->get('config_tax')));
                             $had_price = TRUE;
                         }else{
                             $price_cost='';
                         }
-                        $data['product_prices'][] =array(
-                         'product_price_value'   => $price_cost,
-                         'product_date'          => $value['product_date'],
-                         'product_id'            => $value['product_id']
+                        $data['room_prices'][] =array(
+                         'room_price_value'   => $price_cost,
+                         'room_date'          => $value['room_date'],
+                         'room_id'            => $value['room_id']
                         ); 
                     }
                     
-                    if ($this->session->data['adults'] > $product['maxadults'] || $had_price == FALSE){
+                    if ($this->session->data['adults'] > $room['maxadults'] || $had_price == FALSE){
                         continue;
                     }
                     
-                    $data['proparents'][$i][] = array(
-                        'product_id' => $product['product_id'],
+                    $data['hotels'][$i][] = array(
+                        'room_id' => $room['room_id'],
                         'thumb' => $image,
-                        'name' => $product['name'],
-                        'description' => utf8_substr(strip_tags(html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+                        'name' => $room['name'],
+                        'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
-                        'quantity' => $product['quantity'],
-                        'maxadults' => $product['maxadults'],
+                        'quantity' => $room['quantity'],
+                        'maxadults' => $room['maxadults'],
                         'special' => $special,
                         'tax' => $tax,
-                        'rating' => $product['rating'],
-                        'href' => $this->url->link('product/product',  '&product_id=' . $product['product_id'] . $url)
+                        'rating' => $room['rating'],
+                        'href' => $this->url->link('product/room',  '&room_id=' . $room['room_id'] . $url)
                     );
-                    $product_total++;
+                    $room_total++;
                 }
-                $data['proparents'][$i]['product_total'] = $product_total;
-                if($product_total == 0){
-                    unset($data['proparents'][$i]);
+                $data['hotels'][$i]['room_total'] = $room_total;
+                if($room_total == 0){
+                    unset($data['hotels'][$i]);
                 }else{
                     ++$i;
                 }
@@ -596,16 +594,16 @@ class ControllerProductSearch extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            $proparent_total = count($data['proparents']);
+            $hotel_total = count($data['hotels']);
             $pagination = new Pagination();
-            $pagination->total = $proparent_total;
+            $pagination->total = $hotel_total;
             $pagination->page = $page;
             $pagination->limit = $limit;
             $pagination->url = $this->url->link('product/search', $url . '&page={page}');
 
             $data['pagination'] = $pagination->render();
-            $data['total'] = $proparent_total;
-            $data['results'] = sprintf($this->language->get('text_pagination'), ($proparent_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($proparent_total - $limit)) ? $proparent_total : ((($page - 1) * $limit) + $limit), $proparent_total, ceil($proparent_total / $limit));
+            $data['total'] = $hotel_total;
+            $data['results'] = sprintf($this->language->get('text_pagination'), ($hotel_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($hotel_total - $limit)) ? $hotel_total : ((($page - 1) * $limit) + $limit), $hotel_total, ceil($hotel_total / $limit));
         }
 
         $data['search'] = $search;

@@ -41,7 +41,7 @@
                 <option value="customer"><?php echo $text_customer; ?></option>
                 <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
                 <option value="affiliate"><?php echo $text_affiliate; ?></option>
-                <option value="product"><?php echo $text_product; ?></option>
+                <option value="room"><?php echo $text_room; ?></option>
               </select>
             </div>
           </div>
@@ -69,11 +69,11 @@
               <div id="affiliate" class="well well-sm" style="height: 150px; overflow: auto;"></div>
             </div>
           </div>
-          <div class="form-group to" id="to-product">
-            <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
+          <div class="form-group to" id="to-room">
+            <label class="col-sm-2 control-label" for="input-room"><span data-toggle="tooltip" title="<?php echo $help_room; ?>"><?php echo $entry_room; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-              <div id="product" class="well well-sm" style="height: 150px; overflow: auto;"></div>
+              <input type="text" name="rooms" value="" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
+              <div id="room" class="well well-sm" style="height: 150px; overflow: auto;"></div>
             </div>
           </div>
           <div class="form-group required">
@@ -165,32 +165,32 @@ $('#affiliate').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
-// Products
-$('input[name=\'products\']').autocomplete({
+// Rooms
+$('input[name=\'rooms\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id']
+						value: item['room_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'products\']').val('');
+		$('input[name=\'rooms\']').val('');
 		
-		$('#product' + item['value']).remove();
+		$('#room' + item['value']).remove();
 		
-		$('#product').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+		$('#room').append('<div id="room' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="room[]" value="' + item['value'] + '" /></div>');	
 	}	
 });
 
-$('#product').delegate('.fa-minus-circle', 'click', function() {
+$('#room').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 

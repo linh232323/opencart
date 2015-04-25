@@ -64,42 +64,42 @@
         <tr>
           <td><b><?php echo $column_location; ?></b></td>
           <td><b><?php echo $column_reference; ?></b></td>
-          <td><b><?php echo $column_product; ?></b></td>
+          <td><b><?php echo $column_room; ?></b></td>
           <td><b><?php echo $column_weight; ?></b></td>
           <td><b><?php echo $column_model; ?></b></td>
           <td class="text-right"><b><?php echo $column_quantity; ?></b></td>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($order['product'] as $product) { ?>
+        <?php foreach ($order['room'] as $room) { ?>
         <tr>
-          <td><?php echo $product['location']; ?></td>
-          <td><?php if ($product['sku']) { ?>
-            <?php echo $text_sku; ?> <?php echo $product['sku']; ?><br />
+          <td><?php echo $room['location']; ?></td>
+          <td><?php if ($room['sku']) { ?>
+            <?php echo $text_sku; ?> <?php echo $room['sku']; ?><br />
             <?php } ?>
-            <?php if ($product['upc']) { ?>
-            <?php echo $text_upc; ?> <?php echo $product['upc']; ?><br />
+            <?php if ($room['upc']) { ?>
+            <?php echo $text_upc; ?> <?php echo $room['upc']; ?><br />
             <?php } ?>
-            <?php if ($product['ean']) { ?>
-            <?php echo $text_ean; ?> <?php echo $product['ean']; ?><br />
+            <?php if ($room['ean']) { ?>
+            <?php echo $text_ean; ?> <?php echo $room['ean']; ?><br />
             <?php } ?>
-            <?php if ($product['jan']) { ?>
-            <?php echo $text_jan; ?> <?php echo $product['jan']; ?><br />
+            <?php if ($room['jan']) { ?>
+            <?php echo $text_jan; ?> <?php echo $room['jan']; ?><br />
             <?php } ?>
-            <?php if ($product['isbn']) { ?>
-            <?php echo $text_isbn; ?> <?php echo $product['isbn']; ?><br />
+            <?php if ($room['isbn']) { ?>
+            <?php echo $text_isbn; ?> <?php echo $room['isbn']; ?><br />
             <?php } ?>
-            <?php if ($product['mpn']) { ?>
-            <?php echo $text_mpn; ?><?php echo $product['mpn']; ?><br />
+            <?php if ($room['mpn']) { ?>
+            <?php echo $text_mpn; ?><?php echo $room['mpn']; ?><br />
             <?php } ?></td>
-          <td><?php echo $product['name']; ?>
-            <?php foreach ($product['option'] as $option) { ?>
+          <td><?php echo $room['name']; ?>
+            <?php foreach ($room['option'] as $option) { ?>
             <br />
             &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
             <?php } ?></td>
-          <td><?php echo $product['weight']; ?></td>
-          <td><?php echo $product['model']; ?></td>
-          <td class="text-right"><?php echo $product['quantity']; ?></td>
+          <td><?php echo $room['weight']; ?></td>
+          <td><?php echo $room['model']; ?></td>
+          <td class="text-right"><?php echo $room['quantity']; ?></td>
         </tr>
         <?php } ?>
       </tbody>

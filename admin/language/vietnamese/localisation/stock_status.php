@@ -15,5 +15,5 @@ $_['entry_name']       = 'Tình trạng:';
 // Error
 $_['error_permission'] = 'Cảnh báo: Bạn không đủ quyền đễ thay đổi Tình trạng!';
 $_['error_name']       = 'Trạng thái phải lớn hơn 3 và nhỏ hơn 32 ký tự!';
-$_['error_product']    = 'Cảnh báo: Không thể xóa Tình trạng này vì nó đang được áp dụng cho %s sản phẩm!';
+$_['error_room']    = 'Cảnh báo: Không thể xóa Tình trạng này vì nó đang được áp dụng cho %s sản phẩm!';
 ?>

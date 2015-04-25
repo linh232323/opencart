@@ -187,46 +187,46 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($products) { ?>
-              <?php foreach ($products as $product) { ?>
+            <?php if ($rooms) { ?>
+              <?php foreach ($rooms as $room) { ?>
                 <tr>
                   <td class="text-center">
-                    <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="<?php echo $room['room_id']; ?>" />
                   </td>
                   <td class="text-center">
-                    <?php if ($product['image']) { ?>
-                      <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
+                    <?php if ($room['image']) { ?>
+                      <img src="<?php echo $room['image']; ?>" alt="<?php echo $room['name']; ?>" class="img-thumbnail" />
                       <?php } else { ?>
                       <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
                       <?php } ?>
                   </td>
-                  <td class="text-left"><a href="<?php echo $product['edit']; ?>"><?php echo $product['name']; ?></a></td>
-                  <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-left"><a href="<?php echo $room['edit']; ?>"><?php echo $room['name']; ?></a></td>
+                  <td class="text-left"><?php echo $room['model']; ?></td>
                   <td class="text-left">
-                    <?php if ($product['special']) { ?>
-                      <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                      <div class="text-danger"><?php echo $product['special']; ?></div>
+                    <?php if ($room['special']) { ?>
+                      <span style="text-decoration: line-through;"><?php echo $room['price']; ?></span><br/>
+                      <div class="text-danger"><?php echo $room['special']; ?></div>
                     <?php } else { ?>
-                      <?php echo $product['price']; ?>
+                      <?php echo $room['price']; ?>
                     <?php } ?>
                   </td>
                   <td class="text-right">
-                    <?php if ($product['has_option'] == 0) { ?>
-                      <?php if ($product['quantity'] <= 0) { ?>
-                        <span class="label label-danger"><?php echo $product['quantity']; ?></span>
-                      <?php } elseif ($product['quantity'] <= 5) { ?>
-                        <span class="label label-warning"><?php echo $product['quantity']; ?></span>
+                    <?php if ($room['has_option'] == 0) { ?>
+                      <?php if ($room['quantity'] <= 0) { ?>
+                        <span class="label label-danger"><?php echo $room['quantity']; ?></span>
+                      <?php } elseif ($room['quantity'] <= 5) { ?>
+                        <span class="label label-warning"><?php echo $room['quantity']; ?></span>
                       <?php } else { ?>
-                        <span class="label label-success"><?php echo $product['quantity']; ?></span>
+                        <span class="label label-success"><?php echo $room['quantity']; ?></span>
                       <?php } ?>
                     <?php } else { ?>
-                      <span class="label label-info"><?php echo $product['vCount']; ?> <?php echo $text_variations; ?></span><br />
-                      <span class="label label-info"><?php echo $product['vsCount']; ?> <?php echo $text_variations_stock; ?></span>
+                      <span class="label label-info"><?php echo $room['vCount']; ?> <?php echo $text_variations; ?></span><br />
+                      <span class="label label-info"><?php echo $room['vsCount']; ?> <?php echo $text_variations_stock; ?></span>
                     <?php } ?>
                   </td>
-                  <td class="text-left"><?php echo $product['status']; ?></td>
+                  <td class="text-left"><?php echo $room['status']; ?></td>
                   <td>
-                    <?php foreach ($product['markets'] as $market) { ?>
+                    <?php foreach ($room['markets'] as $market) { ?>
                       <?php if ($market['status'] == 1) { ?>
                         <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-block btn-sm btn-success"><?php echo $market['name']; ?></a>
                       <?php } elseif ($market['status'] == 2) { ?>

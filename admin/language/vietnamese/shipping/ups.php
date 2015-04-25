@@ -27,7 +27,7 @@ $_['text_pr']                      = 'Puerto Rico Origin';
 $_['text_mx']                      = 'Mexico Origin';
 $_['text_other']                   = 'All Other Origins';
 $_['text_test']                    = 'Kiểm tra';
-$_['text_production']              = 'Sản xuất';	
+$_['text_roomion']              = 'Sản xuất';	
 $_['text_residential']             = 'Residential';
 $_['text_commercial']              = 'Commercial';
 $_['text_next_day_air']            = 'UPS Next Day Air';
@@ -59,7 +59,7 @@ $_['entry_password']               = 'Mật khẩu:<span class="help">Enter your
 $_['entry_pickup']                 = 'Pickup Method:<span class="help">How do you give packages to UPS (only used when origin is US)?</span>';
 $_['entry_packaging']              = 'Packaging Type:<span class="help">What kind of packaging do you use?</span>';
 $_['entry_classification']         = 'Customer Classification Code:<span class="help">01 - If you are billing to a UPS account and have a daily UPS pickup, 03 - If you do not have a UPS account or you are billing to a UPS account but do not have a daily pickup, 04 - If you are shipping from a retail outlet (only used when origin is US)</span>';
-$_['entry_origin']                 = 'Shipping Origin Code:<span class="help">What origin point should be used (this setting affects only what UPS product names are shown to the user)</span>';
+$_['entry_origin']                 = 'Shipping Origin Code:<span class="help">What origin point should be used (this setting affects only what UPS room names are shown to the user)</span>';
 $_['entry_city']                   = 'Origin City:<span class="help">Enter the name of the origin city.</span>';
 $_['entry_state']                  = 'Origin State/Province:<span class="help">Enter the two-letter code for your origin state/province.</span>';
 $_['entry_country']                = 'Origin Country:<span class="help">Enter the two-letter code for your origin country.</span>';
@@ -67,7 +67,7 @@ $_['entry_postcode']               = 'Origin Zip/Postal Code:<span class="help">
 $_['entry_test']                   = 'Chế độ kiểm tra:<span class="help">Chế độ kiểm tra(YES) hoặc chế độ sản xuất (NO)?</span>';
 $_['entry_quote_type']             = 'Quote Type:<span class="help">Quote for Residential or Commercial Delivery.</span>';
 $_['entry_service']                = 'Services:<span class="help">Select the UPS services to be offered.</span>';
-$_['entry_insurance']              = 'Enable Insurance:<span class="help">Enables insurance with product total as the value</span>';
+$_['entry_insurance']              = 'Enable Insurance:<span class="help">Enables insurance with room total as the value</span>';
 $_['entry_display_weight']         = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
 $_['entry_weight_code']            = 'Weight Code:<br /><span class="help">Allowed kgs or lbs. Make sure you match the weight class with the UPS accepted weight code.</span>';
 $_['entry_weight_class']           = 'Weight Class:<span class="help">Set to kilograms or pounds.</span>';

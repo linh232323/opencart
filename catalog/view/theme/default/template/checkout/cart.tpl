@@ -49,38 +49,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($products as $product) { ?>
+                            <?php foreach ($rooms as $room) { ?>
                             <tr>
-                                <td class="text-center"><?php if ($product['thumb']) { ?>
-                                    <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
+                                <td class="text-center"><?php if ($room['thumb']) { ?>
+                                    <a href="<?php echo $room['href']; ?>"><img src="<?php echo $room['thumb']; ?>" alt="<?php echo $room['name']; ?>" title="<?php echo $room['name']; ?>" class="img-thumbnail" /></a>
                                     <?php } ?></td>
-                                <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                                    <?php if (!$product['stock']) { ?>
+                                <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a>
+                                    <?php if (!$room['stock']) { ?>
                                     <span class="text-danger">***</span>
                                     <?php } ?>
-                                    <?php if ($product['option']) { ?>
-                                    <?php foreach ($product['option'] as $option) { ?>
+                                    <?php if ($room['option']) { ?>
+                                    <?php foreach ($room['option'] as $option) { ?>
                                     <br />
                                     <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                                     <?php } ?>
                                     <?php } ?>
-                                    <?php if ($product['reward']) { ?>
+                                    <?php if ($room['reward']) { ?>
                                     <br />
-                                    <small><?php echo $product['reward']; ?></small>
+                                    <small><?php echo $room['reward']; ?></small>
                                     <?php } ?>
-                                    <?php if ($product['recurring']) { ?>
+                                    <?php if ($room['recurring']) { ?>
                                     <br />
-                                    <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $product['recurring']; ?></small>
+                                    <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $room['recurring']; ?></small>
                                     <?php } ?></td>
-                                <td class="text-left"><?php echo $product['model']; ?></td>
+                                <td class="text-left"><?php echo $room['model']; ?></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                                        <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
+                                        <input type="text" name="quantity[<?php echo $room['key']; ?>]" value="<?php echo $room['quantity']; ?>" size="1" class="form-control" />
                                         <span class="input-group-btn">
                                             <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
-                                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['key']; ?>');"><i class="fa fa-times-circle"></i></button></span></div></td>
-                                <td class="text-right"><?php echo $product['price']; ?></td>
-                                <td class="text-right"><?php echo $product['night']; ?></td>
-                                <td class="text-right"><?php echo $product['total']; ?></td>
+                                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $room['key']; ?>');"><i class="fa fa-times-circle"></i></button></span></div></td>
+                                <td class="text-right"><?php echo $room['price']; ?></td>
+                                <td class="text-right"><?php echo $room['night']; ?></td>
+                                <td class="text-right"><?php echo $room['total']; ?></td>
                             </tr>
                             <?php } ?>
                             <?php foreach ($vouchers as $vouchers) { ?>

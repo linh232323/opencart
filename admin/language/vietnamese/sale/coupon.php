@@ -29,7 +29,7 @@ $_['entry_logged']        = 'Khách hàng đăng nhập:<br /><span class="help"
 $_['entry_shipping']      = 'Miễn phí giao hàng:';
 $_['entry_total']         = 'Tổng cộng:<br /><span class="help">Tổng số tiền trước khi sử dụng mã giảm giá.</span>';
 $_['entry_category']      = 'Danh mục:<br /><span class="help">Chọn tất cả các sản phẩm theo thể loại được lựa chọn.</span>';
-$_['entry_product']       = 'Sản phẩm:';
+$_['entry_room']       = 'Sản phẩm:';
 $_['entry_date_start']    = 'Ngày bắt đầu:';
 $_['entry_date_end']      = 'Ngày kết thúc:';
 $_['entry_uses_total']    = 'Số lần sử dụng:<br /><span class="help">ố lần tối đa phiếu giảm giá có thể được sử dụng bởi các khách hàng bất kỳ. Để trống cho không giới hạn</span>';

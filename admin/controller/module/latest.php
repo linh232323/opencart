@@ -16,7 +16,7 @@ class ControllerModuleLatest extends Controller {
 				$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 			}
 			
-			$this->cache->delete('product');
+			$this->cache->delete('room');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -37,7 +37,7 @@ class ControllerCommonFooter extends Controller {
 		$data['manufacturer'] = $this->url->link('product/manufacturer');
 		$data['voucher'] = $this->url->link('account/voucher', '', 'SSL');
 		$data['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');
-		$data['special'] = $this->url->link('product/special');
+		$data['special'] = $this->url->link('room/special');
 		$data['account'] = $this->url->link('account/account', '', 'SSL');
 		$data['order'] = $this->url->link('account/order', '', 'SSL');
 		$data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');

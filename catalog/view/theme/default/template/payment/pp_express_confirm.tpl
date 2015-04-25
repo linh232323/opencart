@@ -74,21 +74,21 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($products as $product) { ?>
+            <?php foreach ($rooms as $room) { ?>
             <tr>
-              <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                <?php foreach ($product['option'] as $option) { ?>
+              <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a>
+                <?php foreach ($room['option'] as $option) { ?>
                 <br />
                 <small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                 <?php } ?>
-                <?php if ($product['recurring']) { ?>
+                <?php if ($room['recurring']) { ?>
                 <br />
-                <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $product['recurring_description']; ?></small>
+                <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $room['recurring_description']; ?></small>
                 <?php } ?></td>
-              <td class="text-left"><?php echo $product['model']; ?></td>
-              <td class="text-center"><?php echo $product['quantity']; ?></td>
-              <td class="text-right"><?php echo $product['price']; ?></td>
-              <td class="text-right"><?php echo $product['total']; ?></td>
+              <td class="text-left"><?php echo $room['model']; ?></td>
+              <td class="text-center"><?php echo $room['quantity']; ?></td>
+              <td class="text-right"><?php echo $room['price']; ?></td>
+              <td class="text-right"><?php echo $room['total']; ?></td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>

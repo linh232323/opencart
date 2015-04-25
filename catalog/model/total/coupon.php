@@ -11,14 +11,14 @@ class ModelTotalCoupon extends Model {
 			if ($coupon_info) {
 				$discount_total = 0;
 
-				if (!$coupon_info['product']) {
+				if (!$coupon_info['room']) {
 					$sub_total = $this->cart->getSubTotal();
 				} else {
 					$sub_total = 0;
 
-					foreach ($this->cart->getProducts() as $product) {
-						if (in_array($product['product_id'], $coupon_info['product'])) {
-							$sub_total += $product['total'];
+					foreach ($this->cart->getrooms() as $room) {
+						if (in_array($room['room_id'], $coupon_info['room'])) {
+							$sub_total += $room['total'];
 						}
 					}
 				}
@@ -27,13 +27,13 @@ class ModelTotalCoupon extends Model {
 					$coupon_info['discount'] = min($coupon_info['discount'], $sub_total);
 				}
 
-				foreach ($this->cart->getProducts() as $product) {
+				foreach ($this->cart->getrooms() as $room) {
 					$discount = 0;
 
-					if (!$coupon_info['product']) {
+					if (!$coupon_info['room']) {
 						$status = true;
 					} else {
-						if (in_array($product['product_id'], $coupon_info['product'])) {
+						if (in_array($room['room_id'], $coupon_info['room'])) {
 							$status = true;
 						} else {
 							$status = false;
@@ -42,13 +42,13 @@ class ModelTotalCoupon extends Model {
 
 					if ($status) {
 						if ($coupon_info['type'] == 'F') {
-							$discount = $coupon_info['discount'] * ($product['total'] / $sub_total);
+							$discount = $coupon_info['discount'] * ($room['total'] / $sub_total);
 						} elseif ($coupon_info['type'] == 'P') {
-							$discount = $product['total'] / 100 * $coupon_info['discount'];
+							$discount = $room['total'] / 100 * $coupon_info['discount'];
 						}
 
-						if ($product['tax_class_id']) {
-							$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
+						if ($room['tax_class_id']) {
+							$tax_rates = $this->tax->getRates($room['total'] - ($room['total'] - $discount), $room['tax_class_id']);
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {

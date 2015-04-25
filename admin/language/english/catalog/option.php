@@ -37,5 +37,5 @@ $_['error_permission']    = 'Warning: You do not have permission to modify optio
 $_['error_name']          = 'Option Name must be between 1 and 128 characters!';
 $_['error_type']          = 'Warning: Option Values required!';
 $_['error_option_value']  = 'Option Value Name must be between 1 and 128 characters!';
-$_['error_product']       = 'Warning: This option cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']     = 'Warning: This option cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']       = 'Warning: This option cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']     = 'Warning: This option cannot be deleted as it is currently assigned to %s hotels!';

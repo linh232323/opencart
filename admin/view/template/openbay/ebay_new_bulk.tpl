@@ -33,17 +33,17 @@
               </div>
             </div>
           </div>
-          <?php if ($products) { ?>
+          <?php if ($rooms) { ?>
             <?php $i = 0; ?>
-            <?php foreach ($products as $product) { ?>
+            <?php foreach ($rooms as $room) { ?>
               <div class="well listingBox" id="p_row_<?php echo $i; ?>">
-                <input type="hidden" class="product_id openbay_data_<?php echo $i; ?>" name="product_id" value="<?php echo $i; ?>" />
-                <input type="hidden" class="openbay_data_<?php echo $i; ?>" name="product_id" value="<?php echo $product['product_id']; ?>" />
-                <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                <input type="hidden" class="room_id openbay_data_<?php echo $i; ?>" name="room_id" value="<?php echo $i; ?>" />
+                <input type="hidden" class="openbay_data_<?php echo $i; ?>" name="room_id" value="<?php echo $room['room_id']; ?>" />
+                <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($room['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
                 <input type="hidden" class="openbay_data_<?php echo $i; ?>" name="catalog_epid" id="catalog_epid_<?php echo $i; ?>" value="0" />
                 <div class="row">
                   <div class="col-sm-7">
-                    <h4 id="product_title_<?php echo $i; ?>" style="display:none;"></h4>
+                    <h4 id="room_title_<?php echo $i; ?>" style="display:none;"></h4>
                   </div>
                   <div class="col-sm-5 form-group text-right" id="p_row_buttons_<?php echo $i; ?>">
                     <a class="btn btn-primary" onclick="showCategory('<?php echo $i; ?>');" id="editCategory_<?php echo $i; ?>" ><i class="fa fa-pencil"></i> <?php echo $text_category; ?></a>
@@ -55,18 +55,18 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <div class="row" id="product_messages_<?php echo $i; ?>" style="display:none;"></div>
-                    <div class="row product_content_<?php echo $i; ?>">
+                    <div class="row" id="room_messages_<?php echo $i; ?>" style="display:none;"></div>
+                    <div class="row room_content_<?php echo $i; ?>">
                       <div class="col-sm-2">
                         <div class="row">
                           <div class="col-sm-12 form-group text-center">
-                            <img class="img-thumbnail" src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" />
+                            <img class="img-thumbnail" src="<?php echo $room['image']; ?>" alt="<?php echo $room['name']; ?>" />
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-sm-12 form-group">
-                            <h4 class="text-center"><span class="label label-success"><?php echo $text_stock; ?>: <?php echo $product['quantity']; ?></span></h4>
-                            <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbay_data_<?php echo $i; ?>" />
+                            <h4 class="text-center"><span class="label label-success"><?php echo $text_stock; ?>: <?php echo $room['quantity']; ?></span></h4>
+                            <input type="hidden" name="qty" value="<?php echo $room['quantity']; ?>" class="openbay_data_<?php echo $i; ?>" />
                           </div>
                         </div>
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-feature-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
@@ -249,13 +249,13 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label"><?php echo $text_title; ?></label>
                           <div class="col-sm-10">
-                            <input type="text" name="title" class="openbay_data_<?php echo $i; ?> form-control" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" />
+                            <input type="text" name="title" class="openbay_data_<?php echo $i; ?> form-control" value="<?php echo $room['name']; ?>" id="title_<?php echo $i; ?>" />
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-2 control-label"><?php echo $text_price; ?></label>
                           <div class="col-sm-10">
-                            <input id="price_<?php echo $i; ?>" type="text" name="price" class="openbay_data_<?php echo $i; ?> form-control" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                            <input id="price_<?php echo $i; ?>" type="text" name="price" class="openbay_data_<?php echo $i; ?> form-control" value="<?php echo number_format($room['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
                           </div>
                         </div>
                         <div class="alert alert-info" id="conditionLoading_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_condition; ?></div>
@@ -720,14 +720,14 @@
             success: function(data) {
                     if (data.error == false) {
                       if (data.results > 0) {
-                        data.products = $.makeArray(data.products);
+                        data.rooms = $.makeArray(data.rooms);
 
-                        $.each(data.products, function(key, val) {
+                        $.each(data.rooms, function(key, val) {
                           html = '';
                           html += '<div class="well">';
                           html += '<div class="row">';
                           html += '<div class="col-sm-1">';
-                          html += '<input type="radio" class="openbay_data_'+id+'" name="catalog_epid_'+id+'" value="'+val.productIdentifier.ePID+'" />';
+                          html += '<input type="radio" class="openbay_data_'+id+'" name="catalog_epid_'+id+'" value="'+val.roomIdentifier.ePID+'" />';
                           html += '</div>';
                           html += '<div class="col-sm-2 text-center">';
                           if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
@@ -737,7 +737,7 @@
                           }
                           html += '</div>';
                           html += '<div class="col-sm-9">';
-                          html += '<p>'+val.productDetails.value.text.value+'</p>';
+                          html += '<p>'+val.roomDetails.value.text.value+'</p>';
                           html += '</div>';
                           html += '</div>';
                           html += '</div>';
@@ -745,7 +745,7 @@
                           $('#catalog-results-'+id).append(html).show();
                         });
                       } else {
-                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> <?php echo $text_catalog_no_products; ?></div>').show();
+                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> <?php echo $text_catalog_no_rooms; ?></div>').show();
                       }
                     } else {
                       $('#catalog-results-'+id).append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+data.error_message+'</div>').show();
@@ -806,13 +806,13 @@
       $('#button-edit').show();
       $('#button-submit').show();
 
-      $.each($('.product_id'), function(i) {
+      $.each($('.room_id'), function(i) {
           id = $(this).val();
           name = $('#title_'+$(this).val()).val();
 
-          $('#product_messages_'+id).html('<div class="alert alert-info"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></div>').show();
-          $('.product_content_'+id).hide();
-          $('#product_title_'+id).text(name).show();
+          $('#room_messages_'+id).html('<div class="alert alert-info"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></div>').show();
+          $('.room_content_'+id).hide();
+          $('#room_title_'+id).text(name).show();
 
           $('#catalog_epid_'+id).val($("input[type='radio'][name='catalog_epid_"+id+"']:checked").val());
 
@@ -851,7 +851,7 @@
                         html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
                     });
                 }
-                $('#product_messages_'+data.i).html(html);
+                $('#room_messages_'+data.i).html(html);
                 removeCount();
               },
               failure: function() {
@@ -876,12 +876,12 @@
     $('.button-preview').remove();
     $('.button-listing-view').remove();
 
-    $.each($('.product_id'), function(i) {
+    $.each($('.room_id'), function(i) {
       id = $(this).val();
       name = $('#title_'+$(this).val()).val();
-      $('#product_messages_'+$(this).val()).empty().hide();
-      $('.product_content_'+$(this).val()).show();
-      $('#product_title_'+$(this).val()).text(name).hide();
+      $('#room_messages_'+$(this).val()).empty().hide();
+      $('.room_content_'+$(this).val()).show();
+      $('#room_title_'+$(this).val()).text(name).hide();
     });
   });
 
@@ -899,12 +899,12 @@
           $('#button-submit').hide();
           $('.button-preview').remove();
 
-          $.each($('.product_id'), function(i) {
+          $.each($('.room_id'), function(i) {
               id = $(this).val();
               name = $('#title_'+$(this).val()).val();
 
-              $('.product_content_'+$(this).val()).hide();
-              $('#product_title_'+$(this).val()).text(name).show();
+              $('.room_content_'+$(this).val()).hide();
+              $('#room_title_'+$(this).val()).text(name).show();
 
               $.ajax({
                 url: 'index.php?route=openbay/ebay/listItemBulk&token=<?php echo $token; ?>&i='+id,
@@ -929,7 +929,7 @@
                       html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
                     });
                   }
-                  $('#product_messages_'+data.i).html(html).show();
+                  $('#room_messages_'+data.i).html(html).show();
                   removeCount();
                 },
                 failure: function() {

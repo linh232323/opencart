@@ -45,7 +45,6 @@ class ModelToolImage extends Model {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;
 		}
-
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 		$old_image = $filename;

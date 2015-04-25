@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <?php if (!empty($saved_products)) { ?>
+            <?php if (!empty($saved_rooms)) { ?>
             <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
             <?php } ?>
           </div>
@@ -39,14 +39,14 @@
         </tr>
       </thead>
       <tbody>
-        <?php if (!empty($saved_products)) { ?>
-        <?php foreach ($saved_products as $saved_product) { ?>
+        <?php if (!empty($saved_rooms)) { ?>
+        <?php foreach ($saved_rooms as $saved_room) { ?>
         <tr>
-          <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
-          <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-          <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
-          <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
-          <td class="text-center"><a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $button_edit; ?>]</a> <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $button_remove; ?>]</a></td>
+          <td class="text-left"><?php echo $saved_room['room_name']; ?></td>
+          <td class="text-left"><?php echo $saved_room['room_model']; ?></td>
+          <td class="text-left"><?php echo $saved_room['room_sku']; ?></td>
+          <td class="text-left"><?php echo $saved_room['amazon_sku']; ?></td>
+          <td class="text-center"><a href="<?php echo $saved_room['edit_link']; ?>">[<?php echo $button_edit; ?>]</a> <a onclick="removeSaved('<?php echo $saved_room['room_id']; ?>', '<?php echo $saved_room['var']; ?>')">[<?php echo $button_remove; ?>]</a></td>
         </tr>
         <?php } ?>
         <?php } else { ?>
@@ -66,7 +66,7 @@
     $.ajax({
       url: '<?php echo html_entity_decode($deleteSavedAjax); ?>',
       type: 'get',
-      data: 'product_id=' + id + '&var=' + option_var,
+      data: 'room_id=' + id + '&var=' + option_var,
       success: function () {
         window.location.href = window.location.href;
       },

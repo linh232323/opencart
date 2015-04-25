@@ -30,18 +30,18 @@
           </tr>
         </tbody>
       </table>
-      <h2><?php echo $text_product; ?></h2>
+      <h2><?php echo $text_room; ?></h2>
       <table class="list table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" style="width: 33.3%;"><?php echo $column_product; ?></td>
+            <td class="text-left" style="width: 33.3%;"><?php echo $column_room; ?></td>
             <td class="text-left" style="width: 33.3%;"><?php echo $column_model; ?></td>
             <td class="text-right" style="width: 33.3%;"><?php echo $column_quantity; ?></td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-left"><?php echo $product; ?></td>
+            <td class="text-left"><?php echo $room; ?></td>
             <td class="text-left"><?php echo $model; ?></td>
             <td class="text-right"><?php echo $quantity; ?></td>
           </tr>

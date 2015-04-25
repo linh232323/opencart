@@ -1026,7 +1026,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['text_product_lines'] = $this->language->get('text_product_lines');
+		$data['text_room_lines'] = $this->language->get('text_room_lines');
 		$data['text_ebay_txn_id'] = $this->language->get('text_ebay_txn_id');
 		$data['text_name'] = $this->language->get('text_name');
 		$data['text_qty'] = $this->language->get('text_qty');

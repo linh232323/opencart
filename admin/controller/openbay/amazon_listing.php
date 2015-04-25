@@ -4,7 +4,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->load->language('openbay/amazon_listing');
 		$this->load->model('openbay/amazon_listing');
 		$this->load->model('openbay/amazon');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -79,27 +79,27 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$result = $this->model_openbay_amazon_listing->simpleListing($this->request->post);
 
 			if ($result['status'] === 1) {
-				$this->session->data['success'] = $this->language->get('text_product_sent');
+				$this->session->data['success'] = $this->language->get('text_room_sent');
 				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			} else {
-				$this->session->data['error'] = sprintf($this->language->get('text_product_not_sent'), $result['message']);
-				$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->post['product_id'] . $url, 'SSL'));
+				$this->session->data['error'] = sprintf($this->language->get('text_room_not_sent'), $result['message']);
+				$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->post['room_id'] . $url, 'SSL'));
 			}
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		if (isset($this->request->get['room_id'])) {
+			$room_info = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 
-			if (empty($product_info)) {
+			if (empty($room_info)) {
 				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			}
 
-			$listing_status = $this->model_openbay_amazon->getProductStatus($this->request->get['product_id']);
+			$listing_status = $this->model_openbay_amazon->getRoomStatus($this->request->get['room_id']);
 
 			if ($listing_status === 'processing' || $listing_status === 'ok') {
-				$this->response->redirect($this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
+				$this->response->redirect($this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'] . $url, 'SSL'));
 			} else if ($listing_status === 'error_advanced' || $listing_status === 'saved' || $listing_status === 'error_few') {
-				$this->response->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
+				$this->response->redirect($this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'] . $url, 'SSL'));
 			}
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
@@ -107,7 +107,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['url_return']  = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['url_search']  = $this->url->link('openbay/amazon_listing/search', 'token=' . $this->session->data['token'], 'SSL');
-		$data['url_advanced']  = $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL');
+		$data['url_advanced']  = $this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'] . $url, 'SSL');
 
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_new'] = $this->language->get('button_new');
@@ -148,23 +148,23 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['form_action'] = $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['sku'] = trim($product_info['sku']);
+		$data['sku'] = trim($room_info['sku']);
 
 		if ($this->config->get('openbay_amazon_listing_tax_added')) {
-			$data['price'] = $product_info['price'] * (1 + $this->config->get('openbay_amazon_listing_tax_added') / 100);
+			$data['price'] = $room_info['price'] * (1 + $this->config->get('openbay_amazon_listing_tax_added') / 100);
 		} else {
-			$data['price'] = $product_info['price'];
+			$data['price'] = $room_info['price'];
 		}
 
 		$data['listing_errors'] = array();
 
 		if ($listing_status == 'error_quick') {
-			$data['listing_errors'] = $this->model_openbay_amazon->getProductErrors($product_info['product_id'], 3);
+			$data['listing_errors'] = $this->model_openbay_amazon->getRoomErrors($room_info['room_id'], 3);
 		}
 
 		$data['price'] = number_format($data['price'], 2, '.', '');
-		$data['quantity'] = $product_info['quantity'];
-		$data['product_id'] = $product_info['product_id'];
+		$data['quantity'] = $room_info['quantity'];
+		$data['room_id'] = $room_info['room_id'];
 
 		$data['conditions'] = array(
 			'New' => $this->language->get('text_new'),
@@ -287,8 +287,8 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['room_id'])) {
+			$room_id = $this->request->get['room_id'];
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -307,22 +307,22 @@ class ControllerOpenbayAmazonListing extends Controller {
 			'text' => $this->language->get('text_amazon'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
+			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL'),
 			'text' => $this->language->get('text_edit_heading'),
 		);
 
-		$status = $this->model_openbay_amazon->getProductStatus($product_id);
+		$status = $this->model_openbay_amazon->getRoomStatus($room_id);
 
 		if ($status === false) {
-			$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+			$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL'));
 			return;
 		}
 
-		$data['product_links'] = $this->model_openbay_amazon->getProductLinks($product_id);
+		$data['room_links'] = $this->model_openbay_amazon->getRoomLinks($room_id);
 		$data['url_return']  = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		if ($status == 'ok' || $status == 'linked') {
-			$data['url_create_new']  = $this->url->link('openbay/amazon_listing/createNew', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
-			$data['url_delete_links']  = $this->url->link('openbay/amazon_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+			$data['url_create_new']  = $this->url->link('openbay/amazon_listing/createNew', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL');
+			$data['url_delete_links']  = $this->url->link('openbay/amazon_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL');
 		}
 
 		if ($status == 'saved') {
@@ -331,12 +331,12 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$data['has_saved_listings'] = false;
 		}
 
-		$data['url_saved_listings']  = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL');
+		$data['url_saved_listings']  = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id, 'SSL');
 
 		$data['token'] = $this->session->data['token'];
 
 		$data['text_edit_heading'] = $this->language->get('text_edit_heading');
-		$data['text_product_links'] = $this->language->get('text_product_links');
+		$data['text_room_links'] = $this->language->get('text_room_links');
 		$data['text_has_saved_listings'] = $this->language->get('text_has_saved_listings');
 		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
 		$data['button_remove_links'] = $this->language->get('button_remove_links');
@@ -415,14 +415,14 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['room_id'])) {
+			$room_id = $this->request->get['room_id'];
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		$this->load->model('openbay/amazon');
-		$this->model_openbay_amazon->deleteProduct($product_id);
-		$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+		$this->model_openbay_amazon->deleteRoom($room_id);
+		$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL'));
 	}
 
 	public function deleteLinks() {
@@ -486,18 +486,18 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['room_id'])) {
+			$room_id = $this->request->get['room_id'];
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		$this->load->model('openbay/amazon');
 
-		$links = $this->model_openbay_amazon->getProductLinks($product_id);
+		$links = $this->model_openbay_amazon->getRoomLinks($room_id);
 		foreach ($links as $link) {
-			$this->model_openbay_amazon->removeProductLink($link['amazon_sku']);
+			$this->model_openbay_amazon->removeRoomLink($link['amazon_sku']);
 		}
-		$this->model_openbay_amazon->deleteProduct($product_id);
+		$this->model_openbay_amazon->deleteRoom($room_id);
 		$this->session->data['success'] = $this->language->get('text_links_removed');
 
 		$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
@@ -576,10 +576,10 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getProductByAsin() {
+	public function getRoomByAsin() {
 		$this->load->model('openbay/amazon_listing');
 
-		$data = $this->model_openbay_amazon_listing->getProductByAsin($this->request->post['asin'], $this->request->post['market']);
+		$data = $this->model_openbay_amazon_listing->getRoomByAsin($this->request->post['asin'], $this->request->post['market']);
 
 		$json = array(
 			'title' => (string)$data['ItemAttributes']['Title'],

@@ -48,8 +48,8 @@ class ControllerCommonMenu extends Controller {
 		$data['text_order_status'] = $this->language->get('text_order_status');
 		$data['text_opencart'] = $this->language->get('text_opencart');
 		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_proparent'] = $this->language->get('text_proparent');
+		$data['text_room'] = $this->language->get('text_room');
+		$data['text_hotel'] = $this->language->get('text_hotel');
 		$data['text_reports'] = $this->language->get('text_reports');
 		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
 		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
@@ -57,8 +57,8 @@ class ControllerCommonMenu extends Controller {
 		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
 		$data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');
 		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
-		$data['text_report_product_purchased'] = $this->language->get('text_report_product_purchased');
+		$data['text_report_room_viewed'] = $this->language->get('text_report_room_viewed');
+		$data['text_report_room_purchased'] = $this->language->get('text_report_room_purchased');
 		$data['text_report_customer_activity'] = $this->language->get('text_report_customer_activity');
 		$data['text_report_customer_online'] = $this->language->get('text_report_customer_online');
 		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
@@ -68,7 +68,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_report_affiliate'] = $this->language->get('text_report_affiliate');
 		$data['text_report_affiliate_activity'] = $this->language->get('text_report_affiliate_activity');
 		$data['text_review'] = $this->language->get('text_review');
-		$data['text_pareview'] = $this->language->get('text_pareview');
+		$data['text_hotelreview'] = $this->language->get('text_hotelreview');
 		$data['text_return'] = $this->language->get('text_return');
 		$data['text_return_action'] = $this->language->get('text_return_action');
 		$data['text_return_reason'] = $this->language->get('text_return_reason');
@@ -143,15 +143,15 @@ class ControllerCommonMenu extends Controller {
 		$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');
 		$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
-		$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');
-		$data['proparent'] = $this->url->link('catalog/proparent', 'token=' . $this->session->data['token'], 'SSL');
+		$data['room'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'], 'SSL');
+		$data['hotel'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_return'] = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_coupon'] = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_product_viewed'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_product_purchased'] = $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], 'SSL');
+		$data['report_room_viewed'] = $this->url->link('report/room_viewed', 'token=' . $this->session->data['token'], 'SSL');
+		$data['report_room_purchased'] = $this->url->link('report/room_purchased', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_customer_activity'] = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_customer_online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_customer_order'] = $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], 'SSL');
@@ -161,7 +161,7 @@ class ControllerCommonMenu extends Controller {
 		$data['report_affiliate'] = $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_affiliate_activity'] = $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], 'SSL');
 		$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'], 'SSL');
-		$data['pareview'] = $this->url->link('catalog/pareview', 'token=' . $this->session->data['token'], 'SSL');
+		$data['hotelreview'] = $this->url->link('catalog/hotelreview', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL');
 		$data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL');
@@ -192,7 +192,7 @@ class ControllerCommonMenu extends Controller {
 		$data['openbay_link_ebay_links'] = $this->url->link('openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_etsy'] = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_etsy_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_etsy_links'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], 'SSL');
+		$data['openbay_link_etsy_links'] = $this->url->link('openbay/etsy_room/links', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');

@@ -52,7 +52,7 @@ $_['entry_string1']					= 'Encryption string 1';
 $_['entry_string2']					= 'Encryption string 2';
 $_['entry_end_items']				= 'End items?';
 $_['entry_relist_items']			= 'Relist when back in stock?';
-$_['entry_disable_soldout']			= 'Disable product when no stock?';
+$_['entry_disable_soldout']			= 'Disable room when no stock?';
 $_['entry_debug']					= 'Enable logging';
 $_['entry_currency']				= 'Default currency';
 $_['entry_stock_allocate']			= 'Allocate stock';
@@ -66,7 +66,7 @@ $_['entry_duration']				= 'Default listing duration';
 $_['entry_measurement']				= 'Measurement system';
 $_['entry_address_format']			= 'Default address format';
 $_['entry_timezone_offset']			= 'Timezone offset';
-$_['entry_tax_listing']				= 'Product tax';
+$_['entry_tax_listing']				= 'Room tax';
 $_['entry_tax']						= 'Tax % used for everything';
 $_['entry_create_date']				= 'Created date for new orders';
 $_['entry_notify_order_update']		= 'Order updates';
@@ -86,7 +86,7 @@ $_['tab_setup']						= 'Settings';
 $_['tab_defaults']					= 'Listing defaults';
 
 // Help
-$_['help_disable_soldout']			= 'When the item sells out it then disables the product in Genuine Tours';
+$_['help_disable_soldout']			= 'When the item sells out it then disables the room in Genuine Tours';
 $_['help_relist_items'] 			= 'If an item link existed before it will relist previous item if back in stock';
 $_['help_end_items']    			= 'If items sell out, should the listing be ended on eBay?';
 $_['help_currency']     			= 'Based on currencies from your store';

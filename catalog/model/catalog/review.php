@@ -1,21 +1,21 @@
 <?php
 class ModelCatalogReview extends Model {
-	public function addReview($product_id, $data) {
+	public function addReview($room_id, $data) {
 		$this->event->trigger('pre.review.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', room_id = '" . (int)$room_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
 
 		$review_id = $this->db->getLastId();
 
 		if ($this->config->get('config_review_mail')) {
 			$this->load->language('mail/review');
-			$this->load->model('catalog/product');
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+			$this->load->model('catalog/room');
+			$room_info = $this->model_catalog_room->getRoom($room_id);
 
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 
 			$message  = $this->language->get('text_waiting') . "\n";
-			$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($product_info['name']))) . "\n";
+			$message .= sprintf($this->language->get('text_room'), $this->db->escape(strip_tags($room_info['name']))) . "\n";
 			$message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
 			$message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
 			$message .= $this->language->get('text_review') . "\n";
@@ -43,25 +43,25 @@ class ModelCatalogReview extends Model {
 		$this->event->trigger('post.review.add', $review_id);
 	}
         
-	public function addPareview($proparent_id, $data) {
-		$this->event->trigger('pre.pareview.add', $data);
+	public function addHotelreview($hotel_id, $data) {
+		$this->event->trigger('pre.hotelreview.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "pareview SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', proparent_id = '" . (int)$proparent_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "hotelreview SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', hotel_id = '" . (int)$hotel_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
 
-		$pareview_id = $this->db->getLastId();
+		$hotelreview_id = $this->db->getLastId();
 
-		if ($this->config->get('config_pareview_mail')) {
+		if ($this->config->get('config_hotelreview_mail')) {
 			$this->load->language('mail/review');
-			$this->load->model('catalog/proparent');
-			$proparent_info = $this->model_catalog_proparent->getProparent($proparent_id);
+			$this->load->model('catalog/hotel');
+			$hotel_info = $this->model_catalog_hotel->gethotel($hotel_id);
 
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 
 			$message  = $this->language->get('text_waiting') . "\n";
-			$message .= sprintf($this->language->get('text_proparent'), $this->db->escape(strip_tags($proparent_info['name']))) . "\n";
+			$message .= sprintf($this->language->get('text_hotel'), $this->db->escape(strip_tags($hotel_info['name']))) . "\n";
 			$message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
 			$message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
-			$message .= $this->language->get('text_pareview') . "\n";
+			$message .= $this->language->get('text_hotelreview') . "\n";
 			$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
 
 			$mail = new Mail($this->config->get('config_mail'));
@@ -83,10 +83,10 @@ class ModelCatalogReview extends Model {
 			}
 		}
 
-		$this->event->trigger('post.pareview.add', $pareview_id);
+		$this->event->trigger('post.hotelreview.add', $hotelreview_id);
 	}
 
-	public function getReviewsByProductId($product_id, $start = 0, $limit = 20) {
+	public function getReviewsByRoomId($room_id, $start = 0, $limit = 20) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -95,12 +95,12 @@ class ModelCatalogReview extends Model {
 			$limit = 20;
 		}
 
-		$query = $this->db->query("SELECT r.review_id, r.author, r.rating, r.text, p.product_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT r.review_id, r.author, r.rating, r.text, p.room_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "room p ON (r.room_id = p.room_id) LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) WHERE p.room_id = '" . (int)$room_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
         
-	public function getReviewsByProparentId($proparent_id, $start = 0, $limit = 20) {
+	public function getReviewsByhotelId($hotel_id, $start = 0, $limit = 20) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -109,19 +109,19 @@ class ModelCatalogReview extends Model {
 			$limit = 20;
 		}
 
-		$query = $this->db->query("SELECT r.pareview_id, r.author, r.rating, r.text, p.proparent_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "pareview r LEFT JOIN " . DB_PREFIX . "proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN " . DB_PREFIX . "proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '" . (int)$proparent_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT r.hotelreview_id, r.author, r.rating, r.text, p.hotel_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "hotelreview r LEFT JOIN " . DB_PREFIX . "hotel p ON (r.hotel_id = p.hotel_id) LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (p.hotel_id = pd.hotel_id) WHERE p.hotel_id = '" . (int)$hotel_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 
-	public function getTotalReviewsByProductId($product_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalReviewsByRoomId($room_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "room p ON (r.room_id = p.room_id) LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) WHERE p.room_id = '" . (int)$room_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}
         
-	public function getTotalReviewsByProparentId($proparent_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "pareview r LEFT JOIN " . DB_PREFIX . "proparent p ON (r.proparent_id = p.proparent_id) LEFT JOIN " . DB_PREFIX . "proparent_description pd ON (p.proparent_id = pd.proparent_id) WHERE p.proparent_id = '" . (int)$proparent_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalReviewsByhotelId($hotel_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "hotelreview r LEFT JOIN " . DB_PREFIX . "hotel p ON (r.hotel_id = p.hotel_id) LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (p.hotel_id = pd.hotel_id) WHERE p.hotel_id = '" . (int)$hotel_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

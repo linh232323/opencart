@@ -21,10 +21,10 @@ $_['text_error']            = 'The order you requested could not be found!';
 
 // Column
 $_['column_order_id']       = 'Order ID';
-$_['column_product']        = 'No. of Products';
-$_['column_proparent']      = 'No. of Proparents';
+$_['column_room']        = 'No. of Rooms';
+$_['column_hotel']      = 'No. of hotels';
 $_['column_customer']       = 'Customer';
-$_['column_name']           = 'Product Name';
+$_['column_name']           = 'Room Name';
 $_['column_model']          = 'Model';
 $_['column_quantity']       = 'Quantity';
 $_['column_price']          = 'Price';

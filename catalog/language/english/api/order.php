@@ -9,6 +9,6 @@ $_['error_payment_address']  = 'Payment address required!';
 $_['error_payment_method']   = 'Payment method required!';
 $_['error_shipping_address'] = 'Shipping address required!';
 $_['error_shipping_method']  = 'Shipping method required!';
-$_['error_stock']            = 'Products marked with *** are not available in the desired quantity or not in stock!';
+$_['error_stock']            = 'Rooms marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']          = 'Minimum order amount for %s is %s!';
 $_['error_not_found']        = 'Warning: Order could not be found!';

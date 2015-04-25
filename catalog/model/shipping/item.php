@@ -18,9 +18,9 @@ class ModelShippingItem extends Model {
 		if ($status) {
 			$items = 0;
 
-			foreach ($this->cart->getProducts() as $product) {
-				if ($product['shipping']) {
-					$items += $product['quantity'];
+			foreach ($this->cart->getrooms() as $room) {
+				if ($room['shipping']) {
+					$items += $room['quantity'];
 				}
 			}
 

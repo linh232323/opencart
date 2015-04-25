@@ -31,5 +31,5 @@ $_['help_keyword']       = 'Do not use spaces, instead replace spaces with - and
 $_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';
 $_['error_name']         = 'Manufacturer Name must be between 2 and 64 characters!';
 $_['error_keyword']      = 'SEO keyword already in use!';
-$_['error_product']      = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']    = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']      = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']    = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s hotels!';

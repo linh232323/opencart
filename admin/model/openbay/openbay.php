@@ -711,26 +711,26 @@ class ModelOpenbayOpenbay extends Model {
 		fclose($handle);
 	}
 
-	public function getTotalProducts($data = array()) {
-		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+	public function getTotalRooms($data = array()) {
+		$sql = "SELECT COUNT(DISTINCT p.room_id) AS total FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id)";
 
 		if (!empty($data['filter_category'])) {
-			$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";
+			$sql .= " LEFT JOIN " . DB_PREFIX . "room_to_category p2c ON (p.room_id = p2c.room_id)";
 		}
 
 		if ($data['filter_market_name'] == 'ebay') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "ebay_listing` `ebay` ON (`p`.`product_id` = `ebay`.`product_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "ebay_listing` `ebay` ON (`p`.`room_id` = `ebay`.`room_id`)";
 
 			if ($data['filter_market_id'] == 0) {
-				$sql .= " LEFT JOIN (SELECT product_id, IF( SUM( `status` ) = 0, 0, 1 ) AS 'listing_status' FROM " . DB_PREFIX . "ebay_listing GROUP BY product_id ) ebay2 ON (p.product_id = ebay2.product_id)";
+				$sql .= " LEFT JOIN (SELECT room_id, IF( SUM( `status` ) = 0, 0, 1 ) AS 'listing_status' FROM " . DB_PREFIX . "ebay_listing GROUP BY room_id ) ebay2 ON (p.room_id = ebay2.room_id)";
 			}
 		}
 
 		if ($data['filter_market_name'] == 'amazon') {
 			if ($data['filter_market_id'] <= 4) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_room ap ON p.room_id = ap.room_id";
 			} else {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON p.room_id = apl.room_id";
 			}
 
 			$amazon_status = array(
@@ -763,7 +763,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		if ($data['filter_market_name'] == 'amazon') {
 			if ($data['filter_market_id'] == 0) {
-				$sql .= " AND ap.product_id IS NULL ";
+				$sql .= " AND ap.room_id IS NULL ";
 			} elseif ($data['filter_market_id'] == 5) {
 				$sql .= " AND apl.id IS NOT NULL";
 			} elseif ($data['filter_market_id'] == 6) {
@@ -818,26 +818,26 @@ class ModelOpenbayOpenbay extends Model {
 		return $query->row['total'];
 	}
 
-	public function getProducts($data = array()) {
-		$sql = "SELECT p.*, pd.* FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+	public function getRooms($data = array()) {
+		$sql = "SELECT p.*, pd.* FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id)";
 
 		if (!empty($data['filter_category'])) {
-			$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";
+			$sql .= " LEFT JOIN " . DB_PREFIX . "room_to_category p2c ON (p.room_id = p2c.room_id)";
 		}
 
 		if ($data['filter_market_name'] == 'ebay') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "ebay_listing` `ebay` ON (`p`.`product_id` = `ebay`.`product_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "ebay_listing` `ebay` ON (`p`.`room_id` = `ebay`.`room_id`)";
 
 			if ($data['filter_market_id'] == 0) {
-				$sql .= " LEFT JOIN (SELECT product_id, IF( SUM( `status` ) = 0, 0, 1 ) AS 'listing_status' FROM " . DB_PREFIX . "ebay_listing GROUP BY product_id ) ebay2 ON (p.product_id = ebay2.product_id)";
+				$sql .= " LEFT JOIN (SELECT room_id, IF( SUM( `status` ) = 0, 0, 1 ) AS 'listing_status' FROM " . DB_PREFIX . "ebay_listing GROUP BY room_id ) ebay2 ON (p.room_id = ebay2.room_id)";
 			}
 		}
 
 		if ($data['filter_market_name'] == 'amazon') {
 			if ($data['filter_market_id'] <= 4) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_room ap ON p.room_id = ap.room_id";
 			} elseif ($data['filter_market_id'] <= 6) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON p.room_id = apl.room_id";
 			}
 
 			$amazon_status = array(
@@ -850,9 +850,9 @@ class ModelOpenbayOpenbay extends Model {
 
 		if ($data['filter_market_name'] == 'amazonus') {
 			if ($data['filter_market_id'] <= 4) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_product ap ON p.product_id = ap.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_room ap ON p.room_id = ap.room_id";
 			} elseif ($data['filter_market_id'] <= 6) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON p.product_id = apl.product_id";
+				$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_room_link apl ON p.room_id = apl.room_id";
 			}
 
 			$amazonus_status = array(
@@ -883,7 +883,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		if ($data['filter_market_name'] == 'amazon') {
 			if ($data['filter_market_id'] == 0) {
-				$sql .= " AND ap.product_id IS NULL ";
+				$sql .= " AND ap.room_id IS NULL ";
 			} elseif ($data['filter_market_id'] == 5) {
 				$sql .= " AND apl.id IS NOT NULL";
 			} elseif ($data['filter_market_id'] == 6) {
@@ -895,7 +895,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		if ($data['filter_market_name'] == 'amazonus') {
 			if ($data['filter_market_id'] == 0) {
-				$sql .= " AND ap.product_id IS NULL ";
+				$sql .= " AND ap.room_id IS NULL ";
 			} elseif ($data['filter_market_id'] == 5) {
 				$sql .= " AND apl.id IS NOT NULL";
 			} elseif ($data['filter_market_id'] == 6) {
@@ -945,7 +945,7 @@ class ModelOpenbayOpenbay extends Model {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
 		}
 
-		$sql .= " GROUP BY p.product_id";
+		$sql .= " GROUP BY p.room_id";
 
 		$sort_data = array(
 			'pd.name',

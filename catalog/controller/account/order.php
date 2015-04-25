@@ -44,7 +44,7 @@ class ControllerAccountOrder extends Controller {
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_total'] = $this->language->get('column_total');
 
 		$data['button_view'] = $this->language->get('button_view');
@@ -65,7 +65,7 @@ class ControllerAccountOrder extends Controller {
 		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
+			$room_total = $this->model_account_order->getTotalOrderRoomsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
 
 			$data['orders'][] = array(
@@ -73,7 +73,7 @@ class ControllerAccountOrder extends Controller {
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'products'   => ($product_total + $voucher_total),
+				'rooms'   => ($room_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'href'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], 'SSL'),
 			);
@@ -279,18 +279,18 @@ class ControllerAccountOrder extends Controller {
 
 			$data['shipping_method'] = $order_info['shipping_method'];
 
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/room');
 			$this->load->model('tool/upload');
 
-			// Products
-			$data['products'] = array();
+			// Rooms
+			$data['rooms'] = array();
 
-			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+			$rooms = $this->model_account_order->getOrderRooms($this->request->get['order_id']);
 
-			foreach ($products as $product) {
+			foreach ($rooms as $room) {
 				$option_data = array();
 
-				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $room['order_room_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -311,23 +311,23 @@ class ControllerAccountOrder extends Controller {
 					);
 				}
 
-				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+				$room_info = $this->model_catalog_room->getRoom($room['room_id']);
 
-				if ($product_info) {
-					$reorder = $this->url->link('account/order/reorder', 'order_id=' . $order_id . '&order_product_id=' . $product['order_product_id'], 'SSL');
+				if ($room_info) {
+					$reorder = $this->url->link('account/order/reorder', 'order_id=' . $order_id . '&order_room_id=' . $room['order_room_id'], 'SSL');
 				} else {
 					$reorder = '';
 				}
 
-				$data['products'][] = array(
-					'name'     => $product['name'],
-					'model'    => $product['model'],
+				$data['rooms'][] = array(
+					'name'     => $room['name'],
+					'model'    => $room['model'],
 					'option'   => $option_data,
-					'quantity' => $product['quantity'],
-					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'quantity' => $room['quantity'],
+					'price'    => $this->currency->format($room['price'] + ($this->config->get('config_tax') ? $room['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'    => $this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
+					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&room_id=' . $room['room_id'], 'SSL')
 				);
 			}
 
@@ -446,46 +446,46 @@ class ControllerAccountOrder extends Controller {
 		$order_info = $this->model_account_order->getOrder($order_id);
 
 		if ($order_info) {
-			if (isset($this->request->get['order_product_id'])) {
-				$order_product_id = $this->request->get['order_product_id'];
+			if (isset($this->request->get['order_room_id'])) {
+				$order_room_id = $this->request->get['order_room_id'];
 			} else {
-				$order_product_id = 0;
+				$order_room_id = 0;
 			}
 
-			$order_product_info = $this->model_account_order->getOrderProduct($order_id, $order_product_id);
+			$order_room_info = $this->model_account_order->getOrderRoom($order_id, $order_room_id);
 
-			if ($order_product_info) {
-				$this->load->model('catalog/product');
+			if ($order_room_info) {
+				$this->load->model('catalog/room');
 
-				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
+				$room_info = $this->model_catalog_room->getRoom($order_room_info['room_id']);
 
-				if ($product_info) {
+				if ($room_info) {
 					$option_data = array();
 
-					$order_options = $this->model_account_order->getOrderOptions($order_product_info['order_id'], $order_product_id);
+					$order_options = $this->model_account_order->getOrderOptions($order_room_info['order_id'], $order_room_id);
 
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
-							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
+							$option_data[$order_option['room_option_id']] = $order_option['room_option_value_id'];
 						} elseif ($order_option['type'] == 'checkbox') {
-							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
+							$option_data[$order_option['room_option_id']][] = $order_option['room_option_value_id'];
 						} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];
+							$option_data[$order_option['room_option_id']] = $order_option['value'];
 						} elseif ($order_option['type'] == 'file') {
-							$option_data[$order_option['product_option_id']] = $this->encryption->encrypt($order_option['value']);
+							$option_data[$order_option['room_option_id']] = $this->encryption->encrypt($order_option['value']);
 						}
 					}
 
-					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
+					$this->cart->add($order_room_info['room_id'], $order_room_info['quantity'], $option_data);
 
-					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/room', 'room_id=' . $room_info['room_id']), $room_info['name'], $this->url->link('checkout/cart'));
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['payment_method']);
 					unset($this->session->data['payment_methods']);
 				} else {
-					$this->session->data['error'] = sprintf($this->language->get('error_reorder'), $order_product_info['name']);
+					$this->session->data['error'] = sprintf($this->language->get('error_reorder'), $order_room_info['name']);
 				}
 			}
 		}

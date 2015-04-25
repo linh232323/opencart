@@ -291,7 +291,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['entry_type'] = $this->language->get('entry_type');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_category'] = $this->language->get('entry_category');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
 		$data['entry_uses_total'] = $this->language->get('entry_uses_total');
@@ -303,7 +303,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['help_logged'] = $this->language->get('help_logged');
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_category'] = $this->language->get('help_category');
-		$data['help_product'] = $this->language->get('help_product');
+		$data['help_room'] = $this->language->get('help_room');
 		$data['help_uses_total'] = $this->language->get('help_uses_total');
 		$data['help_uses_customer'] = $this->language->get('help_uses_customer');
 
@@ -445,25 +445,25 @@ class ControllerMarketingCoupon extends Controller {
 			$data['total'] = '';
 		}
 
-		if (isset($this->request->post['coupon_product'])) {
-			$products = $this->request->post['coupon_product'];
+		if (isset($this->request->post['coupon_room'])) {
+			$rooms = $this->request->post['coupon_room'];
 		} elseif (isset($this->request->get['coupon_id'])) {
-			$products = $this->model_marketing_coupon->getCouponProducts($this->request->get['coupon_id']);
+			$rooms = $this->model_marketing_coupon->getCouponRooms($this->request->get['coupon_id']);
 		} else {
-			$products = array();
+			$rooms = array();
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$data['coupon_product'] = array();
+		$data['coupon_room'] = array();
 
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		foreach ($rooms as $room_id) {
+			$room_info = $this->model_catalog_room->getRoom($room_id);
 
-			if ($product_info) {
-				$data['coupon_product'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
+			if ($room_info) {
+				$data['coupon_room'][] = array(
+					'room_id' => $room_info['room_id'],
+					'name'       => $room_info['name']
 				);
 			}
 		}

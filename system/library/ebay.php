@@ -179,10 +179,10 @@ final class Ebay {
 		}
 	}
 
-	public function getEbayItemId($product_id) {
-		$this->log('getEbayItemId() - Product ID: ' . $product_id);
+	public function getEbayItemId($room_id) {
+		$this->log('getEbayItemId() - Room ID: ' . $room_id);
 
-		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1' LIMIT 1");
+		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `room_id` = '" . (int)$room_id . "' AND `status` = '1' LIMIT 1");
 
 		if (!$qry->num_rows) {
 			$this->log('No link found - getEbayItemId()');
@@ -193,10 +193,10 @@ final class Ebay {
 		}
 	}
 
-	public function getEndedEbayItemId($product_id) {
-		$this->log('getEndedEbayItemId() - ID: ' . $product_id);
+	public function getEndedEbayItemId($room_id) {
+		$this->log('getEndedEbayItemId() - ID: ' . $room_id);
 
-		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '0' ORDER BY `ebay_listing_id` DESC LIMIT 1");
+		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `room_id` = '" . (int)$room_id . "' AND `status` = '0' ORDER BY `ebay_listing_id` DESC LIMIT 1");
 
 		if (!$qry->num_rows) {
 			$this->log('getEndedEbayItemId() - No link');
@@ -215,20 +215,20 @@ final class Ebay {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '" . $this->db->escape($item_id) . "'");
 	}
 
-	public function removeItemByProductId($product_id) {
-		$this->log('removeItemByProductId() - ID: ' . $product_id . '');
+	public function removeItemByRoomId($room_id) {
+		$this->log('removeItemByRoomId() - ID: ' . $room_id . '');
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `room_id` = '" . (int)$room_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `room_id` = '" . (int)$room_id . "'");
 	}
 
-	public function deleteProduct($product_id) {
-		$this->log('deleteProduct() - ID: ' . $product_id);
+	public function deleteRoom($room_id) {
+		$this->log('deleteRoom() - ID: ' . $room_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `room_id` = '" . (int)$room_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `room_id` = '" . (int)$room_id . "'");
 	}
 
 	public function orderDelete($order_id) {
@@ -240,16 +240,16 @@ final class Ebay {
 	public function getLiveListingArray() {
 	/*
 	 * Returns the list of linked items with eBay from the database
-	 * @return array ([product id] = ebay item id)
+	 * @return array ([room id] = ebay item id)
 	 */
 		$this->log('getLiveListingArray()');
 
-		$qry = $this->db->query("SELECT `product_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
+		$qry = $this->db->query("SELECT `room_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
 
 		$data = array();
 		if ($qry->num_rows > 0) {
 			foreach ($qry->rows as $row) {
-				$data[$row['product_id']] = $row['ebay_item_id'];
+				$data[$row['room_id']] = $row['ebay_item_id'];
 			}
 		}
 
@@ -260,12 +260,12 @@ final class Ebay {
 		$this->log('getEndedListingArray()');
 		$active = $this->getLiveListingArray();
 
-		$qry = $this->db->query("SELECT e.* FROM (SELECT `product_id`, MAX(`ebay_listing_id`) as `ebay_listing_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = 0 GROUP BY `product_id`) `a` INNER JOIN `" . DB_PREFIX . "ebay_listing` `e` ON (`e`.`ebay_listing_id` = `a`.`ebay_listing_id`)");
+		$qry = $this->db->query("SELECT e.* FROM (SELECT `room_id`, MAX(`ebay_listing_id`) as `ebay_listing_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = 0 GROUP BY `room_id`) `a` INNER JOIN `" . DB_PREFIX . "ebay_listing` `e` ON (`e`.`ebay_listing_id` = `a`.`ebay_listing_id`)");
 
 		$data = array();
 		if ($qry->num_rows > 0) {
 			foreach ($qry->rows as $row) {
-				$data[$row['product_id']] = $row['ebay_item_id'];
+				$data[$row['room_id']] = $row['ebay_item_id'];
 			}
 		}
 
@@ -278,17 +278,17 @@ final class Ebay {
 		return $data;
 	}
 
-	public function getLiveProductArray() {
+	public function getLiveRoomArray() {
 		/**
 		* Returns the list of linked items with eBay from the database
-		* @return array ([ebay item id] = product id)
+		* @return array ([ebay item id] = room id)
 		*/
-		$qry = $this->db->query("SELECT `product_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
+		$qry = $this->db->query("SELECT `room_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
 
 		$data = array();
 		if ($qry->num_rows) {
 			foreach ($qry->rows as $row) {
-				$data[$row['ebay_item_id']] = $row['product_id'];
+				$data[$row['ebay_item_id']] = $row['room_id'];
 			}
 		}
 
@@ -322,21 +322,21 @@ final class Ebay {
 		}
 	}
 
-	public function ebaySaleStockReduce($product_id, $sku = null) {
+	public function ebaySaleStockReduce($room_id, $sku = null) {
 		/**
-		* Gets the product info from an ID and sends to ebay update method.
+		* Gets the room info from an ID and sends to ebay update method.
 		*/
-		$this->log('ebaySaleStockReduce() - Is stock update needed (Item ID: ' . $product_id . ',SKU: ' . $sku . ')');
+		$this->log('ebaySaleStockReduce() - Is stock update needed (Item ID: ' . $room_id . ',SKU: ' . $sku . ')');
 
-		if (!empty($product_id)) {
+		if (!empty($room_id)) {
 			if ($sku == null) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
-				$this->log('ebaySaleStockReduce() - Send item ID: "' . $product_id . '", Stock: "' . $query->row['quantity'] . '" to decideEbayStockAction()');
-				$this->decideEbayStockAction($product_id, $query->row['quantity'], $query->row['subtract']);
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$room_id . "' LIMIT 1");
+				$this->log('ebaySaleStockReduce() - Send item ID: "' . $room_id . '", Stock: "' . $query->row['quantity'] . '" to decideEbayStockAction()');
+				$this->decideEbayStockAction($room_id, $query->row['quantity'], $query->row['subtract']);
 			} else {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
-				$this->log('ebaySaleStockReduce() - Send item ID: ' . $product_id . ', VAR: ' . $sku . ', passing ' . $query->row['stock'] . ' to decideEbayStockAction()');
-				$this->decideEbayStockAction($product_id, $query->row['stock'], $query->row['subtract'], $sku);
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room_option_relation` WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+				$this->log('ebaySaleStockReduce() - Send item ID: ' . $room_id . ', VAR: ' . $sku . ', passing ' . $query->row['stock'] . ' to decideEbayStockAction()');
+				$this->decideEbayStockAction($room_id, $query->row['stock'], $query->row['subtract'], $sku);
 			}
 		}
 	}
@@ -438,56 +438,56 @@ final class Ebay {
 		$this->log('addOrder() - Order id:' . $order_id . ' passed');
 		if (!$this->isEbayOrder($order_id)) {
 			if ($this->openbay->addonLoad('openstock') == true) {
-				$this->log('addOrder() - Loop over products (with OpenStock)');
+				$this->log('addOrder() - Loop over rooms (with OpenStock)');
 
-				$os_array = $this->osProducts($order_id);
+				$os_array = $this->osRooms($order_id);
 
 				foreach ($os_array as $pass) {
 					$this->ebaySaleStockReduce((int)$pass['pid'], (string)$pass['var']);
 				}
 			} else {
-				$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+				$order_room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = '" . (int)$order_id . "'");
 
-				$this->log('addOrder() - Loop over products (no OpenStock)');
-				foreach ($order_product_query->rows as $product) {
-					$this->ebaySaleStockReduce((int)$product['product_id']);
+				$this->log('addOrder() - Loop over rooms (no OpenStock)');
+				foreach ($order_room_query->rows as $room) {
+					$this->ebaySaleStockReduce((int)$room['room_id']);
 				}
 			}
 		}
 	}
 
-	private function osProducts($order_id) {
-		$this->log('osProducts() - Getting products from');
-		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+	private function osRooms($order_id) {
+		$this->log('osRooms() - Getting rooms from');
+		$order_room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
 		$response = array();
-		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
+		foreach ($order_room_query->rows as $order_room) {
+			$room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "room WHERE `room_id` = '" . (int)$order_room['room_id'] . "' LIMIT 1");
 
-			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-				$product_option_query = $this->db->query("
-					SELECT `oo`.`product_option_value_id`
+			if (isset($room_query->row['has_option']) && ($room_query->row['has_option'] == 1)) {
+				$room_option_query = $this->db->query("
+					SELECT `oo`.`room_option_value_id`
 					FROM `" . DB_PREFIX . "order_option` `oo`
-						LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+						LEFT JOIN `" . DB_PREFIX . "room_option_value` `pov` ON (`pov`.`room_option_value_id` = `oo`.`room_option_value_id`)
 						LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
-					WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+					WHERE `oo`.`order_room_id` = '" . (int)$order_room['order_room_id'] . "'
 					AND `oo`.`order_id` = '" . (int)$order_id . "'
 					AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
 					ORDER BY `oo`.`order_option_id`
 					ASC");
 
-				if ($product_option_query->num_rows != 0) {
-					$product_options = array();
-					foreach ($product_option_query->rows as $product_option_row) {
-						$product_options[] = $product_option_row['product_option_value_id'];
+				if ($room_option_query->num_rows != 0) {
+					$room_options = array();
+					foreach ($room_option_query->rows as $room_option_row) {
+						$room_options[] = $room_option_row['room_option_value_id'];
 					}
 
-					$var = implode(':', $product_options);
+					$var = implode(':', $room_options);
 
-					$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => $var);
+					$response[] = array('pid' => $order_room['room_id'], 'qty' => $order_room['quantity'], 'var' => $var);
 				}
 			} else {
-				$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => null);
+				$response[] = array('pid' => $order_room['room_id'], 'qty' => $order_room['quantity'], 'var' => null);
 			}
 		}
 
@@ -504,12 +504,12 @@ final class Ebay {
 		return $this->call('item/getItemListLimited/', array('page' => $page, 'limit' => $limit, 'filter' => $filter));
 	}
 
-	public function disableProduct($product_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = 0 WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
+	public function disableRoom($room_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "room` SET `status` = 0 WHERE `room_id` = '" . (int)$room_id . "' LIMIT 1");
 	}
 
-	public function disableVariant($product_id, $sku) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `active` = 0 WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+	public function disableVariant($room_id, $sku) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "room_option_relation` SET `active` = 0 WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
 	}
 
 	public function putStockUpdate($item_id, $stock, $sku = null) {
@@ -517,8 +517,8 @@ final class Ebay {
 		$this->log('putStockUpdate() - New local stock: ' . $stock);
 
 		$listing    = $this->call('item/getItem', array('itemId' => $item_id));
-		$product_id = $this->getProductId($item_id);
-		$reserve    = $this->getReserve($product_id, $item_id, (($sku != null) ? $sku : ''));
+		$room_id = $this->getRoomId($item_id);
+		$reserve    = $this->getReserve($room_id, $item_id, (($sku != null) ? $sku : ''));
 
 		if ($listing['status'] == 1 ) {
 			if ($reserve != false) {
@@ -535,7 +535,7 @@ final class Ebay {
 
 				if ($stock <= 0) {
 					if ($this->config->get('ebay_disable_nostock') == 1) {
-						$this->disableProduct($product_id);
+						$this->disableRoom($room_id);
 					}
 
 					$this->endItem($item_id);
@@ -562,7 +562,7 @@ final class Ebay {
 
 				if ($stock <= 0) {
 					if ($this->config->get('ebay_disable_nostock') == 1) {
-						$this->disableVariant($product_id, $sku);
+						$this->disableVariant($room_id, $sku);
 					}
 				}
 
@@ -580,11 +580,11 @@ final class Ebay {
 
 			if($sku == null) {
 				if ($stock <= 0 && $this->config->get('ebay_disable_nostock') == 1) {
-					$this->disableProduct($product_id);
+					$this->disableRoom($room_id);
 				}
 			} else {
 				if ($stock <= 0 && $this->config->get('ebay_disable_nostock') == 1) {
-					$this->disableVariant($product_id, $sku);
+					$this->disableVariant($room_id, $sku);
 				}
 			}
 
@@ -592,8 +592,8 @@ final class Ebay {
 		}
 	}
 
-	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
-		// We know is that these product ID's have been modified. They should only be passed if the stock has changed so we can assume this.
+	public function putStockUpdateBulk($room_id_array, $end_inactive = false) {
+		// We know is that these room ID's have been modified. They should only be passed if the stock has changed so we can assume this.
 		$this->log('putStockUpdateBulk()');
 
 		$openstock = false;
@@ -618,33 +618,33 @@ final class Ebay {
 		$linked_items        = array();
 		$linked_ended_items   = array();
 
-		foreach ($product_id_array as $product_id) {
-			if (array_key_exists((int)$product_id, $live_data)) {
-				//product has been passed and is linked to active item
-				$linked_items[] = array('productId' => (int)$product_id, 'itemId' => $live_data[$product_id]);
-			}elseif (array_key_exists((int)$product_id, $ended_data)) {
-				//product has been passed and is not currently active
-				$linked_ended_items[] = array('productId' => (int)$product_id, 'itemId' => $ended_data[$product_id]);
+		foreach ($room_id_array as $room_id) {
+			if (array_key_exists((int)$room_id, $live_data)) {
+				//room has been passed and is linked to active item
+				$linked_items[] = array('roomId' => (int)$room_id, 'itemId' => $live_data[$room_id]);
+			}elseif (array_key_exists((int)$room_id, $ended_data)) {
+				//room has been passed and is not currently active
+				$linked_ended_items[] = array('roomId' => (int)$room_id, 'itemId' => $ended_data[$room_id]);
 			} else {
-				//product does not exist in live or ended links so has never been linked.
+				//room does not exist in live or ended links so has never been linked.
 			}
 		}
 
 		//loop through ended listings, if back in stock and not multi var - relist it
 		foreach ($linked_ended_items as $item) {
 			if ($openstock == true) {
-				$options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+				$options = $this->model_openstock_openstock->getRoomOptionStocks($item['roomId']);
 			} else {
 				$options = array();
 			}
 
 			if (empty($options)) {
 				//get the stock level of the linked items
-				$local_stock = $this->getProductStockLevel($item['productId']);
+				$local_stock = $this->getRoomStockLevel($item['roomId']);
 
 				if ((int)$local_stock['quantity'] > 0 && $local_stock['status'] == 1) {
-					//product has stock and is enabled, so re list it.
-					$reserve = $this->getReserve($item['productId'], $item['itemId']);
+					//room has stock and is enabled, so re list it.
+					$reserve = $this->getReserve($item['roomId'], $item['itemId']);
 
 					if ($reserve != false) {
 						if ($local_stock['quantity'] > $reserve) {
@@ -654,7 +654,7 @@ final class Ebay {
 
 					if ($this->config->get('ebay_relistitems') == 1) {
 						//relist item with new stock
-						$this->relistItem($item['itemId'], $item['productId'], (int)$local_stock['quantity']);
+						$this->relistItem($item['itemId'], $item['roomId'], (int)$local_stock['quantity']);
 					}
 				}
 			} else {
@@ -666,7 +666,7 @@ final class Ebay {
 		//loop through the active listings and update the store or end the item
 		foreach ($linked_items as $item) {
 			//get the stock level of the linked item
-			$local_stock = $this->getProductStockLevel($item['productId']);
+			$local_stock = $this->getRoomStockLevel($item['roomId']);
 
 			//check if the itemid was returned by ebay, if not unlink it as it is ended.
 			if (!isset($ebay_listings[$item['itemId']])) {
@@ -677,9 +677,9 @@ final class Ebay {
 				if ($end_inactive == true && $local_stock['status'] == 0) {
 					$this->endItem($item['itemId']);
 				} else {
-					//get any options that are set for this product
+					//get any options that are set for this room
 					if ($openstock == true) {
-						$options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+						$options = $this->model_openstock_openstock->getRoomOptionStocks($item['roomId']);
 					} else {
 						$options = array();
 					}
@@ -689,7 +689,7 @@ final class Ebay {
 
 						//compare to the ebay data get retrieved
 						if ((int)$local_stock['quantity'] != (int)$ebay_listings[$item['itemId']]['qty']) {
-							$reserve = $this->getReserve($item['productId'], $item['itemId']);
+							$reserve = $this->getReserve($item['roomId'], $item['itemId']);
 
 							if ($reserve != false) {
 								if ($local_stock['quantity'] > $reserve) {
@@ -733,43 +733,43 @@ final class Ebay {
 		}
 	}
 
-	public function getProductStockLevel($product_id, $sku = '') {
-		$this->log('getProductStockLevel() - ID: ' . $product_id . ', SKU: ' . $sku);
+	public function getRoomStockLevel($room_id, $sku = '') {
+		$this->log('getRoomStockLevel() - ID: ' . $room_id . ', SKU: ' . $sku);
 
 		if ($sku == '' || $sku == null) {
-			$qry = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
+			$qry = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$room_id . "' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['quantity'], 'status' => ($qry->row['status']));
 		} else {
-			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "room_option_relation` WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['stock'], 'status' => ($qry->row['active']));
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
-		$this->log('productUpdateListen()');
+	public function roomUpdateListen($room_id, $data) {
+		$this->log('roomUpdateListen()');
 		//check if there is an active item link
-		$item_id = $this->getEbayItemId($product_id);
+		$item_id = $this->getEbayItemId($room_id);
 		if ($item_id != false) {
 			//if so update stock or end item (based on qty)
 			if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 				$variant_data = array();
 				$this->load->model('tool/image');
-				$this->load->model('catalog/product');
+				$this->load->model('catalog/room');
 				$this->load->model('openstock/openstock');
 
-				$variants = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-				$groups = $this->openbay->getProductOptions($product_id);
+				$variants = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
+				$groups = $this->openbay->getRoomOptions($room_id);
 				$variant_data['groups']  = array();
 				$variant_data['related'] = array();
 
 				foreach ($groups as $grp) {
 					$t_tmp = array();
-					foreach ($grp['product_option_value'] as $grp_node) {
+					foreach ($grp['room_option_value'] as $grp_node) {
 						$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-						$variant_data['related'][$grp_node['product_option_value_id']] = $grp['name'];
+						$variant_data['related'][$grp_node['room_option_value_id']] = $grp['name'];
 					}
 					$variant_data['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
 				}
@@ -787,10 +787,10 @@ final class Ebay {
 						$variant_data['option_list'] = base64_encode(serialize($option['opts']));
 					}
 
-					// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
-					$reserve = $this->getReserve($product_id, $item_id, $option['var']);
+					// room RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
+					$reserve = $this->getReserve($room_id, $item_id, $option['var']);
 					if ($reserve != false) {
-						$this->log('productUpdateListen() / Variant (' . $option['var'] . ') - Reserve stock: ' . $reserve);
+						$this->log('roomUpdateListen() / Variant (' . $option['var'] . ') - Reserve stock: ' . $reserve);
 
 						if ($option['stock'] > $reserve) {
 							$this->log('putStockUpdate() - Stock (' . $option['stock'] . ') is larger than reserve (' . $reserve . '), setting level to reserve');
@@ -815,40 +815,40 @@ final class Ebay {
 
 				//send to the api to process
 				if ($stock == true) {
-					$this->log('productUpdateListen() - Sending to API');
+					$this->log('roomUpdateListen() - Sending to API');
 					$response = $this->call('item/reviseStockVariants', $variant_data);
 					return $response;
 				} else {
-					$this->log('productUpdateListen() - Ending item');
+					$this->log('roomUpdateListen() - Ending item');
 
 					$this->endItem($item_id);
 				}
 			} else {
-				$this->decideEbayStockAction($product_id, $data['quantity'], $data['subtract']);
+				$this->decideEbayStockAction($room_id, $data['quantity'], $data['subtract']);
 				return array('msg' => 'ok', 'error' => false);
 			}
 		} else {
 			//if not, is there an old link?
-			$old_item_id = $this->getEndedEbayItemId($product_id);
-			$this->log('productUpdateListen() - Got item: ' . $old_item_id);
+			$old_item_id = $this->getEndedEbayItemId($room_id);
+			$this->log('roomUpdateListen() - Got item: ' . $old_item_id);
 			if ($old_item_id != false) {
 				//yes, check if its a multi variant listing
 				if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 					//yes, mutli variant listing
-					$this->log('productUpdateListen() - multi variant items relist not supported');
+					$this->log('roomUpdateListen() - multi variant items relist not supported');
 				} else {
-					$this->log('productUpdateListen() - Normal item, checking stock(' . $data['quantity'] . ') > 0');
+					$this->log('roomUpdateListen() - Normal item, checking stock(' . $data['quantity'] . ') > 0');
 					//no, its a normal item, is there now stock?
 					if ($data['quantity'] > 0) {
 						//yes, is relist setting yes?
 						if ($this->config->get('ebay_relistitems') == 1) {
 							//relist item with new stock
-							$this->relistItem($old_item_id, $product_id, $data['quantity']);
+							$this->relistItem($old_item_id, $room_id, $data['quantity']);
 						}
 					}
 				}
 			} else {
-				$this->log('productUpdateListen() - no active or previous item ids');
+				$this->log('roomUpdateListen() - no active or previous item ids');
 			}
 		}
 	}
@@ -913,44 +913,44 @@ final class Ebay {
 		}
 	}
 
-	public function decideEbayStockAction($product_id, $qty, $subtract, $sku = null) {
+	public function decideEbayStockAction($room_id, $qty, $subtract, $sku = null) {
 		if ($subtract == 1) {
-			$this->log('decideEbayStockAction() - Product ID: ' . $product_id . ', Current stock: ' . $qty);
+			$this->log('decideEbayStockAction() - Room ID: ' . $room_id . ', Current stock: ' . $qty);
 
-			$item_id = $this->getEbayItemId($product_id);
+			$item_id = $this->getEbayItemId($room_id);
 
 			if ($item_id != false) {
 				$this->putStockUpdate($item_id, $qty, $sku);
 			}
 		} else {
-			$this->log('decideEbayStockAction() - Product ID: ' . $product_id . ' does not subtract stock');
+			$this->log('decideEbayStockAction() - Room ID: ' . $room_id . ' does not subtract stock');
 		}
 	}
 
-	public function getProductId($ebay_item, $status = 0) {
-		$this->log('getProductId() - Item: ' . $ebay_item);
+	public function getRoomId($ebay_item, $status = 0) {
+		$this->log('getRoomId() - Item: ' . $ebay_item);
 
 		$status_sql = '';
 		if ($status == 1) {
 			$status_sql = ' AND `status` = 1';
 		}
 
-		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `ebay_item_id` = '" . $this->db->escape($ebay_item) . "'" . $status_sql . " LIMIT 1");
+		$qry = $this->db->query("SELECT `room_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `ebay_item_id` = '" . $this->db->escape($ebay_item) . "'" . $status_sql . " LIMIT 1");
 
 		if (!$qry->num_rows) {
 			return false;
 		} else {
-			return $qry->row['product_id'];
+			return $qry->row['room_id'];
 		}
 	}
 
-	public function getProductIdFromKey($key) {
-		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape($key) . "' LIMIT 1");
+	public function getRoomIdFromKey($key) {
+		$qry = $this->db->query("SELECT `room_id` FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
 		if (!$qry->num_rows) {
 			return false;
 		} else {
-			return $qry->row['product_id'];
+			return $qry->row['room_id'];
 		}
 	}
 
@@ -962,13 +962,13 @@ final class Ebay {
 		}
 	}
 
-	public function getAllocatedStock($product_id) {
-		$qry = $this->db->query("SELECT SUM(`qty`) AS `total` FROM `" . DB_PREFIX . "ebay_transaction` WHERE `product_id` = '" . (int)$product_id . "' AND `order_id` = '0' LIMIT 1");
+	public function getAllocatedStock($room_id) {
+		$qry = $this->db->query("SELECT SUM(`qty`) AS `total` FROM `" . DB_PREFIX . "ebay_transaction` WHERE `room_id` = '" . (int)$room_id . "' AND `order_id` = '0' LIMIT 1");
 		return (int)$qry->row['total'];
 	}
 
 	public function getImages() {
-		$this->log('getImages() - Getting product images . ');
+		$this->log('getImages() - Getting room images . ');
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_image_import`");
 
 		if ($qry->num_rows) {
@@ -1007,9 +1007,9 @@ final class Ebay {
 				}
 
 				if ($img['imgcount'] == 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'catalog/" . $img['name'] . "' WHERE `product_id` = '" . (int)$img['product_id'] . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "room` SET `image` = 'catalog/" . $img['name'] . "' WHERE `room_id` = '" . (int)$img['room_id'] . "' LIMIT 1");
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '" . (int)$img['product_id'] . "', `image` = 'catalog/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "room_image` SET `room_id` = '" . (int)$img['room_id'] . "', `image` = 'catalog/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
 				}
 
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '" . (int)$img['id'] . "' LIMIT 1");
@@ -1022,14 +1022,14 @@ final class Ebay {
 		return $this->call('item/getItem/', array('itemId' => $item_id));
 	}
 
-	public function relistItem($item_id, $product_id, $qty) {
-		$this->log('relistItem() - Starting relist item, ID: ' . $item_id . ', product: ' . $product_id . ', qty: ' . $qty);
+	public function relistItem($item_id, $room_id, $qty) {
+		$this->log('relistItem() - Starting relist item, ID: ' . $item_id . ', room: ' . $room_id . ', qty: ' . $qty);
 
 		$response = $this->call('listing/relistItem/', array('itemId' => $item_id, 'qty' => $qty));
 
 		if (!empty($response['ItemID'])) {
 			$this->log('relistItem() - Created: ' . $response['ItemID']);
-			$this->createLink($product_id, $response['ItemID'], '');
+			$this->createLink($room_id, $response['ItemID'], '');
 			return $response['ItemID'];
 		} else {
 			$this->log('relistItem() - Relisting failed ID: ' . $item_id);
@@ -1037,34 +1037,34 @@ final class Ebay {
 		}
 	}
 
-	public function createLink($product_id, $item_id, $variant) {
-		$this->deleteProduct($product_id);
+	public function createLink($room_id, $item_id, $variant) {
+		$this->deleteRoom($room_id);
 		$this->removeItemByItemId($item_id);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing` SET `product_id` = '" . (int)$product_id . "', `ebay_item_id` = '" . $this->db->escape($item_id) . "', `variant` = '" . (int)$variant . "', `status` = '1'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing` SET `room_id` = '" . (int)$room_id . "', `ebay_item_id` = '" . $this->db->escape($item_id) . "', `variant` = '" . (int)$variant . "', `status` = '1'");
 	}
 
 	public function addReserve($data, $item_id, $variant) {
 		if ($variant == 1) {
 			foreach ($data['opt'] as $variation) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$data['product_id'] . "' AND `var` = '" . $this->db->escape($variation['sku']) . "' LIMIT 1");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room_option_relation` WHERE `room_id` = '" . (int)$data['room_id'] . "' AND `var` = '" . $this->db->escape($variation['sku']) . "' LIMIT 1");
 
 				if ($query->row['stock'] != $variation['qty']) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `product_id` = '" . (int)$data['product_id'] . "', `item_id` = '" . $this->db->escape($item_id) . "', `variant_id` = '" . $this->db->escape($variation['sku']) . "', `reserve` = '" . (int)$variation['qty'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `room_id` = '" . (int)$data['room_id'] . "', `item_id` = '" . $this->db->escape($item_id) . "', `variant_id` = '" . $this->db->escape($variation['sku']) . "', `reserve` = '" . (int)$variation['qty'] . "'");
 				}
 			}
 		} else {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$data['product_id'] . "' LIMIT 1");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$data['room_id'] . "' LIMIT 1");
 
 			if ($query->row['quantity'] != $data['qty'][0]) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `product_id`    = '" . (int)$data['product_id'] . "', `item_id` = '" . $this->db->escape($item_id) . "', `variant_id` = '', `reserve` = '" . (int)$data['qty'][0] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `room_id`    = '" . (int)$data['room_id'] . "', `item_id` = '" . $this->db->escape($item_id) . "', `variant_id` = '', `reserve` = '" . (int)$data['qty'][0] . "'");
 			}
 		}
 	}
 
-	public function getReserve($product_id, $item_id, $sku = '') {
+	public function getReserve($room_id, $item_id, $sku = '') {
 		$this->log('getReserve()');
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `room_id` = '" . (int)$room_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
 
 		if ($query->num_rows > 0) {
 			$this->log('getReserve() - returning: ' . $query->row['reserve']);
@@ -1075,35 +1075,35 @@ final class Ebay {
 		}
 	}
 
-	public function updateReserve($product_id, $item_id, $reserve, $sku = '', $variant = 0) {
+	public function updateReserve($room_id, $item_id, $reserve, $sku = '', $variant = 0) {
 
 		$this->log('updateReserve() - start');
-		$this->log('updateReserve() - $product_id: ' . $product_id);
+		$this->log('updateReserve() - $room_id: ' . $room_id);
 		$this->log('updateReserve() - $item_id: ' . $item_id);
 		$this->log('updateReserve() - $reserve: ' . $reserve);
 		$this->log('updateReserve() - $sku: ' . $sku);
 		$this->log('updateReserve() - $variant: ' . $variant);
 
 		if ($reserve == 0) {
-			$this->deleteReserve($product_id, $item_id, $sku);
+			$this->deleteReserve($room_id, $item_id, $sku);
 		} else {
-			if ($this->getReserve($product_id, $item_id, $sku) != false) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_stock_reserve` SET `reserve` = '" . (int)$reserve . "' WHERE `product_id` = '" . (int)$product_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
+			if ($this->getReserve($room_id, $item_id, $sku) != false) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_stock_reserve` SET `reserve` = '" . (int)$reserve . "' WHERE `room_id` = '" . (int)$room_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
 			} else {
 				if ($variant == 0) {
 					$this->log('updateReserve() - not a variant');
-					$this->addReserve(array('product_id' => $product_id, 'qty' => array(0 => $reserve)), $item_id, 0);
+					$this->addReserve(array('room_id' => $room_id, 'qty' => array(0 => $reserve)), $item_id, 0);
 				} else {
 					$this->log('updateReserve() - variant');
-					$this->addReserve(array('product_id' => $product_id, 'opt' => array(array('sku' => $sku, 'qty' => $reserve))), $item_id, 1);
+					$this->addReserve(array('room_id' => $room_id, 'opt' => array(array('sku' => $sku, 'qty' => $reserve))), $item_id, 1);
 				}
 			}
 		}
 	}
 
-	public function deleteReserve($product_id, $item_id, $sku = '') {
+	public function deleteReserve($room_id, $item_id, $sku = '') {
 		$this->log('deleteReserve()');
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `room_id` = '" . (int)$room_id . "' AND `variant_id` = '" . $this->db->escape($sku) . "' AND `item_id` = '" . $this->db->escape($item_id) . "'  LIMIT 1");
 	}
 
 	public function getCarriers() {

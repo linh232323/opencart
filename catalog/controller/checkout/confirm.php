@@ -29,24 +29,24 @@ class ControllerCheckoutConfirm extends Controller {
 			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has rooms and has stock.
+		if ((!$this->cart->hasrooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$redirect = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getrooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
+			if ($room['minimum'] > $room_total) {
 				$redirect = $this->url->link('checkout/cart');
 
 				break;
@@ -194,15 +194,15 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['shipping_code'] = '';
 			}
 
-			$order_data['products'] = array();
+			$order_data['rooms'] = array();
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($this->cart->getrooms() as $room) {
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					$option_data[] = array(
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
+						'room_option_id'       => $option['room_option_id'],
+						'room_option_value_id' => $option['room_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],
 						'name'                    => $option['name'],
@@ -211,20 +211,20 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 				}
 
-				$order_data['products'][] = array(
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
+				$order_data['rooms'][] = array(
+					'room_id' => $room['room_id'],
+					'name'       => $room['name'],
+					'model'      => $room['model'],
 					'option'     => $option_data,
-					'download'   => $product['download'],
-					'quantity'   => $product['quantity'],
-					'subtract'   => $product['subtract'],
-					'price'      => $product['price'],
-					'total'      => $product['total'],
-					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'     => $product['reward'],
-					'check_in'   => $product['check_in'],
-					'check_out'  => $product['check_out']
+					'download'   => $room['download'],
+					'quantity'   => $room['quantity'],
+					'subtract'   => $room['subtract'],
+					'price'      => $room['price'],
+					'total'      => $room['total'],
+					'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
+					'reward'     => $room['reward'],
+					'check_in'   => $room['check_in'],
+					'check_out'  => $room['check_out']
 				);
 			}
 
@@ -327,12 +327,12 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$this->load->model('tool/upload');
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($this->cart->getrooms() as $room) {
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
@@ -353,7 +353,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 				$recurring = '';
 
-				if ($product['recurring']) {
+				if ($room['recurring']) {
 					$frequencies = array(
 						'day'        => $this->language->get('text_day'),
 						'week'       => $this->language->get('text_week'),
@@ -362,30 +362,30 @@ class ControllerCheckoutConfirm extends Controller {
 						'year'       => $this->language->get('text_year'),
 					);
 
-					if ($product['recurring']['trial']) {
-						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+					if ($room['recurring']['trial']) {
+						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($room['recurring']['trial_price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['trial_cycle'], $frequencies[$room['recurring']['trial_frequency']], $room['recurring']['trial_duration']) . ' ';
 					}
 
-					if ($product['recurring']['duration']) {
-						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					if ($room['recurring']['duration']) {
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 					} else {
-						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 					}
 				}
 
-				$data['products'][] = array(
-					'key'        => $product['key'],
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
+				$data['rooms'][] = array(
+					'key'        => $room['key'],
+					'room_id' => $room['room_id'],
+					'name'       => $room['name'],
+					'model'      => $room['model'],
 					'option'     => $option_data,
 					'recurring'  => $recurring,
-					'quantity'   => $product['quantity'],
-					'subtract'   => $product['subtract'],
-					'night'      => $product['night'],
-					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'] * $product['night']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'quantity'   => $room['quantity'],
+					'subtract'   => $room['subtract'],
+					'night'      => $room['night'],
+					'price'      => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax'))),
+					'total'      => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')) * $room['quantity'] * $room['night']),
+					'href'       => $this->url->link('product/room', 'room_id=' . $room['room_id']),
 				);
 			}
 

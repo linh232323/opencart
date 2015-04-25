@@ -41,24 +41,24 @@ class ControllerApiOrder extends Controller {
 			}
 
 			// Cart
-			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 				$json['error'] = $this->language->get('error_stock');
 			}
 
 			// Validate minimum quantity requirements.
-			$products = $this->cart->getProducts();
+			$rooms = $this->cart->getRooms();
 
-			foreach ($products as $product) {
-				$product_total = 0;
+			foreach ($rooms as $room) {
+				$room_total = 0;
 
-				foreach ($products as $product_2) {
-					if ($product_2['product_id'] == $product['product_id']) {
-						$product_total += $product_2['quantity'];
+				foreach ($rooms as $room_2) {
+					if ($room_2['room_id'] == $room['room_id']) {
+						$room_total += $room_2['quantity'];
 					}
 				}
 
-				if ($product['minimum'] > $product_total) {
-					$json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+				if ($room['minimum'] > $room_total) {
+					$json['error'] = sprintf($this->language->get('error_minimum'), $room['name'], $room['minimum']);
 
 					break;
 				}
@@ -155,16 +155,16 @@ class ControllerApiOrder extends Controller {
 					$order_data['shipping_code'] = '';
 				}
 
-				// Products
-				$order_data['products'] = array();
+				// Rooms
+				$order_data['rooms'] = array();
 
-				foreach ($this->cart->getProducts() as $product) {
+				foreach ($this->cart->getRooms() as $room) {
 					$option_data = array();
 
-					foreach ($product['option'] as $option) {
+					foreach ($room['option'] as $option) {
 						$option_data[] = array(
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
+							'room_option_id'       => $option['room_option_id'],
+							'room_option_value_id' => $option['room_option_value_id'],
 							'option_id'               => $option['option_id'],
 							'option_value_id'         => $option['option_value_id'],
 							'name'                    => $option['name'],
@@ -173,18 +173,18 @@ class ControllerApiOrder extends Controller {
 						);
 					}
 
-					$order_data['products'][] = array(
-						'product_id' => $product['product_id'],
-						'name'       => $product['name'],
-						'model'      => $product['model'],
+					$order_data['rooms'][] = array(
+						'room_id' => $room['room_id'],
+						'name'       => $room['name'],
+						'model'      => $room['model'],
 						'option'     => $option_data,
-						'download'   => $product['download'],
-						'quantity'   => $product['quantity'],
-						'subtract'   => $product['subtract'],
-						'price'      => $product['price'],
-						'total'      => $product['total'],
-						'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-						'reward'     => $product['reward']
+						'download'   => $room['download'],
+						'quantity'   => $room['quantity'],
+						'subtract'   => $room['subtract'],
+						'price'      => $room['price'],
+						'total'      => $room['total'],
+						'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
+						'reward'     => $room['reward']
 					);
 				}
 
@@ -373,24 +373,24 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Cart
-				if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+				if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 					$json['error'] = $this->language->get('error_stock');
 				}
 
 				// Validate minimum quantity requirements.
-				$products = $this->cart->getProducts();
+				$rooms = $this->cart->getRooms();
 
-				foreach ($products as $product) {
-					$product_total = 0;
+				foreach ($rooms as $room) {
+					$room_total = 0;
 
-					foreach ($products as $product_2) {
-						if ($product_2['product_id'] == $product['product_id']) {
-							$product_total += $product_2['quantity'];
+					foreach ($rooms as $room_2) {
+						if ($room_2['room_id'] == $room['room_id']) {
+							$room_total += $room_2['quantity'];
 						}
 					}
 
-					if ($product['minimum'] > $product_total) {
-						$json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+					if ($room['minimum'] > $room_total) {
+						$json['error'] = sprintf($this->language->get('error_minimum'), $room['name'], $room['minimum']);
 
 						break;
 					}
@@ -487,16 +487,16 @@ class ControllerApiOrder extends Controller {
 						$order_data['shipping_code'] = '';
 					}
 
-					// Products
-					$order_data['products'] = array();
+					// Rooms
+					$order_data['rooms'] = array();
 
-					foreach ($this->cart->getProducts() as $product) {
+					foreach ($this->cart->getRooms() as $room) {
 						$option_data = array();
 
-						foreach ($product['option'] as $option) {
+						foreach ($room['option'] as $option) {
 							$option_data[] = array(
-								'product_option_id'       => $option['product_option_id'],
-								'product_option_value_id' => $option['product_option_value_id'],
+								'room_option_id'       => $option['room_option_id'],
+								'room_option_value_id' => $option['room_option_value_id'],
 								'option_id'               => $option['option_id'],
 								'option_value_id'         => $option['option_value_id'],
 								'name'                    => $option['name'],
@@ -505,18 +505,18 @@ class ControllerApiOrder extends Controller {
 							);
 						}
 
-						$order_data['products'][] = array(
-							'product_id' => $product['product_id'],
-							'name'       => $product['name'],
-							'model'      => $product['model'],
+						$order_data['rooms'][] = array(
+							'room_id' => $room['room_id'],
+							'name'       => $room['name'],
+							'model'      => $room['model'],
 							'option'     => $option_data,
-							'download'   => $product['download'],
-							'quantity'   => $product['quantity'],
-							'subtract'   => $product['subtract'],
-							'price'      => $product['price'],
-							'total'      => $product['total'],
-							'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-							'reward'     => $product['reward']
+							'download'   => $room['download'],
+							'quantity'   => $room['quantity'],
+							'subtract'   => $room['subtract'],
+							'price'      => $room['price'],
+							'total'      => $room['total'],
+							'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
+							'reward'     => $room['reward']
 						);
 					}
 

@@ -184,9 +184,9 @@ class CBA {
 
 					foreach ($message->OrderReport->Item as $item) {
 						$amazon_order_item_code = (string)$item->AmazonOrderItemCode;
-						$order_product_id = (string)$item->SKU;
+						$order_room_id = (string)$item->SKU;
 
-						$db->query("REPLACE INTO `" . DB_PREFIX . "order_amazon_product` (`order_product_id`, `amazon_order_item_code`) SELECT `op`.`order_product_id`, '" . $db->escape($amazon_order_item_code) . "' FROM `" . DB_PREFIX . "order_product` `op` WHERE `op`.`order_product_id` = '" . $db->escape($order_product_id) . "'");
+						$db->query("REPLACE INTO `" . DB_PREFIX . "order_amazon_room` (`order_room_id`, `amazon_order_item_code`) SELECT `op`.`order_room_id`, '" . $db->escape($amazon_order_item_code) . "' FROM `" . DB_PREFIX . "order_room` `op` WHERE `op`.`order_room_id` = '" . $db->escape($order_room_id) . "'");
 					}
 				}
 
@@ -253,8 +253,8 @@ class CBA {
 		$flat = "TemplateType=OrderCancellation\tVersion=1.0/1.0.1\tThis row for Amazon.com use only.  Do not modify or delete.\n";
 		$flat .= "order-id\tmerchant-order-id\tcancellation-reason-code\tamazon-order-item-code\n";
 
-		foreach ($order['products'] as $product) {
-			$flat .= $order['amazon_order_id'] . "\t\tGeneralAdjustment\t" . $product['amazon_order_item_code'] . "\n";
+		foreach ($order['rooms'] as $room) {
+			$flat .= $order['amazon_order_id'] . "\t\tGeneralAdjustment\t" . $room['amazon_order_item_code'] . "\n";
 		}
 
 		$headers = array(
@@ -291,11 +291,11 @@ class CBA {
 	  <FulfillmentDate>' . date('c') . '</FulfillmentDate>
 ';
 
-		foreach ($order['products'] as $product) {
+		foreach ($order['rooms'] as $room) {
 			$xml .= '
 	  <Item>
-		<AmazonOrderItemCode>' . $product['amazon_order_item_code'] . '</AmazonOrderItemCode>
-		<Quantity>' . $product['quantity'] . '</Quantity>
+		<AmazonOrderItemCode>' . $room['amazon_order_item_code'] . '</AmazonOrderItemCode>
+		<Quantity>' . $room['quantity'] . '</Quantity>
 	  </Item>
 ';
 		}
@@ -330,13 +330,13 @@ class CBA {
 		$url_params['PurchaseContractId'] = $parameters['contract_id'];
 
 		$i = 1;
-		foreach ($parameters['products'] as $product) {
+		foreach ($parameters['rooms'] as $room) {
 			$url_params['PurchaseItems.PurchaseItem.' . $i . '.MerchantId'] = $this->getMerchantId();
-			$url_params['PurchaseItems.PurchaseItem.' . $i . '.MerchantItemId'] = $product['model'];
-			$url_params['PurchaseItems.PurchaseItem.' . $i . '.SKU'] = $product['model'];
-			$url_params['PurchaseItems.PurchaseItem.' . $i . '.Quantity'] = $product['quantity'];
-			$url_params['PurchaseItems.PurchaseItem.' . $i . '.Title'] = $product['title'];
-			$url_params['PurchaseItems.PurchaseItem.' . $i . '.UnitPrice.Amount'] = $product['price'];
+			$url_params['PurchaseItems.PurchaseItem.' . $i . '.MerchantItemId'] = $room['model'];
+			$url_params['PurchaseItems.PurchaseItem.' . $i . '.SKU'] = $room['model'];
+			$url_params['PurchaseItems.PurchaseItem.' . $i . '.Quantity'] = $room['quantity'];
+			$url_params['PurchaseItems.PurchaseItem.' . $i . '.Title'] = $room['title'];
+			$url_params['PurchaseItems.PurchaseItem.' . $i . '.UnitPrice.Amount'] = $room['price'];
 			$url_params['PurchaseItems.PurchaseItem.' . $i++ . '.UnitPrice.CurrencyCode'] = $parameters['currency'];
 		}
 

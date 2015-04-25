@@ -7,8 +7,8 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('extension/event');
 
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_room');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_room');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shipping');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_shipping');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shop');
@@ -60,8 +60,8 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['validation'] 	= $this->openbay->etsy->validate();
 		$data['links_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['links_products'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], 'SSL');
-		$data['links_listings'] = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_rooms'] = $this->url->link('openbay/etsy_room/links', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_listings'] = $this->url->link('openbay/etsy_room/listings', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

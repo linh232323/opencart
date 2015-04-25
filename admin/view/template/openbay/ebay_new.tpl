@@ -23,9 +23,9 @@
       </div>
       <div class="panel-body" id="page-listing">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-          <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
+          <input type="hidden" name="room_id" value="<?php echo $room['room_id']; ?>" />
           <input type="hidden" name="auction_type" value="FixedPriceItem" />
-          <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
+          <input type="hidden" name="attributes" value="<?php echo $room['attributes']; ?>" />
 
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
@@ -40,24 +40,24 @@
           </ul>
           <div class="tab-content">
             <div id="tab-listing-general" class="tab-pane active">
-              <?php if ($product['store_cats'] != false) { ?>
+              <?php if ($room['store_cats'] != false) { ?>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shop_category; ?></label>
                   <div class="col-sm-10">
                     <select name="eBayStoreCatId" class="form-control">
-                      <?php foreach($product['store_cats'] as $key => $cat) { ?>
+                      <?php foreach($room['store_cats'] as $key => $cat) { ?>
                       <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
                       <?php } ?>
                     </select>
                   </div>
                 </div>
               <?php } ?>
-              <?php if (!empty($product['popular_cats'])) { ?>
+              <?php if (!empty($room['popular_cats'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_category_popular; ?></label>
                 <div class="col-sm-10">
                   <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
-                  <?php foreach($product['popular_cats'] as $cat) { ?>
+                  <?php foreach($room['popular_cats'] as $cat) { ?>
                   <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" /> <?php echo $cat['breadcrumb']; ?></p>
                   <?php } ?>
                 </div>
@@ -155,14 +155,14 @@
                   </span>
                 </div>
               </div>
-              <div class="row" id="product-catalog-container"></div>
+              <div class="row" id="room-catalog-container"></div>
             </div>
 
             <div id="tab-listing-description" class="tab-pane">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_title; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" class="form-control" />
+                  <input type="text" name="name" value="<?php echo $room['name']; ?>" size="85" id="name" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
@@ -174,7 +174,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_description; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="description" id="description-field"><?php echo $product['description']; ?></textarea>
+                  <textarea name="description" id="description-field"><?php echo $room['description']; ?></textarea>
                 </div>
               </div>
             </div>
@@ -188,8 +188,8 @@
                       <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_theme'])) { ?>
-                          <?php foreach ($product['profiles_theme'] as $profile) { ?>
+                        <?php if (is_array($room['profiles_theme'])) { ?>
+                          <?php foreach ($room['profiles_theme'] as $profile) { ?>
                             <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                           <?php } ?>
                         <?php } ?>
@@ -203,8 +203,8 @@
                 <div class="col-sm-10">
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
-                    <?php if (is_array($product['templates']) && !empty($product['templates'])) { ?>
-                    <?php foreach($product['templates'] as $template) { ?>
+                    <?php if (is_array($room['templates']) && !empty($room['templates'])) { ?>
+                    <?php foreach($room['templates'] as $template) { ?>
                     <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
                     <?php } ?>
                     <?php } ?>
@@ -218,14 +218,14 @@
                     <div class="col-sm-3">
                       <div class="input-group">
                         <span class="input-group-addon"><?php echo $text_height; ?></span>
-                        <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" maxlength="4" class="form-control" id="gallery_height" />
+                        <input type="text" name="gallery_height" value="<?php echo $room['defaults']['gallery_height']; ?>" maxlength="4" class="form-control" id="gallery_height" />
                         <span class="input-group-addon"><?php echo $text_px; ?></span>
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="input-group">
                         <span class="input-group-addon"><?php echo $text_width; ?></span>
-                        <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" maxlength="4" class="form-control" id="gallery_width" />
+                        <input type="text" name="gallery_width" value="<?php echo $room['defaults']['gallery_width']; ?>" maxlength="4" class="form-control" id="gallery_width" />
                         <span class="input-group-addon"><?php echo $text_px; ?></span>
                       </div>
                     </div>
@@ -239,14 +239,14 @@
                     <div class="col-sm-3">
                       <div class="input-group">
                         <span class="input-group-addon"><?php echo $text_height; ?></span>
-                        <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" maxlength="4" class="form-control" id="thumb_height" />
+                        <input type="text" name="thumb_height" value="<?php echo $room['defaults']['thumb_height']; ?>" maxlength="4" class="form-control" id="thumb_height" />
                         <span class="input-group-addon"><?php echo $text_px; ?></span>
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="input-group">
                         <span class="input-group-addon"><?php echo $text_width; ?></span>
-                        <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" maxlength="4" class="form-control" id="thumb_width" />
+                        <input type="text" name="thumb_width" value="<?php echo $room['defaults']['thumb_width']; ?>" maxlength="4" class="form-control" id="thumb_width" />
                         <span class="input-group-addon"><?php echo $text_px; ?></span>
                       </div>
                     </div>
@@ -272,7 +272,7 @@
                 <p>* <?php echo $text_images_text_2; ?></p>
               </div>
               <div class="row">
-                <?php if (!empty($product['product_images'])) { ?>
+                <?php if (!empty($room['room_images'])) { ?>
                   <div class="table-responsive">
                     <table id="images" class="table table-striped table-bordered table-hover">
                       <thead>
@@ -286,7 +286,7 @@
                       </thead>
                       <tbody>
                       <?php $i = 0; $i_valid = null; ?>
-                      <?php foreach($product['product_images'] as $img) { ?>
+                      <?php foreach($room['room_images'] as $img) { ?>
                         <tr>
                           <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
                           <td class="text-center">
@@ -325,7 +325,7 @@
               </div>
 
   <!-- OPENSTOCK CHANGES START @TODO -->
-              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($room['options'])) { ?>
                 <h2><?php echo $text_option_images; ?></h2>
                 <p><?php echo $text_option_description; ?></p>
                 <table class="form">
@@ -334,7 +334,7 @@
                         <td>
                             <select name="option_image_group" id="option_image_group">
                                 <option value="def"><?php echo $text_select; ?></option>
-                                <?php foreach($product['option_grp'] as $option_group) { echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
+                                <?php foreach($room['option_grp'] as $option_group) { echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
                             </select>
                             <input type="hidden" id="option-image-group-name" name="option-image-group-name" value="" />
                         </td>
@@ -342,24 +342,24 @@
                     <tr class="option-group-img-tr displayNone">
                         <td><?php echo $text_option_images_choice; ?></td>
                         <td>
-                            <?php foreach($product['option_grp'] as $option_group) { ?>
+                            <?php foreach($room['option_grp'] as $option_group) { ?>
                                 <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
                                     <table class="form">
-                                        <?php foreach($option_group['product_option_value'] as $option_group_choice) { ?>
+                                        <?php foreach($option_group['room_option_value'] as $option_group_choice) { ?>
                                             <tr>
                                                 <td>
                                                     <h4><?php echo $option_group_choice['name']; ?></h4>
-                                                    <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
+                                                    <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['room_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
                                                     <div class="buttons">
-                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $text_add; ?></span></a>
+                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['room_option_value_id']; ?>);" class="button cursor"><span><?php echo $text_add; ?></span></a>
                                                     </div>
                                                 </td>
-                                                <td class="center" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
+                                                <td class="center" id="option_images_<?php echo $option_group_choice['room_option_value_id']; ?>">
                                                     <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
-                                                        <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
+                                                        <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['room_option_value_id']; ?>_<?php echo $x; ?>">
                                                             <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
-                                                            <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
-                                                            <p class="text-center"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $button_remove; ?></a></p>
+                                                            <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['room_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
+                                                            <p class="text-center"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['room_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $button_remove; ?></a></p>
                                                         </div>
                                                     <?php } ?>
                                                     <div style="clear:both"></div>
@@ -387,7 +387,7 @@
                       <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
+                        <?php if (is_array($room['profiles_generic'])) { foreach($room['profiles_generic'] as $profile) { ?>
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } }?>
                       </select>
@@ -398,7 +398,7 @@
 
   <!-- OPENSTOCK CHANGES START @TODO -->
 
-              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($room['options'])) { ?>
                 <table class="form">
                         <tr>
                             <td><?php echo $text_stock_matrix; ?></td>
@@ -419,12 +419,12 @@
                                     <?php $t = array(); ?>
                                     <?php $t_rel = array(); ?>
   <?php
-                                    foreach($product['option_grp'] as $key => $grp) {
+                                    foreach($room['option_grp'] as $key => $grp) {
                                         $t_tmp = array();
-                                        foreach($grp['product_option_value'] as $grp_node) {
+                                        foreach($grp['room_option_value'] as $grp_node) {
                                             $t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-                                            $t_rel[$grp_node['product_option_value_id']] = $grp['name'];
+                                            $t_rel[$grp_node['room_option_value_id']] = $grp['name'];
                                         }
                                         $t[] = array('name' => $grp['name'], 'child' => $t_tmp);
                                     }
@@ -433,7 +433,7 @@
                                     echo'<input type="hidden" name="optGroupRelArray" value="'.  base64_encode(serialize($t_rel)).'" />';
 
                                         $v = 0;
-                                        foreach($product['options'] as $option) {
+                                        foreach($room['options'] as $option) {
                                             if ($v == 0) {
                                                 //create a php version of the opt array to use on server side
                                                 echo'<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['opts'])).'" />';
@@ -446,7 +446,7 @@
                                             echo '" />';
 
                                             if ($option['price'] == 0) {
-                                                $option['price'] = $product['price'];
+                                                $option['price'] = $room['price'];
                                             }
 
                                             echo'<tr>';
@@ -472,7 +472,7 @@
                         </tr>
                         <tr>
                             <td><?php echo $entry_tax_inc; ?></td>
-                            <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
+                            <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $room['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                         </tr>
                 </table>
               <?php } else { ?>
@@ -481,21 +481,21 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_qty; ?></label>
                   <div class="col-sm-10">
-                    <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
+                    <input type="text" name="qty[0]" id="qty_0" value="<?php echo $room['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $room['quantity']; ?>');" />
                     <span class="help-block"><?php echo $help_quantity_reserve; ?></span>
-                    <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
+                    <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $room['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_price; ?></label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-4">
-                      <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
+                      <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($room['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
                       <span class="input-group-addon"><?php echo $text_price_ex_tax; ?></span>
                     </div>
                     <span class="help-block"><?php echo $help_price_ex_tax; ?></span>
                     <div class="input-group col-xs-4">
-                      <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
+                      <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($room['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
                       <span class="input-group-addon"><?php echo $text_price_inc_tax; ?></span>
                     </div>
                     <span class="help-block"><?php echo $help_price_inc_tax; ?></span>
@@ -505,13 +505,13 @@
                   <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
-                      <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
+                      <input type="text" name="tax" value="<?php echo $room['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
                       <span class="input-group-addon">%</span>
                     </div>
                   </div>
                 </div>
               <?php } ?>
-              <?php if (empty($product['options'])) { ?>
+              <?php if (empty($room['options'])) { ?>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_offers; ?></label>
                   <div class="col-sm-10">
@@ -537,19 +537,19 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_imediate_payment; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_payment_immediate" value="0" />
-                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] != 1) { echo'checked '; } ?> />
+                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($room['defaults']['ebay_payment_immediate'] != 1) { echo'checked '; } ?> />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_payment; ?></label>
                 <div class="col-sm-10">
                   <?php $paypal = false; ?>
-                  <?php foreach($product['payments'] as $payment) { ?>
+                  <?php foreach($room['payments'] as $payment) { ?>
                     <?php if ($payment['ebay_name'] == 'PayPal') { ?>
                       <?php $paypal = true; ?>
                     <?php } else { ?>
                       <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1"
-                        <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/> -
+                        <?php echo ($room['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/> -
                         <?php echo $payment['local_name']; ?></p>
                     <?php } ?>
                   <?php } ?>
@@ -561,9 +561,9 @@
                 <div class="col-sm-10">
                   <div class="input-group">
                     <span class="input-group-addon">
-                      <input type="checkbox" name="payments[PayPal]" value="1" <?php echo ($product['defaults']['ebay_payment_types']['PayPal'] == 1 ? 'checked="checked" ' : ''); ?> />
+                      <input type="checkbox" name="payments[PayPal]" value="1" <?php echo ($room['defaults']['ebay_payment_types']['PayPal'] == 1 ? 'checked="checked" ' : ''); ?> />
                     </span>
-                    <input type="text" class="form-control" name="paypal_email" value="<?php echo $product['defaults']['paypal_address']; ?>" placeholder="<?php echo $text_paypal; ?>"/>
+                    <input type="text" class="form-control" name="paypal_email" value="<?php echo $room['defaults']['paypal_address']; ?>" placeholder="<?php echo $text_paypal; ?>"/>
                   </div>
                 </div>
               </div>
@@ -571,7 +571,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_payment_instruction; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction"><?php echo $product['defaults']['payment_instruction']; ?></textarea>
+                  <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction"><?php echo $room['defaults']['payment_instruction']; ?></textarea>
                 </div>
               </div>
             </div>
@@ -585,7 +585,7 @@
                       <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
+                        <?php if (is_array($room['profiles_shipping'])) { foreach($room['profiles_shipping'] as $profile) { ?>
                           <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } }?>
                       </select>
@@ -635,7 +635,7 @@
                   <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
                 </div>
               </div>
-              <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
+              <?php if ($room['defaults']['cod_surcharge'] == 1) { ?>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
                   <div class="col-sm-10">
@@ -781,7 +781,7 @@
                     <label class="control-label"><?php echo $text_unit; ?></label>
                     <select name="package[unit]" class="form-control" id="measure-unit">
                       <?php foreach ($setting['measurement_types'] as $measurement_key => $measurement_value) { ?>
-                        <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
+                        <?php echo '<option value="' . $measurement_key . '"'.($room['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
                       <?php } ?>
                     </select>
                   </div>
@@ -790,14 +790,14 @@
                       <div class="col-sm-6">
                         <label class="control-label"><?php echo $text_weight_major; ?></label>
                         <div class="input-group col-xs-12">
-                          <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $product['weight_major']; ?>">
+                          <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $room['weight_major']; ?>">
                           <span class="input-group-addon" id="weight-major-text"></span>
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <label class="control-label"><?php echo $text_weight_minor; ?></label>
                         <div class="input-group col-xs-12">
-                          <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $product['weight_minor']; ?>">
+                          <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $room['weight_minor']; ?>">
                           <span class="input-group-addon" id="weight-minor-text"></span>
                         </div>
                       </div>
@@ -818,21 +818,21 @@
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_depth; ?></label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[depth]" class="form-control" value="<?php echo $product['height']; ?>">
+                      <input type="text" name="package[depth]" class="form-control" value="<?php echo $room['height']; ?>">
                       <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_length; ?></label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[length]" class="form-control" value="<?php echo $product['length']; ?>">
+                      <input type="text" name="package[length]" class="form-control" value="<?php echo $room['length']; ?>">
                       <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_width; ?></label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[width]" class="form-control" value="<?php echo $product['width']; ?>">
+                      <input type="text" name="package[width]" class="form-control" value="<?php echo $room['width']; ?>">
                       <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
@@ -856,7 +856,7 @@
                       <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
+                        <?php if (is_array($room['profiles_returns'])) { foreach($room['profiles_returns'] as $profile) { ?>
                         <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
                         <?php } } ?>
                       </select>
@@ -964,7 +964,7 @@
           <div class="row">
             <div class="col-sm-6 text-left">
               <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $button_view; ?></a>
-              <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a>
+              <a class="btn btn-primary" href="<?php echo $room['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a>
             </div>
             <div class="col-sm-6 text-right">
               <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="fa fa-reply fa-lg"></i> <?php echo $text_return; ?></a>
@@ -1043,7 +1043,7 @@
                   $('#suggested_default').bind('click', function() {
                     $('#category-selections-row').show();
                     $('#showFeatureDiv').hide();
-                    $('#product-catalog-container').hide();
+                    $('#room-catalog-container').hide();
                     $('#feature-content').empty();
                     $('#specifics').empty();
                     $('input[name=popular]').removeAttr('checked');
@@ -1075,7 +1075,7 @@
 
   function loadCategories(level, skip) {
         $('#showFeatureDiv').hide();
-        $('#product-catalog-container').hide();
+        $('#room-catalog-container').hide();
         $('#feature-content').empty();
         $('#specifics').empty();
 
@@ -1210,22 +1210,22 @@
             dataType: 'json',
             data: { categoryId: cat, page: 1,  search: qry },
             beforeSend: function() {
-                $('#product-catalog-container').empty().show();
+                $('#room-catalog-container').empty().show();
                 $('#button-catalog-search').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
                 $('#catalog-search-alert').remove();
             },
             success: function(data) {
                 if (data.error == false) {
-                    if (data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
-                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $error_catalog_data; ?></div>');
+                    if (data.data.roomSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
+                        $('#room-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $error_catalog_data; ?></div>');
                     } else {
-                        data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
+                        data.data.roomSearchResult.rooms = $.makeArray(data.data.roomSearchResult.rooms);
 
-                        $.each(data.data.productSearchResult.products, function(key, val) {
+                        $.each(data.data.roomSearchResult.rooms, function(key, val) {
                           html = '<div class="col-sm-3">';
                             html += '<div class="well">';
                               html += '<div class="row">';
-                                html += '<div class="col-sm-12 text-left"><input type="radio" name="catalog_epid" value="'+val.productIdentifier.ePID+'" /></div>';
+                                html += '<div class="col-sm-12 text-left"><input type="radio" name="catalog_epid" value="'+val.roomIdentifier.ePID+'" /></div>';
                               html += '</div>';
                               html += '<div class="row">';
                                 html += '<div class="col-sm-12 text-center" style="height:125px;">';
@@ -1237,12 +1237,12 @@
                                 html += '</div>';
                               html += '</div>';
                               html += '<div class="row">';
-                                html += '<div class="col-sm-12 text-center" style="min-height:70px;">'+val.productDetails.value.text.value+'</div>';
+                                html += '<div class="col-sm-12 text-center" style="min-height:70px;">'+val.roomDetails.value.text.value+'</div>';
                               html += '</div>';
                             html += '</div>';
                           html += '</div>';
 
-                          $('#product-catalog-container').append(html);
+                          $('#room-catalog-container').append(html);
                         });
                     }
                 } else {
@@ -1266,7 +1266,7 @@
 
   function listingDuration(data) {
       var lang            = new Array();
-      var listingDefault  = "<?php echo $product['defaults']['listing_duration']; ?>";
+      var listingDefault  = "<?php echo $room['defaults']['listing_duration']; ?>";
 
       lang["Days_1"]      = '<?php echo $text_listing_1day; ?>';
       lang["Days_3"]      = '<?php echo $text_listing_3day; ?>';
@@ -1620,7 +1620,7 @@
         alert('<?php echo $error_listing_duration; ?>');
     }
 
-    <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+    <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($room['options'])) { ?>
         var hasOptions = "yes";
     <?php } else { ?>
         var hasOptions = "no";
@@ -1692,7 +1692,7 @@
     });
 
   $('#button-save').bind('click', function() {
-      var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { echo'yes'; } else { echo 'no'; }?>";
+      var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($room['options'])) { echo'yes'; } else { echo 'no'; }?>";
 
       $.ajax({
         type:'POST',
@@ -1803,7 +1803,7 @@
   $('#popular_default').click(function() {
     $('#category-selections-row').show();
     $('#showFeatureDiv').hide();
-    $('#product-catalog-container').hide();
+    $('#room-catalog-container').hide();
     $('#feature-content').empty();
     $('#specifics').empty();
     $('input[name=suggested]').removeAttr('checked');
@@ -2018,23 +2018,23 @@
     changeInternationalType();
     updateUnit();
 
-    <?php if ($product['profiles_returns_def'] > 0) { ?>
-        $('#profile-return-input').val(<?php echo $product['profiles_returns_def']; ?>);
+    <?php if ($room['profiles_returns_def'] > 0) { ?>
+        $('#profile-return-input').val(<?php echo $room['profiles_returns_def']; ?>);
         profileReturnUpdate();
     <?php } ?>
 
-    <?php if ($product['profiles_generic_def'] > 0) { ?>
-        $('#profile-generic-input').val(<?php echo $product['profiles_generic_def']; ?>);
+    <?php if ($room['profiles_generic_def'] > 0) { ?>
+        $('#profile-generic-input').val(<?php echo $room['profiles_generic_def']; ?>);
         profileGenericUpdate();
     <?php } ?>
 
-    <?php if ($product['profiles_shipping_def'] > 0) { ?>
-        $('#profile-shipping-input').val(<?php echo $product['profiles_shipping_def']; ?>);
+    <?php if ($room['profiles_shipping_def'] > 0) { ?>
+        $('#profile-shipping-input').val(<?php echo $room['profiles_shipping_def']; ?>);
         profileShippingUpdate();
     <?php } ?>
 
-    <?php if ($product['profiles_theme_def'] > 0) { ?>
-        $('#profile-theme-input').val(<?php echo $product['profiles_theme_def']; ?>);
+    <?php if ($room['profiles_theme_def'] > 0) { ?>
+        $('#profile-theme-input').val(<?php echo $room['profiles_theme_def']; ?>);
         profileThemeUpdate();
     <?php } ?>
 

@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_subject']	= '%s - Product Review';
-$_['text_waiting']	= 'You have a new product review waiting.';
-$_['text_product']	= 'Product: %s';
-$_['text_proparent']	= 'Proparent: %s';
+$_['text_subject']	= '%s - Room Review';
+$_['text_waiting']	= 'You have a new room review waiting.';
+$_['text_room']	= 'Room: %s';
+$_['text_hotel']	= 'hotel: %s';
 $_['text_reviewer']	= 'Reviewer: %s';
 $_['text_rating']	= 'Rating: %s';
 $_['text_review']	= 'Review Text:';
-$_['text_pareview']	= 'Review Text:';
+$_['text_Hotelreview']	= 'Review Text:';

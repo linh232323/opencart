@@ -30,7 +30,7 @@ class ControllerSettingSetting extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_tax'] = $this->language->get('text_tax');
@@ -68,10 +68,10 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_currency_auto'] = $this->language->get('entry_currency_auto');
 		$data['entry_length_class'] = $this->language->get('entry_length_class');
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
-		$data['entry_product_limit'] = $this->language->get('entry_product_limit');
-		$data['entry_product_description_length'] = $this->language->get('entry_product_description_length');
+		$data['entry_room_limit'] = $this->language->get('entry_room_limit');
+		$data['entry_room_description_length'] = $this->language->get('entry_room_description_length');
 		$data['entry_limit_admin'] = $this->language->get('entry_limit_admin');
-		$data['entry_product_count'] = $this->language->get('entry_product_count');
+		$data['entry_room_count'] = $this->language->get('entry_room_count');
 		$data['entry_review'] = $this->language->get('entry_review');
 		$data['entry_review_guest'] = $this->language->get('entry_review_guest');
 		$data['entry_review_mail'] = $this->language->get('entry_review_mail');
@@ -111,7 +111,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_image_category'] = $this->language->get('entry_image_category');
 		$data['entry_image_thumb'] = $this->language->get('entry_image_thumb');
 		$data['entry_image_popup'] = $this->language->get('entry_image_popup');
-		$data['entry_image_product'] = $this->language->get('entry_image_product');
+		$data['entry_image_room'] = $this->language->get('entry_image_room');
 		$data['entry_image_additional'] = $this->language->get('entry_image_additional');
 		$data['entry_image_related'] = $this->language->get('entry_image_related');
 		$data['entry_image_compare'] = $this->language->get('entry_image_compare');
@@ -160,10 +160,10 @@ class ControllerSettingSetting extends Controller {
 		$data['help_location'] = $this->language->get('help_location');
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_currency_auto'] = $this->language->get('help_currency_auto');
-		$data['help_product_limit'] = $this->language->get('help_product_limit');
-		$data['help_product_description_length'] = $this->language->get('help_product_description_length');
+		$data['help_room_limit'] = $this->language->get('help_room_limit');
+		$data['help_room_description_length'] = $this->language->get('help_room_description_length');
 		$data['help_limit_admin'] = $this->language->get('help_limit_admin');
-		$data['help_product_count'] = $this->language->get('help_product_count');
+		$data['help_room_count'] = $this->language->get('help_room_count');
 		$data['help_review'] = $this->language->get('help_review');
 		$data['help_review_guest'] = $this->language->get('help_review_guest');
 		$data['help_review_mail'] = $this->language->get('help_review_mail');
@@ -365,10 +365,10 @@ class ControllerSettingSetting extends Controller {
 			$data['error_image_popup'] = '';
 		}
 
-		if (isset($this->error['image_product'])) {
-			$data['error_image_product'] = $this->error['image_product'];
+		if (isset($this->error['image_room'])) {
+			$data['error_image_room'] = $this->error['image_room'];
 		} else {
-			$data['error_image_product'] = '';
+			$data['error_image_room'] = '';
 		}
 
 		if (isset($this->error['image_additional'])) {
@@ -413,16 +413,16 @@ class ControllerSettingSetting extends Controller {
 			$data['error_error_filename'] = '';
 		}
 
-		if (isset($this->error['product_limit'])) {
-			$data['error_product_limit'] = $this->error['product_limit'];
+		if (isset($this->error['room_limit'])) {
+			$data['error_room_limit'] = $this->error['room_limit'];
 		} else {
-			$data['error_product_limit'] = '';
+			$data['error_room_limit'] = '';
 		}
 
-		if (isset($this->error['product_description_length'])) {
-			$data['error_product_description_length'] = $this->error['product_description_length'];
+		if (isset($this->error['room_description_length'])) {
+			$data['error_room_description_length'] = $this->error['room_description_length'];
 		} else {
-			$data['error_product_description_length'] = '';
+			$data['error_room_description_length'] = '';
 		}
 
 		if (isset($this->error['limit_admin'])) {
@@ -1341,7 +1341,7 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (!$this->request->post['config_image_product_width'] || !$this->request->post['config_image_product_height']) {
-			$this->error['image_product'] = $this->language->get('error_image_product');
+			$this->error['image_room'] = $this->language->get('error_image_room');
 		}
 
 		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
@@ -1391,11 +1391,11 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (!$this->request->post['config_product_limit']) {
-			$this->error['product_limit'] = $this->language->get('error_limit');
+			$this->error['room_limit'] = $this->language->get('error_limit');
 		}
 
 		if (!$this->request->post['config_product_description_length']) {
-			$this->error['product_description_length'] = $this->language->get('error_limit');
+			$this->error['room_description_length'] = $this->language->get('error_limit');
 		}
 
 		if (!$this->request->post['config_limit_admin']) {

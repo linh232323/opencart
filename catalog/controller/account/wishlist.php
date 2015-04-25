@@ -9,7 +9,7 @@ class ControllerAccountWishList extends Controller {
 
 		$this->load->language('account/wishlist');
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$this->load->model('tool/image');
 
@@ -71,48 +71,48 @@ class ControllerAccountWishList extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
-		foreach ($this->session->data['wishlist'] as $key => $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		foreach ($this->session->data['wishlist'] as $key => $room_id) {
+			$room_info = $this->model_catalog_room->getRoom($room_id);
 
-			if ($product_info) {
-				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
+			if ($room_info) {
+				if ($room_info['image']) {
+					$image = $this->model_tool_image->resize($room_info['image'], $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
 				} else {
 					$image = false;
 				}
 
-				if ($product_info['quantity'] <= 0) {
-					$stock = $product_info['stock_status'];
+				if ($room_info['quantity'] <= 0) {
+					$stock = $room_info['stock_status'];
 				} elseif ($this->config->get('config_stock_display')) {
-					$stock = $product_info['quantity'];
+					$stock = $room_info['quantity'];
 				} else {
 					$stock = $this->language->get('text_instock');
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+					$price = $this->currency->format($this->tax->calculate($room_info['price'], $room_info['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$price = false;
 				}
 
-				if ((float)$product_info['special']) {
-					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+				if ((float)$room_info['special']) {
+					$special = $this->currency->format($this->tax->calculate($room_info['special'], $room_info['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$special = false;
 				}
 
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
+				$data['rooms'][] = array(
+					'room_id' => $room_info['room_id'],
 					'thumb'      => $image,
-					'name'       => $product_info['name'],
-					'model'      => $product_info['model'],
+					'name'       => $room_info['name'],
+					'model'      => $room_info['model'],
 					'stock'      => $stock,
 					'price'      => $price,
 					'special'    => $special,
-					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
+					'href'       => $this->url->link('product/room', 'room_id=' . $room_info['room_id']),
+					'remove'     => $this->url->link('account/wishlist', 'remove=' . $room_info['room_id'])
 				);
 			} else {
 				unset($this->session->data['wishlist'][$key]);
@@ -144,27 +144,27 @@ class ControllerAccountWishList extends Controller {
 			$this->session->data['wishlist'] = array();
 		}
 
-		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+		if (isset($this->request->post['room_id'])) {
+			$room_id = $this->request->post['room_id'];
 		} else {
-			$product_id = 0;
+			$room_id = 0;
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
+		$room_info = $this->model_catalog_room->getRoom($room_id);
 
-		if ($product_info) {
-			if (!in_array($this->request->post['product_id'], $this->session->data['wishlist'])) {
-				$this->session->data['wishlist'][] = (int)$this->request->post['product_id'];
+		if ($room_info) {
+			if (!in_array($this->request->post['room_id'], $this->session->data['wishlist'])) {
+				$this->session->data['wishlist'][] = (int)$this->request->post['room_id'];
 
 				if ($this->customer->isLogged()) {
-					$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+					$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/room', 'room_id=' . (int)$this->request->post['room_id']), $room_info['name'], $this->url->link('account/wishlist'));
 				} else {
-					$json['info'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+					$json['info'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'), $this->url->link('product/room', 'room_id=' . (int)$this->request->post['room_id']), $room_info['name'], $this->url->link('account/wishlist'));
 				}
 			} else {
-				$json['info'] = sprintf($this->language->get('text_exists'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+				$json['info'] = sprintf($this->language->get('text_exists'), $this->url->link('product/room', 'room_id=' . (int)$this->request->post['room_id']), $room_info['name'], $this->url->link('account/wishlist'));
 			}
 
 			$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));

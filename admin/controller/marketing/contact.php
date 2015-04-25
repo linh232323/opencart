@@ -16,7 +16,7 @@ class ControllerMarketingContact extends Controller {
 		$data['text_customer_group'] = $this->language->get('text_customer_group');
 		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_store'] = $this->language->get('entry_store');
@@ -24,13 +24,13 @@ class ControllerMarketingContact extends Controller {
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_customer'] = $this->language->get('entry_customer');
 		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_subject'] = $this->language->get('entry_subject');
 		$data['entry_message'] = $this->language->get('entry_message');
 
 		$data['help_customer'] = $this->language->get('help_customer');
 		$data['help_affiliate'] = $this->language->get('help_affiliate');
-		$data['help_product'] = $this->language->get('help_product');
+		$data['help_room'] = $this->language->get('help_room');
 
 		$data['button_send'] = $this->language->get('button_send');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -194,11 +194,11 @@ class ControllerMarketingContact extends Controller {
 							}
 						}
 						break;
-					case 'product':
-						if (isset($this->request->post['product'])) {
-							$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);
+					case 'room':
+						if (isset($this->request->post['room'])) {
+							$email_total = $this->model_sale_order->getTotalEmailsByRoomsOrdered($this->request->post['room']);
 
-							$results = $this->model_sale_order->getEmailsByProductsOrdered($this->request->post['product'], ($page - 1) * 10, 10);
+							$results = $this->model_sale_order->getEmailsByRoomsOrdered($this->request->post['room'], ($page - 1) * 10, 10);
 
 							foreach ($results as $result) {
 								$emails[] = $result['email'];

@@ -17,7 +17,7 @@
     <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
-        <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_listing; ?></a></li>
+        <li><a href="#tab-room" data-toggle="tab"><?php echo $tab_listing; ?></a></li>
         <li><a href="#tab-orders" data-toggle="tab"><?php echo $tab_orders; ?></a></li>
       </ul>
       <div class="tab-content">
@@ -67,9 +67,9 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="tab-product">
+        <div class="tab-pane" id="tab-room">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_tax_percentage; ?>"><?php echo $entry_tax_percentage; ?></span></label>
+            <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-room" title="<?php echo $help_tax_percentage; ?>"><?php echo $entry_tax_percentage; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group col-xs-2">
                 <input type="text" name="openbay_amazon_listing_tax_added" value="<?php echo $openbay_amazon_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_entry_marketplace_default; ?>"><?php echo $entry_marketplace_default; ?></span></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-room" title="<?php echo $help_entry_marketplace_default; ?>"><?php echo $entry_marketplace_default; ?></span></label>
             <div class="col-sm-10">
               <?php foreach ($marketplaces as $marketplace) { ?>
               <?php if ($marketplace['code'] == $openbay_amazon_default_listing_marketplace) { ?>

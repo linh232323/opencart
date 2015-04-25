@@ -34,13 +34,13 @@ class ControllerPaymentSkrill extends Controller {
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$data['currency'] = $order_info['currency_code'];
 
-		$products = '';
+		$rooms = '';
 
-		foreach ($this->cart->getProducts() as $product) {
-			$products .= $product['quantity'] . ' x ' . $product['name'] . ', ';
+		foreach ($this->cart->getRooms() as $room) {
+			$rooms .= $room['quantity'] . ' x ' . $room['name'] . ', ';
 		}
 
-		$data['detail1_text'] = $products;
+		$data['detail1_text'] = $rooms;
 
 		$data['order_id'] = $this->session->data['order_id'];
 

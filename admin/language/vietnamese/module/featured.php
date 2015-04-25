@@ -11,7 +11,7 @@ $_['text_column_left']    = 'Cột trái';
 $_['text_column_right']   = 'Cột phải';
 
 // Entry
-$_['entry_product']       = 'Sản phẩm:';
+$_['entry_room']       = 'Sản phẩm:';
 $_['entry_limit']         = 'Giới hạn:';
 $_['entry_image']         = 'Hình (W x H):';
 $_['entry_layout']        = 'Bố cục:';

@@ -121,29 +121,29 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
                 
-                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                $orders = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
                 
                 foreach ($orders as $order){
                     
                 }
                     
-                $product_id = 0;
+                $room_id = 0;
                 if (isset($order)){
-                     $product_id = $order['product_id'];
+                     $room_id = $order['room_id'];
                 }
                 
                 $check = FALSE;
                 
-                foreach ($products as $product){
-                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                foreach ($rooms as $room){
+                    if($room['room_id'] ==  $room_id || $user_id == 1){
                         $check = TRUE;
                     }
                 }
@@ -169,29 +169,29 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
                 
-                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                $orders = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
                 
                 foreach ($orders as $order){
                     
                 }
                     
-                $product_id = 0;
+                $room_id = 0;
                 if (isset($order)){
-                     $product_id = $order['product_id'];
+                     $room_id = $order['room_id'];
                 }
                 
                 $check = FALSE;
                 
-                foreach ($products as $product){
-                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                foreach ($rooms as $room){
+                    if($room['room_id'] ==  $room_id || $user_id == 1){
                         $check = TRUE;
                     }
                 }
@@ -461,20 +461,20 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
 
 		foreach ($results as $result) {
                         
                         $check = FALSE;
                         
-                        foreach($products as $product){
-                            if($product['product_id'] == $result['product_id'] || $user_id == 1){
+                        foreach($rooms as $room){
+                            if($room['room_id'] == $result['room_id'] || $user_id == 1){
                                 $check = TRUE;
                             }
                         }
@@ -670,7 +670,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order'] = $this->language->get('text_order');
 
@@ -693,7 +693,7 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_zone_code'] = $this->language->get('entry_zone_code');
 		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_option'] = $this->language->get('entry_option');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_to_name'] = $this->language->get('entry_to_name');
@@ -710,7 +710,7 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_check_in'] = $this->language->get('column_check_in');
@@ -722,7 +722,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
-		$data['button_product_add'] = $this->language->get('button_product_add');
+		$data['button_room_add'] = $this->language->get('button_room_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
 
 		$data['button_payment'] = $this->language->get('button_payment');
@@ -737,7 +737,7 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_customer'] = $this->language->get('tab_customer');
 		$data['tab_payment'] = $this->language->get('tab_payment');
 		$data['tab_shipping'] = $this->language->get('tab_shipping');
-		$data['tab_product'] = $this->language->get('tab_product');
+		$data['tab_room'] = $this->language->get('tab_room');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
 
@@ -849,23 +849,23 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
 
-			// Add products to the API
-			$data['products'] = array();
+			// Add rooms to the API
+			$data['rooms'] = array();
 			
-			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+			$rooms = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
 
-			foreach ($products as $product) {
-				$data['order_products'][] = array(
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
-					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']),
-					'quantity'   => $product['quantity'],
-					'price'      => $this->currency->format($product['price']),
-					'check_in'   => $product['check_in'],
-					'check_out'  => $product['check_out'],
-					'total'      => $this->currency->format($product['total']),
-					'reward'     => $product['reward']
+			foreach ($rooms as $room) {
+				$data['order_rooms'][] = array(
+					'room_id' => $room['room_id'],
+					'name'       => $room['name'],
+					'model'      => $room['model'],
+					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $room['order_room_id']),
+					'quantity'   => $room['quantity'],
+					'price'      => $this->currency->format($room['price']),
+					'check_in'   => $room['check_in'],
+					'check_out'  => $room['check_out'],
+					'total'      => $this->currency->format($room['total']),
+					'reward'     => $room['reward']
 				);
 			}
 
@@ -945,7 +945,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_method'] = '';
 			$data['shipping_code'] = '';
 
-			$data['order_products'] = array();
+			$data['order_rooms'] = array();
 			$data['order_vouchers'] = array();
 			$data['order_totals'] = array();
 
@@ -1019,29 +1019,29 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
                 
-                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                $orders = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
                 
                 foreach ($orders as $order){
                     
                 }
                     
-                $product_id = 0;
+                $room_id = 0;
                 if (isset($order)){
-                     $product_id = $order['product_id'];
+                     $room_id = $order['room_id'];
                 }
                 
                 $check = FALSE;
                 
-                foreach ($products as $product){
-                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                foreach ($rooms as $room){
+                    if($room['room_id'] ==  $room_id || $user_id == 1){
                         $check = TRUE;
                     }
                 }
@@ -1204,7 +1204,7 @@ class ControllerSaleOrder extends Controller {
 			$data['help_maxmind_id'] = $this->language->get('help_maxmind_id');
 			$data['help_error'] = $this->language->get('help_error');
 
-			$data['column_product'] = $this->language->get('column_product');
+			$data['column_room'] = $this->language->get('column_room');
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_check_in'] = $this->language->get('column_check_in');
 			$data['column_check_out'] = $this->language->get('column_check_out');
@@ -1231,7 +1231,7 @@ class ControllerSaleOrder extends Controller {
 			$data['tab_order'] = $this->language->get('tab_order');
 			$data['tab_payment'] = $this->language->get('tab_payment');
 			$data['tab_shipping'] = $this->language->get('tab_shipping');
-			$data['tab_product'] = $this->language->get('tab_product');
+			$data['tab_room'] = $this->language->get('tab_room');
 			$data['tab_history'] = $this->language->get('tab_history');
 			$data['tab_fraud'] = $this->language->get('tab_fraud');
 			$data['tab_action'] = $this->language->get('tab_action');
@@ -1549,14 +1549,14 @@ class ControllerSaleOrder extends Controller {
 				}
 			}				
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+			$rooms = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
 
-			foreach ($products as $product) {
+			foreach ($rooms as $room) {
 				$option_data = array();
 
-				$options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $room['order_room_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -1579,19 +1579,19 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 
-				$data['products'][] = array(
-					'order_product_id' => $product['order_product_id'],
-					'product_id'       => $product['product_id'],
-					'name'    	 	   => $product['name'],
-					'model'    		   => $product['model'],
-					'check_in'    		   => $product['check_in'],
-					'check_out'    		   => $product['check_out'],
-					'night'    		   => ( strtotime($product['check_out']) - strtotime($product['check_in']) )/24/3600 ,
+				$data['rooms'][] = array(
+					'order_room_id' => $room['order_room_id'],
+					'room_id'       => $room['room_id'],
+					'name'    	 	   => $room['name'],
+					'model'    		   => $room['model'],
+					'check_in'    		   => $room['check_in'],
+					'check_out'    		   => $room['check_out'],
+					'night'    		   => ( strtotime($room['check_out']) - strtotime($room['check_in']) )/24/3600 ,
 					'option'   		   => $option_data,
-					'quantity'		   => $product['quantity'],
-					'price'    		   => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'    		   => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'     		   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
+					'quantity'		   => $room['quantity'],
+					'price'    		   => $this->currency->format($room['price'] + ($this->config->get('config_tax') ? $room['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'    		   => $this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'href'     		   => $this->url->link('catalog/room/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $room['room_id'], 'SSL')
 				);
 			}
 
@@ -2163,29 +2163,29 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
                 
-                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                $orders = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
                 
                 foreach ($orders as $order){
                     
                 }
                     
-                $product_id = 0;
+                $room_id = 0;
                 if (isset($order)){
-                     $product_id = $order['product_id'];
+                     $room_id = $order['room_id'];
                 }
                 
                 $check = FALSE;
                 
-                foreach ($products as $product){
-                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                foreach ($rooms as $room){
+                    if($room['room_id'] ==  $room_id || $user_id == 1){
                         $check = TRUE;
                     }
                 }
@@ -2221,7 +2221,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_payment_method'] = $this->language->get('text_payment_method');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
@@ -2336,14 +2336,14 @@ class ControllerSaleOrder extends Controller {
 
 				$this->load->model('tool/upload');
 
-				$product_data = array();
+				$room_data = array();
 
-				$products = $this->model_sale_order->getOrderProducts($order_id);
+				$rooms = $this->model_sale_order->getOrderRooms($order_id);
 
-				foreach ($products as $product) {
+				foreach ($rooms as $room) {
 					$option_data = array();
 
-					$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+					$options = $this->model_sale_order->getOrderOptions($order_id, $room['order_room_id']);
 
 					foreach ($options as $option) {
 						if ($option['type'] != 'file') {
@@ -2364,13 +2364,13 @@ class ControllerSaleOrder extends Controller {
 						);
 					}
 
-					$product_data[] = array(
-						'name'     => $product['name'],
-						'model'    => $product['model'],
+					$room_data[] = array(
+						'name'     => $room['name'],
+						'model'    => $room['model'],
 						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'quantity' => $room['quantity'],
+						'price'    => $this->currency->format($room['price'] + ($this->config->get('config_tax') ? $room['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+						'total'    => $this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 					);
 				}
 
@@ -2412,7 +2412,7 @@ class ControllerSaleOrder extends Controller {
 					'shipping_method'    => $order_info['shipping_method'],
 					'payment_address'    => $payment_address,
 					'payment_method'     => $order_info['payment_method'],
-					'product'            => $product_data,
+					'room'            => $room_data,
 					'voucher'            => $voucher_data,
 					'total'              => $total_data,
 					'comment'            => nl2br($order_info['comment'])
@@ -2434,29 +2434,29 @@ class ControllerSaleOrder extends Controller {
                 
                 $user_id = $user_info['user_group_id'];
                 
-                $filter_products = array(
+                $filter_rooms = array(
                         'filter_user_id'  => $user_id
 		);
                 
-                $this->load->model('catalog/product');
+                $this->load->model('catalog/room');
                 
-		$products = $this->model_catalog_product->getProducts($filter_products);
+		$rooms = $this->model_catalog_room->getRooms($filter_rooms);
                 
-                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                $orders = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
                 
                 foreach ($orders as $order){
                     
                 }
                     
-                $product_id = 0;
+                $room_id = 0;
                 if (isset($order)){
-                     $product_id = $order['product_id'];
+                     $room_id = $order['room_id'];
                 }
                 
                 $check = FALSE;
                 
-                foreach ($products as $product){
-                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                foreach ($rooms as $room){
+                    if($room['room_id'] ==  $room_id || $user_id == 1){
                         $check = TRUE;
                     }
                 }
@@ -2501,7 +2501,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['column_location'] = $this->language->get('column_location');
 		$data['column_reference'] = $this->language->get('column_reference');
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_weight'] = $this->language->get('column_weight');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
@@ -2509,7 +2509,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$this->load->model('setting/setting');
 
@@ -2584,16 +2584,16 @@ class ControllerSaleOrder extends Controller {
 
 				$this->load->model('tool/upload');
 
-				$product_data = array();
+				$room_data = array();
 
-				$products = $this->model_sale_order->getOrderProducts($order_id);
+				$rooms = $this->model_sale_order->getOrderRooms($order_id);
 
-				foreach ($products as $product) {
-					$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+				foreach ($rooms as $room) {
+					$room_info = $this->model_catalog_room->getRoom($room['room_id']);
 
 					$option_data = array();
 
-					$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+					$options = $this->model_sale_order->getOrderOptions($order_id, $room['order_room_id']);
 
 					foreach ($options as $option) {
 						if ($option['type'] != 'file') {
@@ -2614,19 +2614,19 @@ class ControllerSaleOrder extends Controller {
 						);
 					}
 
-					$product_data[] = array(
-						'name'     => $product_info['name'],
-						'model'    => $product_info['model'],
+					$room_data[] = array(
+						'name'     => $room_info['name'],
+						'model'    => $room_info['model'],
 						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'location' => $product_info['location'],
-						'sku'      => $product_info['sku'],
-						'upc'      => $product_info['upc'],
-						'ean'      => $product_info['ean'],
-						'jan'      => $product_info['jan'],
-						'isbn'     => $product_info['isbn'],
-						'mpn'      => $product_info['mpn'],
-						'weight'   => $this->weight->format($product_info['weight'], $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'))
+						'quantity' => $room['quantity'],
+						'location' => $room_info['location'],
+						'sku'      => $room_info['sku'],
+						'upc'      => $room_info['upc'],
+						'ean'      => $room_info['ean'],
+						'jan'      => $room_info['jan'],
+						'isbn'     => $room_info['isbn'],
+						'mpn'      => $room_info['mpn'],
+						'weight'   => $this->weight->format($room_info['weight'], $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 					);
 				}
 
@@ -2644,7 +2644,7 @@ class ControllerSaleOrder extends Controller {
 					'telephone'          => $order_info['telephone'],
 					'shipping_address'   => $shipping_address,
 					'shipping_method'    => $order_info['shipping_method'],
-					'product'            => $product_data,
+					'room'            => $room_data,
 					'comment'            => nl2br($order_info['comment'])
 				);
 			}

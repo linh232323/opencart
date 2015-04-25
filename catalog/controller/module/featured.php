@@ -14,7 +14,7 @@ class ControllerModuleFeatured extends Controller {
 
 		$this->load->model('catalog/category');
                 
-		$this->load->model('catalog/proparent');
+		$this->load->model('catalog/hotel');
 
 		$this->load->model('tool/image');
 
@@ -33,7 +33,7 @@ class ControllerModuleFeatured extends Controller {
 						'filter_category_id'  => $category_id,
 						'filter_sub_category' => true
 					);
-                        $child = $this->model_catalog_proparent->getTotalProparents($filter_data);
+                        $child = $this->model_catalog_hotel->getTotalhotels($filter_data);
 			if ($category_info) {
 				if ($category_info['image']) {
 					$image = $this->model_tool_image->resizetoWidth($category_info['image'], $setting['width']);

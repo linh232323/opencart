@@ -40,7 +40,7 @@
     <form id="bulk-link-form" class="form-horizontal">
       <div id="text-<?php echo $marketplace_code; ?>">
         <?php if (!in_array($marketplace_code, $marketplaces_processing)) { ?>
-        <?php if ($unlinked_products) { ?>
+        <?php if ($unlinked_rooms) { ?>
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -62,21 +62,21 @@
           </thead>
           <tbody>
             <?php $row = 0; ?>
-            <?php foreach ($unlinked_products as $product) { ?>
+            <?php foreach ($unlinked_rooms as $room) { ?>
             <?php $row++ ?>
             <tr>
               <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-<?php echo $marketplace['code'] ?>"/></td>
-              <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
-              <td class="text-left"><?php echo $product['amazon_sku'] ?></td>
-              <td class="text-left"><?php echo $product['amazon_quantity'] ?></td>
-              <td class="text-right"><?php echo $product['amazon_price'] ?></td>
-              <td class="text-left"><a href="<?php echo $product['href_product'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-              <td class="text-left"><?php echo $product['sku'] ?></td>
-              <td class="text-left"><?php echo $product['quantity'] ?></td>
-              <td class="text-left"><?php echo $product['combination'] ?></td>
-              <input type="hidden" name="link[<?php echo $row ?>][amazon_sku]" value="<?php echo $product['amazon_sku'] ?>"/>
-              <input type="hidden" name="link[<?php echo $row ?>][product_id]" value="<?php echo $product['product_id'] ?>"/>
-              <input type="hidden" name="link[<?php echo $row ?>][var]" value="<?php echo $product['var'] ?>"/>
+              <td class="text-left"><a href="<?php echo $room['href_amazon'] ?>" target="_blank"><?php echo $room['asin'] ?></a></td>
+              <td class="text-left"><?php echo $room['amazon_sku'] ?></td>
+              <td class="text-left"><?php echo $room['amazon_quantity'] ?></td>
+              <td class="text-right"><?php echo $room['amazon_price'] ?></td>
+              <td class="text-left"><a href="<?php echo $room['href_room'] ?>" target="_blank"><?php echo $room['name'] ?></a></td>
+              <td class="text-left"><?php echo $room['sku'] ?></td>
+              <td class="text-left"><?php echo $room['quantity'] ?></td>
+              <td class="text-left"><?php echo $room['combination'] ?></td>
+              <input type="hidden" name="link[<?php echo $row ?>][amazon_sku]" value="<?php echo $room['amazon_sku'] ?>"/>
+              <input type="hidden" name="link[<?php echo $row ?>][room_id]" value="<?php echo $room['room_id'] ?>"/>
+              <input type="hidden" name="link[<?php echo $row ?>][var]" value="<?php echo $room['var'] ?>"/>
             </tr>
             <?php } ?>
           </tbody>

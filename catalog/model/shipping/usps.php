@@ -315,7 +315,7 @@ class ModelShippingUsps extends Model {
 			if ($status) {
 				$curl = curl_init();
 
-				curl_setopt($curl, CURLOPT_URL, 'production.shippingapis.com/ShippingAPI.dll?' . $request);
+				curl_setopt($curl, CURLOPT_URL, 'roomion.shippingapis.com/ShippingAPI.dll?' . $request);
 				curl_setopt($curl, CURLOPT_HEADER, 0);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 

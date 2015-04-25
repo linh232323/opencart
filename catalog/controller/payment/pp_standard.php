@@ -22,12 +22,12 @@ class ControllerPaymentPPStandard extends Controller {
 			$data['business'] = $this->config->get('pp_standard_email');
 			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($this->cart->getRooms() as $room) {
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
@@ -46,13 +46,13 @@ class ControllerPaymentPPStandard extends Controller {
 					);
 				}
 
-				$data['products'][] = array(
-					'name'     => htmlspecialchars($product['name']),
-					'model'    => htmlspecialchars($product['model']),
-					'price'    => $this->currency->format($product['price'], $order_info['currency_code'], false, false),
-					'quantity' => $product['quantity'],
+				$data['rooms'][] = array(
+					'name'     => htmlspecialchars($room['name']),
+					'model'    => htmlspecialchars($room['model']),
+					'price'    => $this->currency->format($room['price'], $order_info['currency_code'], false, false),
+					'quantity' => $room['quantity'],
 					'option'   => $option_data,
-					'weight'   => $product['weight']
+					'weight'   => $room['weight']
 				);
 			}
 
@@ -61,7 +61,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$total = $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $order_info['currency_code'], false, false);
 
 			if ($total > 0) {
-				$data['products'][] = array(
+				$data['rooms'][] = array(
 					'name'     => $this->language->get('text_total'),
 					'model'    => '',
 					'price'    => $total,

@@ -37,5 +37,5 @@ $_['error_permission']   = 'Cảnh báo: Bạn không được phép thay đổi
 $_['error_name']         = 'Tên tùy chọn phải được lựa chọn từ 3 đến 128 ký tự!';
 $_['error_type']         = 'Cảnh báo: Lựa chọn các giá trị cần thiết!';
 $_['error_option_value'] = 'Tên Lựa chọn giá trị phải có từ 3 đến 128 ký tự!';
-$_['error_product']      = 'Cảnh báo: không thể xóa, vì tùy chọn này đang được kết nối với %s sản phẩm!';
+$_['error_room']      = 'Cảnh báo: không thể xóa, vì tùy chọn này đang được kết nối với %s sản phẩm!';
 ?>

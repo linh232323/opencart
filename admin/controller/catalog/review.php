@@ -26,8 +26,8 @@ class ControllerCatalogReview extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_author'])) {
@@ -74,8 +74,8 @@ class ControllerCatalogReview extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_author'])) {
@@ -124,8 +124,8 @@ class ControllerCatalogReview extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_author'])) {
@@ -159,10 +159,10 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['filter_product'])) {
-			$filter_product = $this->request->get['filter_product'];
+		if (isset($this->request->get['filter_room'])) {
+			$filter_room = $this->request->get['filter_room'];
 		} else {
-			$filter_product = null;
+			$filter_room = null;
 		}
 
 		if (isset($this->request->get['filter_author'])) {
@@ -203,8 +203,8 @@ class ControllerCatalogReview extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_author'])) {
@@ -249,7 +249,7 @@ class ControllerCatalogReview extends Controller {
 		$data['reviews'] = array();
 
 		$filter_data = array(
-			'filter_product'    => $filter_product,
+			'filter_room'    => $filter_room,
 			'filter_author'     => $filter_author,
 			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
@@ -283,14 +283,14 @@ class ControllerCatalogReview extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_author'] = $this->language->get('column_author');
 		$data['column_rating'] = $this->language->get('column_rating');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_author'] = $this->language->get('entry_author');
 		$data['entry_rating'] = $this->language->get('entry_rating');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -335,7 +335,7 @@ class ControllerCatalogReview extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_product'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
+		$data['sort_room'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
 		$data['sort_author'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=r.author' . $url, 'SSL');
 		$data['sort_rating'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=r.rating' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=r.status' . $url, 'SSL');
@@ -343,8 +343,8 @@ class ControllerCatalogReview extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_author'])) {
@@ -377,7 +377,7 @@ class ControllerCatalogReview extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($review_total - $this->config->get('config_limit_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $review_total, ceil($review_total / $this->config->get('config_limit_admin')));
 
-		$data['filter_product'] = $filter_product;
+		$data['filter_room'] = $filter_room;
 		$data['filter_author'] = $filter_author;
 		$data['filter_status'] = $filter_status;
 		$data['filter_date_added'] = $filter_date_added;
@@ -399,13 +399,13 @@ class ControllerCatalogReview extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_author'] = $this->language->get('entry_author');
 		$data['entry_rating'] = $this->language->get('entry_rating');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_text'] = $this->language->get('entry_text');
 
-		$data['help_product'] = $this->language->get('help_product');
+		$data['help_room'] = $this->language->get('help_room');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -416,10 +416,10 @@ class ControllerCatalogReview extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['product'])) {
-			$data['error_product'] = $this->error['product'];
+		if (isset($this->error['room'])) {
+			$data['error_room'] = $this->error['room'];
 		} else {
-			$data['error_product'] = '';
+			$data['error_room'] = '';
 		}
 
 		if (isset($this->error['author'])) {
@@ -442,8 +442,8 @@ class ControllerCatalogReview extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_author'])) {
@@ -496,22 +496,22 @@ class ControllerCatalogReview extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
+		if (isset($this->request->post['room_id'])) {
+			$data['room_id'] = $this->request->post['room_id'];
 		} elseif (!empty($review_info)) {
-			$data['product_id'] = $review_info['product_id'];
+			$data['room_id'] = $review_info['room_id'];
 		} else {
-			$data['product_id'] = '';
+			$data['room_id'] = '';
 		}
 
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
+		if (isset($this->request->post['room'])) {
+			$data['room'] = $this->request->post['room'];
 		} elseif (!empty($review_info)) {
-			$data['product'] = $review_info['product'];
+			$data['room'] = $review_info['room'];
 		} else {
-			$data['product'] = '';
+			$data['room'] = '';
 		}
 
 		if (isset($this->request->post['author'])) {
@@ -558,8 +558,8 @@ class ControllerCatalogReview extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['product_id']) {
-			$this->error['product'] = $this->language->get('error_product');
+		if (!$this->request->post['room_id']) {
+			$this->error['room'] = $this->language->get('error_room');
 		}
 
 		if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {

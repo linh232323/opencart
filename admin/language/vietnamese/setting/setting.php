@@ -48,11 +48,11 @@ $_['entry_checkout']          = 'Quy định thanh toán:<br /><span class="help
 $_['entry_affiliate']           = 'Số liên kết:<br /><span class="help">Số lượng người đồng ý với các điều khoản trước khi tài khoản liên kết được có thể tạod.</span>';
 $_['entry_commission']          = 'Ủy nhiệm liên kết (%):<br /><span class="help">Các liên kết mặc định tỷ lệ phần trăm hoa hồng.</span>';
 $_['entry_stock_display']      = 'Hiện kho hàng:<br /><span class="help">Hiển thị số lượng trong kho trên trang sản phẩm.</span>';
-$_['entry_stock_warning']     = 'Cảnh báo hết hàng .:<br /><span class="help">Display out of stock message on the shopping cart page if a product is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)</span>';
+$_['entry_stock_warning']     = 'Cảnh báo hết hàng .:<br /><span class="help">Display out of stock message on the shopping cart page if a room is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)</span>';
 $_['entry_stock_checkout']    = 'Hết hàng:<br /><span class="help">Cho phép khách hàng vẫn thanh toán nếu các sản phẩm họ đang đặt hàng không còn trong kho.</span>';
 $_['entry_stock_status']      = 'Tình trạng kho:';
 $_['entry_order_status']       = 'Tình trạng đặt hàng:<br /><span class="help">Chọn thứ tự mặc định để một trạng thái khi được xử lý.</span>';
-$_['entry_complete_status']    = 'Complete Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable products and gift vouchers.</span>';
+$_['entry_complete_status']    = 'Complete Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable rooms and gift vouchers.</span>';
 $_['entry_return_status']       = 'Tình trạng Phản hồi:<br /><span class="help">Thiết lập mặc định trở lại trạng thái khi một yêu cầu được gửi trả về.</span>';
 $_['entry_review']       	= 'Cho phép những tổng quan:<br /><span class="help">Enable / Disable mới xem xét nhập và hiển thị các đánh giá hiện tại</span>';
 $_['entry_download']            = 'Cho phép tải xuống:';
@@ -63,7 +63,7 @@ $_['entry_icon']              = 'Icon:<br /><span class="help">icon được hi�
 $_['entry_image_category']    = 'Cỡ hình danh mục:';
 $_['entry_image_thumb']       = 'Cỡ hình sản phẩm thu nhỏ:';
 $_['entry_image_popup']       = 'Cỡ hình sản phẩm phóng to:';
-$_['entry_image_product']     = 'Cỡ sản phẩm:';
+$_['entry_image_room']     = 'Cỡ sản phẩm:';
 $_['entry_image_additional']  = 'Cỡ ảnh sản phẩm nhập vào:';
 $_['entry_image_related']     = 'Cỡ ảnh sản phẩm liên quan:';
 $_['entry_image_compare']       = 'So sánh kích cỡ hình ảnh:';
@@ -105,7 +105,7 @@ $_['error_title']             = 'Tiêu đề phải có từ 3 đến 32 ký t�
 $_['error_limit']             = 'Yêu cầu giới hạn!';
 $_['error_image_thumb']       = 'Yêu cầu kích thước ảnh sản phẩm thu nhỏ!';
 $_['error_image_popup']       = 'Yêu cầu kích thước ảnh sản phẩm phóng to!';
-$_['error_image_product']     = 'Yêu cầu kích thước cho sản phẩm!';
+$_['error_image_room']     = 'Yêu cầu kích thước cho sản phẩm!';
 $_['error_image_category']    = 'Yêu cầu kích thước cho danh mục sản phẩm!';
 $_['error_image_manufacturer']= 'Danh sách các Kích thước ảnh nhà sản xuất !';
 $_['error_image_additional']  = 'Yêu cầu kích thước ảnh cho sản phẩm thêm!';

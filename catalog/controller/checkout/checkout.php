@@ -1,24 +1,24 @@
 <?php
 class ControllerCheckoutCheckout extends Controller {
 	public function index() {
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has rooms and has stock.
+		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getRooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
+			if ($room['minimum'] > $room_total) {
 				$this->response->redirect($this->url->link('checkout/cart'));
 			}
 		}

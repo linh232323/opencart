@@ -7,9 +7,9 @@ class ModelMarketingCoupon extends Model {
 
 		$coupon_id = $this->db->getLastId();
 
-		if (isset($data['coupon_product'])) {
-			foreach ($data['coupon_product'] as $product_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_product SET coupon_id = '" . (int)$coupon_id . "', product_id = '" . (int)$product_id . "'");
+		if (isset($data['coupon_room'])) {
+			foreach ($data['coupon_room'] as $room_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_room SET coupon_id = '" . (int)$coupon_id . "', room_id = '" . (int)$room_id . "'");
 			}
 		}
 
@@ -29,11 +29,11 @@ class ModelMarketingCoupon extends Model {
 
 		$this->db->query("UPDATE " . DB_PREFIX . "coupon SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', discount = '" . (float)$data['discount'] . "', type = '" . $this->db->escape($data['type']) . "', total = '" . (float)$data['total'] . "', logged = '" . (int)$data['logged'] . "', shipping = '" . (int)$data['shipping'] . "', date_start = '" . $this->db->escape($data['date_start']) . "', date_end = '" . $this->db->escape($data['date_end']) . "', uses_total = '" . (int)$data['uses_total'] . "', uses_customer = '" . (int)$data['uses_customer'] . "', status = '" . (int)$data['status'] . "' WHERE coupon_id = '" . (int)$coupon_id . "'");
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_room WHERE coupon_id = '" . (int)$coupon_id . "'");
 
-		if (isset($data['coupon_product'])) {
-			foreach ($data['coupon_product'] as $product_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_product SET coupon_id = '" . (int)$coupon_id . "', product_id = '" . (int)$product_id . "'");
+		if (isset($data['coupon_room'])) {
+			foreach ($data['coupon_room'] as $room_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_room SET coupon_id = '" . (int)$coupon_id . "', room_id = '" . (int)$room_id . "'");
 			}
 		}
 
@@ -52,7 +52,7 @@ class ModelMarketingCoupon extends Model {
 		$this->event->trigger('pre.admin.coupon.delete', $coupon_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon WHERE coupon_id = '" . (int)$coupon_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_room WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");
 
@@ -112,16 +112,16 @@ class ModelMarketingCoupon extends Model {
 		return $query->rows;
 	}
 
-	public function getCouponProducts($coupon_id) {
-		$coupon_product_data = array();
+	public function getCouponRooms($coupon_id) {
+		$coupon_room_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_room WHERE coupon_id = '" . (int)$coupon_id . "'");
 
 		foreach ($query->rows as $result) {
-			$coupon_product_data[] = $result['product_id'];
+			$coupon_room_data[] = $result['room_id'];
 		}
 
-		return $coupon_product_data;
+		return $coupon_room_data;
 	}
 
 	public function getCouponCategories($coupon_id) {

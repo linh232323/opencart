@@ -301,7 +301,7 @@ class ControllerSaleRecurring extends Controller {
 	public function info() {
 		$this->load->model('sale/recurring');
 		$this->load->model('sale/order');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$this->language->load('sale/recurring');
 
@@ -389,7 +389,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['entry_type'] = $this->language->get('entry_type');
 			$data['entry_email'] = $this->language->get('entry_email');
 			$data['entry_recurring_description'] = $this->language->get('entry_recurring_description');
-			$data['entry_product'] = $this->language->get('entry_product');
+			$data['entry_room'] = $this->language->get('entry_room');
 			$data['entry_quantity'] = $this->language->get('entry_quantity');
 			$data['entry_amount'] = $this->language->get('entry_amount');
 			$data['entry_cancel_payment'] = $this->language->get('entry_cancel_payment');
@@ -400,8 +400,8 @@ class ControllerSaleRecurring extends Controller {
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
 			$data['order_recurring_id'] = $order_recurring['order_recurring_id'];
-			$data['product'] = $order_recurring['product_name'];
-			$data['quantity'] = $order_recurring['product_quantity'];
+			$data['room'] = $order_recurring['room_name'];
+			$data['quantity'] = $order_recurring['room_quantity'];
 			$data['status'] = $order_recurring['status'];
 			$data['reference'] = $order_recurring['reference'];
 			$data['recurring_description'] = $order_recurring['recurring_description'];

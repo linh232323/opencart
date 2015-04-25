@@ -61,8 +61,8 @@
               <div class="col-md-12 text-center">
                 <div class="row">
                   <div class="col-md-4 text-center">
-                    <div class="well"> <a href="<?php echo $product_link; ?>"> <span class="fa-stack fa-2x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-tags fa-stack-1x"></i> </span>
-                      <h4><?php echo $text_products; ?></h4>
+                    <div class="well"> <a href="<?php echo $room_link; ?>"> <span class="fa-stack fa-2x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-tags fa-stack-1x"></i> </span>
+                      <h4><?php echo $text_rooms; ?></h4>
                       </a> </div>
                   </div>
                   <div class="col-md-4 text-center">

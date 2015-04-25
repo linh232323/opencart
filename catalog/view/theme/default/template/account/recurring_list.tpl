@@ -23,7 +23,7 @@
               <td class="text-left"><?php echo $column_recurring_id; ?></td>
               <td class="text-left"><?php echo $column_date_added; ?></td>
               <td class="text-left"><?php echo $column_status; ?></td>
-              <td class="text-left"><?php echo $column_product; ?></td>
+              <td class="text-left"><?php echo $column_room; ?></td>
               <td class="text-right"><?php echo $column_action; ?></td>
             </tr>
           </thead>

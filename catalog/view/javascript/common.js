@@ -27,11 +27,11 @@ $(document).ready(function () {
     cols1 = $('#column-right, #column-left').length;
 
     if (cols1 == 2) {
-        $('#content .product-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
+        $('#content .room-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
     } else if (cols1 == 1) {
-        $('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
+        $('#content .room-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
     } else {
-        $('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix"></div>');
+        $('#content .room-layout:nth-child(3n+3)').after('<div class="clearfix"></div>');
     }
 
     // Highlight any found errors
@@ -184,24 +184,24 @@ $(document).ready(function () {
         }
     });
 
-    // Product List
+    // room List
     $('#list-view').click(function () {
-        $('#content .product-layout > .clearfix').remove();
+        $('#content .room-layout > .clearfix').remove();
 
-        $('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
+        $('#content .room-layout').attr('class', 'room-layout room-list col-xs-12');
 
         localStorage.setItem('display', 'list');
     });
 
-    // Product Grid
+    // room Grid
     $('#grid-view').click(function () {
-        $('#content .product-layout > .clearfix').remove();
+        $('#content .room-layout > .clearfix').remove();
 
         // What a shame bootstrap does not take into account dynamically loaded columns
         cols = $('#column-right, #column-left').length;
 
 
-        $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
+        $('#content .room-layout').attr('class', 'room-layout room-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
 
     });
 
@@ -222,11 +222,11 @@ $(document).ready(function () {
 
 // Cart add remove functions
 var cart = {
-    'add': function (product_id, quantity) {
+    'add': function (room_id, quantity) {
         $.ajax({
             url: 'index.php?route=checkout/cart/add',
             type: 'post',
-            data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
+            data: 'room_id=' + room_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
             dataType: 'json',
             beforeSend: function () {
                 $('#cart > button').button('loading');
@@ -328,11 +328,11 @@ var voucher = {
 }
 
 var wishlist = {
-    'add': function (product_id) {
+    'add': function (room_id) {
         $.ajax({
             url: 'index.php?route=account/wishlist/add',
             type: 'post',
-            data: 'product_id=' + product_id,
+            data: 'room_id=' + room_id,
             dataType: 'json',
             success: function (json) {
                 $('.alert').remove();
@@ -357,11 +357,11 @@ var wishlist = {
 }
 
 var compare = {
-    'add': function (product_id) {
+    'add': function (room_id) {
         $.ajax({
-            url: 'index.php?route=product/compare/add',
+            url: 'index.php?route=room/compare/add',
             type: 'post',
-            data: 'product_id=' + product_id,
+            data: 'room_id=' + room_id,
             dataType: 'json',
             success: function (json) {
                 $('.alert').remove();

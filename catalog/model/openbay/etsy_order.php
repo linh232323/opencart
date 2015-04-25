@@ -13,7 +13,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
+		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_room`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
 */
 		if (!empty($orders)) {
@@ -81,10 +81,10 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_order` SET `shipped` = " . (int)$status . " WHERE `order_id` = " . (int)$order_id);
 	}
 
-	public function modifyStock($product_id, $qty, $symbol = '-') {
-		$this->openbay->etsy->log('modifyStock() - Updating stock. Product id: ' . $product_id . ' qty: ' . $qty . ', symbol: ' . $symbol);
+	public function modifyStock($room_id, $qty, $symbol = '-') {
+		$this->openbay->etsy->log('modifyStock() - Updating stock. room id: ' . $room_id . ' qty: ' . $qty . ', symbol: ' . $symbol);
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "room` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `room_id` = '" . (int)$room_id . "' AND `subtract` = '1'");
 	}
 
 	private function lockAdd($order_id) {
@@ -189,21 +189,21 @@ class ModelOpenbayEtsyOrder extends Model {
 		$order_id = $this->db->getLastId();
 
 		foreach ($order->transactions as $transaction) {
-			$product = $this->openbay->etsy->getLinkedProduct($transaction->etsy_listing_id);
+			$room = $this->openbay->etsy->getLinkedroom($transaction->etsy_listing_id);
 
-			if ($product != false) {
-				$product_id = $product['product_id'];
-				$product_model = $product['model'];
+			if ($room != false) {
+				$room_id = $room['room_id'];
+				$room_model = $room['model'];
 			} else {
-				$product_id = 0;
-				$product_model = '';
+				$room_id = 0;
+				$room_model = '';
 			}
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_product` SET
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_room` SET
 			   `order_id`		= '" . (int)$order_id . "',
-			   `product_id`		= '" . (int)$product_id . "',
+			   `room_id`		= '" . (int)$room_id . "',
 			   `name`			= '" . $this->db->escape((string)$transaction->title) . "',
-			   `model`			= '" . $this->db->escape($product_model) . "',
+			   `model`			= '" . $this->db->escape($room_model) . "',
 			   `quantity`		= '" . (int)$transaction->quantity . "',
 			   `price`			= '" . (int)$transaction->price . "',
 			   `total`			= '" . (int)$transaction->price * (int)$transaction->quantity . "',
@@ -211,8 +211,8 @@ class ModelOpenbayEtsyOrder extends Model {
 			   `reward`			= ''
 		   ");
 
-			if ($product_id != 0) {
-				$this->modifyStock($product_id, (int)$transaction->quantity);
+			if ($room_id != 0) {
+				$this->modifyStock($room_id, (int)$transaction->quantity);
 			}
 		}
 

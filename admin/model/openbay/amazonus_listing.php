@@ -8,20 +8,20 @@ class ModelOpenbayAmazonusListing extends Model {
 			'search_string' => $search_string,
 		);
 
-		$results = json_decode($this->openbay->amazonus->call('productv3/search', $search_params), 1);
+		$results = json_decode($this->openbay->amazonus->call('roomv3/search', $search_params), 1);
 
-		$products = array();
+		$rooms = array();
 
-		foreach ($results['Products'] as $result) {
+		foreach ($results['Rooms'] as $result) {
 			if ($result['price']['amount'] && $result['price']['currency']) {
 				$price = $result['price']['amount'] . ' ' . $result['price']['currency'];
 			} else {
 				$price = '-';
 			}
 
-			$link = 'http://www.amazon.com/gp/product/' . $result['asin'] . '/';
+			$link = 'http://www.amazon.com/gp/room/' . $result['asin'] . '/';
 
-			$products[] = array(
+			$rooms[] = array(
 				'name' => $result['name'],
 				'asin' => $result['asin'],
 				'image' => $result['image'],
@@ -30,15 +30,15 @@ class ModelOpenbayAmazonusListing extends Model {
 			);
 		}
 
-		return $products;
+		return $rooms;
 	}
 
-	public function getProductByAsin($asin) {
+	public function getRoomByAsin($asin) {
 		$data = array(
 			'asin' => $asin,
 		);
 
-		$results = json_decode($this->openbay->amazonus->call('productv3/getProduct', $data), 1);
+		$results = json_decode($this->openbay->amazonus->call('roomv3/getRoom', $data), 1);
 
 		return $results;
 	}
@@ -51,7 +51,7 @@ class ModelOpenbayAmazonusListing extends Model {
 
 		$best_price = '';
 
-		$result = json_decode($this->openbay->amazonus->call('productv3/getPrice', $search_params), 1);
+		$result = json_decode($this->openbay->amazonus->call('roomv3/getPrice', $search_params), 1);
 
 		if (isset($result['Price']['Amount']) && $result['Price']['Currency'] && $this->currency->has($result['Price']['Currency'])) {
 			$best_price['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2, '.', '');
@@ -78,10 +78,10 @@ class ModelOpenbayAmazonusListing extends Model {
 			'start_selling' => $data['start_selling'],
 			'restock_date' => $data['restock_date'],
 			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazonus/listing',
-			'product_id' => $data['product_id'],
+			'room_id' => $data['room_id'],
 		);
 
-		$response = $this->openbay->amazonus->call('productv3/simpleListing', $request);
+		$response = $this->openbay->amazonus->call('roomv3/simpleListing', $request);
 		$response = json_decode($response);
 		if (empty($response)) {
 			return array(
@@ -93,8 +93,8 @@ class ModelOpenbayAmazonusListing extends Model {
 
 		if ($response['status'] === 1) {
 			$this->db->query("
-			REPLACE INTO `" . DB_PREFIX . "amazonus_product`
-			SET `product_id` = " . (int)$data['product_id'] . ",
+			REPLACE INTO `" . DB_PREFIX . "amazonus_room`
+			SET `room_id` = " . (int)$data['room_id'] . ",
 				`status` = 'uploaded',
 				`version` = 3,
 				`var` = ''
@@ -105,33 +105,33 @@ class ModelOpenbayAmazonusListing extends Model {
 	}
 
 	public function getBrowseNodes($request) {
-		return $this->openbay->amazonus->call('productv3/getBrowseNodes', $request);
+		return $this->openbay->amazonus->call('roomv3/getBrowseNodes', $request);
 	}
 
-	public function deleteSearchResults($product_ids) {
+	public function deleteSearchResults($room_ids) {
 		$imploded_ids = array();
 
-		foreach ($product_ids as $product_id) {
-			$imploded_ids[] = (int)$product_id;
+		foreach ($room_ids as $room_id) {
+			$imploded_ids[] = (int)$room_id;
 		}
 
 		$imploded_ids = implode(',', $imploded_ids);
 
 		$this->db->query("
-			DELETE FROM " . DB_PREFIX .  "amazonus_product_search
-			WHERE product_id IN ($imploded_ids)
+			DELETE FROM " . DB_PREFIX .  "amazonus_room_search
+			WHERE room_id IN ($imploded_ids)
 		");
 	}
 
 	public function doBulkListing($data) {
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$request = array();
 
-		foreach($data['products'] as $product_id => $asin) {
-			$product = $this->model_catalog_product->getProduct($product_id);
+		foreach($data['rooms'] as $room_id => $asin) {
+			$room = $this->model_catalog_room->getRoom($room_id);
 
-			if ($product) {
-				$price = $product['price'];
+			if ($room) {
+				$price = $room['price'];
 
 				if ($this->config->get('openbay_amazonus_listing_tax_added') && $this->config->get('openbay_amazonus_listing_tax_added') > 0) {
 					$price += $price * ($this->config->get('openbay_amazonus_listing_tax_added') / 100);
@@ -139,8 +139,8 @@ class ModelOpenbayAmazonusListing extends Model {
 
 				$request[] = array(
 					'asin' => $asin,
-					'sku' => $product['sku'],
-					'quantity' => $product['quantity'],
+					'sku' => $room['sku'],
+					'quantity' => $room['quantity'],
 					'price' => number_format($price, 2, ' . ', ''),
 					'sale' => array(),
 					'condition' => (isset($data['condition']) ? $data['condition'] : ''),
@@ -148,21 +148,21 @@ class ModelOpenbayAmazonusListing extends Model {
 					'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
 					'restock_date' => '',
 					'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazonus/listing',
-					'product_id' => $product['product_id'],
+					'room_id' => $room['room_id'],
 				);
 			}
 		}
 
 		if ($request) {
-			$response = $this->openbay->amazonus->call('productv3/bulkListing', $request);
+			$response = $this->openbay->amazonus->call('roomv3/bulkListing', $request);
 
 			$response = json_decode($response, 1);
 
 			if ($response['status'] == 1) {
-				foreach ($request as $product) {
+				foreach ($request as $room) {
 					$this->db->query("
-						REPLACE INTO `" . DB_PREFIX . "amazonus_product`
-						SET `product_id` = " . (int)$product['product_id'] . ",
+						REPLACE INTO `" . DB_PREFIX . "amazonus_room`
+						SET `room_id` = " . (int)$room['room_id'] . ",
 							`status` = 'uploaded',
 							`var` = '',
 							`version` = 3
@@ -177,11 +177,11 @@ class ModelOpenbayAmazonusListing extends Model {
 	}
 
 	public function doBulkSearch($search_data) {
-		foreach ($search_data as $products) {
-			foreach ($products as $product) {
+		foreach ($search_data as $rooms) {
+			foreach ($rooms as $room) {
 				$this->db->query("
-					REPLACE INTO " . DB_PREFIX . "amazonus_product_search (product_id, `status`)
-					VALUES (" . (int)$product['product_id'] . ", 'searching')");
+					REPLACE INTO " . DB_PREFIX . "amazonus_room_search (room_id, `status`)
+					VALUES (" . (int)$room['room_id'] . ", 'searching')");
 			}
 		}
 
@@ -190,6 +190,6 @@ class ModelOpenbayAmazonusListing extends Model {
 			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazonus/search'
 		);
 
-		$response = $this->openbay->amazonus->call('productv3/bulkSearch', $request_data);
+		$response = $this->openbay->amazonus->call('roomv3/bulkSearch', $request_data);
 	}
 }

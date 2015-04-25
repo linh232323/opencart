@@ -13,7 +13,7 @@ $_['text_all_status']   = 'Tất cả các trạng thái';
 $_['column_date_start'] = 'Ngày bắt đầu';
 $_['column_date_end']   = 'Ngày kết thúc';
 $_['column_orders']     = 'Số đơn hàng';
-$_['column_products']   = 'Số sản phẩm';
+$_['column_rooms']   = 'Số sản phẩm';
 $_['column_tax']        = 'Thuế';
 $_['column_total']      = 'Tổng cộng';
 

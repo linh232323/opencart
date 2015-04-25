@@ -1,11 +1,11 @@
 <?php
-class ControllerOpenbayAmazonProduct extends Controller {
+class ControllerOpenbayAmazonRoom extends Controller {
 	public function index() {
-		$this->load->language('catalog/product');
+		$this->load->language('catalog/room');
 		$data = $this->load->language('openbay/amazon_listing');
 
 		$this->load->model('openbay/amazon');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('tool/image');
 
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
@@ -34,7 +34,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_title_advanced'),
 		);
 
@@ -96,10 +96,10 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['room_id'])) {
+			$room_id = $this->request->get['room_id'];
 		} else {
-			die('No product id');
+			die('No room id');
 		}
 
 		if (isset($this->request->get['var'])) {
@@ -113,7 +113,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$data_array = $this->request->post;
 
-			$this->model_openbay_amazon->saveProduct($product_id, $data_array);
+			$this->model_openbay_amazon->saveRoom($room_id, $data_array);
 
 			if ($data_array['upload_after'] === 'true') {
 				$upload_result = $this->uploadSaved();
@@ -125,7 +125,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 				}
 			} else {
 				$this->session->data['success'] = $this->language->get('text_saved_local');
-				$this->response->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+				$this->response->redirect($this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL'));
 			}
 		}
 
@@ -136,14 +136,14 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$data['success'] = '';
 		}
 
-		$saved_listing_data = $this->model_openbay_amazon->getProduct($product_id, $variation);
+		$saved_listing_data = $this->model_openbay_amazon->getRoom($room_id, $variation);
 		if (empty($saved_listing_data)) {
 			$listing_saved = false;
 		} else {
 			$listing_saved = true;
 		}
 
-		$errors = $this->model_openbay_amazon->getProductErrors($product_id);
+		$errors = $this->model_openbay_amazon->getRoomErrors($room_id);
 		foreach($errors as $error) {
 			$error['message'] =  'Error for SKU: "' . $error['sku'] . '" - ' . $this->formatUrlsInText($error['message']);
 			$data['errors'][] = $error;
@@ -154,15 +154,15 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$data['has_listing_errors'] = false;
 		}
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-		$data['listing_name'] = $product_info['name'] . " : " . $product_info['model'];
-		$data['listing_sku'] = $product_info['sku'];
-		$data['listing_url'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+		$room_info = $this->model_catalog_room->getRoom($room_id);
+		$data['listing_name'] = $room_info['name'] . " : " . $room_info['model'];
+		$data['listing_sku'] = $room_info['sku'];
+		$data['listing_url'] = $this->url->link('catalog/room/update', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL');
 
 		if ($listing_saved) {
-			$data['edit_product_category'] = $saved_listing_data['category'];
+			$data['edit_room_category'] = $saved_listing_data['category'];
 		} else {
-			$data['edit_product_category'] = '';
+			$data['edit_room_category'] = '';
 		}
 
 		$data['amazon_categories'] = array();
@@ -180,21 +180,21 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		}
 
 		if ($listing_saved) {
-			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+			$data['template_parser_url'] = $this->url->link('openbay/amazon_room/parseTemplateAjax&edit_id=' . $room_id, 'token=' . $this->session->data['token'], 'SSL');
 		} else {
-			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+			$data['template_parser_url'] = $this->url->link('openbay/amazon_room/parseTemplateAjax&room_id=' . $room_id, 'token=' . $this->session->data['token'], 'SSL');
 		}
 
-		$data['url_remove_errors'] = $this->url->link('openbay/amazon_product/removeErrors', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+		$data['url_remove_errors'] = $this->url->link('openbay/amazon_room/removeErrors', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL');
 		$data['cancel_url'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['saved_listings_url'] = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['main_url'] = $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['main_url'] = $this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['token'] = $this->session->data['token'];
 		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('openstock/openstock');
-			$data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$data['options'] = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
 		} else {
 			$data['options'] = array();
 		}
@@ -289,15 +289,15 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['room_id'])) {
+			$room_id = $this->request->get['room_id'];
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		$this->load->model('openbay/amazon');
-		$this->model_openbay_amazon->removeAdvancedErrors($product_id);
+		$this->model_openbay_amazon->removeAdvancedErrors($room_id);
 		$this->session->data['success'] = 'Errors removed';
-		$this->response->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+		$this->response->redirect($this->url->link('openbay/amazon_room', 'token=' . $this->session->data['token'] . '&room_id=' . $room_id . $url, 'SSL'));
 	}
 
 	public function uploadSavedAjax() {
@@ -312,44 +312,44 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	private function uploadSaved() {
 		$this->load->language('openbay/amazon_listing');
 		$this->load->model('openbay/amazon');
-		$logger = new Log('amazon_product.log');
+		$logger = new Log('amazon_room.log');
 
 		$logger->write('Uploading process started . ');
 
-		$saved_products = $this->model_openbay_amazon->getSavedProductsData();
+		$saved_rooms = $this->model_openbay_amazon->getSavedRoomsData();
 
-		if (empty($saved_products)) {
+		if (empty($saved_rooms)) {
 			$logger->write('No saved listings found. Uploading canceled . ');
 			$result['status'] = 'error';
 			$result['error_message'] = 'No saved listings. Nothing to upload. Aborting . ';
 			return $result;
 		}
 
-		foreach($saved_products as $saved_product) {
-			$product_data_decoded = (array)json_decode($saved_product['data']);
+		foreach($saved_rooms as $saved_room) {
+			$room_data_decoded = (array)json_decode($saved_room['data']);
 
 			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
-			$response_data = array("response_url" => $catalog . 'index.php?route=openbay/amazon/product');
-			$category_data = array('category' => (string)$saved_product['category']);
-			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
+			$response_data = array("response_url" => $catalog . 'index.php?route=openbay/amazon/room');
+			$category_data = array('category' => (string)$saved_room['category']);
+			$fields_data = array('fields' => (array)$room_data_decoded['fields']);
 
-			$mp_array = !empty($saved_product['marketplaces']) ? (array)unserialize($saved_product['marketplaces']) : array();
+			$mp_array = !empty($saved_room['marketplaces']) ? (array)unserialize($saved_room['marketplaces']) : array();
 			$marketplaces_data = array('marketplaces' => $mp_array);
 
-			$product_data = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
-			$insertion_response = $this->openbay->amazon->insertProduct($product_data);
+			$room_data = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
+			$insertion_response = $this->openbay->amazon->insertRoom($room_data);
 
-			$logger->write("Uploading product with data:" . print_r($product_data, true) . "
+			$logger->write("Uploading room with data:" . print_r($room_data, true) . "
 				Got response:" . print_r($insertion_response, true));
 
 			if (!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
-				$result['error_message'] = sprintf($this->language->get('error_upload_failed'), $saved_product['sku'], $details);
+				$result['error_message'] = sprintf($this->language->get('error_upload_failed'), $saved_room['sku'], $details);
 				$result['status'] = 'error';
 				break;
 			}
-			$logger->write('Product upload success');
-			$this->model_openbay_amazon->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['var']);
+			$logger->write('Room upload success');
+			$this->model_openbay_amazon->setRoomUploaded($saved_room['room_id'], $insertion_response['insertion_id'], $saved_room['var']);
 		}
 
 		if (!isset($result['status'])) {
@@ -364,20 +364,20 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	public function parseTemplateAjax() {
 		$this->load->model('tool/image');
 		$this->load->library('log');
-		$log = new Log('amazon_product.log');
+		$log = new Log('amazon_room.log');
 
 		$json = array();
 
 		if (isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
-			$response = $this->openbay->amazon->call("productv2/GetTemplateXml", $request);
+			$response = $this->openbay->amazon->call("roomv2/GetTemplateXml", $request);
 			if ($response) {
 				$template = $this->openbay->amazon->parseCategoryTemplate($response);
 				if ($template) {
 					$variation = isset($this->request->get['var']) ? $this->request->get['var'] : '';
 
-					if (isset($this->request->get['product_id'])) {
-						$template['fields'] = $this->fillDefaultValues($this->request->get['product_id'], $template['fields'], $variation);
+					if (isset($this->request->get['room_id'])) {
+						$template['fields'] = $this->fillDefaultValues($this->request->get['room_id'], $template['fields'], $variation);
 					} elseif (isset($this->request->get['edit_id'])) {
 						$template['fields'] = $this->fillSavedValues($this->request->get['edit_id'], $template['fields'], $variation);
 					}
@@ -405,11 +405,11 @@ class ControllerOpenbayAmazonProduct extends Controller {
 						$json = $json_decoded;
 					} else {
 						$json = array('status' => 'error');
-						$log->write("admin/openbay/amazon_product/parseTemplateAjax failed to parse template response: " . $response);
+						$log->write("admin/openbay/amazon_room/parseTemplateAjax failed to parse template response: " . $response);
 					}
 				}
 			} else {
-				$log->write("admin/openbay/amazon_product/parseTemplateAjax failed calling productv2/GetTemplateXml with params: " . print_r($request, true));
+				$log->write("admin/openbay/amazon_room/parseTemplateAjax failed calling roomv2/GetTemplateXml with params: " . print_r($request, true));
 			}
 		}
 
@@ -417,62 +417,62 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	private function fillDefaultValues($product_id, $fields_array, $var = '') {
-		$this->load->model('catalog/product');
+	private function fillDefaultValues($room_id, $fields_array, $var = '') {
+		$this->load->model('catalog/room');
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/amazon');
 
 		$openbay_settings = $this->model_setting_setting->getSetting('openbay_amazon');
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-		$product_info['description'] = trim(utf8_encode(strip_tags(html_entity_decode($product_info['description']), "<br>")));
-		$product_info['image'] = HTTPS_CATALOG . 'image/' . $product_info['image'];
+		$room_info = $this->model_catalog_room->getRoom($room_id);
+		$room_info['description'] = trim(utf8_encode(strip_tags(html_entity_decode($room_info['description']), "<br>")));
+		$room_info['image'] = HTTPS_CATALOG . 'image/' . $room_info['image'];
 
 		$tax_added = isset($openbay_settings['openbay_amazon_listing_tax_added']) ? $openbay_settings['openbay_amazon_listing_tax_added'] : 0;
 		$default_condition =  isset($openbay_settings['openbay_amazon_listing_default_condition']) ? $openbay_settings['openbay_amazon_listing_default_condition'] : '';
-		$product_info['price'] = number_format($product_info['price'] + $tax_added / 100 * $product_info['price'], 2, ' . ', '');
+		$room_info['price'] = number_format($room_info['price'] + $tax_added / 100 * $room_info['price'], 2, ' . ', '');
 
 		$defaults = array(
-			'sku' => $product_info['sku'],
-			'title' => $product_info['name'],
-			'quantity' => $product_info['quantity'],
-			'standardprice' => $product_info['price'],
-			'description' => $product_info['description'],
-			'mainimage' => $product_info['image'],
+			'sku' => $room_info['sku'],
+			'title' => $room_info['name'],
+			'quantity' => $room_info['quantity'],
+			'standardprice' => $room_info['price'],
+			'description' => $room_info['description'],
+			'mainimage' => $room_info['image'],
 			'currency' => $this->config->get('config_currency'),
-			'shippingweight' => number_format($product_info['weight'], 2, ' . ', ''),
+			'shippingweight' => number_format($room_info['weight'], 2, ' . ', ''),
 			'conditiontype' => $default_condition,
 		);
 
 		$this->load->model('localisation/weight_class');
-		$weight_class = $this->model_localisation_weight_class->getWeightClass($product_info['weight_class_id']);
+		$weight_class = $this->model_localisation_weight_class->getWeightClass($room_info['weight_class_id']);
 		if (!empty($weight_class)) {
 			$defaults['shippingweightunitofmeasure'] = $weight_class['unit'];
 		}
 
 		$this->load->model('catalog/manufacturer');
-		$manufacturer = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
+		$manufacturer = $this->model_catalog_manufacturer->getManufacturer($room_info['manufacturer_id']);
 		if (!empty($manufacturer)) {
 			$defaults['manufacturer'] = $manufacturer['name'];
 			$defaults['brand'] = $manufacturer['name'];
 		}
 
-		$product_images = $this->model_catalog_product->getProductImages($product_id);
+		$room_images = $this->model_catalog_room->getRoomImages($room_id);
 		$image_index = 1;
-		foreach($product_images as $product_image) {
-			$defaults['pt' . $image_index] = HTTPS_CATALOG . 'image/' . $product_image['image'];
+		foreach($room_images as $room_image) {
+			$defaults['pt' . $image_index] = HTTPS_CATALOG . 'image/' . $room_image['image'];
 			$image_index ++;
 		}
 
-		if (!empty($product_info['upc'])) {
+		if (!empty($room_info['upc'])) {
 			$defaults['type'] = 'UPC';
-			$defaults['value'] = $product_info['upc'];
-		} else if (!empty($product_info['ean'])) {
+			$defaults['value'] = $room_info['upc'];
+		} else if (!empty($room_info['ean'])) {
 			$defaults['type'] = 'EAN';
-			$defaults['value'] = $product_info['ean'];
+			$defaults['value'] = $room_info['ean'];
 		}
 
-		$meta_keywords = explode(',', $product_info['meta_keyword']);
+		$meta_keywords = explode(',', $room_info['meta_keyword']);
 		foreach ($meta_keywords as $index => $meta_keyword) {
 			$defaults['searchterms' . $index] = trim($meta_keyword);
 		}
@@ -480,7 +480,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
@@ -524,16 +524,16 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		return $filled_array;
 	}
 
-	private function fillSavedValues($product_id, $fields_array, $var = '') {
+	private function fillSavedValues($room_id, $fields_array, $var = '') {
 
 		$this->load->model('openbay/amazon');
-		$saved_listing = $this->model_openbay_amazon->getProduct($product_id, $var);
+		$saved_listing = $this->model_openbay_amazon->getRoom($room_id, $var);
 
 		$decoded_data = (array)json_decode($saved_listing['data']);
 		$saved_fields = (array)$decoded_data['fields'];
 
 		//Show current quantity instead of last uploaded
-		$saved_fields['Quantity'] = $this->model_openbay_amazon->getProductQuantity($product_id, $var);
+		$saved_fields['Quantity'] = $this->model_openbay_amazon->getRoomQuantity($room_id, $var);
 
 		$filled_array = array();
 
@@ -553,7 +553,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	}
 
 	public function resetPending() {
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product` SET `status` = 'saved' WHERE `status` = 'uploaded'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_room` SET `status` = 'saved' WHERE `status` = 'uploaded'");
 	}
 
 	private function validateForm() {

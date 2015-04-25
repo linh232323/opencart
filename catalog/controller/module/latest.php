@@ -11,11 +11,11 @@ class ControllerModuleLatest extends Controller {
 		$data['button_wishlist'] = $this->language->get('button_wishlist');
 		$data['button_compare'] = $this->language->get('button_compare');
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
 		$filter_data = array(
 			'sort'  => 'p.date_added',
@@ -24,7 +24,7 @@ class ControllerModuleLatest extends Controller {
 			'limit' => $setting['limit']
 		);
 
-		$results = $this->model_catalog_product->getProducts($filter_data);
+		$results = $this->model_catalog_room->getrooms($filter_data);
 
 		if ($results) {
 			foreach ($results as $result) {
@@ -58,8 +58,8 @@ class ControllerModuleLatest extends Controller {
 					$rating = false;
 				}
 
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
+				$data['rooms'][] = array(
+					'room_id'  => $result['room_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
@@ -67,7 +67,7 @@ class ControllerModuleLatest extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'href'        => $this->url->link('product/room', 'room_id=' . $result['room_id']),
 				);
 			}
 

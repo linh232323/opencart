@@ -47,8 +47,8 @@
                 <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
               </div>
               <div class="form-group">
-                <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
-                <input type="text" name="filter_product" value="<?php echo $filter_product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
+                <label class="control-label" for="input-room"><?php echo $entry_room; ?></label>
+                <input type="text" name="filter_room" value="<?php echo $filter_room; ?>" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
               </div>
             </div>
             <div class="col-sm-3">
@@ -112,10 +112,10 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'r.product') { ?>
-                    <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
+                  <td class="text-left"><?php if ($sort == 'r.room') { ?>
+                    <a href="<?php echo $sort_room; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_room; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_product; ?>"><?php echo $column_product; ?></a>
+                    <a href="<?php echo $sort_room; ?>"><?php echo $column_room; ?></a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'r.model') { ?>
                     <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
@@ -152,7 +152,7 @@
                   <td class="text-right"><?php echo $return['return_id']; ?></td>
                   <td class="text-right"><?php echo $return['order_id']; ?></td>
                   <td class="text-left"><?php echo $return['customer']; ?></td>
-                  <td class="text-left"><?php echo $return['product']; ?></td>
+                  <td class="text-left"><?php echo $return['room']; ?></td>
                   <td class="text-left"><?php echo $return['model']; ?></td>
                   <td class="text-left"><?php echo $return['status']; ?></td>
                   <td class="text-left"><?php echo $return['date_added']; ?></td>
@@ -198,10 +198,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_product = $('input[name=\'filter_product\']').val();
+	var filter_room = $('input[name=\'filter_room\']').val();
 	
-	if (filter_product) {
-		url += '&filter_product=' + encodeURIComponent(filter_product);
+	if (filter_room) {
+		url += '&filter_room=' + encodeURIComponent(filter_room);
 	}
 
 	var filter_model = $('input[name=\'filter_model\']').val();
@@ -252,36 +252,36 @@ $('input[name=\'filter_customer\']').autocomplete({
 	}	
 });
 
-$('input[name=\'filter_product\']').autocomplete({
+$('input[name=\'filter_room\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id']
+						value: item['room_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'filter_product\']').val(item['label']);
+		$('input[name=\'filter_room\']').val(item['label']);
 	}	
 });
 
 $('input[name=\'filter_model\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['model'],
-						value: item['product_id']
+						value: item['room_id']
 					}
 				}));
 			}

@@ -12,24 +12,24 @@ class ModelOpenbayAmazon extends Model {
 		) DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order_product` (
-				`order_product_id` int(11) NOT NULL ,
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order_room` (
+				`order_room_id` int(11) NOT NULL ,
 				`amazon_order_item_id` varchar(255) NOT NULL,
-				PRIMARY KEY(`order_product_id`, `amazon_order_item_id`)
+				PRIMARY KEY(`order_room_id`, `amazon_order_item_id`)
 		);");
 
 		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_unshipped` (
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room_unshipped` (
 				`order_id` int(11) NOT NULL,
-				`product_id` int(11) NOT NULL,
+				`room_id` int(11) NOT NULL,
 				`quantity` int(11) NOT NULL DEFAULT '0',
-				PRIMARY KEY (`order_id`,`product_id`)
+				PRIMARY KEY (`order_id`,`room_id`)
 			) DEFAULT COLLATE=utf8_general_ci;;");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product` (
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room` (
 		  `version` int(11) NOT NULL DEFAULT 2,
-		  `product_id`  int(11) NOT NULL ,
+		  `room_id`  int(11) NOT NULL ,
 		  `category`  varchar(255) NOT NULL ,
 		  `sku`  varchar(255) NOT NULL ,
 		  `insertion_id` varchar(255) NOT NULL ,
@@ -39,11 +39,11 @@ class ModelOpenbayAmazon extends Model {
 		  `var` char(100) NOT NULL DEFAULT '',
 		  `marketplaces` text NOT NULL ,
 		  `messages` text NOT NULL,
-		  PRIMARY KEY (`product_id`, `var`)
+		  PRIMARY KEY (`room_id`, `var`)
 		);");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_error` (
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room_error` (
 		  `error_id` int(11) NOT NULL AUTO_INCREMENT,
 		  `sku` varchar(255) NOT NULL ,
 		  `insertion_id` varchar(255) NOT NULL ,
@@ -53,22 +53,22 @@ class ModelOpenbayAmazon extends Model {
 		);");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_link` (
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room_link` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `amazon_sku` varchar(255) NOT NULL,
 		  `var` char(100) NOT NULL DEFAULT '',
-		  `product_id` int(11) NOT NULL,
+		  `room_id` int(11) NOT NULL,
 		  PRIMARY KEY (`id`)
 		) DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
-			`product_id` int(11) NOT NULL,
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room_search` (
+			`room_id` int(11) NOT NULL,
 			`marketplace` enum('uk','de','es','it','fr') NOT NULL,
 			`status` enum('searching','finished') NOT NULL,
 			`matches` int(11) DEFAULT NULL,
 			`data` text,
-			PRIMARY KEY (`product_id`,`marketplace`)
+			PRIMARY KEY (`room_id`,`marketplace`)
 		) DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
@@ -87,15 +87,15 @@ class ModelOpenbayAmazon extends Model {
 
 	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_order`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_order_product`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product2`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_link`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_unshipped`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_error`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_order_room`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room2`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room_link`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room_unshipped`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room_error`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_process`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_unshipped`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_search`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room_unshipped`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_room_search`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_listing_report`");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazon'");
@@ -115,13 +115,13 @@ class ModelOpenbayAmazon extends Model {
 
 		if ($settings) {
 			$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
-					`product_id` int(11) NOT NULL,
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_room_search` (
+					`room_id` int(11) NOT NULL,
 					`marketplace` enum('uk','de','es','it','fr') NOT NULL,
 					`status` enum('searching','finished') NOT NULL,
 					`matches` int(11) DEFAULT NULL,
 					`data` text,
-					PRIMARY KEY (`product_id`,`marketplace`)
+					PRIMARY KEY (`room_id`,`marketplace`)
 				) DEFAULT COLLATE=utf8_general_ci;");
 
 			$this->db->query("
@@ -175,7 +175,7 @@ class ModelOpenbayAmazon extends Model {
 		return false;
 	}
 
-	public function saveProduct($product_id, $data_array) {
+	public function saveRoom($room_id, $data_array) {
 		if (isset($data_array['fields']['item-price'])) {
 			$price = $data_array['fields']['item-price'];
 		} else if (isset($data_array['fields']['price'])) {
@@ -209,8 +209,8 @@ class ModelOpenbayAmazon extends Model {
 		$data_encoded = json_encode(array('fields' => $data_array['fields']));
 
 		$this->db->query("
-			REPLACE INTO `" . DB_PREFIX . "amazon_product`
-			SET `product_id` = '" . (int)$product_id . "',
+			REPLACE INTO `" . DB_PREFIX . "amazon_room`
+			SET `room_id` = '" . (int)$room_id . "',
 				`sku` = '" . $this->db->escape($sku) . "',
 				`category` = '" . $this->db->escape($category) . "',
 				`data` = '" . $this->db->escape($data_encoded) . "',
@@ -221,39 +221,39 @@ class ModelOpenbayAmazon extends Model {
 				`marketplaces` = '" . $this->db->escape($marketplaces) . "'");
 	}
 
-	public function deleteSaved($product_id, $var = '') {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'");
+	public function deleteSaved($room_id, $var = '') {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($var) . "'");
 	}
 
-	public function getSavedProducts() {
+	public function getSavedRooms() {
 		return $this->db->query("
-			SELECT `ap`.`status`, `ap`.`product_id`, `ap`.`sku` as `amazon_sku`, `pd`.`name` as `product_name`, `p`.`model` as `product_model`, `p`.`sku` as `product_sku`, `ap`.`var` as `var`
-			FROM `" . DB_PREFIX . "amazon_product` as `ap`
-			LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
-			ON `ap`.`product_id` = `pd`.`product_id`
-			LEFT JOIN `" . DB_PREFIX . "product` as `p`
-			ON `ap`.`product_id` = `p`.`product_id`
+			SELECT `ap`.`status`, `ap`.`room_id`, `ap`.`sku` as `amazon_sku`, `pd`.`name` as `room_name`, `p`.`model` as `room_model`, `p`.`sku` as `room_sku`, `ap`.`var` as `var`
+			FROM `" . DB_PREFIX . "amazon_room` as `ap`
+			LEFT JOIN `" . DB_PREFIX . "room_description` as `pd`
+			ON `ap`.`room_id` = `pd`.`room_id`
+			LEFT JOIN `" . DB_PREFIX . "room` as `p`
+			ON `ap`.`room_id` = `p`.`room_id`
 			WHERE `ap`.`status` = 'saved'
 			AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'")->rows;
 	}
 
-	public function getSavedProductsData() {
+	public function getSavedRoomsData() {
 		return $this->db->query("
-			SELECT * FROM `" . DB_PREFIX . "amazon_product`
+			SELECT * FROM `" . DB_PREFIX . "amazon_room`
 			WHERE `status` = 'saved' AND `version` = 2")->rows;
 	}
 
-	public function getProduct($product_id, $var = '') {
+	public function getRoom($room_id, $var = '') {
 		return $this->db->query("
-			SELECT * FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2")->row;
+			SELECT * FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2")->row;
 	}
 
-	public function getProductCategory($product_id, $var = '') {
+	public function getProductCategory($room_id, $var = '') {
 		$row = $this->db->query("
-			SELECT `category` FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2")->row;
+			SELECT `category` FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2")->row;
 		if (isset($row['category'])) {
 			return $row['category'];
 		} else {
@@ -261,52 +261,52 @@ class ModelOpenbayAmazon extends Model {
 		}
 	}
 
-	public function setProductUploaded($product_id, $insertion_id, $var = '') {
+	public function setRoomUploaded($room_id, $insertion_id, $var = '') {
 		$this->db->query(
-			"UPDATE `" . DB_PREFIX . "amazon_product`
+			"UPDATE `" . DB_PREFIX . "amazon_room`
 			SET `status` = 'uploaded', `insertion_id` = '" . $this->db->escape($insertion_id) . "'
-			WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2");
+			WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `version` = 2");
 	}
 
 	public function resetUploaded($insertion_id) {
 		$this->db->query(
-			"UPDATE `" . DB_PREFIX . "amazon_product`
+			"UPDATE `" . DB_PREFIX . "amazon_room`
 			SET `status` = 'saved', `insertion_id` = ''
 			WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "' AND `version` = 2");
 	}
 
-	public function getProductStatus($product_id) {
+	public function getRoomStatus($room_id) {
 
 		$rows_uploaded = $this->db->query("
 			SELECT COUNT(*) count
-			FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'uploaded'")->row;
+			FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND status = 'uploaded'")->row;
 		$rows_uploaded = $rows_uploaded['count'];
 
 		$rows_ok = $this->db->query("
 			SELECT COUNT(*) count
-			FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'ok'")->row;
+			FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND status = 'ok'")->row;
 		$rows_ok = $rows_ok['count'];
 
 		$rows_error = $this->db->query("
 			SELECT COUNT(*) count
-			FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'error'")->row;
+			FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND status = 'error'")->row;
 		$rows_error = $rows_error['count'];
 
 		$rows_saved = $this->db->query("
 			SELECT COUNT(*) count
-			FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'saved'")->row;
+			FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND status = 'saved'")->row;
 		$rows_saved = $rows_saved['count'];
 
 		$rows_total = $rows_uploaded + $rows_ok + $rows_error + $rows_saved;
 
 		$links = $this->db->query("
 			SELECT COUNT(*) as count
-			FROM `" . DB_PREFIX . "amazon_product_link`
-			WHERE `product_id` = '" . (int)$product_id . "'")->row;
+			FROM `" . DB_PREFIX . "amazon_room_link`
+			WHERE `room_id` = '" . (int)$room_id . "'")->row;
 		$links = $links['count'];
 
 		if ($rows_total === 0 && $links > 0) {
@@ -328,7 +328,7 @@ class ModelOpenbayAmazon extends Model {
 		}
 
 		if ($rows_uploaded == 0 && $rows_error > 0 && $rows_ok == 0) {
-			$quick = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
+			$quick = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room` WHERE `room_id` = " . (int)$room_id . " AND `version` = 3")->row;
 
 			if ($quick) {
 				return 'error_quick';
@@ -342,20 +342,20 @@ class ModelOpenbayAmazon extends Model {
 		return false;
 	}
 
-	public function getProductErrors($product_id, $version = 2) {
+	public function getRoomErrors($room_id, $version = 2) {
 		if ($version == 3) {
-			$message_row = $this->db->query("SELECT `messages` FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 3")->row;
+			$message_row = $this->db->query("SELECT `messages` FROM `" . DB_PREFIX . "amazon_room` WHERE `room_id` = '" . (int)$room_id . "' AND `version` = 3")->row;
 
 			return json_decode($message_row['messages']);
 		}
 
 		$result = array();
 
-		$insertion_rows = $this->db->query("SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
+		$insertion_rows = $this->db->query("SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazon_room` WHERE `room_id` = '" . (int)$room_id . "' AND `version` = 2")->rows;
 
 		if (!empty($insertion_rows)) {
 			foreach($insertion_rows as $insertion_row) {
-				$error_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_error` WHERE `sku` = '" . $this->db->escape($insertion_row['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertion_row['insertion_id']) . "'")->rows;
+				$error_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room_error` WHERE `sku` = '" . $this->db->escape($insertion_row['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertion_row['insertion_id']) . "'")->rows;
 
 				foreach($error_rows as $error_row) {
 					$result[] = $error_row;
@@ -365,59 +365,59 @@ class ModelOpenbayAmazon extends Model {
 		return $result;
 	}
 
-	public function getProductsWithErrors() {
+	public function getRoomsWithErrors() {
 		return $this->db->query("
-			SELECT `product_id`, `sku` FROM `" . DB_PREFIX . "amazon_product`
+			SELECT `room_id`, `sku` FROM `" . DB_PREFIX . "amazon_room`
 			WHERE `status` = 'error' AND `version` = 2")->rows;
 	}
 
-	public function deleteProduct($product_id) {
+	public function deleteRoom($room_id) {
 		$this->db->query(
-			"DELETE FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "'");
+			"DELETE FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "'");
 	}
 
-	public function linkProduct($amazon_sku, $product_id, $var = '') {
-		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+	public function linkRoom($amazon_sku, $room_id, $var = '') {
+		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_room_link` WHERE `room_id` = '" . (int)$room_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
 		if ($count['count'] == 0) {
 			$this->db->query(
-				"INSERT INTO `" . DB_PREFIX . "amazon_product_link`
-				SET `product_id` = '" . (int)$product_id . "', `amazon_sku` = '" . $this->db->escape($amazon_sku) . "', `var` = '" . $this->db->escape($var) . "'");
+				"INSERT INTO `" . DB_PREFIX . "amazon_room_link`
+				SET `room_id` = '" . (int)$room_id . "', `amazon_sku` = '" . $this->db->escape($amazon_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
 	}
 
-	public function removeProductLink($amazon_sku) {
+	public function removeRoomLink($amazon_sku) {
 		$this->db->query(
-			"DELETE FROM `" . DB_PREFIX . "amazon_product_link`
+			"DELETE FROM `" . DB_PREFIX . "amazon_room_link`
 			WHERE `amazon_sku` = '" . $this->db->escape($amazon_sku) . "'");
 	}
 
-	public function removeAdvancedErrors($product_id) {
-		$product_rows = $this->db->query("
-			SELECT `insertion_id` FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
+	public function removeAdvancedErrors($room_id) {
+		$room_rows = $this->db->query("
+			SELECT `insertion_id` FROM `" . DB_PREFIX . "amazon_room`
+			WHERE `room_id` = '" . (int)$room_id . "' AND `version` = 2")->rows;
 
-		foreach ($product_rows as $product) {
+		foreach ($room_rows as $room) {
 			$this->db->query(
-				"DELETE FROM `" . DB_PREFIX . "amazon_product_error`
-				WHERE `insertion_id` = '" . $this->db->escape($product['insertion_id']) . "'");
+				"DELETE FROM `" . DB_PREFIX . "amazon_room_error`
+				WHERE `insertion_id` = '" . $this->db->escape($room['insertion_id']) . "'");
 		}
 
 		$this->db->query(
-			"UPDATE `" . DB_PREFIX . "amazon_product`
+			"UPDATE `" . DB_PREFIX . "amazon_room`
 			SET `status` = 'saved', `insertion_id` = ''
-			WHERE `product_id` = '" . (int)$product_id . "' AND `status` = 'error' AND `version` = 2");
+			WHERE `room_id` = '" . (int)$room_id . "' AND `status` = 'error' AND `version` = 2");
 	}
 
-	public function getProductLinks($product_id = 'all') {
-		$query = "SELECT `apl`.`amazon_sku`, `apl`.`product_id`, `pd`.`name` as `product_name`, `p`.`model`, `p`.`sku`, `apl`.`var`, '' as `combi`
-			FROM `" . DB_PREFIX . "amazon_product_link` as `apl`
-			LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
-			ON `apl`.`product_id` = `pd`.`product_id`
-			LEFT JOIN `" . DB_PREFIX . "product` as `p`
-			ON `apl`.`product_id` = `p`.`product_id`";
-		if ($product_id != 'all') {
-			$query .= " WHERE `apl`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+	public function getRoomLinks($room_id = 'all') {
+		$query = "SELECT `apl`.`amazon_sku`, `apl`.`room_id`, `pd`.`name` as `room_name`, `p`.`model`, `p`.`sku`, `apl`.`var`, '' as `combi`
+			FROM `" . DB_PREFIX . "amazon_room_link` as `apl`
+			LEFT JOIN `" . DB_PREFIX . "room_description` as `pd`
+			ON `apl`.`room_id` = `pd`.`room_id`
+			LEFT JOIN `" . DB_PREFIX . "room` as `p`
+			ON `apl`.`room_id` = `p`.`room_id`";
+		if ($room_id != 'all') {
+			$query .= " WHERE `apl`.`room_id` = '" . (int)$room_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		} else {
 			$query .= "WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
@@ -430,7 +430,7 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('tool/image');
 			$rows_with_var = array();
 			foreach($rows as $row) {
-				$stock_opts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
+				$stock_opts = $this->model_openstock_openstock->getRoomOptionStocks($row['room_id']);
 				foreach($stock_opts as $opt) {
 					if ($opt['var'] == $row['var']) {
 						$row['combi'] = $opt['combi'];
@@ -446,15 +446,15 @@ class ModelOpenbayAmazon extends Model {
 		}
 	}
 
-	public function getUnlinkedProducts() {
+	public function getUnlinkedRooms() {
 		$this->load->library('amazon');
 		if ($this->openbay->addonLoad('openstock')) {
 
 			$rows = $this->db->query("
-				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`, `p`.`has_option`
-				FROM `" . DB_PREFIX . "product` as `p`
-				LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
-				ON `p`.`product_id` = `pd`.`product_id`
+				SELECT `p`.`room_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `room_name`, '' as `var`, '' as `combi`, `p`.`has_option`
+				FROM `" . DB_PREFIX . "room` as `p`
+				LEFT JOIN `" . DB_PREFIX . "room_description` as `pd`
+				ON `p`.`room_id` = `pd`.`room_id`
 				AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'")->rows;
 
 			$result = array();
@@ -462,9 +462,9 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
-					$stock_opts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
+					$stock_opts = $this->model_openstock_openstock->getRoomOptionStocks($row['room_id']);
 					foreach($stock_opts as $opt) {
-						if ($this->productLinkExists($row['product_id'], $opt['var'])) {
+						if ($this->roomLinkExists($row['room_id'], $opt['var'])) {
 							continue;
 						}
 						$row['var'] = $opt['var'];
@@ -473,19 +473,19 @@ class ModelOpenbayAmazon extends Model {
 						$result[] = $row;
 					}
 				} else {
-					if (!$this->productLinkExists($row['product_id'], $row['var'])) {
+					if (!$this->roomLinkExists($row['room_id'], $row['var'])) {
 						$result[] = $row;
 					}
 				}
 			}
 		} else {
 			$result = $this->db->query("
-				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`
-				FROM `" . DB_PREFIX . "product` as `p`
-				LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
-				ON `p`.`product_id` = `pd`.`product_id`
-				LEFT JOIN `" . DB_PREFIX . "amazon_product_link` as `apl`
-				ON `apl`.`product_id` = `p`.`product_id`
+				SELECT `p`.`room_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `room_name`, '' as `var`, '' as `combi`
+				FROM `" . DB_PREFIX . "room` as `p`
+				LEFT JOIN `" . DB_PREFIX . "room_description` as `pd`
+				ON `p`.`room_id` = `pd`.`room_id`
+				LEFT JOIN `" . DB_PREFIX . "amazon_room_link` as `apl`
+				ON `apl`.`room_id` = `p`.`room_id`
 				WHERE `apl`.`amazon_sku` IS NULL
 				AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'")->rows;
 		}
@@ -493,8 +493,8 @@ class ModelOpenbayAmazon extends Model {
 		return $result;
 	}
 
-	private function productLinkExists($product_id, $var) {
-		$link = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = " . (int)$product_id . " AND var = '" . $this->db->escape($var) . "'")->row;
+	private function roomLinkExists($room_id, $var) {
+		$link = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room_link` WHERE `room_id` = " . (int)$room_id . " AND var = '" . $this->db->escape($var) . "'")->row;
 
 		if (empty($link)) {
 			return false;
@@ -556,15 +556,15 @@ class ModelOpenbayAmazon extends Model {
 		return null;
 	}
 
-	public function getAmazonOrderedProducts($order_id) {
+	public function getAmazonOrderedRooms($order_id) {
 		return $this->db->query("
 			SELECT `aop`.`amazon_order_item_id`, `op`.`quantity`
-			FROM `" . DB_PREFIX . "amazon_order_product` `aop`
-			JOIN `" . DB_PREFIX . "order_product` `op` ON `op`.`order_product_id` = `aop`.`order_product_id`
+			FROM `" . DB_PREFIX . "amazon_order_room` `aop`
+			JOIN `" . DB_PREFIX . "order_room` `op` ON `op`.`order_room_id` = `aop`.`order_room_id`
 				AND `op`.`order_id` = " . (int)$order_id)->rows;
 	}
 
-	public function getProductQuantity($product_id, $var = '') {
+	public function getRoomQuantity($room_id, $var = '') {
 		$this->load->library('amazon');
 
 		$result = null;
@@ -572,7 +572,7 @@ class ModelOpenbayAmazon extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
@@ -586,40 +586,40 @@ class ModelOpenbayAmazon extends Model {
 				$result = $option['stock'];
 			}
 		} else {
-			$this->load->model('catalog/product');
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+			$this->load->model('catalog/room');
+			$room_info = $this->model_catalog_room->getRoom($room_id);
 
-			if (isset($product_info['quantity'])) {
-				$result = $product_info['quantity'];
+			if (isset($room_info['quantity'])) {
+				$result = $room_info['quantity'];
 			}
 		}
 		return $result;
 	}
 
-	public function getProductSearchTotal($data = array()) {
+	public function getRoomSearchTotal($data = array()) {
 		$sql = "
-			SELECT COUNT(*) AS product_total
-			FROM " . DB_PREFIX . "product p
-			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
-			LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id
-			LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
-			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
+			SELECT COUNT(*) AS room_total
+			FROM " . DB_PREFIX . "room p
+			LEFT JOIN " . DB_PREFIX . "amazon_room_search aps ON p.room_id = aps.room_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+			LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON p.room_id = apl.room_id
+			LEFT JOIN " . DB_PREFIX . "amazon_room ap ON p.room_id = ap.room_id
+			WHERE apl.room_id IS NULL AND ap.room_id IS NULL ";
 
 		if (!empty($data['status'])) {
 			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
 		}
 
-		return $this->db->query($sql)->row['product_total'];
+		return $this->db->query($sql)->row['room_total'];
 	}
 
-	public function getProductSearch($data = array()) {
+	public function getRoomSearch($data = array()) {
 		$sql = "
-			SELECT p.product_id, marketplace, aps.status, aps.data, aps.matches
-			FROM " . DB_PREFIX . "product p
-			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
-			LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id
-			LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
-			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
+			SELECT p.room_id, marketplace, aps.status, aps.data, aps.matches
+			FROM " . DB_PREFIX . "room p
+			LEFT JOIN " . DB_PREFIX . "amazon_room_search aps ON p.room_id = aps.room_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+			LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON p.room_id = apl.room_id
+			LEFT JOIN " . DB_PREFIX . "amazon_room ap ON p.room_id = ap.room_id
+			WHERE apl.room_id IS NULL AND ap.room_id IS NULL ";
 
 		if (!empty($data['status'])) {
 			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
@@ -633,7 +633,7 @@ class ModelOpenbayAmazon extends Model {
 
 		foreach ($rows as $row) {
 			$results[] = array(
-				'product_id' => $row['product_id'],
+				'room_id' => $row['room_id'],
 				'marketplace' => $row['marketplace'],
 				'status' => $row['status'],
 				'matches' => $row['matches'],
@@ -653,17 +653,17 @@ class ModelOpenbayAmazon extends Model {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$rows = $this->db->query("
-				SELECT apl.amazon_sku, if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
-				FROM " . DB_PREFIX . "amazon_product_link apl
-				JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
-				LEFT JOIN " . DB_PREFIX . "product_option_relation por ON apl.product_id = por.product_id AND apl.var = por.var
+				SELECT apl.amazon_sku, if (por.room_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				FROM " . DB_PREFIX . "amazon_room_link apl
+				JOIN " . DB_PREFIX . "room p ON apl.room_id = p.room_id
+				LEFT JOIN " . DB_PREFIX . "room_option_relation por ON apl.room_id = por.room_id AND apl.var = por.var
 				WHERE apl.amazon_sku IN (" . implode(',', $sku_array) . ")
 			")->rows;
 		} else {
 			$rows = $this->db->query("
 				SELECT apl.amazon_sku, p.quantity
-				FROM " . DB_PREFIX . "amazon_product_link apl
-				JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
+				FROM " . DB_PREFIX . "amazon_room_link apl
+				JOIN " . DB_PREFIX . "room p ON apl.room_id = p.room_id
 				WHERE apl.amazon_sku IN (" . implode(',', $sku_array) . ")
 			")->rows;
 		}
@@ -687,37 +687,37 @@ class ModelOpenbayAmazon extends Model {
 	public function getTotalUnlinkedItemsFromReport($marketplace) {
 		if ($this->openbay->addonLoad('openstock')) {
 			$result = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.room_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
 				  (
 					SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
-					FROM " . DB_PREFIX . "product_option_value pov
+					FROM " . DB_PREFIX . "room_option_value pov
 					JOIN " . DB_PREFIX . "option_value_description ovd ON ovd.option_value_id = pov.option_value_id AND ovd.language_id = " . (int)$this->config->get('config_language_id') . "
 					JOIN `" . DB_PREFIX . "option` o ON o.option_id = pov.option_id
-					WHERE oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.product_option_value_id ,':%')
-					  OR oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id) OR oc_sku.var LIKE pov.product_option_value_id
+					WHERE oc_sku.var LIKE CONCAT('%:', pov.room_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.room_option_value_id ,':%')
+					  OR oc_sku.var LIKE CONCAT('%:', pov.room_option_value_id) OR oc_sku.var LIKE pov.room_option_value_id
 				  ) AS 'combination'
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
-				  FROM " . DB_PREFIX . "product p
-				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
+				  SELECT p.room_id, if (por.room_id IS NULL, p.sku, por.sku) AS 'sku', if (por.room_id IS NULL, NULL, por.var) AS 'var', if (por.room_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  FROM " . DB_PREFIX . "room p
+				  LEFT JOIN " . DB_PREFIX . "room_option_relation por USING(room_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
-				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
-				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
-				WHERE apl.product_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
+				LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON (oc_sku.var IS NULL AND oc_sku.room_id = apl.room_id) OR (oc_sku.var IS NOT NULL AND oc_sku.room_id = apl.room_id AND oc_sku.var = apl.var)
+				LEFT JOIN " . DB_PREFIX . "room_description pd ON oc_sku.room_id = pd.room_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+				WHERE apl.room_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
 				ORDER BY alr.sku
 			");
 		} else {
 			$result = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.room_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
-					FROM " . DB_PREFIX . "product p
+					SELECT p.room_id, p.sku, NULL AS 'var', p.quantity
+					FROM " . DB_PREFIX . "room p
 				) AS oc_sku ON alr.sku = oc_sku.sku
-				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
-				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
-				WHERE apl.product_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
+				LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON (oc_sku.var IS NULL AND oc_sku.room_id = apl.room_id) OR (oc_sku.var IS NOT NULL AND oc_sku.room_id = apl.room_id AND oc_sku.var = apl.var)
+				LEFT JOIN " . DB_PREFIX . "room_description pd ON oc_sku.room_id = pd.room_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+				WHERE apl.room_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
 				ORDER BY alr.sku
 			");
 		}
@@ -728,48 +728,48 @@ class ModelOpenbayAmazon extends Model {
 	public function getUnlinkedItemsFromReport($marketplace, $limit = 100, $page = 1) {
 		$start = $limit * ($page - 1);
 
-		$products = array();
+		$rooms = array();
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$rows = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.room_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
 				  (
 					SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
-					FROM " . DB_PREFIX . "product_option_value pov
+					FROM " . DB_PREFIX . "room_option_value pov
 					JOIN " . DB_PREFIX . "option_value_description ovd ON ovd.option_value_id = pov.option_value_id AND ovd.language_id = " . (int)$this->config->get('config_language_id') . "
 					JOIN `" . DB_PREFIX . "option` o ON o.option_id = pov.option_id
-					WHERE oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.product_option_value_id ,':%')
-					  OR oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id) OR oc_sku.var LIKE pov.product_option_value_id
+					WHERE oc_sku.var LIKE CONCAT('%:', pov.room_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.room_option_value_id ,':%')
+					  OR oc_sku.var LIKE CONCAT('%:', pov.room_option_value_id) OR oc_sku.var LIKE pov.room_option_value_id
 				  ) AS 'combination'
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
-				  FROM " . DB_PREFIX . "product p
-				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
+				  SELECT p.room_id, if (por.room_id IS NULL, p.sku, por.sku) AS 'sku', if (por.room_id IS NULL, NULL, por.var) AS 'var', if (por.room_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  FROM " . DB_PREFIX . "room p
+				  LEFT JOIN " . DB_PREFIX . "room_option_relation por USING(room_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
-				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
-				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
-				WHERE apl.product_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
+				LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON (oc_sku.var IS NULL AND oc_sku.room_id = apl.room_id) OR (oc_sku.var IS NOT NULL AND oc_sku.room_id = apl.room_id AND oc_sku.var = apl.var)
+				LEFT JOIN " . DB_PREFIX . "room_description pd ON oc_sku.room_id = pd.room_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+				WHERE apl.room_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
 				ORDER BY alr.sku
 				LIMIT " . (int)$start . "," . (int)$limit)->rows;
 		} else {
 			$rows = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.room_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
-					FROM " . DB_PREFIX . "product p
+					SELECT p.room_id, p.sku, NULL AS 'var', p.quantity
+					FROM " . DB_PREFIX . "room p
 				) AS oc_sku ON alr.sku = oc_sku.sku
-				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
-				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
-				WHERE apl.product_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
+				LEFT JOIN " . DB_PREFIX . "amazon_room_link apl ON (oc_sku.var IS NULL AND oc_sku.room_id = apl.room_id) OR (oc_sku.var IS NOT NULL AND oc_sku.room_id = apl.room_id AND oc_sku.var = apl.var)
+				LEFT JOIN " . DB_PREFIX . "room_description pd ON oc_sku.room_id = pd.room_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+				WHERE apl.room_id IS NULL AND alr.marketplace = '" . $this->db->escape($marketplace) . "'
 				ORDER BY alr.sku
 				LIMIT " . (int)$start . "," . (int)$limit)->rows;
 		}
 
 		foreach ($rows as $row) {
-			$products[] = array(
-				'product_id' => $row['product_id'],
+			$rooms[] = array(
+				'room_id' => $row['room_id'],
 				'name' => $row['name'],
 				'sku' => $row['sku'],
 				'var' => $row['var'],
@@ -782,7 +782,7 @@ class ModelOpenbayAmazon extends Model {
 			);
 		}
 
-		return $products;
+		return $rooms;
 	}
 
 	public function getAsinLink($asin, $marketplace) {

@@ -20,7 +20,7 @@
         <table class="table table-striped table-bordered">
           <?php if (!empty($lines)) { ?>
           <tr>
-            <td><?php echo $text_product_lines; ?></td>
+            <td><?php echo $text_room_lines; ?></td>
             <td><table class="table table-striped table-bordered">
                 <?php $i = 0;  foreach($lines as  $k => $v) { ?>
                 <?php if ($i == 0) { ?>

@@ -44,10 +44,10 @@
         </tr>
       </thead>
       <tbody>
-        <?php if (!empty($product_links)) { ?>
-        <?php foreach ($product_links as $link) { ?>
+        <?php if (!empty($room_links)) { ?>
+        <?php foreach ($room_links as $link) { ?>
         <tr>
-          <td class="text-left"><?php echo $link['product_name']; ?></td>
+          <td class="text-left"><?php echo $link['room_name']; ?></td>
           <td class="text-left"><?php echo $link['model']; ?></td>
           <td class="text-left"><?php echo $link['combi']; ?></td>
           <td class="text-left"><?php echo $link['sku']; ?></td>

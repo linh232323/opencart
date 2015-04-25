@@ -5,36 +5,36 @@ class ControllerModuleEbayListing extends Controller {
 			$this->language->load('module/ebay');
 			
 			$this->load->model('tool/image');
-			$this->load->model('openbay/ebay_product');
+			$this->load->model('openbay/ebay_room');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			$products = $this->cache->get('ebay_listing.' . md5(serialize($products)));
+			$rooms = $this->cache->get('ebay_listing.' . md5(serialize($rooms)));
 
-			if (!$products) {
-				$products = $this->model_openbay_ebay_product->getDisplayProducts();
+			if (!$rooms) {
+				$rooms = $this->model_openbay_ebay_room->getDisplayrooms();
 				
-				$this->cache->set('ebay_listing.' . md5(serialize($products)), $products);
+				$this->cache->set('ebay_listing.' . md5(serialize($rooms)), $rooms);
 			}
 
-			foreach($products['products'] as $product) {
-				if (isset($product['pictures'][0])) {
-					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
+			foreach($rooms['rooms'] as $room) {
+				if (isset($room['pictures'][0])) {
+					$image = $this->model_openbay_ebay_room->resize($room['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				}
 
-				$data['products'][] = array(
+				$data['rooms'][] = array(
 					'thumb' => $image, 
-					'name'  => base64_decode($product['Title']), 
-					'price' => $this->currency->format($product['priceGross']), 
-					'href' => (string)$product['link']
+					'name'  => base64_decode($room['Title']), 
+					'price' => $this->currency->format($room['priceGross']), 
+					'href' => (string)$room['link']
 				);
 			}
 
-			$data['tracking_pixel'] = $products['tracking_pixel'];
+			$data['tracking_pixel'] = $rooms['tracking_pixel'];
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebay.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/module/ebay.tpl', $data);

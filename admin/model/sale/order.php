@@ -6,10 +6,10 @@ class ModelSaleOrder extends Model {
 		if ($order_query->num_rows) {
 			$reward = 0;
 
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+			$order_room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
-			foreach ($order_product_query->rows as $product) {
-				$reward += $product['reward'];
+			foreach ($order_room_query->rows as $room) {
+				$reward += $room['reward'];
 			}
 
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
@@ -157,7 +157,7 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function getOrders($data = array()) {
-		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.shipping_code, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified, op.product_id FROM `" . DB_PREFIX . "order` o LEFT JOIN  " . DB_PREFIX . "order_product op ON op.order_id = o.order_id";
+		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.shipping_code, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified, op.room_id FROM `" . DB_PREFIX . "order` o LEFT JOIN  " . DB_PREFIX . "order_room op ON op.order_id = o.order_id";
 
 		if (isset($data['filter_order_status'])) {
 			$implode = array();
@@ -199,7 +199,7 @@ class ModelSaleOrder extends Model {
 
 		$sort_data = array(
 			'o.order_id',
-			'op.product_id',
+			'op.room_id',
 			'customer',
 			'status',
 			'o.date_added',
@@ -236,8 +236,8 @@ class ModelSaleOrder extends Model {
 		return $query->rows;
 	}
 
-	public function getOrderProducts($order_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+	public function getOrderRooms($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
@@ -248,8 +248,8 @@ class ModelSaleOrder extends Model {
 		return $query->row;
 	}
 
-	public function getOrderOptions($order_id, $order_product_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+	public function getOrderOptions($order_id, $order_room_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$order_room_id . "'");
 
 		return $query->rows;
 	}
@@ -420,26 +420,26 @@ class ModelSaleOrder extends Model {
 		return $query->row['total'];
 	}
 
-	public function getEmailsByProductsOrdered($products, $start, $end) {
+	public function getEmailsByRoomsOrdered($rooms, $start, $end) {
 		$implode = array();
 
-		foreach ($products as $product_id) {
-			$implode[] = "op.product_id = '" . (int)$product_id . "'";
+		foreach ($rooms as $room_id) {
+			$implode[] = "op.room_id = '" . (int)$room_id . "'";
 		}
 
-		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
+		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_room op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
 
 		return $query->rows;
 	}
 
-	public function getTotalEmailsByProductsOrdered($products) {
+	public function getTotalEmailsByRoomsOrdered($rooms) {
 		$implode = array();
 
-		foreach ($products as $product_id) {
-			$implode[] = "op.product_id = '" . (int)$product_id . "'";
+		foreach ($rooms as $room_id) {
+			$implode[] = "op.room_id = '" . (int)$room_id . "'";
 		}
 
-		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
+		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_room op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
 
 		return $query->row['total'];
 	}

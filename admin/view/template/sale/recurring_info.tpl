@@ -77,8 +77,8 @@
             <td><?php echo $recurring_description; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_product; ?></td>
-            <td><?php echo $product; ?></td>
+            <td><?php echo $entry_room; ?></td>
+            <td><?php echo $room; ?></td>
           </tr>
           <tr>
             <td><?php echo $entry_quantity; ?></td>

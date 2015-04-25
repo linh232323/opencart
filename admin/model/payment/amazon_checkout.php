@@ -12,10 +12,10 @@ class ModelPaymentAmazonCheckout extends Model {
 		");
 
 		$this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "order_amazon_product` (
-			`order_product_id`  int NOT NULL ,
+			CREATE TABLE `" . DB_PREFIX . "order_amazon_room` (
+			`order_room_id`  int NOT NULL ,
 			`amazon_order_item_code`  varchar(255) NOT NULL,
-			PRIMARY KEY (`order_product_id`)
+			PRIMARY KEY (`order_room_id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 		");
 
@@ -42,7 +42,7 @@ class ModelPaymentAmazonCheckout extends Model {
 
 	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "order_amazon`;");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "order_amazon_product`;");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "order_amazon_room`;");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "order_amazon_report`;");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "order_total_tax`;");
 	}
@@ -82,13 +82,13 @@ class ModelPaymentAmazonCheckout extends Model {
 		if ($result->num_rows) {
 			$order['amazon_order_id'] = $result->row['amazon_order_id'];
 
-			$order['products'] = array();
+			$order['rooms'] = array();
 
-			$results = $this->db->query("SELECT oap.order_product_id, amazon_order_item_code, op.quantity FROM " . DB_PREFIX . "order_amazon_product oap JOIN " . DB_PREFIX . "order_product op USING(order_product_id) WHERE order_id = " . (int)$order_id . "
+			$results = $this->db->query("SELECT oap.order_room_id, amazon_order_item_code, op.quantity FROM " . DB_PREFIX . "order_amazon_room oap JOIN " . DB_PREFIX . "order_room op USING(order_room_id) WHERE order_id = " . (int)$order_id . "
 			")->rows;
 
 			foreach ($results as $result) {
-				$order['products'][$result['order_product_id']] = array(
+				$order['rooms'][$result['order_room_id']] = array(
 					'amazon_order_item_code' => $result['amazon_order_item_code'],
 					'quantity' => $result['quantity'],
 				);

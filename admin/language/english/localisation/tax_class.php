@@ -27,5 +27,5 @@ $_['entry_priority']    = 'Priority';
 $_['error_permission']  = 'Warning: You do not have permission to modify tax classes!';
 $_['error_title']       = 'Tax Class Title must be between 3 and 32 characters!';
 $_['error_description'] = 'Description must be between 3 and 255 characters!';
-$_['error_product']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s hotels!';

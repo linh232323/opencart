@@ -51,7 +51,7 @@ $_['entry_icon']                = 'Icon:<br /><span class="help">icon được h
 $_['entry_image_category']      = 'Cỡ hình danh mục:';
 $_['entry_image_thumb']         = 'Cỡ hình sản phẩm thu nhỏ:';
 $_['entry_image_popup']         = 'Cỡ hình sản phẩm phóng to:';
-$_['entry_image_product']       = 'Cỡ sản phẩm:';
+$_['entry_image_room']       = 'Cỡ sản phẩm:';
 $_['entry_image_additional']    = 'Cỡ ảnh sản phẩm nhập vào:';
 $_['entry_image_related']       = 'Cỡ ảnh sản phẩm liên quan:';
 $_['entry_image_compare']       = 'So sánh kích cỡ hình ảnh:';
@@ -72,7 +72,7 @@ $_['error_title']               = 'Tiêu đề phải có từ 3 đến 32 ký t
 $_['error_limit']       		= 'Yêu cầu giới hạn!';
 $_['error_image_thumb']         = 'Yêu cầu kích thước ảnh sản phẩm thu nhỏ!';
 $_['error_image_popup']         = 'Yêu cầu kích thước ảnh sản phẩm phóng to!';
-$_['error_image_product']       = 'Yêu cầu kích thước cho sản phẩm!';
+$_['error_image_room']       = 'Yêu cầu kích thước cho sản phẩm!';
 $_['error_image_category']      = 'Yêu cầu kích thước cho danh mục sản phẩm!';
 $_['error_image_manufacturer']  = 'Danh sách các Kích thước ảnh nhà sản xuất!';
 $_['error_image_additional']  = 'Yêu cầu kích thước ảnh cho sản phẩm thêm!';

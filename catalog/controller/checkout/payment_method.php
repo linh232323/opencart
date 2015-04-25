@@ -36,7 +36,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 
 			$results = $this->model_extension_extension->getExtensions('payment');
 
-			$recurring = $this->cart->hasRecurringProducts();
+			$recurring = $this->cart->hasRecurringrooms();
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
@@ -136,24 +136,24 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has rooms and has stock.
+		if ((!$this->cart->hasrooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getrooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
+			if ($room['minimum'] > $room_total) {
 				$json['redirect'] = $this->url->link('checkout/cart');
 
 				break;

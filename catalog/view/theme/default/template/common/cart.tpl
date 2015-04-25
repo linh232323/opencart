@@ -1,28 +1,28 @@
 <div id="cart" class="btn-group btn-block">
   <button type="button" data-toggle="dropdown" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo $text_items; ?></span></button>
   <ul class="dropdown-menu pull-right">
-    <?php if ($products || $vouchers) { ?>
+    <?php if ($rooms || $vouchers) { ?>
     <li>
       <table class="table table-striped">
-        <?php foreach ($products as $product) { ?>
+        <?php foreach ($rooms as $room) { ?>
         <tr>
-          <td class="text-center"><?php if ($product['thumb']) { ?>
-            <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
+          <td class="text-center"><?php if ($room['thumb']) { ?>
+            <a href="<?php echo $room['href']; ?>"><img src="<?php echo $room['thumb']; ?>" alt="<?php echo $room['name']; ?>" title="<?php echo $room['name']; ?>" class="img-thumbnail" /></a>
             <?php } ?></td>
-          <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-            <?php if ($product['option']) { ?>
-            <?php foreach ($product['option'] as $option) { ?>
+          <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a>
+            <?php if ($room['option']) { ?>
+            <?php foreach ($room['option'] as $option) { ?>
             <br />
             - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
             <?php } ?>
             <?php } ?>
-            <?php if ($product['recurring']) { ?>
+            <?php if ($room['recurring']) { ?>
             <br />
-            - <small><?php echo $text_recurring; ?> <?php echo $product['recurring']; ?></small>
+            - <small><?php echo $text_recurring; ?> <?php echo $room['recurring']; ?></small>
             <?php } ?></td>
-          <td class="text-right">x <?php echo $product['quantity']; ?></td>
-          <td class="text-right"><?php echo $product['total']; ?></td>
-          <td class="text-center"><button type="button" onclick="cart.remove('<?php echo $product['key']; ?>');" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
+          <td class="text-right">x <?php echo $room['quantity']; ?></td>
+          <td class="text-right"><?php echo $room['total']; ?></td>
+          <td class="text-center"><button type="button" onclick="cart.remove('<?php echo $room['key']; ?>');" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
         </tr>
         <?php } ?>
         <?php foreach ($vouchers as $voucher) { ?>

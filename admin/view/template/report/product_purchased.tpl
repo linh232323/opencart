@@ -65,13 +65,13 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($products) { ?>
-              <?php foreach ($products as $product) { ?>
+              <?php if ($rooms) { ?>
+              <?php foreach ($rooms as $room) { ?>
               <tr>
-                <td class="text-left"><?php echo $product['name']; ?></td>
-                <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-right"><?php echo $product['quantity']; ?></td>
-                <td class="text-right"><?php echo $product['total']; ?></td>
+                <td class="text-left"><?php echo $room['name']; ?></td>
+                <td class="text-left"><?php echo $room['model']; ?></td>
+                <td class="text-right"><?php echo $room['quantity']; ?></td>
+                <td class="text-right"><?php echo $room['total']; ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
@@ -91,7 +91,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/product_purchased&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/room_purchased&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	

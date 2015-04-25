@@ -39,7 +39,7 @@ class ControllerAccountRecurring extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_status'] = $this->language->get('column_status');
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_action'] = $this->language->get('column_action');
 		$data['column_recurring_id'] = $this->language->get('column_recurring_id');
 		$data['text_empty'] = $this->language->get('text_empty');
@@ -64,7 +64,7 @@ class ControllerAccountRecurring extends Controller {
 			foreach ($results as $result) {
 				$data['recurrings'][] = array(
 					'id'                    => $result['order_recurring_id'],
-					'name'                  => $result['product_name'],
+					'name'                  => $result['room_name'],
 					'status'                => $result['status'],
 					'date_added'               => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'href'                  => $this->url->link('account/recurring/info', 'recurring_id=' . $result['order_recurring_id'], 'SSL'),
@@ -164,7 +164,7 @@ class ControllerAccountRecurring extends Controller {
 			$recurring['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
 
 			$recurring['date_added'] = date($this->language->get('date_format_short'), strtotime($recurring['date_added']));
-			$recurring['product_link'] = $this->url->link('product/product', 'product_id=' . $recurring['product_id'], 'SSL');
+			$recurring['room_link'] = $this->url->link('product/room', 'room_id=' . $recurring['room_id'], 'SSL');
 			$recurring['order_link'] = $this->url->link('account/order/info', 'order_id=' . $recurring['order_id'], 'SSL');
 
 			$this->document->setTitle($this->language->get('text_recurring'));
@@ -210,7 +210,7 @@ class ControllerAccountRecurring extends Controller {
 			$data['text_recurring_detail'] = $this->language->get('text_recurring_detail');
 			$data['text_status'] = $this->language->get('text_status');
 			$data['text_ref'] = $this->language->get('text_ref');
-			$data['text_product'] = $this->language->get('text_product');
+			$data['text_room'] = $this->language->get('text_room');
 			$data['text_order'] = $this->language->get('text_order');
 			$data['text_quantity'] = $this->language->get('text_quantity');
 			$data['text_transactions'] = $this->language->get('text_transactions');

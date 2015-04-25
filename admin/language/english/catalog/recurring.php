@@ -39,5 +39,5 @@ $_['column_action']         = 'Action';
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']		= 'Warning: You do not have permission to modify recurring profiles!';
 $_['error_name']			= 'Profile Name must be greater than 3 and less than 255 characters!';
-$_['error_product']			= 'Warning: This recurring profile cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']			= 'Warning: This recurring profile cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']			= 'Warning: This recurring profile cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']			= 'Warning: This recurring profile cannot be deleted as it is currently assigned to %s hotels!';

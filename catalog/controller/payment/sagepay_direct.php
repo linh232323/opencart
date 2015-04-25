@@ -300,10 +300,10 @@ class ControllerPaymentSagepayDirect extends Controller {
 			}
 
 			if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
-				$recurring_products = $this->cart->getRecurringProducts();
+				$recurring_rooms = $this->cart->getRecurringRooms();
 
-				//loop through any products that are recurring items
-				foreach ($recurring_products as $item) {
+				//loop through any rooms that are recurring items
+				foreach ($recurring_rooms as $item) {
 					$this->model_payment_sagepay_direct->recurringPayment($item, $payment_data['VendorTxCode']);
 				}
 			}
@@ -391,10 +391,10 @@ class ControllerPaymentSagepayDirect extends Controller {
 				}
 
 				if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
-					$recurring_products = $this->cart->getRecurringProducts();
+					$recurring_rooms = $this->cart->getRecurringRooms();
 
-					//loop through any products that are recurring items
-					foreach ($recurring_products as $item) {
+					//loop through any rooms that are recurring items
+					foreach ($recurring_rooms as $item) {
 						$this->model_payment_sagepay_direct->recurringPayment($item, $sagepay_order_info['VendorTxCode']);
 					}
 				}

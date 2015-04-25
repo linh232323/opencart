@@ -21,7 +21,7 @@ $_['text_img_upload_done']  	= 'Uploaded image';
 $_['text_create']  				= 'Create a new Etsy listing';
 
 // Entry
-$_['entry_title']      			= 'Product title';
+$_['entry_title']      			= 'Room title';
 $_['entry_description']     	= 'Description';
 $_['entry_price']      			= 'Price';
 $_['entry_non_taxable']     	= 'Non taxable';

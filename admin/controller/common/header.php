@@ -28,10 +28,10 @@ class ControllerCommonHeader extends Controller {
 		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_online'] = $this->language->get('text_online');
 		$data['text_approval'] = $this->language->get('text_approval');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
-		$data['text_pareview'] = $this->language->get('text_pareview');
+		$data['text_hotelreview'] = $this->language->get('text_hotelreview');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_front'] = $this->language->get('text_front');
@@ -86,14 +86,14 @@ class ControllerCommonHeader extends Controller {
 			$data['customer_total'] = $customer_total;
 			$data['customer_approval'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
 
-			// Products
-			$this->load->model('catalog/product');
+			// Rooms
+			$this->load->model('catalog/room');
 
-			$product_total = $this->model_catalog_product->getTotalProducts(array('filter_quantity' => 0));
+			$room_total = $this->model_catalog_room->getTotalRooms(array('filter_quantity' => 0));
 
-			$data['product_total'] = $product_total;
+			$data['room_total'] = $room_total;
 
-			$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&filter_quantity=0', 'SSL');
+			$data['room'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&filter_quantity=0', 'SSL');
 
 			// Reviews
 			$this->load->model('catalog/review');
@@ -107,11 +107,11 @@ class ControllerCommonHeader extends Controller {
 			// Parent Reviews
 			$this->load->model('catalog/review');
 
-			$pareview_total = $this->model_catalog_review->getTotalPareviews(array('filter_status' => false));
+			$hotelreview_total = $this->model_catalog_review->getTotalHotelreviews(array('filter_status' => false));
 
-			$data['pareview_total'] = $pareview_total;
+			$data['hotelreview_total'] = $hotelreview_total;
 
-			$data['pareview'] = $this->url->link('catalog/pareview', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
+			$data['hotelreview'] = $this->url->link('catalog/hotelreview', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
 
 			// Affliate
 			$this->load->model('marketing/affiliate');
@@ -121,7 +121,7 @@ class ControllerCommonHeader extends Controller {
 			$data['affiliate_total'] = $affiliate_total;
 			$data['affiliate_approval'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=1', 'SSL');
 
-			$data['alerts'] = $customer_total + $product_total + $review_total + $return_total + $affiliate_total;
+			$data['alerts'] = $customer_total + $room_total + $review_total + $return_total + $affiliate_total;
 
 			// Online Stores
 			$data['stores'] = array();

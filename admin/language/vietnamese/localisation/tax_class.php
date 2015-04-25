@@ -24,5 +24,5 @@ $_['entry_priority']    = 'Ưu tiên:';
 $_['error_permission']  = 'Cảnh báo: Bạn không được phép sửa đổi về thuế!';
 $_['error_title']       = 'Tiêu đề phải lớn hơn 3 và nhỏ hơn 32 ký tự!';
 $_['error_description'] = 'Mô tả phải lớn hơn 3 và nhỏ hơn 255 ký tự!';
-$_['error_product']     = 'Cảnh báo: Không thể xóa bời vì mức thuế hiện đang được áp dung cho %s sản phẩm!';
+$_['error_room']     = 'Cảnh báo: Không thể xóa bời vì mức thuế hiện đang được áp dung cho %s sản phẩm!';
 ?>

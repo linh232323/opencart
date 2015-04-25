@@ -17,7 +17,7 @@ class ControllerCheckoutCart extends Controller {
 			'text' => $this->language->get('heading_title')
 		);
 
-		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+		if ($this->cart->hasRooms() || !empty($this->session->data['vouchers'])) {
 			$data['heading_title'] = $this->language->get('heading_title');
 
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
@@ -72,32 +72,32 @@ class ControllerCheckoutCart extends Controller {
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			$products = $this->cart->getProducts();
+			$rooms = $this->cart->getRooms();
 
-			foreach ($products as $product) {
-				$product_total = 0;
+			foreach ($rooms as $room) {
+				$room_total = 0;
 
-				foreach ($products as $product_2) {
-					if ($product_2['product_id'] == $product['product_id']) {
-						$product_total += $product_2['quantity'];
+				foreach ($rooms as $room_2) {
+					if ($room_2['room_id'] == $room['room_id']) {
+						$room_total += $room_2['quantity'];
 					}
 				}
 
-				if ($product['minimum'] > $product_total) {
-					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+				if ($room['minimum'] > $room_total) {
+					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $room['name'], $room['minimum']);
 				}
 
-				if ($product['image']) {
-					$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+				if ($room['image']) {
+					$image = $this->model_tool_image->resize($room['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 				} else {
 					$image = '';
 				}
 
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
@@ -118,21 +118,21 @@ class ControllerCheckoutCart extends Controller {
 
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+					$price = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$price = false;
 				}
 
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'] * $product['night']);
+					$total = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')) * $room['quantity'] * $room['night']);
 				} else {
 					$total = false;
 				}
 
 				$recurring = '';
 
-				if ($product['recurring']) {
+				if ($room['recurring']) {
 					$frequencies = array(
 						'day'        => $this->language->get('text_day'),
 						'week'       => $this->language->get('text_week'),
@@ -141,31 +141,31 @@ class ControllerCheckoutCart extends Controller {
 						'year'       => $this->language->get('text_year'),
 					);
 
-					if ($product['recurring']['trial']) {
-						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+					if ($room['recurring']['trial']) {
+						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($room['recurring']['trial_price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['trial_cycle'], $frequencies[$room['recurring']['trial_frequency']], $room['recurring']['trial_duration']) . ' ';
 					}
 
-					if ($product['recurring']['duration']) {
-						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					if ($room['recurring']['duration']) {
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 					} else {
-						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 					}
 				}
 
-				$data['products'][] = array(
-					'key'       => $product['key'],
+				$data['rooms'][] = array(
+					'key'       => $room['key'],
 					'thumb'     => $image,
-					'name'      => $product['name'],
-					'model'     => $product['model'],
+					'name'      => $room['name'],
+					'model'     => $room['model'],
 					'option'    => $option_data,
 					'recurring' => $recurring,
-					'quantity'  => $product['quantity'],
-					'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+					'quantity'  => $room['quantity'],
+					'stock'     => $room['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+					'reward'    => ($room['reward'] ? sprintf($this->language->get('text_points'), $room['reward']) : ''),
 					'price'     => $price,
-					'night'     => $product['night'],
+					'night'     => $room['night'],
 					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'      => $this->url->link('product/room', 'room_id=' . $room['room_id'])
 				);
 			}
 
@@ -283,17 +283,17 @@ class ControllerCheckoutCart extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['product_id'])) {
-			$product_id = (int)$this->request->post['product_id'];
+		if (isset($this->request->post['room_id'])) {
+			$room_id = (int)$this->request->post['room_id'];
 		} else {
-			$product_id = 0;
+			$room_id = 0;
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
+		$room_info = $this->model_catalog_room->getRoom($room_id);
 
-		if ($product_info) {
+		if ($room_info) {
 			if (isset($this->request->post['quantity'])) {
 				$quantity = (int)$this->request->post['quantity'];
 			} else {
@@ -306,11 +306,11 @@ class ControllerCheckoutCart extends Controller {
 				$option = array();
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+			$room_options = $this->model_catalog_room->getRoomOptions($this->request->post['room_id']);
 
-			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+			foreach ($room_options as $room_option) {
+				if ($room_option['required'] && empty($option[$room_option['room_option_id']])) {
+					$json['error']['option'][$room_option['room_option_id']] = sprintf($this->language->get('error_required'), $room_option['name']);
 				}
 			}
 
@@ -320,7 +320,7 @@ class ControllerCheckoutCart extends Controller {
 				$recurring_id = 0;
 			}
 
-			$recurrings = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			$recurrings = $this->model_catalog_room->getProfiles($room_info['room_id']);
 
 			if ($recurrings) {
 				$recurring_ids = array();
@@ -335,9 +335,9 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $recurring_id);
+				$this->cart->add($this->request->post['room_id'], $this->request->post['quantity'], $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/room', 'room_id=' . $this->request->post['room_id']), $room_info['name'], $this->url->link('checkout/cart'));
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
@@ -380,9 +380,9 @@ class ControllerCheckoutCart extends Controller {
 					array_multisort($sort_order, SORT_ASC, $total_data);
 				}
 
-				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countRooms() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/room', 'room_id=' . $this->request->post['room_id']));
 			}
 		}
 
@@ -469,7 +469,7 @@ class ControllerCheckoutCart extends Controller {
 				array_multisort($sort_order, SORT_ASC, $total_data);
 			}
 
-			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countRooms() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

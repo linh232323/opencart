@@ -33,7 +33,7 @@ class ControllerInformationSitemap extends Controller {
 		$data['text_contact'] = $this->language->get('text_contact');
 
 		$this->load->model('catalog/category');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$data['categories'] = array();
 
@@ -70,7 +70,7 @@ class ControllerInformationSitemap extends Controller {
 			);
 		}
 
-		$data['special'] = $this->url->link('product/special');
+		$data['special'] = $this->url->link('room/special');
 		$data['account'] = $this->url->link('account/account', '', 'SSL');
 		$data['edit'] = $this->url->link('account/edit', '', 'SSL');
 		$data['password'] = $this->url->link('account/password', '', 'SSL');

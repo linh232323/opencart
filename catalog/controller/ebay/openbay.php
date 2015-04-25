@@ -6,7 +6,7 @@ class ControllerEbayOpenbay extends Controller {
 		$active         = $this->config->get('ebay_status');
 
 		$this->load->model('openbay/ebay_openbay');
-		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_room');
 		$this->load->model('openbay/ebay_order');
 
 		if(empty($encrypted)) {
@@ -18,15 +18,15 @@ class ControllerEbayOpenbay extends Controller {
 			if($secret == $data['secret'] && $active == 1) {
 				if($data['action'] == 'ItemUnsold') {
 					$this->openbay->ebay->log('Action: Unsold Item');
-					$product_id = $this->openbay->ebay->getProductId($data['itemId']);
+					$room_id = $this->openbay->ebay->getroomId($data['itemId']);
 
-					if($product_id != false) {
-						$this->openbay->ebay->log('eBay item link found with internal product');
-						$rules = $this->model_openbay_ebay_product->getRelistRule($data['itemId']);
+					if($room_id != false) {
+						$this->openbay->ebay->log('eBay item link found with internal room');
+						$rules = $this->model_openbay_ebay_room->getRelistRule($data['itemId']);
 
 						if(!empty($rules)) {
 							$this->openbay->ebay->log('Item is due to be automatically relisted');
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing_pending` SET `ebay_item_id` = '" . $this->db->escape($data['itemId']) . "', `product_id` = '" . (int)$product_id . "', `key` = '" . $this->db->escape($data['key']) . "'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing_pending` SET `ebay_item_id` = '" . $this->db->escape($data['itemId']) . "', `room_id` = '" . (int)$room_id . "', `key` = '" . $this->db->escape($data['key']) . "'");
 							$this->openbay->ebay->removeItemByItemId($data['itemId']);
 						} else {
 							$this->openbay->ebay->log('No automation rule set');
@@ -41,12 +41,12 @@ class ControllerEbayOpenbay extends Controller {
 				if($data['action'] == 'ItemListed') {
 					$this->openbay->ebay->log('Action: Listed Item');
 
-					$product_id = $this->openbay->ebay->getProductIdFromKey($data['key']);
+					$room_id = $this->openbay->ebay->getroomIdFromKey($data['key']);
 
-					if($product_id != false) {
-						$this->openbay->ebay->createLink($product_id, $data['itemId'], '');
+					if($room_id != false) {
+						$this->openbay->ebay->createLink($room_id, $data['itemId'], '');
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape($data['key']) . "' LIMIT 1");
-						$this->openbay->ebay->log('A link was found with product id: ' . $product_id . ', item id: ' . $data['itemId'] . ' and key: ' . $data['key']);
+						$this->openbay->ebay->log('A link was found with room id: ' . $room_id . ', item id: ' . $data['itemId'] . ' and key: ' . $data['key']);
 					} else {
 						$this->openbay->ebay->log('No link found to previous item');
 					}
@@ -98,8 +98,8 @@ class ControllerEbayOpenbay extends Controller {
 
 		if(isset($data['secret']) && $secret == $data['secret'] && $active == 1 && isset($data['data'])) {
 			$this->load->model('openbay/ebay_openbay');
-			$this->load->model('openbay/ebay_product');
-			$this->model_openbay_ebay_product->importItems($data);
+			$this->load->model('openbay/ebay_room');
+			$this->model_openbay_ebay_room->importItems($data);
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'error' => false)));
 		} else {
 			$this->response->setOutput(json_encode(array('msg' => 'Auth failed', 'error' => true)));

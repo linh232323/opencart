@@ -538,7 +538,7 @@ zone, so it may take a little bit of tweaking to work around this
 limitation.
 
 The easiest way to think about it is to pretend that the data
-production time zone is UTC, even if it isn't. So if you have a
+roomion time zone is UTC, even if it isn't. So if you have a
 datapoint at 2002-02-20 08:00, you can generate a timestamp for eight
 o'clock UTC even if it really happened eight o'clock UTC+0200.
 

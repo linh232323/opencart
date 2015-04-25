@@ -3,8 +3,8 @@
   <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <span><?php echo $text_catalog; ?></span></a>
     <ul>
       <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
-      <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
-      <li><a href="<?php echo $proparent; ?>"><?php echo $text_proparent; ?></a></li>
+      <li><a href="<?php echo $room; ?>"><?php echo $text_room; ?></a></li>
+      <li><a href="<?php echo $hotel; ?>"><?php echo $text_hotel; ?></a></li>
       <li><a href="<?php echo $recurring; ?>"><?php echo $text_recurring; ?></a></li>
       <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
       <li><a class="parent"><?php echo $text_attribute; ?></a>
@@ -17,7 +17,7 @@
       <li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li>
       <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
       <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?></a></li>
-      <li><a href="<?php echo $pareview; ?>"><?php echo $text_pareview; ?></a></li>
+      <li><a href="<?php echo $hotelreview; ?>"><?php echo $text_hotelreview; ?></a></li>
       <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
     </ul>
   </li>
@@ -175,10 +175,10 @@
           <li><a href="<?php echo $report_sale_coupon; ?>"><?php echo $text_report_sale_coupon; ?></a></li>
         </ul>
       </li>
-      <li><a class="parent"><?php echo $text_product; ?></a>
+      <li><a class="parent"><?php echo $text_room; ?></a>
         <ul>
-          <li><a href="<?php echo $report_product_viewed; ?>"><?php echo $text_report_product_viewed; ?></a></li>
-          <li><a href="<?php echo $report_product_purchased; ?>"><?php echo $text_report_product_purchased; ?></a></li>
+          <li><a href="<?php echo $report_room_viewed; ?>"><?php echo $text_report_room_viewed; ?></a></li>
+          <li><a href="<?php echo $report_room_purchased; ?>"><?php echo $text_report_room_purchased; ?></a></li>
         </ul>
       </li>
       <li><a class="parent"><?php echo $text_customer; ?></a>

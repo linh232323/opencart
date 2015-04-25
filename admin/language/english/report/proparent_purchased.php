@@ -1,15 +1,15 @@
 <?php
 // Heading
-$_['heading_title']     = 'Proparents Purchased Report';
+$_['heading_title']     = 'hotels Purchased Report';
 
 // Text
-$_['text_list']         = 'Proparents Purchased List';
+$_['text_list']         = 'hotels Purchased List';
 $_['text_all_status']   = 'All Statuses';
 
 // Column
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
-$_['column_name']       = 'Proparent Name';
+$_['column_name']       = 'hotel Name';
 $_['column_model']      = 'Model';
 $_['column_quantity']   = 'Quantity';
 $_['column_total']      = 'Total';

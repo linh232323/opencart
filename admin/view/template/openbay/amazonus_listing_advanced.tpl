@@ -31,12 +31,12 @@
     <div id="tabs" class="htabs"> <a href="#page-main"><?php echo $tab_main; ?></a>
       <div id="dynamic_tabs"></div>
     </div>
-    <form method="POST" id="product_form_advanced">
+    <form method="POST" id="room_form_advanced">
       <div id="page-main">
         <table class="form" align="left">
           <tbody>
             <tr>
-              <td style="width: 400px;"><?php echo $entry_product; ?></td>
+              <td style="width: 400px;"><?php echo $entry_room; ?></td>
               <td><a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?>
                 <?php if (!empty($options)) { echo " : "; } ?>
                 </a>
@@ -55,7 +55,7 @@
               <td><select id="category_selector">
                   <option value=""></option>
                   <?php foreach($amazonus_categories as $category) {  ?>
-                  <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                  <option <?php if ($edit_room_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
                   <?php } ?>
                 </select></td>
             </tr>
@@ -108,7 +108,7 @@ $(document).ready(function(){
     });
     //Update needed if editing
     $('#category_selector').change();
-    $('#product_form_advanced input[name=upload_after]').val(false);
+    $('#room_form_advanced input[name=upload_after]').val(false);
 
 });
 
@@ -476,9 +476,9 @@ function validate(formType) {
     }
 
     var warnings = 0;
-    var productIdType;
-    var productId;
-    var productIdRequired;
+    var roomIdType;
+    var roomId;
+    var roomIdRequired;
 
     $('.fields_' + formType + ' :input').each(function (i) {
 
@@ -494,13 +494,13 @@ function validate(formType) {
         var max_length = $(this).attr('max_length');
 
         if (field_name === 'Type') {
-            productIdType = field_value;
+            roomIdType = field_value;
         } else if (field_name === 'Value') {
-            productId = field_value;
+            roomId = field_value;
             if (field_type === 'required') {
-                productIdRequired = true;
+                roomIdRequired = true;
             } else {
-                productIdRequired = false;
+                roomIdRequired = false;
             }
         }
 
@@ -523,11 +523,11 @@ function validate(formType) {
         }
     });
 
-    if (productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
+    if (roomIdRequired && roomIdType !== 'ASIN' && !isValidroomId(roomId)) {
         $('.fields_' + formType + ' :input').each(function (i) {
             var field_name = $(this).attr('field_name');
             if (field_name === 'Value') {
-                $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
+                $('.fields_' + formType + ' #error_' + field_name).text('Not valid room ID!');
                 warnings ++;
                 return;
             }
@@ -549,9 +549,9 @@ function validate(formType) {
 function validate_and_save(formType) {
     if (validate(formType)) {
         if (formType == 'advanced') {
-            $("#product_form_advanced").submit();
+            $("#room_form_advanced").submit();
         } else if (formType == 'quick') {
-            $("#product_form_quick").submit();
+            $("#room_form_quick").submit();
         }
     } else {
         alert('<?php echo $error_not_saved; ?>');
@@ -559,16 +559,16 @@ function validate_and_save(formType) {
 }
 
 function save_and_upload() {
-    $('#product_form_advanced input[name=upload_after]').val(true);
+    $('#room_form_advanced input[name=upload_after]').val(true);
 
     if (validate('advanced')) {
-        $("#product_form_advanced").submit();
+        $("#room_form_advanced").submit();
     } else {
         alert('<?php echo $error_not_saved; ?>');
     }
 }
 
-function isValidProductId(value) {
+function isValidroomId(value) {
     var barcode = value.substring(0, value.length - 1);
     var checksum = parseInt(value.substring(value.length - 1), 10);
     var calcSum = 0;

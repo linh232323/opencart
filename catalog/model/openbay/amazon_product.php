@@ -1,37 +1,37 @@
 <?php
-class ModelOpenbayAmazonProduct extends Model {
+class ModelOpenbayAmazonroom extends Model {
 	public function setStatus($insertion_id, $status_string) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product` SET `status` = '" . $this->db->escape($status_string) . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_room` SET `status` = '" . $this->db->escape($status_string) . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}
 
-	public function getProductRows($insertion_id) {
-		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
+	public function getroomRows($insertion_id) {
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 	}
 
-	public function getProduct($insertion_id) {
-		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->row;
+	public function getroom($insertion_id) {
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->row;
 	}
 
 	public function linkItems(array $data) {
-		foreach ($data as $amazon_sku => $product_id) {
-			$var_row = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazon_product` WHERE `sku` = '" . $this->db->escape($amazon_sku) . "' AND `product_id` = '" . (int)$product_id . "'")->row;
+		foreach ($data as $amazon_sku => $room_id) {
+			$var_row = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazon_room` WHERE `sku` = '" . $this->db->escape($amazon_sku) . "' AND `room_id` = '" . (int)$room_id . "'")->row;
 			$var = isset($var_row['var']) ? $var_row['var'] : '';
-			$this->linkProduct($amazon_sku, $product_id, $var);
+			$this->linkroom($amazon_sku, $room_id, $var);
 		}
 	}
 
 	public function insertError($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_product_error` SET `sku` = '" . $this->db->escape($data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape($data['message']) . "', `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_room_error` SET `sku` = '" . $this->db->escape($data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape($data['message']) . "', `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product`SET `status` = 'error' WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_room`SET `status` = 'error' WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
 	}
 
 	public function deleteErrors($insertion_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_room_error` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}
 
 	public function setSubmitError($insertion_id, $message) {
-		$sku_rows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazon_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
+		$sku_rows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazon_room` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 
 		foreach ($sku_rows as $sku_row) {
 			$data = array(
@@ -44,14 +44,14 @@ class ModelOpenbayAmazonProduct extends Model {
 		}
 	}
 
-	public function linkProduct($amazon_sku, $product_id, $var = '') {
-		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+	public function linkroom($amazon_sku, $room_id, $var = '') {
+		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_room_link` WHERE `room_id` = '" . (int)$room_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
 		if ($count['count'] == 0) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_product_link` SET `product_id` = '" . (int)$product_id . "', `amazon_sku` = '" . $this->db->escape($amazon_sku) . "', `var` = '" . $this->db->escape($var) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_room_link` SET `room_id` = '" . (int)$room_id . "', `amazon_sku` = '" . $this->db->escape($amazon_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
 	}
 
-	public function getProductQuantity($product_id, $var = '') {
+	public function getroomQuantity($room_id, $var = '') {
 		$this->load->library('amazon');
 
 		$result = null;
@@ -59,7 +59,7 @@ class ModelOpenbayAmazonProduct extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getroomOptionStocks($room_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
@@ -73,11 +73,11 @@ class ModelOpenbayAmazonProduct extends Model {
 				$result = $option['stock'];
 			}
 		} else {
-			$this->load->model('catalog/product');
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+			$this->load->model('catalog/room');
+			$room_info = $this->model_catalog_room->getroom($room_id);
 
-			if (isset($product_info['quantity'])) {
-				$result = $product_info['quantity'];
+			if (isset($room_info['quantity'])) {
+				$result = $room_info['quantity'];
 			}
 		}
 		return $result;
@@ -90,11 +90,11 @@ class ModelOpenbayAmazonProduct extends Model {
 			$data = json_encode($result['results']);
 
 			$this->db->query("
-				UPDATE " . DB_PREFIX . "amazon_product_search
+				UPDATE " . DB_PREFIX . "amazon_room_search
 				SET matches = " . (int)$results_found . ",
 					`data` = '" . $this->db->escape($data) . "',
 					`status` = 'finished'
-				WHERE product_id = " . (int)$result['product_id'] . " AND
+				WHERE room_id = " . (int)$result['room_id'] . " AND
 					  marketplace = '" . $this->db->escape($result['marketplace']) . "'
 				LIMIT 1
 			");
@@ -106,8 +106,8 @@ class ModelOpenbayAmazonProduct extends Model {
 
 		$sql_values = array();
 
-		foreach ($data as $product) {
-			$sql_values[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
+		foreach ($data as $room) {
+			$sql_values[] = " ('" . $this->db->escape($room['marketplace']) . "', '" . $this->db->escape($room['sku']) . "', " . (int)$room['quantity'] . ", '" . $this->db->escape($room['asin']) . "', " . (double)$room['price'] . ") ";
 		}
 
 		$sql .= implode(',', $sql_values);

@@ -58,8 +58,8 @@ class ModelReportAffiliate extends Model {
 		return $query->row['total'];
 	}
 
-	public function getProducts($data = array()) {
-		$sql = "SELECT at.product_id, CONCAT(a.firstname, ' ', a.lastname) AS affiliate, a.email, a.status, SUM(at.amount) AS commission, COUNT(o.order_id) AS orders, SUM(o.total) AS total FROM " . DB_PREFIX . "affiliate_transaction at LEFT JOIN `" . DB_PREFIX . "affiliate` a ON (at.affiliate_id = a.affiliate_id) LEFT JOIN `" . DB_PREFIX . "order` o ON (at.order_id = o.order_id) LEFT JOIN " . DB_PREFIX . "product";
+	public function getRooms($data = array()) {
+		$sql = "SELECT at.room_id, CONCAT(a.firstname, ' ', a.lastname) AS affiliate, a.email, a.status, SUM(at.amount) AS commission, COUNT(o.order_id) AS orders, SUM(o.total) AS total FROM " . DB_PREFIX . "affiliate_transaction at LEFT JOIN `" . DB_PREFIX . "affiliate` a ON (at.affiliate_id = a.affiliate_id) LEFT JOIN `" . DB_PREFIX . "order` o ON (at.order_id = o.order_id) LEFT JOIN " . DB_PREFIX . "room";
 
 		$implode = array();
 
@@ -94,8 +94,8 @@ class ModelReportAffiliate extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalProducts($data = array()) {
-		$sql = "SELECT COUNT(DISTINCT product_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
+	public function getTotalRooms($data = array()) {
+		$sql = "SELECT COUNT(DISTINCT room_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
 
 		$implode = array();
 

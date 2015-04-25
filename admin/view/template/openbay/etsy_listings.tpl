@@ -58,8 +58,8 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-                <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
-                <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+                <input type="hidden" name="add_link_room_id" value="" id="input-room-id"/>
+                <input type="text" name="add_link_room" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
               </div>
             </div>
             <div class="col-sm-6">
@@ -138,7 +138,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>&page=<?php echo $filter["page"]; ?>';
+var url = 'index.php?route=openbay/etsy_room/listings&token=<?php echo $token; ?>&page=<?php echo $filter["page"]; ?>';
 
 var filter_keywords = $('input[name=\'keywords\']').val();
 
@@ -159,7 +159,7 @@ if (filter_limit) {
 }
 
 $('#button-filter').on('click', function() {
-  var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
+  var url = 'index.php?route=openbay/etsy_room/listings&token=<?php echo $token; ?>';
 
   var status = $('select[name=\'status\']').val();
 
@@ -184,11 +184,11 @@ function showLinkOption(id) {
 }
 
 function addLink() {
-  var product_id = $('#input-product-id').val();
+  var room_id = $('#input-room-id').val();
   var etsy_id = $('#input-etsy-id').val();
 
-  if (product_id == '') {
-    alert('<?php echo $error_product_id; ?>');
+  if (room_id == '') {
+    alert('<?php echo $error_room_id; ?>');
     return false;
   }
 
@@ -198,10 +198,10 @@ function addLink() {
   }
 
   $.ajax({
-    url: 'index.php?route=openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+    url: 'index.php?route=openbay/etsy_room/addLink&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
-    data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
+    data: { 'room_id' : room_id, 'etsy_id' : etsy_id },
     beforeSend: function() {
       $('#alert-error').hide().empty();
       $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
@@ -224,7 +224,7 @@ function addLink() {
 
 function deleteLink(etsy_link_id) {
   $.ajax({
-    url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+    url: 'index.php?route=openbay/etsy_room/deleteLink&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
     data: { 'etsy_link_id' : etsy_link_id },
@@ -251,7 +251,7 @@ function endListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/endlisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/endlisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -279,7 +279,7 @@ function deactivateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/deactivatelisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/deactivatelisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -307,7 +307,7 @@ function activateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/activatelisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/activatelisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -330,24 +330,24 @@ function activateListing(etsy_item_id) {
   }
 }
 
-$('input[name=\'add_link_product\']').autocomplete({
+$('input[name=\'add_link_room\']').autocomplete({
   'source': function(request, response) {
     $.ajax({
-      url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+      url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
       dataType: 'json',
       success: function(json) {
         response($.map(json, function(item) {
           return {
             label: item['name'],
-            value: item['product_id']
+            value: item['room_id']
           }
         }));
       }
     });
   },
   'select': function(item) {
-    $('input[name=\'add_link_product\']').val(item['label']);
-    $('#input-product-id').val(item['value']);
+    $('input[name=\'add_link_room\']').val(item['label']);
+    $('#input-room-id').val(item['value']);
   }
 });
 //--></script>

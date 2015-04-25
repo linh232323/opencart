@@ -21,5 +21,5 @@ $_['error_permission'] = 'Cảnh báo: Bạn không được phép thay đổi c
 $_['error_name']       = 'Tên phải lớn hơn 3 và nhỏ hơn 64 ký tự!';
 $_['error_filename']   = 'Tên tập tin phải lớn hơn 3 và nhỏ hơn 128 ký tự!';
 $_['error_filetype']   = 'Loại tập tin không hợp lệ!';
-$_['error_product']    = 'Cảnh báo: Không thể xóa, vì mục tải về này đang được kết nối với %s sản phẩm!';
+$_['error_room']    = 'Cảnh báo: Không thể xóa, vì mục tải về này đang được kết nối với %s sản phẩm!';
 ?>

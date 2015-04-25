@@ -124,18 +124,18 @@ final class Openbay {
 		return $this->installed_markets;
 	}
 
-	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
+	public function putStockUpdateBulk($room_id_array, $end_inactive = false) {
 		/**
 		 * putStockUpdateBulk
 		 *
-		 * Takes an array of product id's where stock has been modified
+		 * Takes an array of room id's where stock has been modified
 		 *
-		 * @param $product_id_array
+		 * @param $room_id_array
 		 */
 
 		foreach ($this->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {
-				$this->{$market}->putStockUpdateBulk($product_id_array, $end_inactive);
+				$this->{$market}->putStockUpdateBulk($room_id_array, $end_inactive);
 			}
 		}
 	}
@@ -247,7 +247,7 @@ final class Openbay {
 		$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order` ASC");
 
 		//Order contents
-		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$order_room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
 
@@ -256,12 +256,12 @@ final class Openbay {
 		$text .= $language->get('text_new_order_id') . ' ' . $order_info['order_id'] . "\n";
 		$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
 		$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
-		$text .= $language->get('text_new_products') . "\n";
+		$text .= $language->get('text_new_rooms') . "\n";
 
-		foreach ($order_product_query->rows as $product) {
-			$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+		foreach ($order_room_query->rows as $room) {
+			$text .= $room['quantity'] . 'x ' . $room['name'] . ' (' . $room['model'] . ') ' . html_entity_decode($this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-			$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+			$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$room['order_room_id'] . "'");
 
 			foreach ($order_option_query->rows as $option) {
 				if ($option['type'] != 'file') {
@@ -332,9 +332,9 @@ final class Openbay {
 		}
 	}
 
-	public function getProductModelNumber($product_id, $sku = null) {
+	public function getRoomModelNumber($room_id, $sku = null) {
 		if($sku != null) {
-			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
+			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "room_option_relation` WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];
@@ -342,7 +342,7 @@ final class Openbay {
 				return false;
 			}
 		}else{
-			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
+			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$room_id . "' LIMIT 1");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['model'];
@@ -378,54 +378,54 @@ final class Openbay {
 		}
 	}
 
-	public function getProductOptions($product_id) {
-		$product_option_data = array();
+	public function getRoomOptions($room_id) {
+		$room_option_data = array();
 
-		$product_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.sort_order");
+		$room_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "room_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.room_id = '" . (int)$room_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.sort_order");
 
-		foreach ($product_option_query->rows as $product_option) {
-			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-				$product_option_value_data = array();
+		foreach ($room_option_query->rows as $room_option) {
+			if ($room_option['type'] == 'select' || $room_option['type'] == 'radio' || $room_option['type'] == 'checkbox' || $room_option['type'] == 'image') {
+				$room_option_value_data = array();
 
-				$product_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_id = '" . (int)$product_option['product_option_id'] . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order");
+				$room_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "room_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.room_option_id = '" . (int)$room_option['room_option_id'] . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order");
 
-				foreach ($product_option_value_query->rows as $product_option_value) {
-					$product_option_value_data[] = array(
-						'product_option_value_id' => $product_option_value['product_option_value_id'],
-						'option_value_id'         => $product_option_value['option_value_id'],
-						'name'                    => $product_option_value['name'],
-						'image'                   => $product_option_value['image'],
-						'quantity'                => $product_option_value['quantity'],
-						'subtract'                => $product_option_value['subtract'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'points'                  => $product_option_value['points'],
-						'points_prefix'           => $product_option_value['points_prefix'],
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']
+				foreach ($room_option_value_query->rows as $room_option_value) {
+					$room_option_value_data[] = array(
+						'room_option_value_id' => $room_option_value['room_option_value_id'],
+						'option_value_id'         => $room_option_value['option_value_id'],
+						'name'                    => $room_option_value['name'],
+						'image'                   => $room_option_value['image'],
+						'quantity'                => $room_option_value['quantity'],
+						'subtract'                => $room_option_value['subtract'],
+						'price'                   => $room_option_value['price'],
+						'price_prefix'            => $room_option_value['price_prefix'],
+						'points'                  => $room_option_value['points'],
+						'points_prefix'           => $room_option_value['points_prefix'],
+						'weight'                  => $room_option_value['weight'],
+						'weight_prefix'           => $room_option_value['weight_prefix']
 					);
 				}
 
-				$product_option_data[] = array(
-					'product_option_id'    => $product_option['product_option_id'],
-					'option_id'            => $product_option['option_id'],
-					'name'                 => $product_option['name'],
-					'type'                 => $product_option['type'],
-					'product_option_value' => $product_option_value_data,
-					'required'             => $product_option['required']
+				$room_option_data[] = array(
+					'room_option_id'    => $room_option['room_option_id'],
+					'option_id'            => $room_option['option_id'],
+					'name'                 => $room_option['name'],
+					'type'                 => $room_option['type'],
+					'room_option_value' => $room_option_value_data,
+					'required'             => $room_option['required']
 				);
 			} else {
-				$product_option_data[] = array(
-					'product_option_id' => $product_option['product_option_id'],
-					'option_id'         => $product_option['option_id'],
-					'name'              => $product_option['name'],
-					'type'              => $product_option['type'],
-					'option_value'      => $product_option['option_value'],
-					'required'          => $product_option['required']
+				$room_option_data[] = array(
+					'room_option_id' => $room_option['room_option_id'],
+					'option_id'         => $room_option['option_id'],
+					'name'              => $room_option['name'],
+					'type'              => $room_option['type'],
+					'option_value'      => $room_option['option_value'],
+					'required'          => $room_option['required']
 				);
 			}
 		}
 
-		return $product_option_data;
+		return $room_option_data;
 	}
 }

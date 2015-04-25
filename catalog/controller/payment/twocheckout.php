@@ -42,17 +42,17 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$data['ship_country'] = $order_info['payment_country'];
 		}
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getRooms();
 
-		foreach ($products as $product) {
-			$data['products'][] = array(
-				'product_id'  => $product['product_id'],
-				'name'        => $product['name'],
-				'description' => $product['name'],
-				'quantity'    => $product['quantity'],
-				'price'       => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], false)
+		foreach ($rooms as $room) {
+			$data['rooms'][] = array(
+				'room_id'  => $room['room_id'],
+				'name'        => $room['name'],
+				'description' => $room['name'],
+				'quantity'    => $room['quantity'],
+				'price'       => $this->currency->format($room['price'], $order_info['currency_code'], $order_info['currency_value'], false)
 			);
 		}
 

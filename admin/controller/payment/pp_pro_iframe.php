@@ -478,7 +478,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->load->language('payment/pp_pro_iframe');
 
 		$data['text_transaction'] = $this->language->get('text_transaction');
-		$data['text_product_lines'] = $this->language->get('text_product_lines');
+		$data['text_room_lines'] = $this->language->get('text_room_lines');
 		$data['text_ebay_txn_id'] = $this->language->get('text_ebay_txn_id');
 		$data['text_name'] = $this->language->get('text_name');
 		$data['text_qty'] = $this->language->get('text_qty');

@@ -17,8 +17,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->document->addScript($amazon_payment_js);
 
-		// CBA supports up to 50 distinct products
-		if (count($this->cart->getProducts()) > 50) {
+		// CBA supports up to 50 distinct rooms
+		if (count($this->cart->getRooms()) > 50) {
 			$this->response->redirect($this->url->link('common/home'));
 		}
 
@@ -157,8 +157,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->response->redirect($this->url->link('common/home'));
 		}
 
-		// Validate cart has products and has stock.
-		if (!empty($this->session->data['vouchers']) || !$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has rooms and has stock.
+		if (!empty($this->session->data['vouchers']) || !$this->cart->hasRooms() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -171,18 +171,18 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getRooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
+			if ($room['minimum'] > $room_total) {
 				$this->response->redirect($this->url->link('checkout/cart'));
 			}
 		}
@@ -343,12 +343,12 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$order_data['shipping_code'] = '';
 		}
 
-		$product_data = array();
+		$room_data = array();
 
-		foreach ($this->cart->getProducts() as $product) {
+		foreach ($this->cart->getRooms() as $room) {
 			$option_data = array();
 
-			foreach ($product['option'] as $option) {
+			foreach ($room['option'] as $option) {
 				if ($option['type'] != 'file') {
 					$value = $option['value'];
 				} else {
@@ -356,8 +356,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				}
 
 				$option_data[] = array(
-					'product_option_id'       => $option['product_option_id'],
-					'product_option_value_id' => $option['product_option_value_id'],
+					'room_option_id'       => $option['room_option_id'],
+					'room_option_value_id' => $option['room_option_value_id'],
 					'option_id'               => $option['option_id'],
 					'option_value_id'         => $option['option_value_id'],
 					'name'                    => $option['name'],
@@ -366,22 +366,22 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				);
 			}
 
-			$product_data[] = array(
-				'product_id' => $product['product_id'],
-				'name'       => $product['name'],
-				'model'      => $product['model'],
+			$room_data[] = array(
+				'room_id' => $room['room_id'],
+				'name'       => $room['name'],
+				'model'      => $room['model'],
 				'option'     => $option_data,
-				'download'   => $product['download'],
-				'quantity'   => $product['quantity'],
-				'subtract'   => $product['subtract'],
-				'price'      => $product['price'],
-				'total'      => $product['total'],
-				'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-				'reward'     => $product['reward']
+				'download'   => $room['download'],
+				'quantity'   => $room['quantity'],
+				'subtract'   => $room['subtract'],
+				'price'      => $room['price'],
+				'total'      => $room['total'],
+				'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
+				'reward'     => $room['reward']
 			);
 		}
 
-		$order_data['products'] = $product_data;
+		$order_data['rooms'] = $room_data;
 		$order_data['vouchers'] = array();
 		$order_data['totals'] = $total_data;
 
@@ -461,10 +461,10 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
 		$data['process_order'] = $this->url->link('payment/amazon_checkout/processorder', '', 'SSL');
 
-		foreach ($this->cart->getProducts() as $product) {
+		foreach ($this->cart->getRooms() as $room) {
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
@@ -479,14 +479,14 @@ class ControllerPaymentAmazonCheckout extends Controller {
 					);
 				}
 
-			$data['products'][] = array(
-				'product_id' => $product['product_id'],
-				'name' => $product['name'],
-				'model' => $product['model'],
+			$data['rooms'][] = array(
+				'room_id' => $room['room_id'],
+				'name' => $room['name'],
+				'model' => $room['model'],
 				'option' => $option_data,
-				'quantity' => $product['quantity'],
-				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'])
+				'quantity' => $room['quantity'],
+				'price' => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax'))),
+				'total' => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')) * $room['quantity'])
 			);
 		}
 
@@ -569,7 +569,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				break;
 		}
 
-		$ordered_products = $this->model_account_order->getOrderProducts($order['order_id']);
+		$ordered_rooms = $this->model_account_order->getOrderRooms($order['order_id']);
 
 		$total = 0;
 
@@ -580,23 +580,23 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$total += $shipping_cost;
 		}
 
-		foreach ($ordered_products as $product) {
+		foreach ($ordered_rooms as $room) {
 
-			$parameters_items['products'][] = array(
-				'title'    => html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8'),
-				'model'    => $product['order_product_id'],
-				'quantity' => $product['quantity'],
-				'price'    => $this->currency->format($product['price'] + $product['tax'], $currency_code, '', false)
+			$parameters_items['rooms'][] = array(
+				'title'    => html_entity_decode($room['name'], ENT_QUOTES, 'UTF-8'),
+				'model'    => $room['order_room_id'],
+				'quantity' => $room['quantity'],
+				'price'    => $this->currency->format($room['price'] + $room['tax'], $currency_code, '', false)
 			);
 
-			$total += ($product['price'] + $product['tax']) * $product['quantity'];
+			$total += ($room['price'] + $room['tax']) * $room['quantity'];
 
 		}
 
 		$order_totals = $this->model_payment_amazon_checkout->getAdditionalCharges($order['order_id']);
 
 		foreach ($order_totals as $order_total) {
-			$parameters_items['products'][] = array(
+			$parameters_items['rooms'][] = array(
 				'title' => $order_total['title'],
 				'model' => 'ot_' . $order_total['order_total_id'],
 				'quantity' => 1,

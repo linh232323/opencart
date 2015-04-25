@@ -380,17 +380,17 @@ class ControllerLocalisationLengthClass extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		foreach ($this->request->post['selected'] as $length_class_id) {
 			if ($this->config->get('config_length_class_id') == $length_class_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
 
-			$product_total = $this->model_catalog_product->getTotalProductsByLengthClassId($length_class_id);
+			$room_total = $this->model_catalog_room->getTotalRoomsByLengthClassId($length_class_id);
 
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+			if ($room_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_room'), $room_total);
 			}
 		}
 

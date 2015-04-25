@@ -3,11 +3,11 @@ class ModelCatalogReview extends Model {
 	public function addReview($data) {
 		$this->event->trigger('pre.admin.review.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', room_id = '" . (int)$data['room_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
 		$review_id = $this->db->getLastId();
 
-		$this->cache->delete('product');
+		$this->cache->delete('room');
 
 		$this->event->trigger('post.admin.review.add', $review_id);
 
@@ -17,9 +17,9 @@ class ModelCatalogReview extends Model {
 	public function editReview($review_id, $data) {
 		$this->event->trigger('pre.admin.review.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', room_id = '" . (int)$data['room_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 
-		$this->cache->delete('product');
+		$this->cache->delete('room');
 
 		$this->event->trigger('post.admin.review.edit', $review_id);
 	}
@@ -29,22 +29,22 @@ class ModelCatalogReview extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE review_id = '" . (int)$review_id . "'");
 
-		$this->cache->delete('product');
+		$this->cache->delete('room');
 
 		$this->event->trigger('post.admin.review.delete', $review_id);
 	}
 
 	public function getReview($review_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "product_description pd WHERE pd.product_id = r.product_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS product FROM " . DB_PREFIX . "review r WHERE r.review_id = '" . (int)$review_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "room_description pd WHERE pd.room_id = r.room_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS room FROM " . DB_PREFIX . "review r WHERE r.review_id = '" . (int)$review_id . "'");
 
 		return $query->row;
 	}
 
 	public function getReviews($data = array()) {
-		$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "room_description pd ON (r.room_id = pd.room_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_product'])) {
-			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
+		if (!empty($data['filter_room'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_room']) . "%'";
 		}
 
 		if (!empty($data['filter_author'])) {
@@ -97,10 +97,10 @@ class ModelCatalogReview extends Model {
 	}
 
 	public function getTotalReviews($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "room_description pd ON (r.room_id = pd.room_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_product'])) {
-			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
+		if (!empty($data['filter_room'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_room']) . "%'";
 		}
 
 		if (!empty($data['filter_author'])) {
@@ -126,51 +126,51 @@ class ModelCatalogReview extends Model {
 		return $query->row['total'];
 	}
         
-	public function addPareview($data) {
-		$this->event->trigger('pre.admin.pareview.add', $data);
+	public function addHotelreview($data) {
+		$this->event->trigger('pre.admin.hotelreview.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "pareview SET author = '" . $this->db->escape($data['author']) . "', proparent_id = '" . (int)$data['proparent_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "hotelreview SET author = '" . $this->db->escape($data['author']) . "', hotel_id = '" . (int)$data['hotel_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
-		$pareview_id = $this->db->getLastId();
+		$hotelreview_id = $this->db->getLastId();
 
-		$this->cache->delete('proparent');
+		$this->cache->delete('hotel');
 
-		$this->event->trigger('post.admin.pareview.add', $pareview_id);
+		$this->event->trigger('post.admin.hotelreview.add', $hotelreview_id);
 
-		return $pareview_id;
+		return $hotelreview_id;
 	}
 
-	public function editPareview($pareview_id, $data) {
-		$this->event->trigger('pre.admin.pareview.edit', $data);
+	public function editHotelreview($hotelreview_id, $data) {
+		$this->event->trigger('pre.admin.hotelreview.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "pareview SET author = '" . $this->db->escape($data['author']) . "', proparent_id = '" . (int)$data['proparent_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE pareview_id = '" . (int)$pareview_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "hotelreview SET author = '" . $this->db->escape($data['author']) . "', hotel_id = '" . (int)$data['hotel_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE hotelreview_id = '" . (int)$hotelreview_id . "'");
 
-		$this->cache->delete('proparent');
+		$this->cache->delete('hotel');
 
-		$this->event->trigger('post.admin.pareview.edit', $pareview_id);
+		$this->event->trigger('post.admin.hotelreview.edit', $hotelreview_id);
 	}
 
-	public function deletePareview($pareview_id) {
-		$this->event->trigger('pre.admin.pareview.delete', $pareview_id);
+	public function deleteHotelreview($hotelreview_id) {
+		$this->event->trigger('pre.admin.hotelreview.delete', $hotelreview_id);
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "pareview WHERE pareview_id = '" . (int)$pareview_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "hotelreview WHERE hotelreview_id = '" . (int)$hotelreview_id . "'");
 
-		$this->cache->delete('proparent');
+		$this->cache->delete('hotel');
 
-		$this->event->trigger('post.admin.pareview.delete', $pareview_id);
+		$this->event->trigger('post.admin.hotelreview.delete', $hotelreview_id);
 	}
 
-	public function getPareview($pareview_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "proparent_description pd WHERE pd.proparent_id = r.proparent_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS proparent FROM " . DB_PREFIX . "pareview r WHERE r.pareview_id = '" . (int)$pareview_id . "'");
+	public function getHotelreview($hotelreview_id) {
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "hotel_description pd WHERE pd.hotel_id = r.hotel_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS hotel FROM " . DB_PREFIX . "hotelreview r WHERE r.hotelreview_id = '" . (int)$hotelreview_id . "'");
 
 		return $query->row;
 	}
 
-	public function getPareviews($data = array()) {
-		$sql = "SELECT r.pareview_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "pareview r LEFT JOIN " . DB_PREFIX . "proparent_description pd ON (r.proparent_id = pd.proparent_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+	public function getHotelreviews($data = array()) {
+		$sql = "SELECT r.hotelreview_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "hotelreview r LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (r.hotel_id = pd.hotel_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_proparent'])) {
-			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_proparent']) . "%'";
+		if (!empty($data['filter_hotel'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_hotel']) . "%'";
 		}
 
 		if (!empty($data['filter_author'])) {
@@ -222,10 +222,10 @@ class ModelCatalogReview extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalPareviews($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "pareview r LEFT JOIN " . DB_PREFIX . "proparent_description pd ON (r.proparent_id = pd.proparent_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+	public function getTotalHotelreviews($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "hotelreview r LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (r.hotel_id = pd.hotel_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_proparent'])) {
+		if (!empty($data['filter_hotel'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_']) . "%'";
 		}
 
@@ -246,8 +246,8 @@ class ModelCatalogReview extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalPareviewsAwaitingApproval() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "pareview WHERE status = '0'");
+	public function getTotalHotelreviewsAwaitingApproval() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "hotelreview WHERE status = '0'");
 
 		return $query->row['total'];
 	}

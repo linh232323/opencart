@@ -54,10 +54,10 @@
         <li><a href="<?php echo $online; ?>"><span class="label label-success pull-right"><?php echo $online_total; ?></span><?php echo $text_online; ?></a></li>
         <li><a href="<?php echo $customer_approval; ?>"><span class="label label-danger pull-right"><?php echo $customer_total; ?></span><?php echo $text_approval; ?></a></li>
         <li class="divider"></li>
-        <li class="dropdown-header"><?php echo $text_product; ?></li>
-        <li><a href="<?php echo $product; ?>"><span class="label label-danger pull-right"><?php echo $product_total; ?></span><?php echo $text_stock; ?></a></li>
+        <li class="dropdown-header"><?php echo $text_room; ?></li>
+        <li><a href="<?php echo $room; ?>"><span class="label label-danger pull-right"><?php echo $room_total; ?></span><?php echo $text_stock; ?></a></li>
         <li><a href="<?php echo $review; ?>"><span class="label label-danger pull-right"><?php echo $review_total; ?></span><?php echo $text_review; ?></a></li>
-        <li><a href="<?php echo $pareview; ?>"><span class="label label-danger pull-right"><?php echo $pareview_total; ?></span><?php echo $text_pareview; ?></a></li>
+        <li><a href="<?php echo $Hotelreview; ?>"><span class="label label-danger pull-right"><?php echo $Hotelreview_total; ?></span><?php echo $text_Hotelreview; ?></a></li>
         <li class="divider"></li>
         <li class="dropdown-header"><?php echo $text_affiliate; ?></li>
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>

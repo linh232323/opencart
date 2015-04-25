@@ -82,7 +82,7 @@ class ControllerReportCustomerOrder extends Controller {
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'orders'         => $result['orders'],
-				'products'       => $result['products'],
+				'rooms'       => $result['rooms'],
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'edit'           => $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
 			);
@@ -100,7 +100,7 @@ class ControllerReportCustomerOrder extends Controller {
 		$data['column_customer_group'] = $this->language->get('column_customer_group');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_orders'] = $this->language->get('column_orders');
-		$data['column_products'] = $this->language->get('column_products');
+		$data['column_rooms'] = $this->language->get('column_rooms');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_action'] = $this->language->get('column_action');
 

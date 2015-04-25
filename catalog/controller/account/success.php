@@ -36,7 +36,7 @@ class ControllerAccountSuccess extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		if ($this->cart->hasProducts()) {
+		if ($this->cart->hasRooms()) {
 			$data['continue'] = $this->url->link('checkout/cart');
 		} else {
 			$data['continue'] = $this->url->link('account/account', '', 'SSL');

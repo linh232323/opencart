@@ -19,10 +19,10 @@ class ControllerCommonContentBottom extends Controller {
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
 		}
 
-		if ($route == 'product/product' && isset($this->request->get['product_id'])) {
-			$this->load->model('catalog/product');
+		if ($route == 'product/room' && isset($this->request->get['room_id'])) {
+			$this->load->model('catalog/room');
 			
-			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
+			$layout_id = $this->model_catalog_room->getroomLayoutId($this->request->get['room_id']);
 		}
 
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {

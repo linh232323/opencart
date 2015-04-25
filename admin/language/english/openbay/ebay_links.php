@@ -12,10 +12,10 @@ $_['button_remove_link']       		= 'Remove link';
 // Errors
 $_['error_ajax_load']          		= 'Sorry, could not get a response. Try later.';
 $_['error_validation']         		= 'You need to register for your API token and enable the module.';
-$_['error_no_listings']      		= 'No linked products found';
-$_['error_link_value']          	= 'The product link is not value';
+$_['error_no_listings']      		= 'No linked rooms found';
+$_['error_link_value']          	= 'The room link is not value';
 $_['error_link_no_stock']    		= 'A link cannot be created for an out of stock item. End the item manually on eBay.';
-$_['error_subtract_setting']        = 'This product is set not to subtract stock in Genuine Tours.';
+$_['error_subtract_setting']        = 'This room is set not to subtract stock in Genuine Tours.';
 
 // Text
 $_['text_linked_items']             = 'Linked items';
@@ -26,7 +26,7 @@ $_['text_link_desc2']               = 'For each item that is updated the local s
 $_['text_link_desc3']               = 'Your local stock is stock that is available to sell. Your eBay stock levels should match this.';
 $_['text_link_desc4']               = 'Your allocated stock is items that have sold but not yet been paid for. These items should be set aside and not calculated in your available stock levels.';
 $_['text_text_linked_desc']         = 'Linked items are Genuine Tours items that have a link to an eBay listing.';
-$_['text_text_unlinked_desc']       = 'Unlinked items are listings on your eBay account that do not link to any of your Genuine Tours products.';
+$_['text_text_unlinked_desc']       = 'Unlinked items are listings on your eBay account that do not link to any of your Genuine Tours rooms.';
 $_['text_text_unlinked_info']       = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['text_text_loading_items']       = 'Loading items';
 $_['text_failed']       			= 'Failed to load';
@@ -45,10 +45,10 @@ $_['column_action']            		= 'Action';
 $_['column_status']            		= 'Status';
 $_['column_variants']          		= 'Variants';
 $_['column_item_id']            	= 'eBay item ID';
-$_['column_product']           		= 'Product';
-$_['column_product_auto']      		= 'ProduProductct name (auto complete)';
-$_['column_proparent']           	= 'Proparent';
-$_['column_proparent_auto']      	= 'ProduProparentct name (auto complete)';
+$_['column_room']           		= 'Room';
+$_['column_room_auto']      		= 'ProduRoomct name (auto complete)';
+$_['column_hotel']           	= 'Hotel';
+$_['column_hotel_auto']      	= 'ProduHotelct name (auto complete)';
 $_['column_listing_title']     		= 'eBay listing title';
 $_['column_allocated']         		= 'Allocated stock';
 $_['column_ebay_stock']        		= 'eBay stock';

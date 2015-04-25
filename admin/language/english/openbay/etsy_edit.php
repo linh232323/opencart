@@ -13,7 +13,7 @@ $_['text_updated']  			= 'Your Etsy listing has been updated';
 $_['text_edit']  				= 'Update your Etsy listing';
 
 // Entry
-$_['entry_title']      			= 'Product title';
+$_['entry_title']      			= 'Room title';
 $_['entry_description']     	= 'Description';
 $_['entry_price']      			= 'Price';
 $_['entry_state']      			= 'State';

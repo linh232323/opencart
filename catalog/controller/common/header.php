@@ -82,9 +82,9 @@ class ControllerCommonHeader extends Controller {
 		// Menu
 		$this->load->model('catalog/category');
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
                 
-		$this->load->model('catalog/proparent');
+		$this->load->model('catalog/hotel');
 
 		$data['categories'] = array();
 
@@ -102,9 +102,8 @@ class ControllerCommonHeader extends Controller {
 						'filter_category_id'  => $child['category_id'],
 						'filter_sub_category' => true
 					);
-                                        
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_proparent->getTotalProparents($filter_data) . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_hotel->getTotalhotels($filter_data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);
 				}
@@ -126,8 +125,8 @@ class ControllerCommonHeader extends Controller {
 
 		// For page specific css
 		if (isset($this->request->get['route'])) {
-			if (isset($this->request->get['product_id'])) {
-				$class = '-' . $this->request->get['product_id'];
+			if (isset($this->request->get['room_id'])) {
+				$class = '-' . $this->request->get['room_id'];
 			} elseif (isset($this->request->get['path'])) {
 				$class = '-' . $this->request->get['path'];
 			} elseif (isset($this->request->get['manufacturer_id'])) {

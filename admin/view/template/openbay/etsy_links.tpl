@@ -26,8 +26,8 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-            <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
-            <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            <input type="hidden" name="add_link_room_id" value="" id="input-room-id"/>
+            <input type="text" name="add_link_room" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           </div>
         </div>
         <div class="col-sm-6">
@@ -49,7 +49,7 @@
           <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-left"><?php echo $column_product; ?></th>
+              <th class="text-left"><?php echo $column_room; ?></th>
               <th class="text-center"><?php echo $column_item_id; ?></th>
               <th class="text-center"><?php echo $column_store_stock; ?></th>
               <th class="text-center"><?php echo $column_status; ?></th>
@@ -86,11 +86,11 @@
 </div>
 <script type="text/javascript"><!--
   function addLink() {
-    var product_id = $('#input-product-id').val();
+    var room_id = $('#input-room-id').val();
     var etsy_id = $('#input-etsy-id').val();
 
-    if (product_id == '') {
-      alert('<?php echo $error_product_id; ?>');
+    if (room_id == '') {
+      alert('<?php echo $error_room_id; ?>');
       return false;
     }
 
@@ -100,10 +100,10 @@
     }
 
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/addLink&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
-      data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
+      data: { 'room_id' : room_id, 'etsy_id' : etsy_id },
       beforeSend: function() {
         $('#alert-link-save').hide();
         $('#alert-link-error').hide().empty();
@@ -111,7 +111,7 @@
       },
       success: function(json) {
         if (json.error == false) {
-          $('#input-product-id').val('');
+          $('#input-room-id').val('');
           $('#input-name').val('');
           $('#input-etsy-id').val('');
           $('#alert-link-save').show();
@@ -129,7 +129,7 @@
 
   function deleteLink(etsy_link_id) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/deleteLink&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_link_id' : etsy_link_id },
@@ -150,24 +150,24 @@
     });
   }
 
-  $('input[name=\'add_link_product\']').autocomplete({
+  $('input[name=\'add_link_room\']').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function(json) {
           response($.map(json, function(item) {
             return {
               label: item['name'],
-              value: item['product_id']
+              value: item['room_id']
             }
           }));
         }
       });
     },
     'select': function(item) {
-      $('input[name=\'add_link_product\']').val(item['label']);
-      $('#input-product-id').val(item['value']);
+      $('input[name=\'add_link_room\']').val(item['label']);
+      $('#input-room-id').val(item['value']);
     }
   });
 

@@ -20,7 +20,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
-      <?php if ($products) { ?>
+      <?php if ($rooms) { ?>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -33,25 +33,25 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($products as $product) { ?>
+          <?php foreach ($rooms as $room) { ?>
           <tr>
-            <td class="text-center"><?php if ($product['thumb']) { ?>
-              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+            <td class="text-center"><?php if ($room['thumb']) { ?>
+              <a href="<?php echo $room['href']; ?>"><img src="<?php echo $room['thumb']; ?>" alt="<?php echo $room['name']; ?>" title="<?php echo $room['name']; ?>" /></a>
               <?php } ?></td>
-            <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></td>
-            <td class="text-left"><?php echo $product['model']; ?></td>
-            <td class="text-right"><?php echo $product['stock']; ?></td>
-            <td class="text-right"><?php if ($product['price']) { ?>
+            <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a></td>
+            <td class="text-left"><?php echo $room['model']; ?></td>
+            <td class="text-right"><?php echo $room['stock']; ?></td>
+            <td class="text-right"><?php if ($room['price']) { ?>
               <div class="price">
-                <?php if (!$product['special']) { ?>
-                <?php echo $product['price']; ?>
+                <?php if (!$room['special']) { ?>
+                <?php echo $room['price']; ?>
                 <?php } else { ?>
-                <b><?php echo $product['special']; ?></b> <s><?php echo $product['price']; ?></s>
+                <b><?php echo $room['special']; ?></b> <s><?php echo $room['price']; ?></s>
                 <?php } ?>
               </div>
               <?php } ?></td>
-            <td class="text-right"><button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-              <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
+            <td class="text-right"><button type="button" onclick="cart.add('<?php echo $room['room_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+              <a href="<?php echo $room['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
           </tr>
           <?php } ?>
         </tbody>

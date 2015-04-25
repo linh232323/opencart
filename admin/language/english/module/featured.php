@@ -9,17 +9,17 @@ $_['text_edit']        = 'Edit Featured Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';
-$_['entry_product']    = 'Products';
-$_['entry_category']    = 'Categories';
-$_['entry_proparent']  = 'Proparents';
+$_['entry_room']    = 'Rooms';
+$_['entry_category']   = 'Categories';
+$_['entry_hotel']      = 'Hotels';
 $_['entry_limit']      = 'Limit';
 $_['entry_width']      = 'Width';
 $_['entry_height']     = 'Height';
 $_['entry_status']     = 'Status';
 
 // Help
-$_['help_product']     = '(Autocomplete)';
-$_['help_proparent']   = '(Autocomplete)';
+$_['help_room']     = '(Autocomplete)';
+$_['help_hotel']   = '(Autocomplete)';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify featured module!';

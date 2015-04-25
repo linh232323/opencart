@@ -1,9 +1,9 @@
 <?php
-class ControllerProductCompare extends Controller {
+class ControllerRoomCompare extends Controller {
 	public function index() {
-		$this->load->language('product/compare');
+		$this->load->language('room/compare');
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$this->load->model('tool/image');
 
@@ -20,7 +20,7 @@ class ControllerProductCompare extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
-			$this->response->redirect($this->url->link('product/compare'));
+			$this->response->redirect($this->url->link('room/compare'));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -34,12 +34,12 @@ class ControllerProductCompare extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/compare')
+			'href' => $this->url->link('room/compare')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_name'] = $this->language->get('text_name');
 		$data['text_image'] = $this->language->get('text_image');
 		$data['text_price'] = $this->language->get('text_price');
@@ -66,43 +66,43 @@ class ControllerProductCompare extends Controller {
 
 		$data['review_status'] = $this->config->get('config_review_status');
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
 		$data['attribute_groups'] = array();
 
-		foreach ($this->session->data['compare'] as $key => $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		foreach ($this->session->data['compare'] as $key => $room_id) {
+			$room_info = $this->model_catalog_room->getRoom($room_id);
 
-			if ($product_info) {
-				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
+			if ($room_info) {
+				if ($room_info['image']) {
+					$image = $this->model_tool_image->resize($room_info['image'], $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
 				} else {
 					$image = false;
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+					$price = $this->currency->format($this->tax->calculate($room_info['price'], $room_info['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$price = false;
 				}
 
-				if ((float)$product_info['special']) {
-					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+				if ((float)$room_info['special']) {
+					$special = $this->currency->format($this->tax->calculate($room_info['special'], $room_info['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$special = false;
 				}
 
-				if ($product_info['quantity'] <= 0) {
-					$availability = $product_info['stock_status'];
+				if ($room_info['quantity'] <= 0) {
+					$availability = $room_info['stock_status'];
 				} elseif ($this->config->get('config_stock_display')) {
-					$availability = $product_info['quantity'];
+					$availability = $room_info['quantity'];
 				} else {
 					$availability = $this->language->get('text_instock');
 				}
 
 				$attribute_data = array();
 
-				$attribute_groups = $this->model_catalog_product->getProductAttributes($product_id);
+				$attribute_groups = $this->model_catalog_room->getRoomAttributes($room_id);
 
 				foreach ($attribute_groups as $attribute_group) {
 					foreach ($attribute_group['attribute'] as $attribute) {
@@ -110,25 +110,25 @@ class ControllerProductCompare extends Controller {
 					}
 				}
 
-				$data['products'][$product_id] = array(
-					'product_id'   => $product_info['product_id'],
-					'name'         => $product_info['name'],
+				$data['rooms'][$room_id] = array(
+					'room_id'   => $room_info['room_id'],
+					'name'         => $room_info['name'],
 					'thumb'        => $image,
 					'price'        => $price,
 					'special'      => $special,
-					'description'  => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
-					'model'        => $product_info['model'],
-					'manufacturer' => $product_info['manufacturer'],
+					'description'  => utf8_substr(strip_tags(html_entity_decode($room_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
+					'model'        => $room_info['model'],
+					'manufacturer' => $room_info['manufacturer'],
 					'availability' => $availability,
-					'rating'       => (int)$product_info['rating'],
-					'reviews'      => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
-					'weight'       => $this->weight->format($product_info['weight'], $product_info['weight_class_id']),
-					'length'       => $this->length->format($product_info['length'], $product_info['length_class_id']),
-					'width'        => $this->length->format($product_info['width'], $product_info['length_class_id']),
-					'height'       => $this->length->format($product_info['height'], $product_info['length_class_id']),
+					'rating'       => (int)$room_info['rating'],
+					'reviews'      => sprintf($this->language->get('text_reviews'), (int)$room_info['reviews']),
+					'weight'       => $this->weight->format($room_info['weight'], $room_info['weight_class_id']),
+					'length'       => $this->length->format($room_info['length'], $room_info['length_class_id']),
+					'width'        => $this->length->format($room_info['width'], $room_info['length_class_id']),
+					'height'       => $this->length->format($room_info['height'], $room_info['length_class_id']),
 					'attribute'    => $attribute_data,
-					'href'         => $this->url->link('product/product', 'product_id=' . $product_id),
-					'remove'       => $this->url->link('product/compare', 'remove=' . $product_id)
+					'href'         => $this->url->link('product/room', 'room_id=' . $room_id),
+					'remove'       => $this->url->link('room/compare', 'remove=' . $room_id)
 				);
 
 				foreach ($attribute_groups as $attribute_group) {
@@ -152,15 +152,15 @@ class ControllerProductCompare extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/compare.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/compare.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/room/compare.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/room/compare.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/product/compare.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/room/compare.tpl', $data));
 		}
 	}
 
 	public function add() {
-		$this->load->language('product/compare');
+		$this->load->language('room/compare');
 
 		$json = array();
 
@@ -168,26 +168,26 @@ class ControllerProductCompare extends Controller {
 			$this->session->data['compare'] = array();
 		}
 
-		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+		if (isset($this->request->post['room_id'])) {
+			$room_id = $this->request->post['room_id'];
 		} else {
-			$product_id = 0;
+			$room_id = 0;
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
+		$room_info = $this->model_catalog_room->getRoom($room_id);
 
-		if ($product_info) {
-			if (!in_array($this->request->post['product_id'], $this->session->data['compare'])) {
+		if ($room_info) {
+			if (!in_array($this->request->post['room_id'], $this->session->data['compare'])) {
 				if (count($this->session->data['compare']) >= 4) {
 					array_shift($this->session->data['compare']);
 				}
 
-				$this->session->data['compare'][] = $this->request->post['product_id'];
+				$this->session->data['compare'][] = $this->request->post['room_id'];
 			}
 
-			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare'));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/room', 'room_id=' . $this->request->post['room_id']), $room_info['name'], $this->url->link('room/compare'));
 
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		}

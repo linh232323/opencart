@@ -20,7 +20,7 @@
         <form class="form-horizontal">
           <ul id="order" class="nav nav-tabs nav-justified">
             <li class="disabled active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
-            <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
+            <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_room; ?></a></li>
             <li class="disabled"><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
             <li class="disabled"><a href="#tab-shipping" data-toggle="tab">4. <?php echo $tab_shipping; ?></a></li>
             <li class="disabled"><a href="#tab-total" data-toggle="tab">5. <?php echo $tab_total; ?></a></li>
@@ -228,7 +228,7 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <td class="text-left"><?php echo $column_product; ?></td>
+                      <td class="text-left"><?php echo $column_room; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
                       <td class="text-left"><?php echo $column_check_in; ?></td>
                       <td class="text-left"><?php echo $column_check_out; ?></td>
@@ -239,34 +239,34 @@
                     </tr>
                   </thead>
                   <tbody id="cart">
-                    <?php if ($order_products || $order_vouchers) { ?>
-                    <?php $product_row = 0; ?>
-                    <?php foreach ($order_products as $order_product) { ?>
+                    <?php if ($order_rooms || $order_vouchers) { ?>
+                    <?php $room_row = 0; ?>
+                    <?php foreach ($order_rooms as $order_room) { ?>
                     <tr>
-                      <td class="text-left"><?php echo $order_product['name']; ?><br />
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                        <?php foreach ($order_product['option'] as $option) { ?>
+                      <td class="text-left"><?php echo $order_room['name']; ?><br />
+                        <input type="hidden" name="room[<?php echo $room_row; ?>][room_id]" value="<?php echo $order_room['room_id']; ?>" />
+                        <?php foreach ($order_room['option'] as $option) { ?>
                         - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
                         <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <input type="hidden" name="room[<?php echo $room_row; ?>][option][<?php echo $option['room_option_id']; ?>]" value="<?php echo $option['room_option_value_id']; ?>" />
                         <?php } ?>
                         <?php if ($option['type'] == 'checkbox') { ?>
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <input type="hidden" name="room[<?php echo $room_row; ?>][option][<?php echo $option['room_option_id']; ?>][]" value="<?php echo $option['room_option_value_id']; ?>" />
                         <?php } ?>
                         <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
+                        <input type="hidden" name="room[<?php echo $room_row; ?>][option][<?php echo $option['room_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
                         <?php } ?>
                         <?php } ?></td>
-                      <td class="text-left"><?php echo $order_product['model']; ?></td>
-                      <td class="text-left"><?php echo $order_product['check_in']; ?></td>
-                      <td class="text-left"><?php echo $order_product['check_out']; ?></td>
-                      <td class="text-right"><?php echo $order_product['quantity']; ?>
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                      <td class="text-right"><?php echo $order_product['price']; ?></td>
-                      <td class="text-right"><?php echo $order_product['total']; ?></td>
+                      <td class="text-left"><?php echo $order_room['model']; ?></td>
+                      <td class="text-left"><?php echo $order_room['check_in']; ?></td>
+                      <td class="text-left"><?php echo $order_room['check_out']; ?></td>
+                      <td class="text-right"><?php echo $order_room['quantity']; ?>
+                        <input type="hidden" name="room[<?php echo $room_row; ?>][quantity]" value="<?php echo $order_room['quantity']; ?>" /></td>
+                      <td class="text-right"><?php echo $order_room['price']; ?></td>
+                      <td class="text-right"><?php echo $order_room['total']; ?></td>
                       <td class="text-center"></td>
                     </tr>
-                    <?php $product_row++; ?>
+                    <?php $room_row++; ?>
                     <?php } ?>
                     <?php $voucher_row = 0; ?>
                     <?php foreach ($order_vouchers as $order_voucher) { ?>
@@ -299,18 +299,18 @@
                 </table>
               </div>
               <ul class="nav nav-tabs nav-justified">
-                <li class="active"><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
+                <li class="active"><a href="#tab-room" data-toggle="tab"><?php echo $tab_room; ?></a></li>
                 <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="tab-product">
+                <div class="tab-pane active" id="tab-room">
                   <fieldset>
-                    <legend><?php echo $text_product; ?></legend>
+                    <legend><?php echo $text_room; ?></legend>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+                      <label class="col-sm-2 control-label" for="input-room"><?php echo $entry_room; ?></label>
                       <div class="col-sm-10">
-                        <input type="text" name="product" value="" id="input-product" class="form-control" />
-                        <input type="hidden" name="product_id" value="" />
+                        <input type="text" name="room" value="" id="input-room" class="form-control" />
+                        <input type="hidden" name="room_id" value="" />
                       </div>
                     </div>
                     <div class="form-group">
@@ -322,7 +322,7 @@
                     <div id="option"></div>
                   </fieldset>
                   <div class="text-right">
-                    <button type="button" id="button-product-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_product_add; ?></button>
+                    <button type="button" id="button-room-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_room_add; ?></button>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab-voucher">
@@ -817,7 +817,7 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <td class="text-left"><?php echo $column_product; ?></td>
+                      <td class="text-left"><?php echo $column_room; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
                       <td class="text-left"><?php echo $column_check_in; ?></td>
                       <td class="text-left"><?php echo $column_check_out; ?></td>
@@ -945,7 +945,7 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
 			
-// Add all products to the cart using the api
+// Add all rooms to the cart using the api
 
 // Customer
 $('input[name=\'customer\']').autocomplete({
@@ -1095,13 +1095,13 @@ $('#button-customer').on('click', function() {
 				$.ajax({
 					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					type: 'post',
-					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
+					data: $('#cart input[name^=\'room\'][type=\'text\'], #cart input[name^=\'room\'][type=\'hidden\'], #cart input[name^=\'room\'][type=\'radio\']:checked, #cart input[name^=\'room\'][type=\'checkbox\']:checked, #cart select[name^=\'room\'], #cart textarea[name^=\'room\']'),
 					dataType: 'json',
 					beforeSend: function() {
-						$('#button-product-add').button('loading');
+						$('#button-room-add').button('loading');
 					},
 					complete: function() {
-						$('#button-product-add').button('reset');
+						$('#button-room-add').button('reset');
 					},
 					success: function(json) {
 						$('.alert, .text-danger').remove();
@@ -1140,7 +1140,7 @@ $('#button-customer').on('click', function() {
 					}
 				});	
 
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 								
 				$('a[href=\'#tab-cart\']').tab('show');
@@ -1152,16 +1152,16 @@ $('#button-customer').on('click', function() {
 	});	
 });
 				
-$('#tab-product input[name=\'product\']').autocomplete({
+$('#tab-room input[name=\'room\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id'],
+						value: item['room_id'],
 						model: item['model'],
 						option: item['option'],
 						price: item['price']						
@@ -1171,8 +1171,8 @@ $('#tab-product input[name=\'product\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('#tab-product input[name=\'product\']').val(item['label']);
-		$('#tab-product input[name=\'product_id\']').val(item['value']);
+		$('#tab-room input[name=\'room\']').val(item['label']);
+		$('#tab-room input[name=\'room_id\']').val(item['value']);
 		
 		if (item['option'] != '') {
  			html  = '<fieldset>';
@@ -1183,15 +1183,15 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				
 				if (option['type'] == 'select') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
+					html += '    <select name="option[' + option['room_option_id'] + ']" id="input-option' + option['room_option_id'] + '" class="form-control">';
 					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['product_option_value'].length; j++) {
-						option_value = option['product_option_value'][j];
+					for (j = 0; j < option['room_option_value'].length; j++) {
+						option_value = option['room_option_value'][j];
 						
-						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<option value="' + option_value['room_option_value_id'] + '">' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1207,15 +1207,15 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				
 				if (option['type'] == 'radio') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
+					html += '    <select name="option[' + option['room_option_id'] + ']" id="input-option' + option['room_option_id'] + '" class="form-control">';
 					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['product_option_value'].length; j++) {
-						option_value = option['product_option_value'][j];
+					for (j = 0; j < option['room_option_value'].length; j++) {
+						option_value = option['room_option_value'][j];
 						
-						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<option value="' + option_value['room_option_value_id'] + '">' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1233,14 +1233,14 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <div id="input-option' + option['product_option_id'] + '">';
+					html += '    <div id="input-option' + option['room_option_id'] + '">';
 					
-					for (j = 0; j < option['product_option_value'].length; j++) {
-						option_value = option['product_option_value'][j];
+					for (j = 0; j < option['room_option_value'].length; j++) {
+						option_value = option['room_option_value'][j];
 						
 						html += '<div class="checkbox">';
 						
-						html += '  <label><input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" /> ' + option_value['name'];
+						html += '  <label><input type="checkbox" name="option[' + option['room_option_id'] + '][]" value="' + option_value['room_option_value_id'] + '" /> ' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1257,15 +1257,15 @@ $('#tab-product input[name=\'product\']').autocomplete({
 			
 				if (option['type'] == 'image') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
+					html += '    <select name="option[' + option['room_option_id'] + ']" id="input-option' + option['room_option_id'] + '" class="form-control">';
 					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['product_option_value'].length; j++) {
-						option_value = option['product_option_value'][j];
+					for (j = 0; j < option['room_option_value'].length; j++) {
+						option_value = option['room_option_value'][j];
 						
-						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<option value="' + option_value['room_option_value_id'] + '">' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1281,15 +1281,15 @@ $('#tab-product input[name=\'product\']').autocomplete({
 						
 				if (option['type'] == 'text') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /></div>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="col-sm-10"><input type="text" name="option[' + option['room_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['room_option_id'] + '" class="form-control" /></div>';
 					html += '</div>';					
 				}
 				
 				if (option['type'] == 'textarea') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><textarea name="option[' + option['product_option_id'] + ']" rows="5" id="input-option' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea></div>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="col-sm-10"><textarea name="option[' + option['room_option_id'] + ']" rows="5" id="input-option' + option['room_option_id'] + '" class="form-control">' + option['value'] + '</textarea></div>';
 					html += '</div>';
 				}
 				
@@ -1297,30 +1297,30 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
-					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
+					html += '    <button type="button" id="button-upload' + option['room_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <input type="hidden" name="option[' + option['room_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['room_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
 				}
 				
 				if (option['type'] == 'date') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['room_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['room_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';
 				}
 				
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['room_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['room_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 				
 				if (option['type'] == 'time') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
-					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <label class="col-sm-2 control-label" for="input-option' + option['room_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['room_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['room_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 			}
@@ -1347,17 +1347,17 @@ $('#tab-product input[name=\'product\']').autocomplete({
 	}	
 });
 
-$('#button-product-add').on('click', function() {
+$('#button-room-add').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
+		data: $('#tab-room input[name=\'room_id\'], #tab-room input[name=\'quantity\'], #tab-room input[name^=\'option\'][type=\'text\'], #tab-room input[name^=\'option\'][type=\'hidden\'], #tab-room input[name^=\'option\'][type=\'radio\']:checked, #tab-room input[name^=\'option\'][type=\'checkbox\']:checked, #tab-room select[name^=\'option\'], #tab-room textarea[name^=\'option\']'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-product-add').button('loading');
+			$('#button-room-add').button('loading');
 		},
 		complete: function() {
-			$('#button-product-add').button('reset');
+			$('#button-room-add').button('reset');
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1387,7 +1387,7 @@ $('#button-product-add').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');				
 			} else {
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -1439,7 +1439,7 @@ $('#button-voucher-add').on('click', function() {
 				$('textarea[name=\'message\']').attr('value', '');	
 				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 					
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -1470,7 +1470,7 @@ $('#tab-cart').delegate('.btn-danger', 'click', function() {
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -1651,7 +1651,7 @@ $('#button-payment-address').on('click', function() {
 					}
 				});	
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 								
 				// If shipping required got to shipping tab else total tabs
@@ -1846,7 +1846,7 @@ $('#button-shipping-address').on('click', function() {
 					}
 				});	
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 								
 				$('a[href=\'#tab-total\']').tab('show');							
@@ -1885,7 +1885,7 @@ $('#button-shipping-method').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},	
@@ -1922,7 +1922,7 @@ $('#button-payment-method').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -1959,7 +1959,7 @@ $('#button-coupon').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -1996,7 +1996,7 @@ $('#button-voucher').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},
@@ -2033,7 +2033,7 @@ $('#button-reward').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				// Refresh products, vouchers and totals
+				// Refresh rooms, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
 		},

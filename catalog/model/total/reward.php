@@ -11,22 +11,22 @@ class ModelTotalReward extends Model {
 
 				$points_total = 0;
 
-				foreach ($this->cart->getProducts() as $product) {
-					if ($product['points']) {
-						$points_total += $product['points'];
+				foreach ($this->cart->getrooms() as $room) {
+					if ($room['points']) {
+						$points_total += $room['points'];
 					}
 				}
 
 				$points = min($points, $points_total);
 
-				foreach ($this->cart->getProducts() as $product) {
+				foreach ($this->cart->getrooms() as $room) {
 					$discount = 0;
 
-					if ($product['points']) {
-						$discount = $product['total'] * ($this->session->data['reward'] / $points_total);
+					if ($room['points']) {
+						$discount = $room['total'] * ($this->session->data['reward'] / $points_total);
 
-						if ($product['tax_class_id']) {
-							$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
+						if ($room['tax_class_id']) {
+							$tax_rates = $this->tax->getRates($room['total'] - ($room['total'] - $discount), $room['tax_class_id']);
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {

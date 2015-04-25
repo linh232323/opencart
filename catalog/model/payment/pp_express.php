@@ -154,7 +154,7 @@ class ModelPaymentPPExpress extends Model {
 		$i = 0;
 		$item_total = 0;
 
-		foreach ($this->cart->getProducts() as $item) {
+		foreach ($this->cart->getrooms() as $item) {
 			$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
 
 			$option_count = 0;
@@ -183,7 +183,7 @@ class ModelPaymentPPExpress extends Model {
 
 			$data['L_PAYMENTREQUEST_0_QTY' . $i] = $item['quantity'];
 
-			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'product_id=' . $item['product_id']);
+			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/room', 'room_id=' . $item['room_id']);
 
 			if ($this->config->get('config_cart_weight')) {
 				$weight = $this->weight->convert($item['weight'], $item['weight_class_id'], $this->config->get('config_weight_class_id'));
@@ -274,12 +274,12 @@ class ModelPaymentPPExpress extends Model {
 
 		$z = 0;
 
-		$recurring_products = $this->cart->getRecurringProducts();
+		$recurring_rooms = $this->cart->getRecurringrooms();
 
-		if ($recurring_products) {
+		if ($recurring_rooms) {
 			$this->language->load('payment/pp_express');
 
-			foreach ($recurring_products as $item) {
+			foreach ($recurring_rooms as $item) {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
 				if ($item['recurring']['trial']) {

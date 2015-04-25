@@ -18,5 +18,5 @@ $_['entry_name']       = 'Stock Status Name';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify stock statuses!';
 $_['error_name']       = 'Stock Status Name must be between 3 and 32 characters!';
-$_['error_product']    = 'Warning: This stock status cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']  = 'Warning: This stock status cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']    = 'Warning: This stock status cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']  = 'Warning: This stock status cannot be deleted as it is currently assigned to %s hotels!';

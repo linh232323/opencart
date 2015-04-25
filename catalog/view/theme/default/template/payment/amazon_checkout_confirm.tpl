@@ -8,7 +8,7 @@
     </div>
     <div style="clear: both;"></div>
   </form>
-  <div class="checkout-product" style="margin-top: 15px">
+  <div class="checkout-room" style="margin-top: 15px">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -20,17 +20,17 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($products as $product) { ?>
+        <?php foreach ($rooms as $room) { ?>
           <tr>
-            <td class="text-left"><?php echo $product['name']; ?>
-              <?php foreach ($product['option'] as $option) { ?>
+            <td class="text-left"><?php echo $room['name']; ?>
+              <?php foreach ($room['option'] as $option) { ?>
                 <br />
                 &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
               <?php } ?></td>
-            <td class="text-left"><?php echo $product['model']; ?></td>
-            <td class="text-right"><?php echo $product['quantity']; ?></td>
-            <td class="text-right"><?php echo $product['price']; ?></td>
-            <td class="text-right"><?php echo $product['total']; ?></td>
+            <td class="text-left"><?php echo $room['model']; ?></td>
+            <td class="text-right"><?php echo $room['quantity']; ?></td>
+            <td class="text-right"><?php echo $room['price']; ?></td>
+            <td class="text-right"><?php echo $room['total']; ?></td>
           </tr>
         <?php } ?>
       </tbody>

@@ -16,11 +16,11 @@
   <input type="hidden" name="ship_zip" value="<?php echo $ship_zip; ?>" />
   <input type="hidden" name="ship_country" value="<?php echo $ship_country; ?>" />
   <?php $i = 0; ?>
-  <?php foreach ($products as $product) { ?>
-  <input type="hidden" name="c_prod_<?php echo $i; ?>" value="<?php echo $product['product_id']; ?>,<?php echo $product['quantity']; ?>" />
-  <input type="hidden" name="c_name_<?php echo $i; ?>" value="<?php echo $product['name']; ?>" />
-  <input type="hidden" name="c_description_<?php echo $i; ?>" value="<?php echo $product['description']; ?>" />
-  <input type="hidden" name="c_price_<?php echo $i; ?>" value="<?php echo $product['price']; ?>" />
+  <?php foreach ($rooms as $room) { ?>
+  <input type="hidden" name="c_prod_<?php echo $i; ?>" value="<?php echo $room['room_id']; ?>,<?php echo $room['quantity']; ?>" />
+  <input type="hidden" name="c_name_<?php echo $i; ?>" value="<?php echo $room['name']; ?>" />
+  <input type="hidden" name="c_description_<?php echo $i; ?>" value="<?php echo $room['description']; ?>" />
+  <input type="hidden" name="c_price_<?php echo $i; ?>" value="<?php echo $room['price']; ?>" />
   <?php $i++; ?>
   <?php } ?>
   <input type="hidden" name="id_type" value="1" />

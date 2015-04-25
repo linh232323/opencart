@@ -11,42 +11,42 @@ class ControllerFeedGoogleBase extends Controller {
 
 			$this->load->model('catalog/category');
 
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/room');
 
 			$this->load->model('tool/image');
 
-			$products = $this->model_catalog_product->getProducts();
+			$rooms = $this->model_catalog_room->getrooms();
 
-			foreach ($products as $product) {
-				if ($product['description']) {
+			foreach ($rooms as $room) {
+				if ($room['description']) {
 					$output .= '<item>';
-					$output .= '<title>' . $product['name'] . '</title>';
-					$output .= '<link>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</link>';
-					$output .= '<description>' . $product['description'] . '</description>';
-					$output .= '<g:brand>' . html_entity_decode($product['manufacturer'], ENT_QUOTES, 'UTF-8') . '</g:brand>';
+					$output .= '<title>' . $room['name'] . '</title>';
+					$output .= '<link>' . $this->url->link('product/room', 'room_id=' . $room['room_id']) . '</link>';
+					$output .= '<description>' . $room['description'] . '</description>';
+					$output .= '<g:brand>' . html_entity_decode($room['manufacturer'], ENT_QUOTES, 'UTF-8') . '</g:brand>';
 					$output .= '<g:condition>new</g:condition>';
-					$output .= '<g:id>' . $product['product_id'] . '</g:id>';
+					$output .= '<g:id>' . $room['room_id'] . '</g:id>';
 
-					if ($product['image']) {
-						$output .= '<g:image_link>' . $this->model_tool_image->resize($product['image'], 500, 500) . '</g:image_link>';
+					if ($room['image']) {
+						$output .= '<g:image_link>' . $this->model_tool_image->resize($room['image'], 500, 500) . '</g:image_link>';
 					} else {
 						$output .= '<g:image_link></g:image_link>';
 					}
 
-					$output .= '<g:model_number>' . $product['model'] . '</g:model_number>';
+					$output .= '<g:model_number>' . $room['model'] . '</g:model_number>';
 
-					if ($product['mpn']) {
-						$output .= '<g:mpn>' . $product['mpn'] . '</g:mpn>' ;
+					if ($room['mpn']) {
+						$output .= '<g:mpn>' . $room['mpn'] . '</g:mpn>' ;
 					} else {
 						$output .= '<g:identifier_exists>false</g:identifier_exists>';
 					}
 
-					if ($product['upc']) {
-						$output .= '<g:upc>' . $product['upc'] . '</g:upc>';
+					if ($room['upc']) {
+						$output .= '<g:upc>' . $room['upc'] . '</g:upc>';
 					}
 
-					if ($product['ean']) {
-						$output .= '<g:ean>' . $product['ean'] . '</g:ean>';
+					if ($room['ean']) {
+						$output .= '<g:ean>' . $room['ean'] . '</g:ean>';
 					}
 
 					$currencies = array(
@@ -63,13 +63,13 @@ class ControllerFeedGoogleBase extends Controller {
 						$currency_value = $this->currency->getValue('USD');
 					}
 
-					if ((float)$product['special']) {
-						$output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+					if ((float)$room['special']) {
+						$output .= '<g:price>' .  $this->currency->format($this->tax->calculate($room['special'], $room['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
 					} else {
-						$output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+						$output .= '<g:price>' . $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
 					}
 
-					$categories = $this->model_catalog_product->getCategories($product['product_id']);
+					$categories = $this->model_catalog_room->getCategories($room['room_id']);
 
 					foreach ($categories as $category) {
 						$path = $this->getPath($category['category_id']);
@@ -89,13 +89,13 @@ class ControllerFeedGoogleBase extends Controller {
 								}
 							}
 
-							$output .= '<g:product_type>' . $string . '</g:product_type>';
+							$output .= '<g:room_type>' . $string . '</g:room_type>';
 						}
 					}
 
-					$output .= '<g:quantity>' . $product['quantity'] . '</g:quantity>';
-					$output .= '<g:weight>' . $this->weight->format($product['weight'], $product['weight_class_id']) . '</g:weight>';
-					$output .= '<g:availability>' . ($product['quantity'] ? 'in stock' : 'out of stock') . '</g:availability>';
+					$output .= '<g:quantity>' . $room['quantity'] . '</g:quantity>';
+					$output .= '<g:weight>' . $this->weight->format($room['weight'], $room['weight_class_id']) . '</g:weight>';
+					$output .= '<g:availability>' . ($room['quantity'] ? 'in stock' : 'out of stock') . '</g:availability>';
 					$output .= '</item>';
 				}
 			}

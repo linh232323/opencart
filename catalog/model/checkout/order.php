@@ -7,15 +7,15 @@ class ModelCheckoutOrder extends Model {
 
 		$order_id = $this->db->getLastId();
 
-		// Products
-		if (isset($data['products'])) {
-			foreach ($data['products'] as $product) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', quantity = '" . (int)$product['quantity'] . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', reward = '" . (int)$product['reward'] . "', check_in = '" . $product['check_in'] . "', check_out = '" . $product['check_out'] . "'");
+		// Rooms
+		if (isset($data['rooms'])) {
+			foreach ($data['rooms'] as $room) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', tax = '" . (float)$room['tax'] . "', reward = '" . (int)$room['reward'] . "', check_in = '" . $room['check_in'] . "', check_out = '" . $room['check_out'] . "'");
 	
-				$order_product_id = $this->db->getLastId();
+				$order_room_id = $this->db->getLastId();
 	
-				foreach ($product['option'] as $option) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$option['product_option_id'] . "', product_option_value_id = '" . (int)$option['product_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
+				foreach ($room['option'] as $option) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_room_id = '" . (int)$order_room_id . "', room_option_id = '" . (int)$option['room_option_id'] . "', room_option_value_id = '" . (int)$option['room_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 			}
 		}
@@ -56,18 +56,18 @@ class ModelCheckoutOrder extends Model {
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_prefix = '" . $this->db->escape($data['invoice_prefix']) . "', store_id = '" . (int)$data['store_id'] . "', store_name = '" . $this->db->escape($data['store_name']) . "', store_url = '" . $this->db->escape($data['store_url']) . "', customer_id = '" . (int)$data['customer_id'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(serialize($data['custom_field'])) . "', payment_firstname = '" . $this->db->escape($data['payment_firstname']) . "', payment_lastname = '" . $this->db->escape($data['payment_lastname']) . "', payment_company = '" . $this->db->escape($data['payment_company']) . "', payment_address_1 = '" . $this->db->escape($data['payment_address_1']) . "', payment_address_2 = '" . $this->db->escape($data['payment_address_2']) . "', payment_city = '" . $this->db->escape($data['payment_city']) . "', payment_postcode = '" . $this->db->escape($data['payment_postcode']) . "', payment_country = '" . $this->db->escape($data['payment_country']) . "', payment_country_id = '" . (int)$data['payment_country_id'] . "', payment_zone = '" . $this->db->escape($data['payment_zone']) . "', payment_zone_id = '" . (int)$data['payment_zone_id'] . "', payment_address_format = '" . $this->db->escape($data['payment_address_format']) . "', payment_custom_field = '" . $this->db->escape(serialize($data['payment_custom_field'])) . "', payment_method = '" . $this->db->escape($data['payment_method']) . "', payment_code = '" . $this->db->escape($data['payment_code']) . "', shipping_firstname = '" . $this->db->escape($data['shipping_firstname']) . "', shipping_lastname = '" . $this->db->escape($data['shipping_lastname']) . "', shipping_company = '" . $this->db->escape($data['shipping_company']) . "', shipping_address_1 = '" . $this->db->escape($data['shipping_address_1']) . "', shipping_address_2 = '" . $this->db->escape($data['shipping_address_2']) . "', shipping_city = '" . $this->db->escape($data['shipping_city']) . "', shipping_postcode = '" . $this->db->escape($data['shipping_postcode']) . "', shipping_country = '" . $this->db->escape($data['shipping_country']) . "', shipping_country_id = '" . (int)$data['shipping_country_id'] . "', shipping_zone = '" . $this->db->escape($data['shipping_zone']) . "', shipping_zone_id = '" . (int)$data['shipping_zone_id'] . "', shipping_address_format = '" . $this->db->escape($data['shipping_address_format']) . "', shipping_custom_field = '" . $this->db->escape(serialize($data['shipping_custom_field'])) . "', shipping_method = '" . $this->db->escape($data['shipping_method']) . "', shipping_code = '" . $this->db->escape($data['shipping_code']) . "', comment = '" . $this->db->escape($data['comment']) . "', total = '" . (float)$data['total'] . "', affiliate_id = '" . (int)$data['affiliate_id'] . "', commission = '" . (float)$data['commission'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "'");
 
-		// Products
-		if (isset($data['products'])) {
-			foreach ($data['products'] as $product) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', quantity = '" . (int)$product['quantity'] . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', reward = '" . (int)$product['reward'] . "'");
+		// Rooms
+		if (isset($data['rooms'])) {
+			foreach ($data['rooms'] as $room) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', tax = '" . (float)$room['tax'] . "', reward = '" . (int)$room['reward'] . "'");
 	
-				$order_product_id = $this->db->getLastId();
+				$order_room_id = $this->db->getLastId();
 	
-				foreach ($product['option'] as $option) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$option['product_option_id'] . "', product_option_value_id = '" . (int)$option['product_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
+				foreach ($room['option'] as $option) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_room_id = '" . (int)$order_room_id . "', room_option_id = '" . (int)$option['room_option_id'] . "', room_option_value_id = '" . (int)$option['room_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 			}
 		}
@@ -111,7 +111,7 @@ class ModelCheckoutOrder extends Model {
 		$this->addOrderHistory($order_id, 0);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_room` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "'");
@@ -312,15 +312,15 @@ class ModelCheckoutOrder extends Model {
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
 			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Stock subtraction
-				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				$order_room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
-				foreach ($order_product_query->rows as $order_product) {
-					$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
+				foreach ($order_room_query->rows as $order_room) {
+					$this->db->query("UPDATE " . DB_PREFIX . "room SET quantity = (quantity - " . (int)$order_room['quantity'] . ") WHERE room_id = '" . (int)$order_room['room_id'] . "' AND subtract = '1'");
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product['order_product_id'] . "'");
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$order_room['order_room_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
-						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+						$this->db->query("UPDATE " . DB_PREFIX . "room_option_value SET quantity = (quantity - " . (int)$order_room['quantity'] . ") WHERE room_option_value_id = '" . (int)$option['room_option_value_id'] . "' AND subtract = '1'");
 					}
 				}
 
@@ -346,15 +346,15 @@ class ModelCheckoutOrder extends Model {
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
 			if (in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Restock
-				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				$room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
-				foreach($product_query->rows as $product) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "' AND subtract = '1'");
+				foreach($room_query->rows as $room) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "room` SET quantity = (quantity + " . (int)$room['quantity'] . ") WHERE room_id = '" . (int)$room['room_id'] . "' AND subtract = '1'");
 
-					$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+					$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$room['order_room_id'] . "'");
 
 					foreach ($option_query->rows as $option) {
-						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+						$this->db->query("UPDATE " . DB_PREFIX . "room_option_value SET quantity = (quantity + " . (int)$room['quantity'] . ") WHERE room_option_value_id = '" . (int)$option['room_option_value_id'] . "' AND subtract = '1'");
 					}
 				}
 
@@ -379,20 +379,20 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			$this->cache->delete('product');
+			$this->cache->delete('room');
 
 			// If order status is 0 then becomes greater than 0 send main html email
 			if (!$order_info['order_status_id'] && $order_status_id) {
-				// Check for any downloadable products
+				// Check for any downloadable rooms
 				$download_status = false;
 
-				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				$order_room_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
-				foreach ($order_product_query->rows as $order_product) {
+				foreach ($order_room_query->rows as $order_room) {
 					// Check if there are any linked downloads
-					$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
+					$room_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "room_to_download` WHERE room_id = '" . (int)$order_room['room_id'] . "'");
 
-					if ($product_download_query->row['total']) {
+					if ($room_download_query->row['total']) {
 						$download_status = true;
 					}
 				}
@@ -432,7 +432,7 @@ class ModelCheckoutOrder extends Model {
 				$data['text_order_status'] = $language->get('text_new_order_status');
 				$data['text_payment_address'] = $language->get('text_new_payment_address');
 				$data['text_shipping_address'] = $language->get('text_new_shipping_address');
-				$data['text_product'] = $language->get('text_new_product');
+				$data['text_room'] = $language->get('text_new_room');
 				$data['text_model'] = $language->get('text_new_model');
 				$data['text_quantity'] = $language->get('text_new_quantity');
 				$data['text_price'] = $language->get('text_new_price');
@@ -536,13 +536,13 @@ class ModelCheckoutOrder extends Model {
 
 				$this->load->model('tool/upload');
 
-				// Products
-				$data['products'] = array();
+				// Rooms
+				$data['rooms'] = array();
 
-				foreach ($order_product_query->rows as $product) {
+				foreach ($order_room_query->rows as $room) {
 					$option_data = array();
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$room['order_room_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
 						if ($option['type'] != 'file') {
@@ -563,13 +563,13 @@ class ModelCheckoutOrder extends Model {
 						);
 					}
 
-					$data['products'][] = array(
-						'name'     => $product['name'],
-						'model'    => $product['model'],
+					$data['rooms'][] = array(
+						'name'     => $room['name'],
+						'model'    => $room['model'],
 						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'quantity' => $room['quantity'],
+						'price'    => $this->currency->format($room['price'] + ($this->config->get('config_tax') ? $room['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+						'total'    => $this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 					);
 				}
 
@@ -616,13 +616,13 @@ class ModelCheckoutOrder extends Model {
 						$text .= $comment . "\n\n";
 					}
 
-					// Products
-					$text .= $language->get('text_new_products') . "\n";
+					// Rooms
+					$text .= $language->get('text_new_rooms') . "\n";
 
-					foreach ($order_product_query->rows as $product) {
-						$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+					foreach ($order_room_query->rows as $room) {
+						$text .= $room['quantity'] . 'x ' . $room['name'] . ' (' . $room['model'] . ') ' . html_entity_decode($this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");
+						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . $room['order_room_id'] . "'");
 
 						foreach ($order_option_query->rows as $option) {
 							if ($option['type'] != 'file') {
@@ -722,12 +722,12 @@ class ModelCheckoutOrder extends Model {
 					$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
 					$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
 					$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
-					$text .= $language->get('text_new_products') . "\n";
+					$text .= $language->get('text_new_rooms') . "\n";
 
-					foreach ($order_product_query->rows as $product) {
-						$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+					foreach ($order_room_query->rows as $room) {
+						$text .= $room['quantity'] . 'x ' . $room['name'] . ' (' . $room['model'] . ') ' . html_entity_decode($this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");
+						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . $room['order_room_id'] . "'");
 
 						foreach ($order_option_query->rows as $option) {
 							if ($option['type'] != 'file') {

@@ -123,8 +123,8 @@ class ModelSaleRecurring extends Model {
 				'recurring_id'          => $query->row['recurring_id'],
 				'recurring_name'        => $query->row['recurring_name'],
 				'recurring_description' => $query->row['recurring_description'],
-				'product_name'          => $query->row['product_name'],
-				'product_quantity'      => $query->row['product_quantity'],
+				'room_name'          => $query->row['room_name'],
+				'room_quantity'      => $query->row['room_quantity'],
 				'status'                => $this->getStatus($query->row['status']),
 				'status_id'             => $query->row['status']
 			);

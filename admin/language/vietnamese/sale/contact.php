@@ -12,7 +12,7 @@ $_['text_customer_group']  = 'Nhóm khách hàng';
 $_['text_customer']        = 'Tất cả khách hàng';
 $_['text_affiliate_all']   = 'Tất cả các chi nhánh';
 $_['text_affiliate']       = 'Đại lý';
-$_['text_product']         = 'Sản phẩm';
+$_['text_room']         = 'Sản phẩm';
 
 // Entry
 $_['entry_store']          = 'Từ:';
@@ -20,7 +20,7 @@ $_['entry_to']             = 'Tới:';
 $_['entry_customer_group'] = 'Nhóm khách hàng:';
 $_['entry_customer']       = 'Khách hàng:<br /><span class="help">Autocomplete</span>';
 $_['entry_affiliate']      = 'Liên kết:<br /><span class="help">Autocomplete</span>';
-$_['entry_product']        = 'Sản phẩm:<br /><span class="help">Gửi đến khách hàng đã đặt mua sản phẩm.</span>';
+$_['entry_room']        = 'Sản phẩm:<br /><span class="help">Gửi đến khách hàng đã đặt mua sản phẩm.</span>';
 $_['entry_subject']        = 'Chủ đề:';
 $_['entry_message']        = 'Nội dung:';
 

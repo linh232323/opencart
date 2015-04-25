@@ -1,12 +1,12 @@
 <?php
-class ModelOpenbayEbayProduct extends Model {
+class ModelOpenbayEbayroom extends Model {
 	public function getRelistRule($id) {
 		return $this->openbay->ebay->call('item/getAutomationRule', array('id' => $id));
 	}
 
 	public function importItems($data) {
 		$this->openbay->ebay->log('Starting item import');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		//check for ebay import img table
 		$res = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "ebay_image_import'");
@@ -17,7 +17,7 @@ class ModelOpenbayEbayProduct extends Model {
 				  `image_original` text NOT NULL,
 				  `image_new` text NOT NULL,
 				  `name` text NOT NULL,
-				  `product_id` int(11) NOT NULL,
+				  `room_id` int(11) NOT NULL,
 				  `imgcount` int(11) NOT NULL,
 				  PRIMARY KEY (`id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -235,7 +235,7 @@ class ModelOpenbayEbayProduct extends Model {
 				}
 
 				$this->db->query("
-					INSERT INTO `" . DB_PREFIX . "product` SET
+					INSERT INTO `" . DB_PREFIX . "room` SET
 						`quantity`              = '" . (int)$item['Quantity'] . "',
 						`manufacturer_id`       = '" . (int)$manufacturer_id . "',
 						`stock_status_id`       = '6',
@@ -263,11 +263,11 @@ class ModelOpenbayEbayProduct extends Model {
 						`date_modified`         = 'now()'
 				");
 
-				$product_id = $this->db->getLastId();
+				$room_id = $this->db->getLastId();
 
-				$this->openbay->ebay->log('Product insert done');
+				$this->openbay->ebay->log('room insert done');
 
-				//Insert product description
+				//Insert room description
 				$original_description = $item['Description'];
 
 				if (!empty($original_description)) {
@@ -280,17 +280,17 @@ class ModelOpenbayEbayProduct extends Model {
 					}
 				}
 
-				$sql = " INSERT INTO `" . DB_PREFIX . "product_description` SET
-						`product_id`            = '" . (int)$product_id . "',
+				$sql = " INSERT INTO `" . DB_PREFIX . "room_description` SET
+						`room_id`            = '" . (int)$room_id . "',
 						`language_id`           = '" . (int)$this->config->get('config_language_id') . "',
 						`name`                  = '" . $this->db->escape(htmlspecialchars(base64_decode($item['Title']), ENT_COMPAT, 'UTF-8')) . "',
 						`description`           = '" . $this->db->escape(htmlspecialchars(utf8_encode($item['Description']), ENT_COMPAT, 'UTF-8')) . "'";
 
 				$this->db->query($sql);
-				$this->openbay->ebay->log('Product description done');
+				$this->openbay->ebay->log('room description done');
 
-				//Insert product store link
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` = '0'");
+				//Insert room store link
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "room_to_store` SET `room_id` = '" . (int)$room_id . "', `store_id` = '0'");
 				$this->openbay->ebay->log('Store link done');
 
 				//Create any attributes from eBay for the item
@@ -302,30 +302,30 @@ class ModelOpenbayEbayProduct extends Model {
 						//check if the attribute exists in the group, if not create
 						$attribute_id = $this->attributeExists($group_id, base64_decode($spec['name']));
 
-						//insert the attribute value into the product attribute table
-						$this->attributeAdd($product_id, $attribute_id, base64_decode($spec['value']));
+						//insert the attribute value into the room attribute table
+						$this->attributeAdd($room_id, $attribute_id, base64_decode($spec['value']));
 					}
 				}
 
-				//Create the product variants for OpenStock
+				//Create the room variants for OpenStock
 				$variant = 0;
 				if (!empty($item['variation'])) {
 					$variant = 1;
 
 					if ($openstock == true) {
 						$this->openbay->ebay->log('OpenStock Loaded');
-						$this->createVariants($product_id, $item);
+						$this->createVariants($room_id, $item);
 					}
 
 					$this->openbay->ebay->log('Variants done');
 				}
 
 				//insert store to eBay item link
-				$this->openbay->ebay->createLink($product_id, $item['ItemID'], $variant);
+				$this->openbay->ebay->createLink($room_id, $item['ItemID'], $variant);
 
 				//Insert product/category link
 				if ($options['cat'] == 1 || !isset($options['cat'])) {
-					$this->createCategoryLink($product_id, $cat_link[$item['CategoryName']]);
+					$this->createCategoryLink($room_id, $cat_link[$item['CategoryName']]);
 				}
 
 				//images
@@ -334,23 +334,23 @@ class ModelOpenbayEbayProduct extends Model {
 					foreach ($item['pictures'] as $img) {
 						if (!empty($img)) {
 							$name = rand(500000, 1000000000);
-							$this->addImage($img, DIR_IMAGE . 'catalog/' . $name . '.jpg', $name . '.jpg', $product_id, $img_count);
+							$this->addImage($img, DIR_IMAGE . 'catalog/' . $name . '.jpg', $name . '.jpg', $room_id, $img_count);
 							$img_count++;
 						}
 					}
 				}
 
-				$this->openbay->ebay->log('Product import completed . ');
+				$this->openbay->ebay->log('room import completed . ');
 			} else {
 				$this->openbay->ebay->log($item['ItemID'] . ' exists already');
 			}
 		}
 
-		$this->openbay->ebay->log('Product data import done');
+		$this->openbay->ebay->log('room data import done');
 		$this->openbay->ebay->getImages();
 	}
 
-	public function getDisplayProducts() {
+	public function getDisplayrooms() {
 		$data = array();
 		$data['search_keyword'] = $this->config->get('ebaydisplay_module_keywords');
 		$data['seller_id']      = $this->config->get('ebaydisplay_module_username');
@@ -361,7 +361,7 @@ class ModelOpenbayEbayProduct extends Model {
 		return $this->openbay->ebay->call('item/searchListingsForDisplay', $data);
 	}
 
-	private function createVariants($product_id, $data) {
+	private function createVariants($room_id, $data) {
 		foreach ($data['variation']['vars'] as $variant) {
 			$vars           = array();
 			$s              = '';
@@ -373,14 +373,14 @@ class ModelOpenbayEbayProduct extends Model {
 				$option     = $this->getOption($name);
 				$opt        = $this->getOptionValue($value, $option['id']);
 
-				//lookup product option rel table, insert if needed
-				$product_option_id          = $this->getProductOption($product_id, $option['id']);
-				$product_option_value_id    = $this->getProductOptionValue($product_id, $option['id'], $opt['id'], $product_option_id);
+				//lookup room option rel table, insert if needed
+				$room_option_id          = $this->getroomOption($room_id, $option['id']);
+				$room_option_value_id    = $this->getroomOptionValue($room_id, $option['id'], $opt['id'], $room_option_id);
 
 				$this->openbay->ebay->log('Option data: ' . serialize($option));
 
 				$s          = $option['sort'];
-				$vars[$s]   = $product_option_value_id;
+				$vars[$s]   = $room_option_value_id;
 			}
 
 			//$this->openbay->ebay->log('Unsorted: ' . serialize($vars));
@@ -403,10 +403,10 @@ class ModelOpenbayEbayProduct extends Model {
 			//$this->openbay->ebay->log('Vars: ' . $vars);
 
 			//create the variant
-			$this->createProductVariant(array('var' => $vars, 'price' => $variant['price'], 'stock' => $variant['qty'], 'product_id' => $product_id, 'sku' => $variant['sku']));
+			$this->createroomVariant(array('var' => $vars, 'price' => $variant['price'], 'stock' => $variant['qty'], 'room_id' => $room_id, 'sku' => $variant['sku']));
 		}
 
-		$this->updateVariantListing($product_id, $data['ItemID']);
+		$this->updateVariantListing($room_id, $data['ItemID']);
 
 		//$this->openbay->ebay->log('Item variant stuff done. . ');
 	}
@@ -453,36 +453,36 @@ class ModelOpenbayEbayProduct extends Model {
 		return array('id' => (int)$id);
 	}
 
-	private function getProductOption($product_id, $option_id) {
-		$qry = $this->db->query("SELECT * FROM  " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "' AND option_id = '" . (int)$option_id . "' LIMIT 1");
+	private function getroomOption($room_id, $option_id) {
+		$qry = $this->db->query("SELECT * FROM  " . DB_PREFIX . "room_option WHERE room_id = '" . (int)$room_id . "' AND option_id = '" . (int)$option_id . "' LIMIT 1");
 
 		if ($qry->num_rows) {
-			return $qry->row['product_option_id'];
+			return $qry->row['room_option_id'];
 		} else {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$option_id . "', required = '1'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "room_option SET room_id = '" . (int)$room_id . "', option_id = '" . (int)$option_id . "', required = '1'");
 			return $this->db->getLastId();
 		}
 	}
 
-	private function getProductOptionValue($product_id, $option_id, $option_value_id, $product_option_id) {
+	private function getroomOptionValue($room_id, $option_id, $option_value_id, $room_option_id) {
 		$qry = $this->db->query("
 			SELECT *
-			FROM  `" . DB_PREFIX . "product_option_value`
-				WHERE `product_id` = '" . (int)$product_id . "'
+			FROM  `" . DB_PREFIX . "room_option_value`
+				WHERE `room_id` = '" . (int)$room_id . "'
 				AND `option_id` = '" . (int)$option_id . "'
-				AND `product_option_id` = '" . (int)$product_option_id . "'
+				AND `room_option_id` = '" . (int)$room_option_id . "'
 				AND `option_value_id` = '" . (int)$option_value_id . "'
 				LIMIT 1
 			");
 
 		if ($qry->num_rows) {
-			return $qry->row['product_option_value_id'];
+			return $qry->row['room_option_value_id'];
 		} else {
 			$this->db->query("
-				INSERT INTO " . DB_PREFIX . "product_option_value
+				INSERT INTO " . DB_PREFIX . "room_option_value
 				SET
-					product_option_id = '" . (int)$product_option_id . "',
-					product_id = '" . (int)$product_id . "',
+					room_option_id = '" . (int)$room_option_id . "',
+					room_id = '" . (int)$room_id . "',
 					option_id = '" . (int)$option_id . "',
 					option_value_id = '" . (int)$option_value_id . "'
 			");
@@ -491,11 +491,11 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function createProductVariant($data) {
+	private function createroomVariant($data) {
 		$this->db->query("
-			INSERT INTO `" . DB_PREFIX . "product_option_relation`
+			INSERT INTO `" . DB_PREFIX . "room_option_relation`
 			SET
-				`product_id`    = '" . (int)$data['product_id'] . "',
+				`room_id`    = '" . (int)$data['room_id'] . "',
 				`var`           = '" . $this->db->escape($data['var']) . "',
 				`stock`         = '" . (int)$data['stock'] . "',
 				`sku`           = '" . $this->db->escape($data['sku']) . "',
@@ -507,11 +507,11 @@ class ModelOpenbayEbayProduct extends Model {
 		return array('id' => $this->db->getLastId());
 	}
 
-	private function updateVariantListing($product_id, $item_id) {
+	private function updateVariantListing($room_id, $item_id) {
 		$variant_data = array();
 
-		$variants = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-		$groups = $this->model_catalog_product->getProductOptions($product_id);
+		$variants = $this->model_openstock_openstock->getroomOptionStocks($room_id);
+		$groups = $this->model_catalog_room->getroomOptions($room_id);
 
 		$variant_data['groups']  = array();
 		$variant_data['related'] = array();
@@ -521,7 +521,7 @@ class ModelOpenbayEbayProduct extends Model {
 			foreach ($grp['option_value'] as $grp_node) {
 				$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-				$variant_data['related'][$grp_node['product_option_value_id']] = $grp['name'];
+				$variant_data['related'][$grp_node['room_option_value_id']] = $grp['name'];
 			}
 
 			$variant_data['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
@@ -619,17 +619,17 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function attributeAdd($product_id, $attribute_id, $name) {
-		$this->openbay->ebay->log('Adding product attribute');
-		$sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$attribute_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	private function attributeAdd($room_id, $attribute_id, $name) {
+		$this->openbay->ebay->log('Adding room attribute');
+		$sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room_attribute` WHERE `room_id` = '" . (int)$room_id . "' AND `attribute_id` = '" . (int)$attribute_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		if ($sql->num_rows == 0) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_attribute` SET `product_id` = '" . (int)$product_id . "', `attribute_id` = '" . (int)$attribute_id . "', `text` = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "room_attribute` SET `room_id` = '" . (int)$room_id . "', `attribute_id` = '" . (int)$attribute_id . "', `text` = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 		}
 	}
 
-	private function createCategoryLink($product_id, $category_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_category` SET `product_id` = '" . (int)$product_id . "', `category_id` = '" . (int)$category_id . "'");
+	private function createCategoryLink($room_id, $category_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "room_to_category` SET `room_id` = '" . (int)$room_id . "', `category_id` = '" . (int)$category_id . "'");
 	}
 
 	private function manufacturerExists($name) {
@@ -702,10 +702,10 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function addImage($orig, $new, $name, $product_id, $img_count) {
+	private function addImage($orig, $new, $name, $room_id, $img_count) {
 		$orig = str_replace(' ', '%20', $orig);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `product_id` = '" . (int)$product_id . "', `imgcount` = '" . (int)$img_count . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `room_id` = '" . (int)$room_id . "', `imgcount` = '" . (int)$img_count . "'");
 	}
 
 	public function resize($filename, $width, $height, $type = "") {

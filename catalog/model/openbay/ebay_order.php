@@ -12,7 +12,7 @@ class ModelOpenbayEbayOrder extends Model{
 		if ($order_line === false) {
 			if ($created >= $from) {
 				$this->openbay->ebay->log('addOrderLine() - New line');
-				$product_id = $this->openbay->ebay->getProductId($data['item_id']);
+				$room_id = $this->openbay->ebay->getroomId($data['item_id']);
 				/* add to the transaction table */
 				$this->db->query("
 					INSERT INTO `" . DB_PREFIX . "ebay_transaction`
@@ -20,7 +20,7 @@ class ModelOpenbayEbayOrder extends Model{
 					`order_id`                  = '" . (int)$order_id . "',
 					`txn_id`                    = '" . $this->db->escape($data['txn_id']) . "',
 					`item_id`                   = '" . $this->db->escape($data['item_id']) . "',
-					`product_id`                = '" . (int)$product_id . "',
+					`room_id`                = '" . (int)$room_id . "',
 					`containing_order_id`       = '" . $data['containing_order_id'] . "',
 					`order_line_id`             = '" . $this->db->escape($data['order_line_id']) . "',
 					`qty`                       = '" . (int)$data['qty'] . "',
@@ -30,9 +30,9 @@ class ModelOpenbayEbayOrder extends Model{
 					`modified`                  = now()
 				");
 
-				if (!empty($product_id)) {
+				if (!empty($room_id)) {
 					$this->openbay->ebay->log('Link found');
-					$this->modifyStock($product_id, $data['qty'], '-', $data['sku']);
+					$this->modifyStock($room_id, $data['qty'], '-', $data['sku']);
 				}
 			} else {
 				$this->openbay->ebay->log('addOrderLine() - Transaction is older than ' . $this->config->get('ebay_created_hours') . ' hours');
@@ -122,7 +122,7 @@ class ModelOpenbayEbayOrder extends Model{
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_transaction` WHERE `txn_id` = '" . $this->db->escape($txn_id) . "' AND `item_id` = '" . $this->db->escape($item_id) . "' LIMIT 1");
 
 		if ($this->db->countAffected() > 0) {
-			$this->modifyStock($line['product_id'], $line['qty'], '+', $line['sku']);
+			$this->modifyStock($line['room_id'], $line['qty'], '+', $line['sku']);
 		}
 	}
 
@@ -130,7 +130,7 @@ class ModelOpenbayEbayOrder extends Model{
 		$order_lines = $this->getOrderLines($order_id);
 
 		foreach ($order_lines as $line) {
-			$this->modifyStock($line['product_id'], $line['qty'], '+', $line['sku']);
+			$this->modifyStock($line['room_id'], $line['qty'], '+', $line['sku']);
 		}
 	}
 
@@ -258,9 +258,9 @@ class ModelOpenbayEbayOrder extends Model{
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			if (isset($order_info['email']) && !empty($order_info['email']) && $notify == 1){
-				$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+				$order_room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = '" . (int)$order_id . "'");
 
-				$this->cache->delete('product');
+				$this->cache->delete('room');
 
 				// Downloads
 				$order_download_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_download` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -308,7 +308,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$template->data['text_ip'] = $language->get('text_new_ip');
 				$template->data['text_payment_address'] = $language->get('text_new_payment_address');
 				$template->data['text_shipping_address'] = $language->get('text_new_shipping_address');
-				$template->data['text_product'] = $language->get('text_new_product');
+				$template->data['text_room'] = $language->get('text_new_room');
 				$template->data['text_model'] = $language->get('text_new_model');
 				$template->data['text_quantity'] = $language->get('text_new_quantity');
 				$template->data['text_price'] = $language->get('text_new_price');
@@ -413,12 +413,12 @@ class ModelOpenbayEbayOrder extends Model{
 				);
 
 				$template->data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
-				$template->data['products']         = array();
+				$template->data['rooms']         = array();
 
-				foreach ($order_product_query->rows as $product) {
+				foreach ($order_room_query->rows as $room) {
 					$option_data = array();
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$room['order_room_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
 						if ($option['type'] != 'file') {
@@ -433,13 +433,13 @@ class ModelOpenbayEbayOrder extends Model{
 						);
 					}
 
-					$template->data['products'][] = array(
-						'name'     => $product['name'],
-						'model'    => $product['model'],
+					$template->data['rooms'][] = array(
+						'name'     => $room['name'],
+						'model'    => $room['model'],
 						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'quantity' => $room['quantity'],
+						'price'    => $this->currency->format($room['price'] + ($this->config->get('config_tax') ? $room['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+						'total'    => $this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 					);
 				}
 
@@ -464,13 +464,13 @@ class ModelOpenbayEbayOrder extends Model{
 					$text .= $comment . "\n\n";
 				}
 
-				// Products
-				$text .= $language->get('text_new_products') . "\n";
+				// rooms
+				$text .= $language->get('text_new_rooms') . "\n";
 
-				foreach ($order_product_query->rows as $product) {
-					$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+				foreach ($order_room_query->rows as $room) {
+					$text .= $room['quantity'] . 'x ' . $room['name'] . ' (' . $room['model'] . ') ' . html_entity_decode($this->currency->format($room['total'] + ($this->config->get('config_tax') ? ($room['tax'] * $room['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$room['order_room_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
 						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($option['value']) > 20) ? utf8_substr($option['value'], 0, 20) . '..' : $option['value'] . "\n";
@@ -525,27 +525,27 @@ class ModelOpenbayEbayOrder extends Model{
 		}
 	}
 
-	private function modifyStock($product_id, $qty, $symbol = '-', $sku = '') {
-		$this->openbay->ebay->log('modifyStock() - Updating stock. Product id: ' . $product_id . ' qty: ' . $qty . ', symbol: ' . $symbol . ' sku: ' . $sku);
+	private function modifyStock($room_id, $qty, $symbol = '-', $sku = '') {
+		$this->openbay->ebay->log('modifyStock() - Updating stock. room id: ' . $room_id . ' qty: ' . $qty . ', symbol: ' . $symbol . ' sku: ' . $sku);
 
-		$item_id = $this->openbay->ebay->getEbayItemId($product_id);
+		$item_id = $this->openbay->ebay->getEbayItemId($room_id);
 
 		if ($this->openbay->addonLoad('openstock') && !empty($sku)) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = (`stock` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `var` = '" . (string)$sku . "' AND `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "room_option_relation` SET `stock` = (`stock` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `var` = '" . (string)$sku . "' AND `room_id` = '" . (int)$room_id . "' AND `subtract` = '1'");
 
-			$stock = $this->openbay->ebay->getProductStockLevel($product_id, $sku);
+			$stock = $this->openbay->ebay->getroomStockLevel($room_id, $sku);
 
 			$this->openbay->ebay->log('modifyStock() /variant  - Stock is now set to: ' . $stock['quantity']);
 
 			$this->openbay->ebay->putStockUpdate($item_id, $stock['quantity'], $sku);
 		} else {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "room` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `room_id` = '" . (int)$room_id . "' AND `subtract` = '1'");
 
-			$stock = $this->openbay->ebay->getProductStockLevel($product_id);
+			$stock = $this->openbay->ebay->getroomStockLevel($room_id);
 
 			$this->openbay->ebay->log('modifyStock() - Stock is now set to: ' . $stock['quantity']);
 
-			//send back stock update to eBay incase of a reserve product level
+			//send back stock update to eBay incase of a reserve room level
 			$this->openbay->ebay->putStockUpdate($item_id, $stock['quantity']);
 		}
 	}
@@ -584,7 +584,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 	public function delete($order_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");

@@ -49,10 +49,10 @@ class ControllerOpenbayEtsy extends Controller {
 				$this->model_openbay_etsy_order->inbound($data);
 
 				break;
-			case 'products';
-				$this->load->model('openbay/etsy_product');
+			case 'rooms';
+				$this->load->model('openbay/etsy_room');
 
-				$this->model_openbay_etsy_product->inbound($data);
+				$this->model_openbay_etsy_room->inbound($data);
 
 				break;
 		}

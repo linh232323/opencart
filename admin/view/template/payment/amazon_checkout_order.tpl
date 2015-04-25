@@ -8,7 +8,7 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <td class="text-left"><?php echo $column_product; ?></td>
+      <td class="text-left"><?php echo $column_room; ?></td>
       <td class="text-left"><?php echo $column_model; ?></td>
       <td class="text-left"><?php echo $column_amazon_order_item_code; ?></td>
       <td class="text-right"><?php echo $column_quantity; ?></td>
@@ -17,10 +17,10 @@
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($products as $product) { ?>
+    <?php foreach ($rooms as $room) { ?>
     <tr>
-      <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-        <?php foreach ($product['option'] as $option) { ?>
+      <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a>
+        <?php foreach ($room['option'] as $option) { ?>
         <br />
         <?php if ($option['type'] != 'file') { ?>
         &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
@@ -28,11 +28,11 @@
         &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
         <?php } ?>
         <?php } ?></td>
-      <td class="text-left"><?php echo $product['model']; ?></td>
-      <td class="text-left"><?php echo $product['amazon_order_item_code']; ?></td>
-      <td class="text-right"><?php echo $product['quantity']; ?></td>
-      <td class="text-right"><?php echo $product['price']; ?></td>
-      <td class="text-right"><?php echo $product['total']; ?></td>
+      <td class="text-left"><?php echo $room['model']; ?></td>
+      <td class="text-left"><?php echo $room['amazon_order_item_code']; ?></td>
+      <td class="text-right"><?php echo $room['quantity']; ?></td>
+      <td class="text-right"><?php echo $room['price']; ?></td>
+      <td class="text-right"><?php echo $room['total']; ?></td>
     </tr>
     <?php } ?>
   </tbody>

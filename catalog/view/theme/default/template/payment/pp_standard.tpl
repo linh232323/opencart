@@ -6,14 +6,14 @@
   <input type="hidden" name="upload" value="1" />
   <input type="hidden" name="business" value="<?php echo $business; ?>" />
   <?php $i = 1; ?>
-  <?php foreach ($products as $product) { ?>
-  <input type="hidden" name="item_name_<?php echo $i; ?>" value="<?php echo $product['name']; ?>" />
-  <input type="hidden" name="item_number_<?php echo $i; ?>" value="<?php echo $product['model']; ?>" />
-  <input type="hidden" name="amount_<?php echo $i; ?>" value="<?php echo $product['price']; ?>" />
-  <input type="hidden" name="quantity_<?php echo $i; ?>" value="<?php echo $product['quantity']; ?>" />
-  <input type="hidden" name="weight_<?php echo $i; ?>" value="<?php echo $product['weight']; ?>" />
+  <?php foreach ($rooms as $room) { ?>
+  <input type="hidden" name="item_name_<?php echo $i; ?>" value="<?php echo $room['name']; ?>" />
+  <input type="hidden" name="item_number_<?php echo $i; ?>" value="<?php echo $room['model']; ?>" />
+  <input type="hidden" name="amount_<?php echo $i; ?>" value="<?php echo $room['price']; ?>" />
+  <input type="hidden" name="quantity_<?php echo $i; ?>" value="<?php echo $room['quantity']; ?>" />
+  <input type="hidden" name="weight_<?php echo $i; ?>" value="<?php echo $room['weight']; ?>" />
   <?php $j = 0; ?>
-  <?php foreach ($product['option'] as $option) { ?>
+  <?php foreach ($room['option'] as $option) { ?>
   <input type="hidden" name="on<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['name']; ?>" />
   <input type="hidden" name="os<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['value']; ?>" />
   <?php $j++; ?>

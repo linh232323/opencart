@@ -1,7 +1,7 @@
 <?php
-class ControllerReportProductViewed extends Controller {
+class ControllerReportRoomViewed extends Controller {
 	public function index() {
-		$this->load->language('report/product_viewed');
+		$this->load->language('report/room_viewed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -26,30 +26,30 @@ class ControllerReportProductViewed extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('report/room_viewed', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$this->load->model('report/product');
+		$this->load->model('report/room');
 
 		$filter_data = array(
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
-		$product_viewed_total = $this->model_report_product->getTotalProductsViewed();
+		$room_viewed_total = $this->model_report_room->getTotalRoomsViewed();
 
-		$results = $this->model_report_product->getProductsViewed($filter_data);
+		$results = $this->model_report_room->getRoomsViewed($filter_data);
 
 		foreach ($results as $result) {
 			if ($result['viewed']) {
-				$percent = round($result['viewed'] / $product_viewed_total * 100, 2);
+				$percent = round($result['viewed'] / $room_viewed_total * 100, 2);
 			} else {
 				$percent = 0;
 			}
 
-			$data['products'][] = array(
+			$data['rooms'][] = array(
 				'name'    => $result['name'],
 				'model'   => $result['model'],
 				'viewed'  => $result['viewed'],
@@ -76,7 +76,7 @@ class ControllerReportProductViewed extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['reset'] = $this->url->link('report/product_viewed/reset', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['reset'] = $this->url->link('report/room_viewed/reset', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -97,10 +97,10 @@ class ControllerReportProductViewed extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $product_viewed_total;
+		$pagination->total = $room_viewed_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('report/room_viewed', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
 		$limit = $this->config->get('config_limit_admin');
@@ -111,22 +111,22 @@ class ControllerReportProductViewed extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/product_viewed.tpl', $data));
+		$this->response->setOutput($this->load->view('report/room_viewed.tpl', $data));
 	}
 
 	public function reset() {
-		$this->load->language('report/product_viewed');
+		$this->load->language('report/room_viewed');
 
-		if (!$this->user->hasPermission('modify', 'report/product_viewed')) {
+		if (!$this->user->hasPermission('modify', 'report/room_viewed')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('report/product');
+			$this->load->model('report/room');
 
-			$this->model_report_product->reset();
+			$this->model_report_room->reset();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('report/room_viewed', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 }

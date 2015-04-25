@@ -222,7 +222,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		}
 
 		$this->load->model('localisation/currency');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
 
@@ -263,18 +263,18 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$order_id = $this->db->getLastId();
 
 		foreach ($order->txn as $txn) {
-			$product_id = $this->openbay->ebay->getProductId($txn->item->id);
+			$room_id = $this->openbay->ebay->getroomId($txn->item->id);
 
-			if ($product_id != false) {
-				$this->openbay->ebay->log('create() - Product ID: "' . $product_id . '" from ebay item: ' . $txn->item->id . ' was returned');
+			if ($room_id != false) {
+				$this->openbay->ebay->log('create() - room ID: "' . $room_id . '" from ebay item: ' . $txn->item->id . ' was returned');
 
 				if (!empty($txn->item->variantsku) && $openstock == true) {
-					$model_number = $this->openbay->getProductModelNumber($product_id, $txn->item->variantsku);
+					$model_number = $this->openbay->getroomModelNumber($room_id, $txn->item->variantsku);
 				} else {
-					$model_number = $this->openbay->getProductModelNumber($product_id);
+					$model_number = $this->openbay->getroomModelNumber($room_id);
 				}
 			} else {
-				$this->openbay->ebay->log('create() - No product ID from ebay item: ' . $txn->item->id . ' was returned');
+				$this->openbay->ebay->log('create() - No room ID from ebay item: ' . $txn->item->id . ' was returned');
 				$model_number = '';
 			}
 
@@ -313,9 +313,9 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$txn->item->sku             = stripslashes($txn->item->sku);
 			$txn->item->variantsku      = stripslashes($txn->item->variantsku);
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_product` SET
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_room` SET
 					`order_id`            = '" . (int)$order_id . "',
-					`product_id`          = '" . (int)$product_id . "',
+					`room_id`          = '" . (int)$room_id . "',
 					`name`                = '" . $this->db->escape((isset($txn->item->varianttitle) && !empty($txn->item->varianttitle)) ? $txn->item->varianttitle : $txn->item->name) . "',
 					`model`               = '" . $this->db->escape($model_number) . "',
 					`quantity`            = '" . (int)$qty . "',
@@ -324,40 +324,40 @@ class ModelOpenbayEbayOpenbay extends Model{
 					`tax`                 = '" . (double)$tax . "'
 				");
 
-			$order_product_id = $this->db->getLastId();
+			$order_room_id = $this->db->getLastId();
 
-			$this->openbay->ebay->log('create() - Added order product id ' . $order_product_id);
+			$this->openbay->ebay->log('create() - Added order room id ' . $order_room_id);
 
 			if ($openstock == true) {
 				$this->openbay->ebay->log('create() - OpenStock enabled');
 				if (!empty($txn->item->variantsku)) {
 					$this->openbay->ebay->log($txn->item->variantsku);
 
-					if ($product_id != false) {
+					if ($room_id != false) {
 						$sku_parts = explode(':', $txn->item->variantsku);
 						$p_options = array();
 
 						foreach ($sku_parts as $part) {
 							$sql = "SELECT
-									`pv`.`product_option_id`,
-									`pv`.`product_option_value_id`,
+									`pv`.`room_option_id`,
+									`pv`.`room_option_value_id`,
 									`od`.`name`,
 									`ovd`.`name` as `value`,
 									`o`.`option_id`,
 									`o`.`type`
-									FROM `" . DB_PREFIX . "product_option_value` `pv`
+									FROM `" . DB_PREFIX . "room_option_value` `pv`
 									LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pv`.`option_value_id` = `ov`.`option_value_id`)
 									LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ovd`.`option_value_id` = `ov`.`option_value_id`)
 									LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`ov`.`option_id` = `od`.`option_id`)
 									LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `od`.`option_id`)
-									WHERE `pv`.`product_option_value_id` = '" . (int)$part . "'
-									AND `pv`.`product_id` = '" . (int)$product_id . "'";
+									WHERE `pv`.`room_option_value_id` = '" . (int)$part . "'
+									AND `pv`.`room_id` = '" . (int)$room_id . "'";
 							$option_qry = $this->db->query($sql);
 
 							if (!empty($option_qry->row)) {
 								$p_options[] = array(
-									'product_option_id'         => $option_qry->row['product_option_id'],
-									'product_option_value_id'   => $option_qry->row['product_option_value_id'],
+									'room_option_id'         => $option_qry->row['room_option_id'],
+									'room_option_value_id'   => $option_qry->row['room_option_value_id'],
 									'name'                      => $option_qry->row['name'],
 									'value'                     => $option_qry->row['value'],
 									'type'                      => $option_qry->row['type'],
@@ -371,9 +371,9 @@ class ModelOpenbayEbayOpenbay extends Model{
 								INSERT INTO `" . DB_PREFIX . "order_option`
 								SET
 								`order_id`                  = '" . (int)$order_id . "',
-								`order_product_id`          = '" . (int)$order_product_id . "',
-								`product_option_id`         = '" . (int)$option['product_option_id'] . "',
-								`product_option_value_id`   = '" . (int)$option['product_option_value_id'] . "',
+								`order_room_id`          = '" . (int)$order_room_id . "',
+								`room_option_id`         = '" . (int)$option['room_option_id'] . "',
+								`room_option_value_id`   = '" . (int)$option['room_option_value_id'] . "',
 								`name`                      = '" . $this->db->escape($option['name']) . "',
 								`value`                     = '" . $this->db->escape($option['value']) . "',
 								`type`                      = '" . $this->db->escape($option['type']) . "'
@@ -391,7 +391,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 	private function updateOrderWithConfirmedData($order_id, $order) {
 		$this->load->model('localisation/currency');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$totals_language = $this->language->load('openbay/ebay_order');
 
 		$name_parts     = $this->openbay->splitName((string)$order->address->name);
@@ -574,7 +574,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		/* send the new order notification to openbay so the other markets can update the stock */
 		/* @todo */
-		/* improve this to update when products are subtracted, NOT just when they are paid */
+		/* improve this to update when rooms are subtracted, NOT just when they are paid */
 		$this->openbay->addOrder($order_id);
 	}
 

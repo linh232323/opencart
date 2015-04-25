@@ -8,8 +8,8 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazonus_listing');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazonus_listing');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazonus_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazonus_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazonus_room');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazonus_room');
 
 		$this->model_openbay_amazonus->install();
 	}
@@ -63,7 +63,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['link_item_link'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_stock_updates'] = $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_saved_listings'] = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['link_bulk_listing'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_bulk_listing'] = $this->url->link('openbay/amazonus/bulkListRooms', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_bulk_linking'] = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -130,9 +130,9 @@ class ControllerOpenbayAmazonus extends Controller {
 					'status' => (string)$update_node->status,
 					);
 				$data = array();
-				foreach($update_node->data->product as $product_node) {
-					$data[] = array('sku' => (string)$product_node->sku,
-						'stock' => (int)$product_node->stock
+				foreach($update_node->data->room as $room_node) {
+					$data[] = array('sku' => (string)$room_node->sku,
+						'stock' => (int)$room_node->stock
 						);
 				}
 				$row['data'] = $data;
@@ -189,7 +189,7 @@ class ControllerOpenbayAmazonus extends Controller {
 					'title' => (string)$plan->Title,
 					'description' => (string)$plan->Description,
 					'order_frequency' => (string)$plan->OrderFrequency,
-					'product_listings' => (string)$plan->ProductListings,
+					'room_listings' => (string)$plan->RoomListings,
 					'bulk_listing' => (string)$plan->BulkListing,
 					'price' => (string)$plan->Price,
 				);
@@ -208,7 +208,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				'description' => (string)$response->Description,
 				'price' => (string)$response->Price,
 				'order_frequency' => (string)$response->OrderFrequency,
-				'product_listings' => (string)$response->ProductListings,
+				'room_listings' => (string)$response->RoomListings,
 				'listings_remain' => (string)$response->ListingsRemain,
 				'listings_reserved' => (string)$response->ListingsReserved,
 				'bulk_listing' => (string)$response->BulkListing,
@@ -336,7 +336,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['subscription_url'] = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
-		$data['itemLinks_url'] = $this->url->link('openbay/amazonus_product/linkItems', 'token=' . $this->session->data['token'], 'SSL');
+		$data['itemLinks_url'] = $this->url->link('openbay/amazonus_room/linkItems', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['openbay_amazonus_notify_admin'] = isset($settings['openbay_amazonus_notify_admin']) ? $settings['openbay_amazonus_notify_admin'] : '';
 
@@ -430,24 +430,24 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 		$this->load->model('openbay/amazonus');
-		$saved_products = $this->model_openbay_amazonus->getSavedProducts();
+		$saved_rooms = $this->model_openbay_amazonus->getSavedRooms();
 
-		$data['saved_products'] = array();
+		$data['saved_rooms'] = array();
 
-		foreach($saved_products as $saved_product) {
-			$data['saved_products'][] = array(
-				'product_id' => $saved_product['product_id'],
-				'product_name' => $saved_product['product_name'],
-				'product_model' => $saved_product['product_model'],
-				'product_sku' => $saved_product['product_sku'],
-				'amazonus_sku' => $saved_product['amazonus_sku'],
-				'var' => $saved_product['var'],
-				'edit_link' => $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $saved_product['product_id'] . '&var=' . $saved_product['var'], 'SSL'),
+		foreach($saved_rooms as $saved_room) {
+			$data['saved_rooms'][] = array(
+				'room_id' => $saved_room['room_id'],
+				'room_name' => $saved_room['room_name'],
+				'room_model' => $saved_room['room_model'],
+				'room_sku' => $saved_room['room_sku'],
+				'amazonus_sku' => $saved_room['amazonus_sku'],
+				'var' => $saved_room['var'],
+				'edit_link' => $this->url->link('openbay/amazonus_room', 'token=' . $this->session->data['token'] . '&room_id=' . $saved_room['room_id'] . '&var=' . $saved_room['var'], 'SSL'),
 			);
 		}
 
 		$data['deleteSavedAjax'] = $this->url->link('openbay/amazonus/deleteSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['uploadSavedAjax'] = $this->url->link('openbay/amazonus_product/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['uploadSavedAjax'] = $this->url->link('openbay/amazonus_room/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -470,10 +470,10 @@ class ControllerOpenbayAmazonus extends Controller {
 
 	public function getOpenstockOptionsAjax() {
 		$json = array();
-		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
+		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['room_id'])) {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_openstock_openstock->getRoomOptionStocks($this->request->get['room_id']);
 		}
 		if (empty($json)) {
 			$json = false;
@@ -484,9 +484,9 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function addItemLinkAjax() {
-		if (isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
+		if (isset($this->request->get['room_id']) && isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
-			$product_id = $this->request->get['product_id'];
+			$room_id = $this->request->get['room_id'];
 			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
 		} else {
 			$this->response->addHeader('Content-Type: application/json');
@@ -495,16 +495,16 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$this->load->model('openbay/amazonus');
-		$this->model_openbay_amazonus->linkProduct($amazonus_sku, $product_id, $var);
+		$this->model_openbay_amazonus->linkRoom($amazonus_sku, $room_id, $var);
 
 		$logger = new Log('amazonus_stocks.log');
-		$logger->write('addItemLink() called for product id: ' . $product_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
+		$logger->write('addItemLink() called for room id: ' . $room_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
 
 		if ($var != '' && $this->openbay->addonLoad('openstock')) {
 			$logger->write('Using openStock');
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
 			$quantity_data = array();
 			foreach($option_stocks as $option_stock) {
 				if (isset($option_stock['var']) && $option_stock['var'] == $var) {
@@ -519,7 +519,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				$logger->write('No quantity data will be posted . ');
 			}
 		} else {
-			$this->openbay->amazonus->putStockUpdateBulk(array($product_id));
+			$this->openbay->amazonus->putStockUpdateBulk(array($room_id));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -537,7 +537,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 		$this->load->model('openbay/amazonus');
 
-		$this->model_openbay_amazonus->removeProductLink($amazonus_sku);
+		$this->model_openbay_amazonus->removeRoomLink($amazonus_sku);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode('ok'));
@@ -545,9 +545,9 @@ class ControllerOpenbayAmazonus extends Controller {
 
 	public function getItemLinksAjax() {
 		$this->load->model('openbay/amazonus');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$itemLinks = $this->model_openbay_amazonus->getProductLinks();
+		$itemLinks = $this->model_openbay_amazonus->getRoomLinks();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($itemLinks));
@@ -555,27 +555,27 @@ class ControllerOpenbayAmazonus extends Controller {
 
 	public function getUnlinkedItemsAjax() {
 		$this->load->model('openbay/amazonus');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$unlinkedProducts = $this->model_openbay_amazonus->getUnlinkedProducts();
+		$unlinkedRooms = $this->model_openbay_amazonus->getUnlinkedRooms();
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($unlinkedProducts));
+		$this->response->setOutput(json_encode($unlinkedRooms));
 	}
 
 	public function deleteSavedAjax() {
-		if (!isset($this->request->get['product_id']) || !isset($this->request->get['var'])) {
+		if (!isset($this->request->get['room_id']) || !isset($this->request->get['var'])) {
 			return;
 		}
 
 		$this->load->model('openbay/amazonus');
-		$this->model_openbay_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
+		$this->model_openbay_amazonus->deleteSaved($this->request->get['room_id'], $this->request->get['var']);
 	}
 
 	public function doBulkList() {
 		$this->load->language('openbay/amazonus_listing');
 
-		if (empty($this->request->post['products'])) {
+		if (empty($this->request->post['rooms'])) {
 			$json = array(
 				'message' => $this->language->get('error_not_searched'),
 			);
@@ -584,22 +584,22 @@ class ControllerOpenbayAmazonus extends Controller {
 
 			$delete_search_results = array();
 
-			$bulk_list_products = array();
+			$bulk_list_rooms = array();
 
-			foreach ($this->request->post['products'] as $product_id => $asin) {
-				$delete_search_results[] = $product_id;
+			foreach ($this->request->post['rooms'] as $room_id => $asin) {
+				$delete_search_results[] = $room_id;
 
-				if (!empty($asin) && in_array($product_id, $this->request->post['product_ids'])) {
-					$bulk_list_products[$product_id] = $asin;
+				if (!empty($asin) && in_array($room_id, $this->request->post['room_ids'])) {
+					$bulk_list_rooms[$room_id] = $asin;
 				}
 			}
 
 			$status = false;
 
-			if ($bulk_list_products) {
+			if ($bulk_list_rooms) {
 				$data = array();
 
-				$data['products'] = $bulk_list_products;
+				$data['rooms'] = $bulk_list_rooms;
 
 				if (!empty($this->request->post['start_selling'])) {
 					$data['start_selling'] = $this->request->post['start_selling'];
@@ -613,16 +613,16 @@ class ControllerOpenbayAmazonus extends Controller {
 				$status = $this->model_openbay_amazonus_listing->doBulkListing($data);
 
 				if ($status) {
-					$message = $this->language->get('text_products_sent');
+					$message = $this->language->get('text_rooms_sent');
 
 					if ($delete_search_results) {
 						$this->model_openbay_amazonus_listing->deleteSearchResults($delete_search_results);
 					}
 				} else {
-					$message = $this->language->get('error_sending_products');
+					$message = $this->language->get('error_sending_rooms');
 				}
 			} else {
-				$message = $this->language->get('error_no_products_selected');
+				$message = $this->language->get('error_no_rooms_selected');
 			}
 
 			$json = array(
@@ -636,20 +636,20 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function doBulkSearch() {
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_bulk');
 
 		$json = array();
 		$search_data = array();
 
-		if (!empty($this->request->post['product_ids'])) {
-			foreach ($this->request->post['product_ids'] as $product_id) {
-				$product = $this->model_catalog_product->getProduct($product_id);
+		if (!empty($this->request->post['room_ids'])) {
+			foreach ($this->request->post['room_ids'] as $room_id) {
+				$room = $this->model_catalog_room->getRoom($room_id);
 
-				if (empty($product['sku'])) {
-					$json[$product_id] = array(
-						'error' => $this->language->get('error_product_sku')
+				if (empty($room['sku'])) {
+					$json[$room_id] = array(
+						'error' => $this->language->get('error_room_sku')
 					);
 				}
 
@@ -658,25 +658,25 @@ class ControllerOpenbayAmazonus extends Controller {
 				$id_types = array('isbn', 'upc', 'ean', 'jan', 'sku');
 
 				foreach ($id_types as $id_type) {
-					if (!empty($product[$id_type])) {
+					if (!empty($room[$id_type])) {
 						$key = $id_type;
 						break;
 					}
 				}
 
 				if (!$key) {
-					$json[$product_id] = array(
+					$json[$room_id] = array(
 						'error' => $this->language->get('error_searchable_fields')
 					);
 				}
 
-				if (!isset($json[$product_id])) {
+				if (!isset($json[$room_id])) {
 					$search_data[$key][] = array(
-						'product_id' => $product['product_id'],
-						'value' => trim($product[$id_type]),
+						'room_id' => $room['room_id'],
+						'value' => trim($room[$id_type]),
 					);
 
-					$json[$product_id] = array(
+					$json[$room_id] = array(
 						'success' => $this->language->get('text_searching')
 					);
 				}
@@ -691,9 +691,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function bulkListProducts() {
+	public function bulkListRooms() {
 		$this->load->model('openbay/amazonus');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('tool/image');
 
 		$data = $this->load->language('openbay/amazonus_bulk_listing');
@@ -716,7 +716,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('openbay/amazonus/bulkListRooms', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('heading_title'),
 		);
 
@@ -760,16 +760,16 @@ class ControllerOpenbayAmazonus extends Controller {
 			$data['start'] = ($page - 1) * $this->config->get('config_limit_admin');
 			$data['limit'] = $this->config->get('config_limit_admin');
 
-			$results = $this->model_openbay_amazonus->getProductSearch($data);
-			$product_total = $this->model_openbay_amazonus->getProductSearchTotal($data);
+			$results = $this->model_openbay_amazonus->getRoomSearch($data);
+			$room_total = $this->model_openbay_amazonus->getRoomSearchTotal($data);
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
 			foreach ($results as $result) {
-				$product = $this->model_catalog_product->getProduct($result['product_id']);
+				$room = $this->model_catalog_room->getRoom($result['room_id']);
 
-				if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
-					$image = $this->model_tool_image->resize($product['image'], 40, 40);
+				if ($room['image'] && file_exists(DIR_IMAGE . $room['image'])) {
+					$image = $this->model_tool_image->resize($room['image'], 40, 40);
 				} else {
 					$image = $this->model_tool_image->resize('no_image.png', 40, 40);
 				}
@@ -782,7 +782,7 @@ class ControllerOpenbayAmazonus extends Controller {
 					$search_status = '-';
 				}
 
-				$href = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
+				$href = $this->url->link('catalog/room/update', 'token=' . $this->session->data['token'] . '&room_id=' . $room['room_id'], 'SSL');
 
 				$search_results = array();
 
@@ -799,11 +799,11 @@ class ControllerOpenbayAmazonus extends Controller {
 					}
 				}
 
-				$data['products'][] = array(
-					'product_id' => $product['product_id'],
+				$data['rooms'][] = array(
+					'room_id' => $room['room_id'],
 					'href' => $href,
-					'name' => $product['name'],
-					'model' => $product['model'],
+					'name' => $room['name'],
+					'model' => $room['model'],
 					'image' => $image,
 					'matches' => $result['matches'],
 					'search_status' => $search_status,
@@ -812,11 +812,11 @@ class ControllerOpenbayAmazonus extends Controller {
 			}
 
 			$pagination = new Pagination();
-			$pagination->total = $product_total;
+			$pagination->total = $room_total;
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_limit_admin');
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+			$pagination->url = $this->url->link('openbay/amazonus/bulkListRooms', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 
 			$data['pagination'] = $pagination->render();
 		}
@@ -889,10 +889,10 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport($linked_item_limit, $linked_item_page);
 
-		$products = array();
+		$rooms = array();
 
 		foreach ($results as $result) {
-			$products[] = array(
+			$rooms[] = array(
 				'asin' => $result['asin'],
 				'href_amazon' => 'https://www.amazon.com/dp/' . $result['asin'] . '/',
 				'amazon_sku' => $result['amazon_sku'],
@@ -902,13 +902,13 @@ class ControllerOpenbayAmazonus extends Controller {
 				'sku' => $result['sku'],
 				'quantity' => $result['quantity'],
 				'combination' => $result['combination'],
-				'product_id' => $result['product_id'],
+				'room_id' => $result['room_id'],
 				'var' => $result['var'],
-				'href_product' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
+				'href_room' => $this->url->link('catalog/room/update', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'], 'SSL'),
 			);
 		}
 
-		$data['unlinked_products'] = $products;
+		$data['unlinked_rooms'] = $rooms;
 
 		$data['href_load_listings'] = $this->url->link('openbay/amazonus/loadListingReport', 'token=' . $this->session->data['token'], 'SSL');
 		$data['marketplace_processing'] = $this->config->get('openbay_amazonus_processing_listing_reports');
@@ -962,7 +962,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		if (!empty($this->request->post['link'])) {
 			foreach ($this->request->post['link'] as $link) {
-				if (!empty($link['product_id'])) {
+				if (!empty($link['room_id'])) {
 					$links[] = $link;
 					$amazon_skus[] = $link['amazon_sku'];
 				}
@@ -971,7 +971,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		if (!empty($links)) {
 			foreach ($links as $link) {
-				$this->model_openbay_amazonus->linkProduct($link['amazon_sku'], $link['product_id'], $link['var']);
+				$this->model_openbay_amazonus->linkRoom($link['amazon_sku'], $link['room_id'], $link['var']);
 			}
 
 			$this->model_openbay_amazonus->updateAmazonSkusQuantities($amazon_skus);

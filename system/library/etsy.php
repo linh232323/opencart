@@ -150,8 +150,8 @@ final class Etsy {
 		}
 	}
 
-	public function getLinks($product_id, $status = 0, $limit = null) {
-		$this->log('getLinks() - Product_id: ' . $product_id . ' status: ' . $status . ' limit:' . $limit);
+	public function getLinks($room_id, $status = 0, $limit = null) {
+		$this->log('getLinks() - Room_id: ' . $room_id . ' status: ' . $status . ' limit:' . $limit);
 
 		if ($limit != null) {
 			$sql_limit = ' LIMIT 1';
@@ -159,7 +159,7 @@ final class Etsy {
 			$sql_limit = '';
 		}
 
-		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '" . (int)$status . "' ORDER BY `el`.`created` DESC" . $sql_limit);
+		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "room` `p` ON `el`.`room_id` = `p`.`room_id` WHERE `el`.`room_id` = '" . (int)$room_id . "' AND `el`.`status` = '" . (int)$status . "' ORDER BY `el`.`created` DESC" . $sql_limit);
 
 		if ($qry->num_rows) {
 			$links = array();
@@ -173,8 +173,8 @@ final class Etsy {
 		}
 	}
 
-	public function getLinkedProduct($etsy_item_id) {
-		$qry = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `p`.`model`, `el`.`etsy_listing_id`, `el`.`status` AS `link_status` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `p`.`product_id` = `el`.`product_id` WHERE `el`.`etsy_item_id` = '" . (int)$etsy_item_id . "' AND `el`.`status` = 1");
+	public function getLinkedRoom($etsy_item_id) {
+		$qry = $this->db->query("SELECT `p`.`quantity`, `p`.`room_id`, `p`.`model`, `el`.`etsy_listing_id`, `el`.`status` AS `link_status` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "room` `p` ON `p`.`room_id` = `el`.`room_id` WHERE `el`.`etsy_item_id` = '" . (int)$etsy_item_id . "' AND `el`.`status` = 1");
 
 		if($qry->num_rows) {
 			return $qry->row;
@@ -183,13 +183,13 @@ final class Etsy {
 		}
 	}
 
-	public function updateAllStock($product_id, $new_stock) {
+	public function updateAllStock($room_id, $new_stock) {
 		/**
 		 * This will update all linked listings with the set stock amount
 		 */
 
 		/** @var loop over linked items $response
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+		$response = $this->openbay->etsy->call('room/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
 
 		if (isset($response['data']['error'])) {
 			$this->response->setOutput(json_encode($response['data']));
@@ -205,7 +205,7 @@ final class Etsy {
 				$status = 'inactive';
 			}
 
-			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock, 'state' => $status));
+			$response = $this->call('room/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock, 'state' => $status));
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -215,7 +215,7 @@ final class Etsy {
 		} else {
 			$this->deleteLink(null, $etsy_item_id);
 
-			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/inactive', 'POST');
+			$response = $this->call('room/listing/' . (int)$etsy_item_id . '/inactive', 'POST');
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -225,8 +225,8 @@ final class Etsy {
 		}
 	}
 
-	public function deleteProduct($product_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+	public function deleteRoom($room_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `room_id` = '" . $this->db->escape($room_id) . "'");
 	}
 
 	public function deleteLink($etsy_listing_id = null, $etsy_item_id = null) {
@@ -237,10 +237,10 @@ final class Etsy {
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
-		$this->log('productUpdateListen() - ' . $product_id);
+	public function roomUpdateListen($room_id, $data) {
+		$this->log('roomUpdateListen() - ' . $room_id);
 
-		$links = $this->getLinks($product_id, 1);
+		$links = $this->getLinks($room_id, 1);
 
 		if (!empty($links)) {
 			foreach ($links as $link) {
@@ -287,11 +287,11 @@ final class Etsy {
 
 	public function addOrder($order_id) {
 		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
+			$query = $this->db->query("SELECT `p`.`room_id` FROM `" . DB_PREFIX . "order_room` `op` LEFT JOIN `" . DB_PREFIX . "room` `p` ON `op`.`room_id` = `p`.`room_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
-				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
+				foreach ($query->rows as $room) {
+					$this->roomUpdateListen((int)$room['room_id'], array());
 				}
 			}
 		}
@@ -299,11 +299,11 @@ final class Etsy {
 
 	public function orderDelete($order_id) {
 		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
+			$query = $this->db->query("SELECT `p`.`room_id` FROM `" . DB_PREFIX . "order_room` `op` LEFT JOIN `" . DB_PREFIX . "room` `p` ON `op`.`room_id` = `p`.`room_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
-				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
+				foreach ($query->rows as $room) {
+					$this->roomUpdateListen((int)$room['room_id'], array());
 				}
 			}
 		}
@@ -329,9 +329,9 @@ final class Etsy {
 		}
 	}
 
-	public function putStockUpdateBulk($product_id_array, $end_inactive) {
-		foreach($product_id_array as $product_id) {
-			$links = $this->getLinks($product_id, 1);
+	public function putStockUpdateBulk($room_id_array, $end_inactive) {
+		foreach($room_id_array as $room_id) {
+			$links = $this->getLinks($room_id, 1);
 
 			if (!empty($links)) {
 				foreach ($links as $link) {
@@ -350,7 +350,7 @@ final class Etsy {
 	}
 
 	public function getEtsyItem($listing_id) {
-		$response = $this->openbay->etsy->call('product/listing/' . $listing_id, 'GET');
+		$response = $this->openbay->etsy->call('room/listing/' . $listing_id, 'GET');
 
 		if (isset($response['data']['error'])) {
 			return $response;

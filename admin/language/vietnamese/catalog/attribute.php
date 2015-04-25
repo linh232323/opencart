@@ -19,5 +19,5 @@ $_['entry_sort_order']      = 'Thứ tự:';
 // Error
 $_['error_permission']      = 'Cảnh báo: Bạn không được phép thay đổi các thuộc tính!';
 $_['error_name']            = 'Tên thuộc tính phải có từ 3 và 64 ký tự!';
-$_['error_product']         = 'Cảnh báo: không thể xóa, vì thuộc tính này đang được kết nối với %s sản phẩm!';
+$_['error_room']         = 'Cảnh báo: không thể xóa, vì thuộc tính này đang được kết nối với %s sản phẩm!';
 ?>

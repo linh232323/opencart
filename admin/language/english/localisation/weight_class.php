@@ -27,5 +27,5 @@ $_['error_permission'] = 'Warning: You do not have permission to modify weight c
 $_['error_title']      = 'Weight Title must be between 3 and 32 characters!';
 $_['error_unit']       = 'Weight Unit must be between 1 and 4 characters!';
 $_['error_default']    = 'Warning: This weight class cannot be deleted as it is currently assigned as the default store weight class!';
-$_['error_product']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s products!';
-$_['error_proparent']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s proparents!';
+$_['error_room']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s rooms!';
+$_['error_hotel']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s hotels!';

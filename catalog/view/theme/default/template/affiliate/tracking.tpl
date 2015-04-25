@@ -26,7 +26,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="<?php echo $help_generator; ?>"><?php echo $entry_generator; ?></span></label>
           <div class="col-sm-10">
-            <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
+            <input type="text" name="room" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
           </div>
         </div>
         <div class="form-group">
@@ -43,7 +43,7 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('input[name=\'room\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=affiliate/tracking/autocomplete&filter_name=' +  encodeURIComponent(request),
@@ -59,7 +59,7 @@ $('input[name=\'product\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
+		$('input[name=\'room\']').val(item['label']);
 		$('textarea[name=\'link\']').val(item['value']);	
 	}	
 });

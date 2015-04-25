@@ -14,8 +14,8 @@ $_['text_all_status']   = 'All Statuses';
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
 $_['column_orders']     = 'No. Orders';
-$_['column_products']   = 'No. Products';
-$_['column_proparents'] = 'No. Proparents';
+$_['column_rooms']   = 'No. Rooms';
+$_['column_hotels'] = 'No. hotels';
 $_['column_tax']        = 'Tax';
 $_['column_total']      = 'Total';
 

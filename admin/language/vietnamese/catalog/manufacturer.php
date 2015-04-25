@@ -27,5 +27,5 @@ $_['entry_type']         = 'Loại:';
 // Error
 $_['error_permission']   = 'Cảnh báo: Bạn không được phép thay đổi các hãng sản xuất!';
 $_['error_name']         = 'Tên hãng sản xuất phải lớn hơn 3 và nhỏ hơn 64 ký tự!';
-$_['error_product']      = 'Cảnh báo: không thể xóa, vì hãng sản xuất này đang được kết nối với %s sản phẩm!';
+$_['error_room']      = 'Cảnh báo: không thể xóa, vì hãng sản xuất này đang được kết nối với %s sản phẩm!';
 ?>

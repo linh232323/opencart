@@ -125,13 +125,13 @@ class Amazonus {
 			if ($this->openbay->addonLoad('openstock') == true) {
 				$logger->write('openStock found installed.');
 
-				$os_products = $this->osProducts($order_id);
-				$logger->write(print_r($os_products, true));
+				$os_rooms = $this->osRooms($order_id);
+				$logger->write(print_r($os_rooms, true));
 				$quantity_data = array();
-				foreach ($os_products as $os_product) {
-					$amazonus_sku_rows = $this->getLinkedSkus($os_product['pid'], $os_product['var']);
+				foreach ($os_rooms as $os_room) {
+					$amazonus_sku_rows = $this->getLinkedSkus($os_room['pid'], $os_room['var']);
 					foreach($amazonus_sku_rows as $amazonus_sku_row) {
-						$quantity_data[$amazonus_sku_row['amazonus_sku']] = $os_product['qty_left'];
+						$quantity_data[$amazonus_sku_row['amazonus_sku']] = $os_room['qty_left'];
 					}
 				}
 				if(!empty($quantity_data)) {
@@ -141,26 +141,26 @@ class Amazonus {
 					$logger->write('No quantity data need to be posted.');
 				}
 			} else {
-				$ordered_products = $this->getOrderdProducts($order_id);
-				$ordered_product_ids = array();
-				foreach($ordered_products as $ordered_product) {
-					$ordered_product_ids[] = $ordered_product['product_id'];
+				$ordered_rooms = $this->getOrderdRooms($order_id);
+				$ordered_room_ids = array();
+				foreach($ordered_rooms as $ordered_room) {
+					$ordered_room_ids[] = $ordered_room['room_id'];
 				}
-				$this->putStockUpdateBulk($ordered_product_ids);
+				$this->putStockUpdateBulk($ordered_room_ids);
 			}
 			$logger->write('addOrder() exiting');
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
+	public function roomUpdateListen($room_id, $data) {
 		$logger = new Log('amazonus_stocks.log');
-		$logger->write('productUpdateListen called for product id: ' . $product_id);
+		$logger->write('roomUpdateListen called for room id: ' . $room_id);
 
 		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-			$logger->write('openStock found installed and product has options.');
+			$logger->write('openStock found installed and room has options.');
 			$quantity_data = array();
-			foreach($data['product_option_stock'] as $opt_stock) {
-				$amazonus_sku_rows = $this->getLinkedSkus($product_id, $opt_stock['var']);
+			foreach($data['room_option_stock'] as $opt_stock) {
+				$amazonus_sku_rows = $this->getLinkedSkus($room_id, $opt_stock['var']);
 				foreach($amazonus_sku_rows as $amazonus_sku_row) {
 					$quantity_data[$amazonus_sku_row['amazonus_sku']] = $opt_stock['stock'];
 				}
@@ -173,9 +173,9 @@ class Amazonus {
 			}
 
 		} else {
-			$this->putStockUpdateBulk(array($product_id));
+			$this->putStockUpdateBulk(array($room_id));
 		}
-		$logger->write('productUpdateListen() exiting');
+		$logger->write('roomUpdateListen() exiting');
 	}
 
 	public function bulkUpdateOrders($orders) {
@@ -194,21 +194,21 @@ class Amazonus {
 
 		foreach ($orders as $order) {
 			$amazon_order = $this->getOrder($order['order_id']);
-			$amazon_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order['order_id']);
+			$amazon_order_rooms = $this->model_openbay_amazonus->getAmazonusOrderedRooms($order['order_id']);
 
-			$products = array();
+			$rooms = array();
 
-			foreach ($amazon_order_products as $amazon_order_product) {
-				$products[] = array(
-					'amazon_order_item_id' => $amazon_order_product['amazonus_order_item_id'],
-					'quantity' => $amazon_order_product['quantity'],
+			foreach ($amazon_order_rooms as $amazon_order_room) {
+				$rooms[] = array(
+					'amazon_order_item_id' => $amazon_order_room['amazonus_order_item_id'],
+					'quantity' => $amazon_order_room['quantity'],
 				);
 			}
 
 			$order_info = array(
 				'amazon_order_id' => $amazon_order['amazonus_order_id'],
 				'status' => $order['status'],
-				'products' => $products,
+				'rooms' => $rooms,
 			);
 
 			if ($order['status'] == 'shipped' && !empty($order['carrier'])) {
@@ -254,7 +254,7 @@ class Amazonus {
 		$log->write("Order's $amazonus_order_id status changed to $order_status_string");
 
 		$this->load->model('openbay/amazonus');
-		$amazonus_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
+		$amazonus_order_rooms = $this->model_openbay_amazonus->getAmazonusOrderedRooms($order_id);
 
 		$request_node = new SimpleXMLElement('<Request/>');
 
@@ -272,10 +272,10 @@ class Amazonus {
 
 		$order_items_node = $request_node->addChild('OrderItems');
 
-		foreach ($amazonus_order_products as $product) {
+		foreach ($amazonus_order_rooms as $room) {
 			$new_order_item = $order_items_node->addChild('OrderItem');
-			$new_order_item->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
-			$new_order_item->addChild('Quantity', (int)$product['quantity']);
+			$new_order_item->addChild('ItemId', htmlspecialchars($room['amazonus_order_item_id']));
+			$new_order_item->addChild('Quantity', (int)$room['quantity']);
 		}
 
 		$doc = new DOMDocument('1.0');
@@ -290,7 +290,7 @@ class Amazonus {
 	}
 
 	public function getCategoryTemplates() {
-		$result = $this->call("productv2/RequestTemplateList");
+		$result = $this->call("roomv2/RequestTemplateList");
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -299,7 +299,7 @@ class Amazonus {
 	}
 
 	public function registerInsertion($data) {
-		$result = $this->call("productv2/RegisterInsertionRequest", $data);
+		$result = $this->call("roomv2/RegisterInsertionRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -307,8 +307,8 @@ class Amazonus {
 		}
 	}
 
-	public function insertProduct($data) {
-		$result = $this->call("productv2/InsertProductRequest", $data);
+	public function insertRoom($data) {
+		$result = $this->call("roomv2/InsertRoomRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -317,7 +317,7 @@ class Amazonus {
 	}
 
 	public function updateQuantities($data) {
-		$result = $this->call("product/UpdateQuantityRequest", $data);
+		$result = $this->call("room/UpdateQuantityRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -334,21 +334,21 @@ class Amazonus {
 		}
 	}
 
-	public function putStockUpdateBulk($product_id_array, $end_inactive = false){
+	public function putStockUpdateBulk($room_id_array, $end_inactive = false){
 		$this->load->library('log');
 		$logger = new Log('amazonus_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantity_data = array();
-		foreach($product_id_array as $product_id) {
-			$amazonus_rows = $this->getLinkedSkus($product_id);
+		foreach($room_id_array as $room_id) {
+			$amazonus_rows = $this->getLinkedSkus($room_id);
 			foreach($amazonus_rows as $amazonus_row) {
-				$product_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
+				$room_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$room_id . "'")->row;
 
-				if(!empty($product_row)) {
-					if($end_inactive && $product_row['status'] == '0') {
+				if(!empty($room_row)) {
+					if($end_inactive && $room_row['status'] == '0') {
 						$quantity_data[$amazonus_row['amazonus_sku']] = 0;
 					} else {
-						$quantity_data[$amazonus_row['amazonus_sku']] = $product_row['quantity'];
+						$quantity_data[$amazonus_row['amazonus_sku']] = $room_row['quantity'];
 					}
 				}
 			}
@@ -362,49 +362,49 @@ class Amazonus {
 		}
 	}
 
-	public function getLinkedSkus($product_id, $var='') {
-		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
+	public function getLinkedSkus($room_id, $var='') {
+		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_room_link` WHERE `room_id` = '" . (int)$room_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
-	public function getOrderdProducts($order_id) {
-		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_product` as `op` LEFT JOIN `" . DB_PREFIX . "product` as `p` ON `p`.`product_id` = `op`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'")->rows;
+	public function getOrderdRooms($order_id) {
+		return $this->db->query("SELECT `op`.`room_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_room` as `op` LEFT JOIN `" . DB_PREFIX . "room` as `p` ON `p`.`room_id` = `op`.`room_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'")->rows;
 	}
 
-	public function osProducts($order_id){
-		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function osRooms($order_id){
+		$order_room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		$pass_array = array();
-		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
+		foreach ($order_room_query->rows as $order_room) {
+			$room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . (int)$order_room['room_id'] . "' LIMIT 1");
 
-			if (!empty($product_query->row)) {
-				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-					$product_option_query = $this->db->query("
-						SELECT `oo`.`product_option_value_id`
+			if (!empty($room_query->row)) {
+				if (isset($room_query->row['has_option']) && ($room_query->row['has_option'] == 1)) {
+					$room_option_query = $this->db->query("
+						SELECT `oo`.`room_option_value_id`
 						FROM `" . DB_PREFIX . "order_option` `oo`
-							LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+							LEFT JOIN `" . DB_PREFIX . "room_option_value` `pov` ON (`pov`.`room_option_value_id` = `oo`.`room_option_value_id`)
 							LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
-						WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+						WHERE `oo`.`order_room_id` = '" . (int)$order_room['order_room_id'] . "'
 						AND `oo`.`order_id` = '" . (int)$order_id . "'
 						AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
 						ORDER BY `oo`.`order_option_id`
 						ASC");
 
-					if ($product_option_query->num_rows != 0) {
+					if ($room_option_query->num_rows != 0) {
 						$p_options = array();
-						foreach ($product_option_query->rows as $p_option_row) {
-							$p_options[] = $p_option_row['product_option_value_id'];
+						foreach ($room_option_query->rows as $p_option_row) {
+							$p_options[] = $p_option_row['room_option_value_id'];
 						}
 
 						$var = implode(':', $p_options);
-						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "room_option_relation` WHERE `room_id` = '" . (int)$order_room['room_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
 						if(empty($quantity_left_row)) {
 							$quantity_left_row['stock'] = 0;
 						}
-						$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
+						$pass_array[] = array('pid' => $order_room['room_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
 					}
 				} else {
-					$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
+					$pass_array[] = array('pid' => $order_room['room_id'], 'qty_left' => $room_query->row['quantity'], 'var' => '');
 				}
 			}
 		}
@@ -423,8 +423,8 @@ class Amazonus {
 		}
 	}
 
-	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+	public function deleteRoom($room_id){
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_room_link` WHERE `room_id` = '" . $this->db->escape($room_id) . "'");
 	}
 
 	public function orderDelete($order_id){

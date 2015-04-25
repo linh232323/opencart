@@ -653,74 +653,74 @@ footer h5 {
 #sync2 .synced .item{
   background: #0c83e7;
 }
-/* product list */
-#product .product-thumb{
+/* room list */
+#room .room-thumb{
         padding-bottom: 10px;
 }
-.product-thumb {
+.room-thumb {
 	margin-bottom: 0px;
 	overflow: auto;
 }
-.product-thumb:hover {
+.room-thumb:hover {
 	background: #f5fbfe;
 }
-.product-thumb .image {
+.room-thumb .image {
 	text-align: center;
 }
-.product-thumb .image a {
+.room-thumb .image a {
 	display: block;
 }
-.product-thumb .image a:hover {
+.room-thumb .image a:hover {
 	opacity: 0.5;
         transition: 0.5s ease-in-out;
 }
-.product-thumb .image img {
+.room-thumb .image img {
 	margin-left: auto;
 	margin-right: auto;
         padding: 10px;
 }
-.product-grid .product-thumb .image {
+.room-grid .room-thumb .image {
 	float: none;
 }
 @media (min-width: 767px) {
-.product-list .product-thumb .image {
+.room-list .room-thumb .image {
 	float: left;
 	padding: 0 15px;
 }
 }
-.product-thumb h4 {
+.room-thumb h4 {
 	font-weight: bold;
 }
-.product-thumb .caption {
+.room-thumb .caption {
 	padding: 0 20px;
 	min-height: 230px;
         position: relative;
 }
-.product-list .product-thumb .caption {
+.room-list .room-thumb .caption {
 	margin-left: 230px;
         position: relative;
 }
 @media (max-width: 1200px) {
-.product-grid .product-thumb .caption {
+.room-grid .room-thumb .caption {
 	min-height: 210px;
 	padding: 0 10px;
         position: relative;
 }
 }
 @media (max-width: 767px) {
-.product-list .product-thumb .caption {
+.room-list .room-thumb .caption {
 	min-height: 0;
 	margin-left: 0;
 	padding: 0 10px;
         position: relative;
 }
-.product-grid .product-thumb .caption {
+.room-grid .room-thumb .caption {
 	min-height: 0;
         position: relative;
 }
 }
 
-.product-thumb .rating {
+.room-thumb .rating {
 	padding-bottom: 10px;
 }
 .rating .fa-stack {
@@ -740,37 +740,37 @@ footer h5 {
 h2.price {
 	margin: 0;
 }
-.product-thumb .price {
+.room-thumb .price {
 	color: #444;
 }
-.product-thumb .price-new {
+.room-thumb .price-new {
 	font-weight: 600;
 }
-.product-thumb .price-old {
+.room-thumb .price-old {
 	color: #999;
 	text-decoration: line-through;
 	margin-left: 10px;
 }
-.product-thumb .price-tax {
+.room-thumb .price-tax {
 	color: #999;
 	font-size: 12px;
 	display: block;
 }
-.product-thumb .button-group {
+.room-thumb .button-group {
 	border-top: 1px solid #ddd;
 	background-color: #eee;
 	overflow: auto;
 }
-.product-list .product-thumb .button-group {
+.room-list .room-thumb .button-group {
 	border-left: 1px solid #ddd;
 }
 
 @media (max-width: 768px) {
-	.product-list .product-thumb .button-group {
+	.room-list .room-thumb .button-group {
 		border-left: none;
 	}
 }
-.product-thumb .button-group button {
+.room-thumb .button-group button {
 	width: 60%;
 	border: none;
 	display: inline-block;
@@ -782,23 +782,23 @@ h2.price {
 	text-align: center;
 	text-transform: uppercase;
 }
-.product-thumb .button-group button + button {
+.room-thumb .button-group button + button {
 	width: 20%;
 	border-left: 1px solid #ddd;
 }
-.product-thumb .button-group button:hover {
+.room-thumb .button-group button:hover {
 	color: #444;
 	background-color: #ddd;
 	text-decoration: none;
 	cursor: pointer;
 }
 @media (max-width: 1200px) {
-	.product-thumb .button-group button, .product-thumb .button-group button + button {
+	.room-thumb .button-group button, .room-thumb .button-group button + button {
 		width: 33.33%;
 	}
 }
 @media (max-width: 767px) {
-	.product-thumb .button-group button, .product-thumb .button-group button + button {
+	.room-thumb .button-group button, .room-thumb .button-group button + button {
 		width: 33.33%;
 	}
 }
@@ -838,16 +838,16 @@ h2.price {
 
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
-    #column-left  .product-layout .col-md-3{
+    #column-left  .room-layout .col-md-3{
        width: 100%;
     }
-    #column-left + #content .product-layout .col-md-3 {
+    #column-left + #content .room-layout .col-md-3 {
        width: 50%;
     }
-    #column-left + #content + #column-right .product-layout .col-md-3{
+    #column-left + #content + #column-right .room-layout .col-md-3{
        width: 100%;
     }
-    #content + #column-right .product-layout .col-md-3{
+    #content + #column-right .room-layout .col-md-3{
        width: 100%;
     }
 }
@@ -878,21 +878,21 @@ h2.price {
 #tab-specification tr:first-child td{
     border-top: 0px;
 }
-/* table product */
-.product-layout .product-thumb{
+/* table room */
+.room-layout .room-thumb{
     border-top:  1px solid #CECECE;
 }
-#product-layout div table tr td{
+#room-layout div table tr td{
     border-bottom: 0px;
 }
-#product-layout div:last-child table tr td{
+#room-layout div:last-child table tr td{
     border-bottom: 1px solid #CECECE;
 }
 
-#product-layout .table-header tr th{
+#room-layout .table-header tr th{
     border-bottom: 0px;
 }
-#product-layout .table-bordered{
+#room-layout .table-bordered{
     border:0px;
 }
 /* Search Page */
@@ -910,17 +910,17 @@ h2.price {
     padding-left: 1px;
     padding-right: 1px;
 }
-.product-thumb .btn-primary{
+.room-thumb .btn-primary{
     height: 35px;
     padding: 3px 5px 3px 5px;
     font-size: 16px;
 }
-/* Proparent */
+/* hotel */
 .content{
     width: 87%;
     margin: auto;
 }
-.product-thumb table .btn-primary{
+.room-thumb table .btn-primary{
     height: 38px;
     font-size: 15px;
     padding: 5px !important;

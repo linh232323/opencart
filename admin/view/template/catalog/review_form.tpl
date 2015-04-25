@@ -35,12 +35,12 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-room"><span data-toggle="tooltip" title="<?php echo $help_room; ?>"><?php echo $entry_room; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-              <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-              <?php if ($error_product) { ?>
-              <div class="text-danger"><?php echo $error_product; ?></div>
+              <input type="text" name="room" value="<?php echo $room; ?>" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
+              <input type="hidden" name="room_id" value="<?php echo $room_id; ?>" />
+              <?php if ($error_room) { ?>
+              <div class="text-danger"><?php echo $error_room; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -126,24 +126,24 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('input[name=\'room\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id']
+						value: item['room_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('input[name=\'product_id\']').val(item['value']);		
+		$('input[name=\'room\']').val(item['label']);
+		$('input[name=\'room_id\']').val(item['value']);		
 	}	
 });
 //--></script></div>

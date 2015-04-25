@@ -64,7 +64,7 @@
               <th class="text-left"></th>
               <th class="text-left"><?php echo $column_item_id; ?></th>
               <th class="text-left"><?php echo $column_listing_title; ?></th>
-              <th class="text-left"><?php echo $column_product_auto; ?></th>
+              <th class="text-left"><?php echo $column_room_auto; ?></th>
               <th class="text-center"><?php echo $column_stock_available; ?></th>
               <th class="text-center"><?php echo $column_allocated; ?></th>
               <th class="text-center"><?php echo $column_ebay_stock; ?></th>
@@ -92,7 +92,7 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-left"><?php echo $column_product; ?></th>
+              <th class="text-left"><?php echo $column_room; ?></th>
               <th class="text-center"><?php echo $column_item_id; ?></th>
               <th class="text-center"><?php echo $column_allocated; ?></th>
               <th class="text-center"><?php echo $column_stock_available; ?></th>
@@ -112,7 +112,7 @@
           <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
           <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
           <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
-          <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
+          <input type="hidden" name="room_id[]" id="room-id-<?php echo $id; ?>" value="<?php echo $item['room_id']; ?>" />
           <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
           <tr id="row-<?php echo $id; ?>">
             <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
@@ -156,7 +156,7 @@
             } else {
               $.each (json.data, function(key, val) {
                 key                 = String(key);
-                var product_id      = $('#product-id-'+key).val();
+                var room_id      = $('#room-id-'+key).val();
                 var store_qty       = $('#store-qty-'+key).val();
                 var reserve_qty     = $('#reserve-qty-'+key).val();
                 var html_inj        = '';
@@ -169,16 +169,16 @@
                     if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-'+key).text('OK');
                       $('#row-'+key+' > td').css('background-color', '#E3FFC8');
-                      $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $button_edit; ?></span></a>');
+                      $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+room_id+'" class="btn btn-primary"><span><?php echo $button_edit; ?></span></a>');
                     } else {
                       $('#text-status-'+key).text('<?php echo $text_stock_error; ?>');
                       $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $button_resync; ?></a>');
+                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+room_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $button_resync; ?></a>');
                     }
                   } else {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+room_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
                   }
                 } else {
                   $.each (val.variants, function(key1, val1) {
@@ -194,7 +194,7 @@
                   if (val.status == 0) {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+room_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
                   }
                 }
               });
@@ -212,10 +212,10 @@
       });
   }
 
-  function removeLink(product_id, id) {
+  function removeLink(room_id, id) {
       $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id='+product_id,
+          url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&room_id='+room_id,
           dataType: 'json',
           success: function(json) {
               $('#row-'+id).fadeOut('slow');
@@ -226,7 +226,7 @@
       });
   }
 
-  function updateLink(item_id, qty, product_id, store_qty, reserve_qty) {
+  function updateLink(item_id, qty, room_id, store_qty, reserve_qty) {
       var r = confirm("<?php echo $text_alert_stock_local; ?>");
       var button_old = $('#text-buttons-'+item_id).html();
 
@@ -235,12 +235,12 @@
       if (r == true) {
           $.ajax({
               type: 'GET',
-              url: 'index.php?route=openbay/ebay/setProductStock&token=<?php echo $token; ?>&product_id='+product_id,
+              url: 'index.php?route=openbay/ebay/setRoomStock&token=<?php echo $token; ?>&room_id='+room_id,
               dataType: 'json',
               success: function(json) {
                   if (json.error == false) {
                       $('#text-status-'+item_id).text('OK');
-                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><?php echo $button_edit; ?></a>');
+                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+room_id+'" class="btn btn-primary"><?php echo $button_edit; ?></a>');
                       $('#row-'+item_id+' > td').css('background-color', '#E3FFC8');
                       $('#l-'+item_id+'-qty-input').val(qty);
                       $('#l-'+item_id+'-qty').val(qty);
@@ -268,12 +268,12 @@
   }
 
   function saveListingLink(id) {
-      var product_id      = $('#l-'+id+'-pid').val();
+      var room_id      = $('#l-'+id+'-pid').val();
       var qty             = $('#l-'+id+'-qty-input').val();
       var ebayqty         = $('#l-'+id+'-qtyebayinput').val();
       var variants        = $('#l-'+id+'-variants').val();
 
-      if (product_id === '') {
+      if (room_id === '') {
           alert('<?php echo $error_link_value; ?>');
           return false;
       }
@@ -284,7 +284,7 @@
       }
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid='+product_id+'&itemId='+id+'&qty='+qty+'&ebayqty='+ebayqty+'&variants='+variants,
+          url: 'index.php?route=openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid='+room_id+'&itemId='+id+'&qty='+qty+'&ebayqty='+ebayqty+'&variants='+variants,
           type: 'post',
           dataType: 'json',
           beforeSend: function() {
@@ -300,11 +300,11 @@
       });
   }
 
-  function getProductStock(id, element_id) {
+  function getRoomStock(id, element_id) {
       $.ajax({
           type:'GET',
           dataType: 'json',
-          url: 'index.php?route=openbay/ebay/getProductStock&token=<?php echo $token; ?>&pid='+id,
+          url: 'index.php?route=openbay/ebay/getRoomStock&token=<?php echo $token; ?>&pid='+id,
           success: function(data) {
               if (data.variant == 0) {
                   $('#'+element_id+'-qty').text(data.qty);
@@ -354,7 +354,7 @@
             html_inj += '</td>';
             html_inj += '<td class="text-left">'+key+'<input type="hidden" id="l-'+key+'_val" val="'+key+'" /></td>';
             html_inj += '<td class="text-left">'+val.name+'</td>';
-            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
+            html_inj += '<td class="text-left"><input type="text" class="room-search form-control" placeholder="<?php echo $column_room_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
 
             if (val.variants == 0) {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span><input type="hidden" id="l-'+key+'-qtyinput" /></td>';
@@ -405,19 +405,19 @@
     });
   });
 
-  $(document).on('keydown', '.product-search', function() {
+  $(document).on('keydown', '.room-search', function() {
     var element_id = $(this).attr('id');
 
     $(this).autocomplete({
       source: function(request, response) {
         $.ajax({
-          url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+          url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {
               return {
                 label: item['name'],
-                value: item['product_id']
+                value: item['room_id']
               }
             }));
           }
@@ -425,7 +425,7 @@
       },
       select: function(item) {
         $('#'+element_id).val(item['label']);
-        getProductStock(item['value'], element_id);
+        getRoomStock(item['value'], element_id);
         $('#'+element_id+'-pid').val(item['value']);
         return false;
       }

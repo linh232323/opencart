@@ -368,31 +368,31 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$amazon_order_info = $this->model_payment_amazon_checkout->getOrder($this->request->get['order_id']);
 
 		if ($amazon_order_info) {
-			$order_products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+			$order_rooms = $this->model_sale_order->getOrderRooms($this->request->get['order_id']);
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
-			$data['products'] = array();
+			$data['rooms'] = array();
 
-			foreach ($order_products as $product) {
-				$product_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+			foreach ($order_rooms as $room) {
+				$room_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $room['order_room_id']);
 
 				$order_item_code = '';
 
-				if (isset($amazon_order_info['products'][$product['order_product_id']])) {
-					$order_item_code = $amazon_order_info['products'][$product['order_product_id']]['amazon_order_item_code'];
+				if (isset($amazon_order_info['rooms'][$room['order_room_id']])) {
+					$order_item_code = $amazon_order_info['rooms'][$room['order_room_id']]['amazon_order_item_code'];
 				}
 
-				$data['products'][] = array(
+				$data['rooms'][] = array(
 					'amazon_order_item_code' => $order_item_code,
-					'order_product_id'       => $product['order_product_id'],
-					'product_id'             => $product['product_id'],
-					'name'                   => $product['name'],
-					'model'                  => $product['model'],
-					'option'                 => $product_options,
-					'quantity'               => $product['quantity'],
-					'price'                  => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']),
-					'total'                  => $this->currency->format($product['total'], $order_info['currency_code'], $order_info['currency_value']),
-					'href'                   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
+					'order_room_id'       => $room['order_room_id'],
+					'room_id'             => $room['room_id'],
+					'name'                   => $room['name'],
+					'model'                  => $room['model'],
+					'option'                 => $room_options,
+					'quantity'               => $room['quantity'],
+					'price'                  => $this->currency->format($room['price'], $order_info['currency_code'], $order_info['currency_value']),
+					'total'                  => $this->currency->format($room['total'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'                   => $this->url->link('catalog/room/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $room['room_id'], 'SSL')
 				);
 			}
 
@@ -408,7 +408,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$data['column_status'] = $this->language->get('column_status');
 			$data['column_text'] = $this->language->get('column_text');
 			$data['column_amazon_order_item_code'] = $this->language->get('column_amazon_order_item_code');
-			$data['column_product'] = $this->language->get('column_product');
+			$data['column_room'] = $this->language->get('column_room');
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');

@@ -1,9 +1,10 @@
 <?php
 // Heading
-$_['heading_title']     = 'So sánh sản phẩm';
+$_['heading_title']     = 'So sánh';
  
 // Text
-$_['text_product']      = 'Chi tiết sản phẩm';
+$_['text_room']      = 'Chi tiết sản phẩm';
+$_['text_hotel']        = 'Chi tiết khách sạn';
 $_['text_name']         = 'Sản phẩm';
 $_['text_image']        = 'Hình ảnh';
 $_['text_price']        = 'Giá';
@@ -17,7 +18,7 @@ $_['text_summary']      = 'Tóm tắt';
 $_['text_weight']       = 'Trọng lượng';
 $_['text_dimension']    = 'Kích thước (L x W x H)';
 $_['text_remove']       = 'Xóa';
-$_['text_compare']      = 'So sánh sản phẩm (%s)';
-$_['text_success']      = 'Thành công: Bạn đã thêm <a href="%s">%s</a> sản phẩm vào danh sách <a href="%s">so sánh</a>!';
-$_['text_empty']        = 'Bạn chưa chọn sản phẩm nào để so sánh.';
+$_['text_compare']      = 'So sánh khách sạn (%s)';
+$_['text_success']      = 'Thành công: Bạn đã thêm <a href="%s">%s</a> khách sạn vào danh sách <a href="%s">so sánh</a>!';
+$_['text_empty']        = 'Bạn chưa chọn khách sạn nào để so sánh.';
 ?>

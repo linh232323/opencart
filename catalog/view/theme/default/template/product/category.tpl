@@ -121,8 +121,8 @@
                 <?php if (count($categories) <= 10) { ?>
                 <div class="row">
                     <?php foreach ($categories as $category) { ?>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
+                    <div class="room-layout room-list col-xs-12">
+                        <div class="room-thumb">
                             <div class="image">
                                 <a href="<?php echo $category['href']; ?>"><img src = "<?php echo $category['image']; ?>" alt ="<?php echo $category['name']; ?>" title ="<?php echo $category['name']; ?>"/></a>
                             </div>
@@ -151,7 +151,7 @@
                 </div>
                 <?php } ?>
                 <?php } ?>
-                <?php if ($proparents && !$categories) { ?>
+                <?php if ($hotels && !$categories) { ?>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="btn-group hidden-xs">
@@ -190,15 +190,15 @@
                 </div>
                 <br />
                 <div class="row">
-                    <?php foreach ($proparents as $proparent) { ?>
-                    <?php if (isset($proparent[0])) { ?>
-                    <div id="product" class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image"><a href="<?php echo $proparent['hrefp']; ?>"><img src="<?php echo $proparent['thumbp']; ?>" alt="<?php echo $proparent['namep']; ?>" title="<?php echo $proparent['namep']; ?>" class="img-responsive" /></a></div>
+                    <?php foreach ($hotels as $hotel) { ?>
+                    <?php if (isset($hotel[0])) { ?>
+                    <div id="room" class="room-layout room-list col-xs-12">
+                        <div class="room-thumb">
+                            <div class="image"><a href="<?php echo $hotel['hrefp']; ?>"><img src="<?php echo $hotel['thumbp']; ?>" alt="<?php echo $hotel['namep']; ?>" title="<?php echo $hotel['namep']; ?>" class="img-responsive" /></a></div>
                             <div class="caption">
-                                <h4 class="col-lg-9 col-md-9 col-sm-9 col-xs-12"><a href="<?php echo $proparent['hrefp']; ?>"><?php echo $proparent['namep']; ?></a><span class="rating">
+                                <h4 class="col-lg-9 col-md-9 col-sm-9 col-xs-12"><a href="<?php echo $hotel['hrefp']; ?>"><?php echo $hotel['namep']; ?></a><span class="rating">
                                         <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                        <?php if ($proparent['star'] < $i) { ?>
+                                        <?php if ($hotel['star'] < $i) { ?>
                                         <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                                         <?php } else { ?>
                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -207,9 +207,9 @@
                                     </span></h4>
                                 <div class="col-xs-3 pull-right text-right text-primary">
                                     <h4 class="text-primary">
-                                        <?php if ($proparent['ratingp']) { ?>
+                                        <?php if ($hotel['ratingp']) { ?>
                                         <?php
-                                        switch ($proparent['ratingp']) {
+                                        switch ($hotel['ratingp']) {
                                         case "10":
                                         $text_rating = $text_rate_superb;
                                         break;
@@ -233,47 +233,47 @@
                                         $text_rating = $text_rate_bad;
                                         }
                                         ?>
-                                        <?php echo $text_rating.' '.$proparent['ratingp']; ?>
+                                        <?php echo $text_rating.' '.$hotel['ratingp']; ?>
                                         <?php } ?>
                                     </h4>
                                     <div>
-                                        <?php echo $proparent['pareviews']; ?>
+                                        <?php echo $hotel['Hotelreviews']; ?>
                                     </div>
                                 </div>
-                                <div class="col-xs-9"><strong><?php if ($proparent['wifi'] == 1) { ?>
+                                <div class="col-xs-9"><strong><?php if ($hotel['wifi'] == 1) { ?>
                                         <?php echo $text_freewifi; ?> <img src="catalog/view/theme/default/image/icon_aniwifi.gif"/>
                                         <?php } else { ?>
                                         <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
                                         <?php } ?>
                                     </strong></div>
-                                <div class="col-xs-9"><?php echo $proparent['descriptionp']; ?></div>
+                                <div class="col-xs-9"><?php echo $hotel['descriptionp']; ?></div>
                                 <div class="pull-bottom-right">
-                                    <a href="<?php echo $proparent['hrefp']; ?>" ><button type="button" class= "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i><strong> <?php echo $text_book; ?> </strong></button></a>
+                                    <a href="<?php echo $hotel['hrefp']; ?>" ><button type="button" class= "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i><strong> <?php echo $text_book; ?> </strong></button></a>
                                 </div>
                             </div>
                             <div class = "col-xs-12" >
-                                <?php if (isset($proparent[0])) { ?>
-                                <?php if ($proparent[0]) { ?>
+                                <?php if (isset($hotel[0])) { ?>
+                                <?php if ($hotel[0]) { ?>
                                 <div class="table table-responsive table-hover table-striped">
-                                    <?php  for($i=0; $i < $proparent['product_total'];$i++) { ?>
+                                    <?php  for($i=0; $i < $hotel['room_total'];$i++) { ?>
                                     <div class="list-group">
-                                        <a href="<?php echo $proparent[$i]['href'];?>" class="col-xs-12">
-                                            <span class="col-lg-2 col-xs-12 text-primary"><?php echo $proparent[$i]['name'];?></span>
-                                            <span class="col-lg-4 col-xs-12 text-info"><strong><?php echo $proparent[$i]['description'];?></strong></span>
-                                            <?php if ($proparent[$i]['quantity'] == 1){ ?>
+                                        <a href="<?php echo $hotel[$i]['href'];?>" class="col-xs-12">
+                                            <span class="col-lg-2 col-xs-12 text-primary"><?php echo $hotel[$i]['name'];?></span>
+                                            <span class="col-lg-4 col-xs-12 text-info"><strong><?php echo $hotel[$i]['description'];?></strong></span>
+                                            <?php if ($hotel[$i]['quantity'] == 1){ ?>
                                             <span class="col-lg-3 col-xs-12 text-danger"><strong><?php echo $text_ourlastroom; ?></strong></span>
-                                            <?php } else { if ($proparent[$i]['quantity'] <= 5) { ?>
-                                            <span class="col-lg-3 col-xs-12 text-warning"><strong><?php echo $text_ourlast; ?> <?php echo $proparent[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong></span>
+                                            <?php } else { if ($hotel[$i]['quantity'] <= 5) { ?>
+                                            <span class="col-lg-3 col-xs-12 text-warning"><strong><?php echo $text_ourlast; ?> <?php echo $hotel[$i]['quantity'];?> <?php echo $text_rooms; ?> </strong></span>
                                             <?php } else { ?>
                                             <span class="col-lg-3 col-xs-12 text-success"><strong><?php echo $text_available; ?></strong></span>
                                             <?php } ?>
                                             <?php } ?>
                                             <span class="col-lg-3 col-xs-12 text-right">
                                                 <strong>
-                                                    <?php if (isset($product_prices)) { ?>
-                                                    <?php foreach ($product_prices as $product_price) { ?>
-                                                    <?php if ($proparent[$i]['product_id'] == $product_price['product_id']) { ?>
-                                                    <?php if (!empty($product_price['product_price_value'])){ $price_cost = $product_price['product_price_value'];} ?>
+                                                    <?php if (isset($room_prices)) { ?>
+                                                    <?php foreach ($room_prices as $room_price) { ?>
+                                                    <?php if ($hotel[$i]['room_id'] == $room_price['room_id']) { ?>
+                                                    <?php if (!empty($room_price['room_price_value'])){ $price_cost = $room_price['room_price_value'];} ?>
                                                     <?php } else { ?>
                                                     <?php $cost = ''; ?>
                                                     <?php } ?>
@@ -300,7 +300,7 @@
                     <div class="col-sm-6 text-right"><?php echo $results; ?></div>
                 </div>
                 <?php } ?>
-                <?php if (!$categories && !$proparents) { ?>
+                <?php if (!$categories && !$hotels) { ?>
                 <p><?php echo $text_empty; ?></p>
                 <div class="buttons">
                     <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>

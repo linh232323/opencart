@@ -38,13 +38,13 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($products) { ?>
-              <?php foreach ($products as $product) { ?>
+              <?php if ($rooms) { ?>
+              <?php foreach ($rooms as $room) { ?>
               <tr>
-                <td class="text-left"><?php echo $product['name']; ?></td>
-                <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-right"><?php echo $product['viewed']; ?></td>
-                <td class="text-right"><?php echo $product['percent']; ?></td>
+                <td class="text-left"><?php echo $room['name']; ?></td>
+                <td class="text-left"><?php echo $room['model']; ?></td>
+                <td class="text-right"><?php echo $room['viewed']; ?></td>
+                <td class="text-right"><?php echo $room['percent']; ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

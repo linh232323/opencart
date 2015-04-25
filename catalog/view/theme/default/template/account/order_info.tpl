@@ -74,27 +74,27 @@
               <td class="text-right"><?php echo $column_quantity; ?></td>
               <td class="text-right"><?php echo $column_price; ?></td>
               <td class="text-right"><?php echo $column_total; ?></td>
-              <?php if ($products) { ?>
+              <?php if ($rooms) { ?>
               <td style="width: 20px;"></td>
               <?php } ?>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($products as $product) { ?>
+            <?php foreach ($rooms as $room) { ?>
             <tr>
-              <td class="text-left"><?php echo $product['name']; ?>
-                <?php foreach ($product['option'] as $option) { ?>
+              <td class="text-left"><?php echo $room['name']; ?>
+                <?php foreach ($room['option'] as $option) { ?>
                 <br />
                 &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                 <?php } ?></td>
-              <td class="text-left"><?php echo $product['model']; ?></td>
-              <td class="text-right"><?php echo $product['quantity']; ?></td>
-              <td class="text-right"><?php echo $product['price']; ?></td>
-              <td class="text-right"><?php echo $product['total']; ?></td>
-              <td class="text-right" style="white-space: nowrap;"><?php if ($product['reorder']) { ?>
-                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+              <td class="text-left"><?php echo $room['model']; ?></td>
+              <td class="text-right"><?php echo $room['quantity']; ?></td>
+              <td class="text-right"><?php echo $room['price']; ?></td>
+              <td class="text-right"><?php echo $room['total']; ?></td>
+              <td class="text-right" style="white-space: nowrap;"><?php if ($room['reorder']) { ?>
+                <a href="<?php echo $room['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                 <?php } ?>
-                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
+                <a href="<?php echo $room['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>
@@ -104,7 +104,7 @@
               <td class="text-right">1</td>
               <td class="text-right"><?php echo $voucher['amount']; ?></td>
               <td class="text-right"><?php echo $voucher['amount']; ?></td>
-              <?php if ($products) { ?>
+              <?php if ($rooms) { ?>
               <td></td>
               <?php } ?>
             </tr>
@@ -116,7 +116,7 @@
               <td colspan="3"></td>
               <td class="text-right"><b><?php echo $total['title']; ?></b></td>
               <td class="text-right"><?php echo $total['text']; ?></td>
-              <?php if ($products) { ?>
+              <?php if ($rooms) { ?>
               <td></td>
               <?php } ?>
             </tr>

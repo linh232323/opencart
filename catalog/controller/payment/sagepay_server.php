@@ -160,10 +160,10 @@ class ControllerPaymentSagepayServer extends Controller {
 			$this->model_payment_sagepay_server->addOrder($order_info);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
-				$recurring_products = $this->cart->getRecurringProducts();
+				$recurring_rooms = $this->cart->getRecurringRooms();
 
-				//loop through any products that are recurring items
-				foreach ($recurring_products as $item) {
+				//loop through any rooms that are recurring items
+				foreach ($recurring_rooms as $item) {
 					$this->model_payment_sagepay_server->addRecurringPayment($item, $payment_data['VendorTxCode']);
 				}
 			}
@@ -411,10 +411,10 @@ class ControllerPaymentSagepayServer extends Controller {
 			$order_details = $this->model_payment_sagepay_server->getOrder($this->session->data['order_id']);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
-				$recurring_products = $this->model_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
+				$recurring_rooms = $this->model_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
 
-				//loop through any products that are recurring items
-				foreach ($recurring_products as $item) {
+				//loop through any rooms that are recurring items
+				foreach ($recurring_rooms as $item) {
 					$this->model_payment_sagepay_server->updateRecurringPayment($item, $order_details);
 				}
 			}

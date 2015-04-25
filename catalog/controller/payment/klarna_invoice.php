@@ -272,16 +272,16 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					'country'         => $country,
 				);
 
-				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
+				$room_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_room` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
 
-				foreach ($product_query->rows as $product) {
+				foreach ($room_query->rows as $room) {
 					$goods_list[] = array(
-						'qty'   => (int)$product['quantity'],
+						'qty'   => (int)$room['quantity'],
 						'goods' => array(
-							'artno'    => $product['model'],
-							'title'    => $product['name'],
-							'price'    => (int)str_replace('.', '', $this->currency->format($product['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
-							'vat'      => (float)$product['tax_rate'],
+							'artno'    => $room['model'],
+							'title'    => $room['name'],
+							'price'    => (int)str_replace('.', '', $this->currency->format($room['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
+							'vat'      => (float)$room['tax_rate'],
 							'discount' => 0.0,
 							'flags'    => 0
 						)

@@ -77,13 +77,13 @@
           </div>
         </fieldset>
         <fieldset>
-          <legend><?php echo $text_product; ?></legend>
+          <legend><?php echo $text_room; ?></legend>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+            <label class="col-sm-2 control-label" for="input-room"><?php echo $entry_room; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-              <?php if ($error_product) { ?>
-              <div class="text-danger"><?php echo $error_product; ?></div>
+              <input type="text" name="room" value="<?php echo $room; ?>" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
+              <?php if ($error_room) { ?>
+              <div class="text-danger"><?php echo $error_room; ?></div>
               <?php } ?>
             </div>
           </div>

@@ -24,8 +24,8 @@
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-      <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
-      <input type="hidden" name="quantity" value="<?php echo $product['quantity']; ?>"/>
+      <input type="hidden" name="room_id" value="<?php echo $room['room_id']; ?>"/>
+      <input type="hidden" name="quantity" value="<?php echo $room['quantity']; ?>"/>
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
         <li><a href="#tab-listing-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
@@ -68,19 +68,19 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="title" value="<?php echo $product['name']; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
+              <input type="text" name="title" value="<?php echo $room['name']; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-description"><span data-toggle="tooltip" data-container="#tab-listing-general" title="<?php echo $help_description; ?>"><?php echo $entry_description; ?></span></label>
             <div class="col-sm-10">
-              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description_raw']; ?></textarea>
+              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $room['description_raw']; ?></textarea>
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="price" value="<?php echo $product['price']; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
+              <input type="text" name="price" value="<?php echo $room['price']; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
@@ -238,11 +238,11 @@
         <div id="tab-images" class="tab-pane">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
-              <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
+            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $room['thumb']; ?>" alt="" title="" /></a>
+              <input type="hidden" name="image" value="<?php echo $room['image_url']; ?>" id="input-image" />
             </div>
           </div>
-          <?php if (!empty($product['product_images'])) { ?>
+          <?php if (!empty($room['room_images'])) { ?>
           <div class="table-responsive">
             <table id="images" class="table table-striped table-bordered table-hover">
               <thead>
@@ -253,10 +253,10 @@
               </thead>
               <tbody>
               <?php $image_row = 0; ?>
-              <?php foreach ($product['product_images'] as $product_image) { ?>
+              <?php foreach ($room['room_images'] as $room_image) { ?>
               <tr>
-                <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
+                <td class="text-left"><input type="checkbox" name="room_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $room_image['image_url']; ?>" class="room-image" checked="checked" /></td>
+                <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $room_image['thumb']; ?>" alt="" title="" /></a></td>
               </tr>
               <?php $image_row++; ?>
               <?php } ?>
@@ -294,7 +294,7 @@
 
   function submitForm() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/createsubmit&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/createsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -322,7 +322,7 @@
             }
 
             // get the extra images and upload
-            $('.product-image:checkbox:checked').each(function() {
+            $('.room-image:checkbox:checked').each(function() {
               uploadImage(json.listing_id, $(this).val(), image_count);
               image_count = image_count + 1;
             });
@@ -345,7 +345,7 @@
 
   function uploadImage(listing_id, url, id) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/addimage&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/addimage&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_img_upload; ?> '+id+'</li>');
       },
@@ -391,7 +391,7 @@
 
   $('#input-category').on('change', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getsubcategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/getsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').empty();
@@ -427,7 +427,7 @@
     var sub_tag = $(this).val();
 
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getsubsubcategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/getsubsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').attr('disabled','disabled');
@@ -474,7 +474,7 @@
 
   function getCategory(tag) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getcategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_room/getcategory&token=<?php echo $token; ?>',
       beforeSend: function(){ },
       type: 'post',
       data: {'tag' : tag},

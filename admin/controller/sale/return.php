@@ -38,8 +38,8 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_model'])) {
@@ -102,8 +102,8 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_model'])) {
@@ -168,8 +168,8 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+			if (isset($this->request->get['filter_room'])) {
+				$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_model'])) {
@@ -225,10 +225,10 @@ class ControllerSaleReturn extends Controller {
 			$filter_customer = null;
 		}
 
-		if (isset($this->request->get['filter_product'])) {
-			$filter_product = $this->request->get['filter_product'];
+		if (isset($this->request->get['filter_room'])) {
+			$filter_room = $this->request->get['filter_room'];
 		} else {
-			$filter_product = null;
+			$filter_room = null;
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -287,8 +287,8 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -340,7 +340,7 @@ class ControllerSaleReturn extends Controller {
 			'filter_return_id'        => $filter_return_id,
 			'filter_order_id'         => $filter_order_id,
 			'filter_customer'         => $filter_customer,
-			'filter_product'          => $filter_product,
+			'filter_room'          => $filter_room,
 			'filter_model'            => $filter_model,
 			'filter_return_status_id' => $filter_return_status_id,
 			'filter_date_added'       => $filter_date_added,
@@ -360,7 +360,7 @@ class ControllerSaleReturn extends Controller {
 				'return_id'     => $result['return_id'],
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
-				'product'       => $result['product'],
+				'room'       => $result['room'],
 				'model'         => $result['model'],
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -378,7 +378,7 @@ class ControllerSaleReturn extends Controller {
 		$data['column_return_id'] = $this->language->get('column_return_id');
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_product'] = $this->language->get('column_product');
+		$data['column_room'] = $this->language->get('column_room');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_status'] = $this->language->get('column_status');
 
@@ -389,7 +389,7 @@ class ControllerSaleReturn extends Controller {
 		$data['entry_return_id'] = $this->language->get('entry_return_id');
 		$data['entry_order_id'] = $this->language->get('entry_order_id');
 		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_return_status'] = $this->language->get('entry_return_status');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
@@ -440,8 +440,8 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -473,7 +473,7 @@ class ControllerSaleReturn extends Controller {
 		$data['sort_return_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.return_id' . $url, 'SSL');
 		$data['sort_order_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.order_id' . $url, 'SSL');
 		$data['sort_customer'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
-		$data['sort_product'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=product' . $url, 'SSL');
+		$data['sort_room'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=room' . $url, 'SSL');
 		$data['sort_model'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=model' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
 		$data['sort_date_added'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, 'SSL');
@@ -493,8 +493,8 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -534,7 +534,7 @@ class ControllerSaleReturn extends Controller {
 		$data['filter_return_id'] = $filter_return_id;
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
-		$data['filter_product'] = $filter_product;
+		$data['filter_room'] = $filter_room;
 		$data['filter_model'] = $filter_model;
 		$data['filter_return_status_id'] = $filter_return_status_id;
 		$data['filter_date_added'] = $filter_date_added;
@@ -562,7 +562,7 @@ class ControllerSaleReturn extends Controller {
 		$data['text_opened'] = $this->language->get('text_opened');
 		$data['text_unopened'] = $this->language->get('text_unopened');
 		$data['text_order'] = $this->language->get('text_order');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_history'] = $this->language->get('text_history');
 		$data['text_loading'] = $this->language->get('text_loading');
 
@@ -573,7 +573,7 @@ class ControllerSaleReturn extends Controller {
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_opened'] = $this->language->get('entry_opened');
@@ -583,7 +583,7 @@ class ControllerSaleReturn extends Controller {
 		$data['entry_comment'] = $this->language->get('entry_comment');
 		$data['entry_notify'] = $this->language->get('entry_notify');
 
-		$data['help_product'] = $this->language->get('help_product');
+		$data['help_room'] = $this->language->get('help_room');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -636,10 +636,10 @@ class ControllerSaleReturn extends Controller {
 			$data['error_telephone'] = '';
 		}
 
-		if (isset($this->error['product'])) {
-			$data['error_product'] = $this->error['product'];
+		if (isset($this->error['room'])) {
+			$data['error_room'] = $this->error['room'];
 		} else {
-			$data['error_product'] = '';
+			$data['error_room'] = '';
 		}
 
 		if (isset($this->error['model'])) {
@@ -662,8 +662,8 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_room'])) {
+			$url .= '&filter_room=' . urlencode(html_entity_decode($this->request->get['filter_room'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -782,20 +782,20 @@ class ControllerSaleReturn extends Controller {
 			$data['telephone'] = '';
 		}
 
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
+		if (isset($this->request->post['room'])) {
+			$data['room'] = $this->request->post['room'];
 		} elseif (!empty($return_info)) {
-			$data['product'] = $return_info['product'];
+			$data['room'] = $return_info['room'];
 		} else {
-			$data['product'] = '';
+			$data['room'] = '';
 		}
 
-		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
+		if (isset($this->request->post['room_id'])) {
+			$data['room_id'] = $this->request->post['room_id'];
 		} elseif (!empty($return_info)) {
-			$data['product_id'] = $return_info['product_id'];
+			$data['room_id'] = $return_info['room_id'];
 		} else {
-			$data['product_id'] = '';
+			$data['room_id'] = '';
 		}
 
 		if (isset($this->request->post['model'])) {
@@ -898,8 +898,8 @@ class ControllerSaleReturn extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
-			$this->error['product'] = $this->language->get('error_product');
+		if ((utf8_strlen($this->request->post['room']) < 1) || (utf8_strlen($this->request->post['room']) > 255)) {
+			$this->error['room'] = $this->language->get('error_room');
 		}
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {

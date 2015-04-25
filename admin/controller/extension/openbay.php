@@ -89,7 +89,7 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
-		$data['product_link'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
+		$data['room_link'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 		$data['order_link'] = $this->url->link('extension/openbay/orderlist', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['success'] = '';
@@ -1144,12 +1144,12 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = array();
 
-		$data = array_merge($data, $this->load->language('catalog/product'));
+		$data = array_merge($data, $this->load->language('catalog/room'));
 		$data = array_merge($data, $this->load->language('openbay/openbay_itemlist'));
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('openbay/openbay');
@@ -1335,13 +1335,13 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		if ($this->config->get('openbay_amazon_status')) {
-			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListRooms', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$data['link_amazon_eu_bulk'] = '';
 		}
 
 		if ($this->config->get('openbay_amazonus_status')) {
-			$data['link_amazon_us_bulk'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['link_amazon_us_bulk'] = $this->url->link('openbay/amazonus/bulkListRooms', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$data['link_amazon_us_bulk'] = '';
 		}
@@ -1352,7 +1352,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$data['link_ebay_bulk'] = '';
 		}
 
-		$data['products'] = array();
+		$data['rooms'] = array();
 
 		$filter_market_id = '';
 		$filter_market_name = '';
@@ -1444,12 +1444,12 @@ class ControllerExtensionOpenbay extends Controller {
 			'etsy' => $this->config->get('etsy_status'),
 		);
 
-		$product_total = $this->model_openbay_openbay->getTotalProducts($filter);
+		$room_total = $this->model_openbay_openbay->getTotalRooms($filter);
 
-		$results = $this->model_openbay_openbay->getProducts($filter);
+		$results = $this->model_openbay_openbay->getRooms($filter);
 
 		foreach ($results as $result) {
-			$edit = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL');
+			$edit = $this->url->link('catalog/room/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL');
 
 			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
@@ -1459,11 +1459,11 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$special = false;
 
-			$product_specials = $this->model_catalog_product->getProductSpecials($result['product_id']);
+			$room_specials = $this->model_catalog_room->getRoomSpecials($result['room_id']);
 
-			foreach ($product_specials  as $product_special) {
-				if (($product_special['date_start'] == '0000-00-00' || $product_special['date_start'] < date('Y-m-d')) && ($product_special['date_end'] == '0000-00-00' || $product_special['date_end'] > date('Y-m-d'))) {
-					$special = $product_special['price'];
+			foreach ($room_specials  as $room_special) {
+				if (($room_special['date_start'] == '0000-00-00' || $room_special['date_start'] < date('Y-m-d')) && ($room_special['date_end'] == '0000-00-00' || $room_special['date_end'] > date('Y-m-d'))) {
+					$special = $room_special['price'];
 
 					break;
 				}
@@ -1484,18 +1484,18 @@ class ControllerExtensionOpenbay extends Controller {
 
 				$active_list = $this->model_openbay_ebay->getLiveListingArray();
 
-				if (!array_key_exists($result['product_id'], $active_list)) {
+				if (!array_key_exists($result['room_id'], $active_list)) {
 					$markets[] = array(
 						'name'      => $this->language->get('text_ebay'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_ebay'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 1
 					);
 				}
@@ -1503,7 +1503,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			if ($this->config->get('openbay_amazon_status') == '1') {
 				$this->load->model('openbay/amazon');
-				$amazon_status = $this->model_openbay_amazon->getProductStatus($result['product_id']);
+				$amazon_status = $this->model_openbay_amazon->getRoomStatus($result['room_id']);
 
 				if ($amazon_status == 'processing') {
 					$markets[] = array(
@@ -1516,21 +1516,21 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 1
 					);
 				} else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_error_fix'),
-						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 2
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
 				}
@@ -1538,7 +1538,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			if ($this->config->get('openbay_amazonus_status') == '1') {
 				$this->load->model('openbay/amazonus');
-				$amazonus_status = $this->model_openbay_amazonus->getProductStatus($result['product_id']);
+				$amazonus_status = $this->model_openbay_amazonus->getRoomStatus($result['room_id']);
 
 				if ($amazonus_status == 'processing') {
 					$markets[] = array(
@@ -1551,43 +1551,43 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 1
 					);
 				} else if ($amazonus_status == 'error_quick' || $amazonus_status == 'error_advanced' || $amazonus_status == 'error_few') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_error_fix'),
-						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 2
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
 				}
 			}
 
 			if ($this->config->get('etsy_status') == '1') {
-				$this->load->model('openbay/etsy_product');
+				$this->load->model('openbay/etsy_room');
 
-				$status = $this->model_openbay_etsy_product->getStatus($result['product_id']);
+				$status = $this->model_openbay_etsy_room->getStatus($result['room_id']);
 
 				if ($status == 0) {
 					$markets[] = array(
 						'name'      => $this->language->get('text_etsy'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/etsy_room/create', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_etsy'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/etsy_room/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id'] . $url, 'SSL'),
 						'status'	=> 1
 					);
 				}
@@ -1597,9 +1597,9 @@ class ControllerExtensionOpenbay extends Controller {
 				$result['has_option'] = 0;
 			}
 
-			$data['products'][] = array(
+			$data['rooms'][] = array(
 				'markets'   => $markets,
-				'product_id' => $result['product_id'],
+				'room_id' => $result['room_id'],
 				'name'       => $result['name'],
 				'model'      => $result['model'],
 				'price'      => $result['price'],
@@ -1607,11 +1607,11 @@ class ControllerExtensionOpenbay extends Controller {
 				'image'      => $image,
 				'quantity'   => $result['quantity'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['room_id'], $this->request->post['selected']),
 				'edit'       => $edit,
 				'has_option' => $openstock_installed ? $result['has_option'] : 0,
-				'vCount'     => $openstock_installed ? $this->model_openstock_openstock->countVariation($result['product_id']) : '',
-				'vsCount'    => $openstock_installed ? $this->model_openstock_openstock->countVariationStock($result['product_id']) : '',
+				'vCount'     => $openstock_installed ? $this->model_openstock_openstock->countVariation($result['room_id']) : '',
+				'vsCount'    => $openstock_installed ? $this->model_openstock_openstock->countVariationStock($result['room_id']) : '',
 			);
 		}
 
@@ -1762,7 +1762,7 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $product_total;
+		$pagination->total = $room_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
@@ -1770,7 +1770,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($room_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($room_total - $this->config->get('config_limit_admin'))) ? $room_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $room_total, ceil($room_total / $this->config->get('config_limit_admin')));
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
@@ -1798,18 +1798,18 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/openbay_itemlist.tpl', $data));
 	}
 
-	public function eventDeleteProduct($product_id) {
+	public function eventDeleteRoom($room_id) {
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {
-				$this->openbay->{$market}->deleteProduct($product_id);
+				$this->openbay->{$market}->deleteRoom($room_id);
 			}
 		}
 	}
 
-	public function eventEditProduct() {
+	public function eventEditRoom() {
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {
-				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);
+				$this->openbay->{$market}->roomUpdateListen($this->request->get['room_id'], $this->request->post);
 			}
 		}
 	}
@@ -1838,7 +1838,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_room`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_activity`");
@@ -1885,21 +1885,21 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "category`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_description`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_to_store`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_store`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_attribute`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_value`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_image`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_category`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_to_store`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_attribute`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_option`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_option_value`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_image`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "room_to_category`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "option`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_description`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
 
 			if ($this->openbay->addonLoad('openstock')) {
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
+				$this->db->query("TRUNCATE `" . DB_PREFIX . "room_option_relation`");
 			}
 			*/
 			$this->log->write('Data cleared');

@@ -21,5 +21,5 @@ $_['error_permission'] = 'Cảnh báo: Bạn không có quyền thay đổi đơ
 $_['error_title']      = 'Tiêu đề phải lớn hơn 3 và nhỏ hơn 32 ký tự!';
 $_['error_unit']       = 'Viết tắt phải lớn hơn 1 và nhỏ hơn 4 ký tự!';
 $_['error_default']    = 'Cảnh báo: Không thể xóa bởi đơn vị này đang được sử dụng mặc định!';
-$_['error_product']    = 'Cảnh báo: Không thể xóa bởi đơn vị cân nặng này đang được áp dụng cho %s sản phẩm!';
+$_['error_room']    = 'Cảnh báo: Không thể xóa bởi đơn vị cân nặng này đang được áp dụng cho %s sản phẩm!';
 ?>

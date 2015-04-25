@@ -7,7 +7,7 @@ $_['text_success']     = 'Success: You have modified feeds!';
 $_['text_list']        = 'Feed List';
 
 // Column
-$_['column_name']      = 'Product Feed Name';
+$_['column_name']      = 'Room Feed Name';
 $_['column_status']    = 'Status';
 $_['column_action']    = 'Action';
 

@@ -48,8 +48,8 @@
                   <td class="text-left"><?php echo $user_plan['order_frequency'] ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_product_listings ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['product_listings'] ?></td>
+                  <td class="text-right"><b><?php echo $text_room_listings ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['room_listings'] ?></td>
                 </tr>
                 <tr>
                   <td class="text-right"><b><?php echo $text_listings_remaining ?>:</b></td>
@@ -88,7 +88,7 @@
                   <td class="text-right"><?php echo $column_name; ?></td>
                   <td class="text-left"><?php echo $column_description; ?></td>
                   <td class="text-left"><?php echo $column_order_frequency; ?></td>
-                  <td class="text-left"><?php echo $column_product_listings; ?></td>
+                  <td class="text-left"><?php echo $column_room_listings; ?></td>
                   <td class="text-left"><?php echo $column_bulk_listing; ?></td>
                   <td class="text-left"><?php echo $column_price; ?></td>
                 </tr>
@@ -99,7 +99,7 @@
                   <td class="text-right"><?php echo $plan['title']; ?></td>
                   <td class="text-left"><?php echo $plan['description']; ?></td>
                   <td class="text-left"><?php echo $plan['order_frequency']; ?></td>
-                  <td class="text-left"><?php echo $plan['product_listings']; ?></td>
+                  <td class="text-left"><?php echo $plan['room_listings']; ?></td>
                   <td class="text-left"><?php if ($plan['bulk_listing']) { ?>
                     <?php echo $text_allowed; ?>
                     <?php } else { ?>

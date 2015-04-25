@@ -52,21 +52,21 @@ class ControllerOpenbayAmazon extends Controller {
 		$currency_to = $this->config->get('config_currency');
 		$order_currency = (string)$order_xml->Payment->CurrencyCode;
 
-		$products = array();
+		$rooms = array();
 
-		$products_total = 0;
-		$products_shipping = 0;
-		$products_tax = 0;
-		$products_shipping_tax = 0;
+		$rooms_total = 0;
+		$rooms_shipping = 0;
+		$rooms_tax = 0;
+		$rooms_shipping_tax = 0;
 		$gift_wrap = 0;
 		$gift_wrap_tax = 0;
 
-		$product_count = 0;
+		$room_count = 0;
 
 		$amazon_order_id = (string)$order_xml->AmazonOrderId;
 
 		/* SKU => ORDER_ITEM_ID */
-		$product_mapping = array();
+		$room_mapping = array();
 
 		foreach ($order_xml->Items->Item as $item) {
 
@@ -79,10 +79,10 @@ class ControllerOpenbayAmazon extends Controller {
 
 			$tax_total = $this->currency->convert($tax_total, $order_currency, $currency_to);
 
-			$products_total += $total_price;
-			$products_tax += $tax_total;
+			$rooms_total += $total_price;
+			$rooms_tax += $tax_total;
 
-			$products_shipping += $this->currency->convert((double)$item->Totals->Shipping, $order_currency, $currency_to);
+			$rooms_shipping += $this->currency->convert((double)$item->Totals->Shipping, $order_currency, $currency_to);
 
 			$shipping_tax = (double)$item->Totals->ShippingTax;
 
@@ -90,7 +90,7 @@ class ControllerOpenbayAmazon extends Controller {
 				$shipping_tax = (double)$item->Totals->Shipping * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
 			}
 
-			$products_shipping_tax += $this->currency->convert($shipping_tax, $order_currency, $currency_to);
+			$rooms_shipping_tax += $this->currency->convert($shipping_tax, $order_currency, $currency_to);
 
 			$gift_wrap += $this->currency->convert((double)$item->Totals->GiftWrap, $order_currency, $currency_to);
 
@@ -102,18 +102,18 @@ class ControllerOpenbayAmazon extends Controller {
 
 			$gift_wrap_tax += $this->currency->convert($item_gift_wrap_tax, $order_currency, $currency_to);
 
-			$product_count += (int)$item->Ordered;
+			$room_count += (int)$item->Ordered;
 
 			if ((int)$item->Ordered == 0) {
 				continue;
 			}
 
-			$product_id = $this->model_openbay_amazon_order->getProductId((string)$item->Sku);
-			$product_var = $this->model_openbay_amazon_order->getProductVar((string)$item->Sku);
+			$room_id = $this->model_openbay_amazon_order->getRoomId((string)$item->Sku);
+			$room_var = $this->model_openbay_amazon_order->getRoomVar((string)$item->Sku);
 
-			$products[] = array(
-				'product_id' => $product_id,
-				'var' => $product_var,
+			$rooms[] = array(
+				'room_id' => $room_id,
+				'var' => $room_var,
 				'sku' => (string)$item->Sku,
 				'asin' => (string)$item->Asin,
 				'order_item_id' => (string)$item->OrderItemId,
@@ -124,11 +124,11 @@ class ControllerOpenbayAmazon extends Controller {
 				'total' => sprintf('%.4f', $total_price - $tax_total),
 				'tax' => $tax_total / (int)$item->Ordered,
 				'reward' => '0',
-				'option' => $this->model_openbay_amazon_order->getProductOptionsByVar($product_var),
+				'option' => $this->model_openbay_amazon_order->getRoomOptionsByVar($room_var),
 				'download' => array(),
 			);
 
-			$product_mapping[(string)$item->Sku] = (string)$item->OrderItemId;
+			$room_mapping[(string)$item->Sku] = (string)$item->OrderItemId;
 		}
 
 		$total = sprintf('%.4f', $this->currency->convert((double)$order_xml->Payment->Amount, $order_currency, $currency_to));
@@ -235,31 +235,31 @@ class ControllerOpenbayAmazon extends Controller {
 			'forwarded_ip' => '',
 			'user_agent' => 'OpenBay Pro for Amazon',
 			'accept_language' => '',
-			'products' => $products,
+			'rooms' => $rooms,
 			'vouchers' => array(),
 			'totals' => array(
 				array(
 					'code' => 'sub_total',
 					'title' => $this->language->get('text_total_sub'),
-					'value' => sprintf('%.4f', $products_total),
+					'value' => sprintf('%.4f', $rooms_total),
 					'sort_order' => '1',
 				),
 				array(
 					'code' => 'shipping',
 					'title' => $this->language->get('text_total_shipping'),
-					'value' => sprintf('%.4f', $products_shipping),
+					'value' => sprintf('%.4f', $rooms_shipping),
 					'sort_order' => '3',
 				),
 				array(
 					'code' => 'tax',
 					'title' => $this->language->get('text_tax'),
-					'value' => sprintf('%.4f', $products_tax),
+					'value' => sprintf('%.4f', $rooms_tax),
 					'sort_order' => '4',
 				),
 				array(
 					'code' => 'shipping_tax',
 					'title' => $this->language->get('text_total_shipping_tax'),
-					'value' => sprintf('%.4f', $products_shipping_tax),
+					'value' => sprintf('%.4f', $rooms_shipping_tax),
 					'sort_order' => '6',
 				),
 				array(
@@ -287,11 +287,11 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->model_openbay_amazon_order->updateOrderStatus($order_id, $order_status);
 		$this->model_openbay_amazon_order->addAmazonOrder($order_id, $amazon_order_id);
-		$this->model_openbay_amazon_order->addAmazonOrderProducts($order_id, $product_mapping);
+		$this->model_openbay_amazon_order->addAmazonOrderRooms($order_id, $room_mapping);
 
-		foreach($products as $product) {
-			if($product['product_id'] != 0) {
-				$this->model_openbay_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+		foreach($rooms as $room) {
+			if($room['room_id'] != 0) {
+				$this->model_openbay_amazon_order->decreaseRoomQuantity($room['room_id'], $room['quantity'], $room['var']);
 			}
 		}
 
@@ -320,7 +320,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->library('log');
 		$this->load->library('amazon');
 		$this->load->model('openbay/amazon_listing');
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('openbay/amazon_room');
 
 		$logger = new Log('amazon_listing.log');
 		$logger->write('amazon/listing - started');
@@ -346,13 +346,13 @@ class ControllerOpenbayAmazon extends Controller {
 		$logger->write("Received data: " . print_r($data, 1));
 
 		if ($data['status']) {
-			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as successful');
-			$this->model_openbay_amazon_listing->listingSuccessful($data['product_id'], $data['marketplace']);
-			$this->model_openbay_amazon_product->linkProduct($data['sku'], $data['product_id']);
+			$logger->write("Updating " . $data['room_id'] . ' from ' . $data['marketplace'] . ' as successful');
+			$this->model_openbay_amazon_listing->listingSuccessful($data['room_id'], $data['marketplace']);
+			$this->model_openbay_amazon_room->linkRoom($data['sku'], $data['room_id']);
 			$logger->write("Updated successfully");
 		} else {
-			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as failed');
-			$this->model_openbay_amazon_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
+			$logger->write("Updating " . $data['room_id'] . ' from ' . $data['marketplace'] . ' as failed');
+			$this->model_openbay_amazon_listing->listingFailed($data['room_id'], $data['marketplace'], $data['messages']);
 			$logger->write("Updated successfully");
 		}
 	}
@@ -362,7 +362,7 @@ class ControllerOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('openbay/amazon_room');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/listing_reports - started');
@@ -389,26 +389,26 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data = array();
 
-		foreach ($request['products'] as $product) {
+		foreach ($request['rooms'] as $room) {
 			$data[] = array(
 				'marketplace' => $request['marketplace'],
-				'sku' => $product['sku'],
-				'quantity' => $product['quantity'],
-				'asin' => $product['asin'],
-				'price' => $product['price'],
+				'sku' => $room['sku'],
+				'quantity' => $room['quantity'],
+				'asin' => $room['asin'],
+				'price' => $room['price'],
 			);
 		}
 
 		if ($data) {
-			$this->model_openbay_amazon_product->addListingReport($data);
+			$this->model_openbay_amazon_room->addListingReport($data);
 		}
 
-		$this->model_openbay_amazon_product->removeListingReportLock($request['marketplace']);
+		$this->model_openbay_amazon_room->removeListingReportLock($request['marketplace']);
 
 		$logger->write('amazon/listing_reports - Finished');
 	}
 
-	public function product() {
+	public function room() {
 		if ($this->config->get('openbay_amazon_status') != '1') {
 			$this->response->setOutput("disabled");
 			return;
@@ -417,11 +417,11 @@ class ControllerOpenbayAmazon extends Controller {
 		ob_start();
 
 		$this->load->library('amazon');
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('openbay/amazon_room');
 		$this->load->library('log');
-		$logger = new Log('amazon_product.log');
+		$logger = new Log('amazon_room.log');
 
-		$logger->write("AmazonProduct/inbound: incoming data");
+		$logger->write("AmazonRoom/inbound: incoming data");
 
 		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
@@ -448,24 +448,24 @@ class ControllerOpenbayAmazon extends Controller {
 		$status = $decoded_data['status'];
 
 		if($status == "submit_error") {
-			$message = 'Product was not submited to amazon properly. Please try again or contact OpenBay.';
-			$this->model_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $message);
+			$message = 'Room was not submited to amazon properly. Please try again or contact OpenBay.';
+			$this->model_openbay_amazon_room->setSubmitError($decoded_data['insertion_id'], $message);
 		} else {
 			$status = (array)$status;
 			if($status['successful'] == 1) {
-				$this->model_openbay_amazon_product->setStatus($decoded_data['insertion_id'], 'ok');
-				$insertion_product = $this->model_openbay_amazon_product->getProduct($decoded_data['insertion_id']);
-				$this->model_openbay_amazon_product->linkProduct($insertion_product['sku'], $insertion_product['product_id'], $insertion_product['var']);
-				$this->model_openbay_amazon_product->deleteErrors($decoded_data['insertion_id']);
+				$this->model_openbay_amazon_room->setStatus($decoded_data['insertion_id'], 'ok');
+				$insertion_room = $this->model_openbay_amazon_room->getRoom($decoded_data['insertion_id']);
+				$this->model_openbay_amazon_room->linkRoom($insertion_room['sku'], $insertion_room['room_id'], $insertion_room['var']);
+				$this->model_openbay_amazon_room->deleteErrors($decoded_data['insertion_id']);
 
 				$quantity_data = array(
-					$insertion_product['sku'] => $this->model_openbay_amazon_product->getProductQuantity($insertion_product['product_id'], $insertion_product['var'])
+					$insertion_room['sku'] => $this->model_openbay_amazon_room->getRoomQuantity($insertion_room['room_id'], $insertion_room['var'])
 				);
 				$logger->write('Updating quantity with data: ' . print_r($quantity_data, true));
 				$logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantity_data), true));
 			} else {
-				$msg = 'Product was not accepted by amazon. Please try again or contact OpenBay.';
-				$this->model_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $msg);
+				$msg = 'Room was not accepted by amazon. Please try again or contact OpenBay.';
+				$this->model_openbay_amazon_room->setSubmitError($decoded_data['insertion_id'], $msg);
 
 				if(isset($decoded_data['error_details'])) {
 					foreach($decoded_data['error_details'] as $error) {
@@ -476,7 +476,7 @@ class ControllerOpenbayAmazon extends Controller {
 							'message' => $error['message'],
 							'insertion_id' => $decoded_data['insertion_id']
 						);
-						$this->model_openbay_amazon_product->insertError($error_data);
+						$this->model_openbay_amazon_room->insertError($error_data);
 					}
 				}
 			}
@@ -492,7 +492,7 @@ class ControllerOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('openbay/amazon_room');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/search - started');
@@ -517,7 +517,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$json = json_decode($decrypted, 1);
 
-		$this->model_openbay_amazon_product->updateSearch($json);
+		$this->model_openbay_amazon_room->updateSearch($json);
 	}
 
 	public function dev() {
@@ -548,14 +548,14 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$action = trim((string)$data_xml->action);
 
-		if ($action === "get_amazon_product") {
-			if(!isset($data_xml->product_id)) {
+		if ($action === "get_amazon_room") {
+			if(!isset($data_xml->room_id)) {
 				$this->response->setOutput("error 005");
 				return;
 			}
-			$product_id = trim((string)$data_xml->product_id);
-			if ($product_id === "all") {
-				$all_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product`")->rows;
+			$room_id = trim((string)$data_xml->room_id);
+			if ($room_id === "all") {
+				$all_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room`")->rows;
 
 				$response = array();
 				foreach ($all_rows as $row) {
@@ -566,7 +566,7 @@ class ControllerOpenbayAmazon extends Controller {
 				$this->response->setOutput(print_r($response, true));
 				return;
 			} else {
-				$response = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = '" . (int)$product_id . "'")->rows;
+				$response = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_room` WHERE `room_id` = '" . (int)$room_id . "'")->rows;
 
 				$this->response->setOutput(print_r($response, true));
 				return;

@@ -127,13 +127,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
+                <label class="col-sm-2 control-label" for="input-room"><span data-toggle="tooltip" title="<?php echo $help_room; ?>"><?php echo $entry_room; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
-                    <?php foreach ($coupon_product as $coupon_product) { ?>
-                    <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_product['name']; ?>
-                      <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
+                  <input type="text" name="room" value="" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
+                  <div id="coupon-room" class="well well-sm" style="height: 150px; overflow: auto;">
+                    <?php foreach ($coupon_room as $coupon_room) { ?>
+                    <div id="coupon-room<?php echo $coupon_room['room_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_room['name']; ?>
+                      <input type="hidden" name="coupon_room[]" value="<?php echo $coupon_room['room_id']; ?>" />
                     </div>
                     <?php } ?>
                   </div>
@@ -210,31 +210,31 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('input[name=\'room\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/room/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id']
+						value: item['room_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'product\']').val('');
+		$('input[name=\'room\']').val('');
 		
-		$('#coupon-product' + item['value']).remove();
+		$('#coupon-room' + item['value']).remove();
 		
-		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');	
+		$('#coupon-room').append('<div id="coupon-room' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_room[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 
-$('#coupon-product').delegate('.fa-minus-circle', 'click', function() {
+$('#coupon-room').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 

@@ -70,14 +70,14 @@
         </tbody>
       </table>
     </div>
-    <div class="panel-body" id="chosen-product" style="display:none;">
-      <div id="chosen-product-preview" class="well" style="display:none;"></div>
+    <div class="panel-body" id="chosen-room" style="display:none;">
+      <div id="chosen-room-preview" class="well" style="display:none;"></div>
       <div class="panel">
         <div class="panel-body">
           <form method="POST" action="<?php echo $form_action ?>" class="form-horizontal">
             <input type="hidden" name="asin" value="" />
             <input type="hidden" name="marketplace" value="<?php echo $default_marketplace ?>" />
-            <input type="hidden" name="product_id" value="<?php echo $product_id ?>" />
+            <input type="hidden" name="room_id" value="<?php echo $room_id ?>" />
             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" id="quantity" />
             <ul class="nav nav-tabs">
               <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required; ?></a></li>
@@ -205,7 +205,7 @@
         $('#search-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         $('#search-error').hide();
         $('#search-result-container').hide();
-        $('#chosen-product').hide();
+        $('#chosen-room').hide();
       },
       complete: function() {
         $('#search-submit').empty().html('<i class="fa fa-search"></i> <?php echo $button_search; ?>').removeAttr('disabled').show();
@@ -219,7 +219,7 @@
           var funcString = '';
 
           $.each(data['data'], function(index, value) {
-            functString = "listProduct('" + value.asin + "')";
+            functString = "listRoom('" + value.asin + "')";
 
             html += '<tr>';
             html += '  <td class="text-center"><img src="' + value.image + '" /></td>';
@@ -306,26 +306,26 @@
     }
 
     if (error == false){
-      $('#chosen-product form').submit();
+      $('#chosen-room form').submit();
     }
   });
 
-  function listProduct(asin) {
-    getProduct(asin);
+  function listRoom(asin) {
+    getRoom(asin);
     $('form input[name="asin"]').val(asin);
-    $('#chosen-product').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
+    $('#chosen-room').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
     $('#search-result-container').css('opacity', 1).slideUp('medium').animate({ opacity: 0 },{ queue: false, duration: 'medium' });
     $('html, body').animate({ scrollTop: 0 }, 'slow');
   }
 
-  function getProduct(asin){
+  function getRoom(asin){
     $.ajax({
-      url: 'index.php?route=openbay/amazonus_listing/getProductByAsin&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/amazonus_listing/getRoomByAsin&token=<?php echo $token; ?>',
       type: 'POST',
       dataType: 'json',
       data: {asin : asin, market : $('form input[name="marketplace"]').val() },
       beforeSend: function(){
-        $('#chosen-product-preview').empty();
+        $('#chosen-room-preview').empty();
       },
       success: function(data) {
         var html = '';
@@ -340,7 +340,7 @@
         html += '</div>';
         html += '</div>';
 
-        $('#chosen-product-preview').html(html).css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
+        $('#chosen-room-preview').html(html).css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }

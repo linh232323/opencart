@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEtsyProduct extends Model {
+class ModelOpenbayEtsyroom extends Model {
 	public function inbound($data) {
 
 	}

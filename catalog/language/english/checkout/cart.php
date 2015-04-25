@@ -28,7 +28,7 @@ $_['text_payment_cancel']      = '%s every %d %s(s) until canceled';
 
 // Column
 $_['column_image']             = 'Image';
-$_['column_name']              = 'Product Name';
+$_['column_name']              = 'room Name';
 $_['column_model']             = 'Model';
 $_['column_quantity']          = 'Quantity';
 $_['column_price']             = 'Unit Price';
@@ -36,9 +36,9 @@ $_['column_night']             = 'Night';
 $_['column_total']             = 'Total';
 
 // Error
-$_['error_stock']              = 'Products marked with *** are not available in the desired quantity or not in stock!';
+$_['error_stock']              = 'rooms marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']            = 'Minimum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
-$_['error_product']            = 'Warning: There are no products in your cart!';
-$_['error_proparent']          = 'Warning: There are no proparents in your cart!';
+$_['error_room']            = 'Warning: There are no rooms in your cart!';
+$_['error_hotel']          = 'Warning: There are no hotels in your cart!';
 $_['error_recurring_required'] = 'Please select a payment recurring!';

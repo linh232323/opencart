@@ -33,8 +33,8 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
-                <input type="text" name="filter_product" value="<?php echo $filter_product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
+                <label class="control-label" for="input-room"><?php echo $entry_room; ?></label>
+                <input type="text" name="filter_room" value="<?php echo $filter_room; ?>" placeholder="<?php echo $entry_room; ?>" id="input-room" class="form-control" />
               </div>
               <div class="form-group">
                 <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
@@ -77,9 +77,9 @@
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'pd.name') { ?>
-                    <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
+                    <a href="<?php echo $sort_room; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_room; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_product; ?>"><?php echo $column_product; ?></a>
+                    <a href="<?php echo $sort_room; ?>"><?php echo $column_room; ?></a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'r.author') { ?>
                     <a href="<?php echo $sort_author; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_author; ?></a>
@@ -141,10 +141,10 @@
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=catalog/review&token=<?php echo $token; ?>';
 	
-	var filter_product = $('input[name=\'filter_product\']').val();
+	var filter_room = $('input[name=\'filter_room\']').val();
 	
-	if (filter_product) {
-		url += '&filter_product=' + encodeURIComponent(filter_product);
+	if (filter_room) {
+		url += '&filter_room=' + encodeURIComponent(filter_room);
 	}
 	
 	var filter_author = $('input[name=\'filter_author\']').val();

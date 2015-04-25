@@ -73,7 +73,7 @@
                 <td class="text-left"><?php echo $column_date_start; ?></td>
                 <td class="text-left"><?php echo $column_date_end; ?></td>
                 <td class="text-right"><?php echo $column_orders; ?></td>
-                <td class="text-right"><?php echo $column_products; ?></td>
+                <td class="text-right"><?php echo $column_rooms; ?></td>
                 <td class="text-right"><?php echo $column_tax; ?></td>
                 <td class="text-right"><?php echo $column_total; ?></td>
               </tr>
@@ -85,7 +85,7 @@
                 <td class="text-left"><?php echo $order['date_start']; ?></td>
                 <td class="text-left"><?php echo $order['date_end']; ?></td>
                 <td class="text-right"><?php echo $order['orders']; ?></td>
-                <td class="text-right"><?php echo $order['products']; ?></td>
+                <td class="text-right"><?php echo $order['rooms']; ?></td>
                 <td class="text-right"><?php echo $order['tax']; ?></td>
                 <td class="text-right"><?php echo $order['total']; ?></td>
               </tr>

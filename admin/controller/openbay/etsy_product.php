@@ -1,16 +1,16 @@
 <?php
-class ControllerOpenbayEtsyProduct extends Controller {
+class ControllerOpenbayEtsyRoom extends Controller {
 	private $error;
 
 	public function create() {
 		$data = $this->load->language('openbay/etsy_create');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action']   = $this->url->link('openbay/etsy_room/create', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token']    = $this->session->data['token'];
 
@@ -28,47 +28,47 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/etsy_room/create', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		$room_info = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 
 		$this->load->model('tool/image');
 
-		if (!empty($product_info) && is_file(DIR_IMAGE . $product_info['image'])) {
-			$product_info['image_url'] = $this->model_tool_image->resize($product_info['image'], 800, 800);
-			$product_info['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
+		if (!empty($room_info) && is_file(DIR_IMAGE . $room_info['image'])) {
+			$room_info['image_url'] = $this->model_tool_image->resize($room_info['image'], 800, 800);
+			$room_info['thumb'] = $this->model_tool_image->resize($room_info['image'], 100, 100);
 		} else {
-			$product_info['image_url'] = '';
-			$product_info['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+			$room_info['image_url'] = '';
+			$room_info['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		// Images
-		if (isset($this->request->get['product_id'])) {
-			$product_images = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+		if (isset($this->request->get['room_id'])) {
+			$room_images = $this->model_catalog_room->getRoomImages($this->request->get['room_id']);
 		} else {
-			$product_images = array();
+			$room_images = array();
 		}
 
-		$data['product_images'] = array();
+		$data['room_images'] = array();
 
-		foreach ($product_images as $product_image) {
-			if (is_file(DIR_IMAGE . $product_image['image'])) {
-				$image = $product_image['image'];
+		foreach ($room_images as $room_image) {
+			if (is_file(DIR_IMAGE . $room_image['image'])) {
+				$image = $room_image['image'];
 			} else {
 				$image = '';
 			}
 
-			$product_info['product_images'][] = array(
+			$room_info['room_images'][] = array(
 				'image_url'  => $this->model_tool_image->resize($image, 800, 800),
 				'thumb'      => $this->model_tool_image->resize($image, 100, 100),
-				'sort_order' => $product_image['sort_order']
+				'sort_order' => $room_image['sort_order']
 			);
 		}
 
-		$data['product'] = $product_info;
-		$data['product']['description_raw'] = trim(strip_tags(html_entity_decode($data['product']['description'], ENT_QUOTES, 'UTF-8')));
+		$data['room'] = $room_info;
+		$data['room']['description_raw'] = trim(strip_tags(html_entity_decode($data['room']['description'], ENT_QUOTES, 'UTF-8')));
 
 		$setting = array();
 
@@ -101,8 +101,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['setting'] = $setting;
 
-		if ($product_info['quantity'] > 999) {
-			$this->error['warning'] = sprintf($this->language->get('error_stock_max'), $product_info['quantity']);
+		if ($room_info['quantity'] > 999) {
+			$this->error['warning'] = sprintf($this->language->get('error_stock_max'), $room_info['quantity']);
 		}
 
 		if (isset($this->error['warning'])) {
@@ -120,7 +120,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 	public function createSubmit() {
 		$this->load->language('openbay/etsy_create');
-		$this->load->model('openbay/etsy_product');
+		$this->load->model('openbay/etsy_room');
 
 		$data = $this->request->post;
 
@@ -169,18 +169,18 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$this->error['quantity'] = sprintf($this->language->get('error_stock_max'), $data['quantity']);
 		}
 
-		if (count($data['product_image']) > 4) {
-			$this->error['images'] = sprintf($this->language->get('error_image_max'), count($data['product_image'])+1);
+		if (count($data['room_image']) > 4) {
+			$this->error['images'] = sprintf($this->language->get('error_image_max'), count($data['room_image'])+1);
 		}
 
 		if (!$this->error) {
 			// process the request
-			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);
+			$response = $this->openbay->etsy->call('room/listing/create', 'POST', $data);
 
 			$this->response->addHeader('Content-Type: application/json');
 
 			if (isset($response['data']['results'][0]['listing_id'])) {
-				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id'], 1);
+				$this->model_openbay_etsy_room->addLink($data['room_id'], $response['data']['results'][0]['listing_id'], 1);
 			}
 
 			if (isset($response['data']['error'])) {
@@ -195,13 +195,13 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 	public function edit() {
 		$data = $this->load->language('openbay/etsy_edit');
-		$this->load->model('openbay/etsy_product');
+		$this->load->model('openbay/etsy_room');
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('openbay/etsy_product/editSubmit', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action']   = $this->url->link('openbay/etsy_room/editSubmit', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token']    = $this->session->data['token'];
 
@@ -219,16 +219,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
+			'href' => $this->url->link('openbay/etsy_room/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$links = $this->openbay->etsy->getLinks($this->request->get['product_id'], 1, 1);
+		$links = $this->openbay->etsy->getLinks($this->request->get['room_id'], 1, 1);
 
 		$data['listing'] = $this->openbay->etsy->getEtsyItem($links[0]['etsy_item_id']);
 
 		$data['etsy_item_id'] = $links[0]['etsy_item_id'];
-		$data['product_id'] = $this->request->get['product_id'];
+		$data['room_id'] = $this->request->get['room_id'];
 
 		$setting['state'] = array('active', 'inactive', 'draft');
 
@@ -253,7 +253,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 	public function editSubmit() {
 		$this->load->language('openbay/etsy_edit');
-		$this->load->model('openbay/etsy_product');
+		$this->load->model('openbay/etsy_room');
 
 		$data = $this->request->post;
 
@@ -280,7 +280,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		if (!$this->error) {
 			// process the request
-			$response = $this->openbay->etsy->call('product/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);
+			$response = $this->openbay->etsy->call('room/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);
 
 			$this->response->addHeader('Content-Type: application/json');
 
@@ -308,7 +308,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		if (!$this->error) {
-			$response = $this->openbay->etsy->call('product/listing/' . (int)$data['listing_id'] . '/image', 'POST', $data);
+			$response = $this->openbay->etsy->call('room/listing/' . (int)$data['listing_id'] . '/image', 'POST', $data);
 
 			$this->response->addHeader('Content-Type: application/json');
 
@@ -349,13 +349,13 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 	public function addLink() {
 		$this->load->language('openbay/etsy_links');
-		$this->load->model('openbay/etsy_product');
-		$this->load->model('catalog/product');
+		$this->load->model('openbay/etsy_room');
+		$this->load->model('catalog/room');
 
 		$data = $this->request->post;
 
-		if (!isset($data['product_id'])) {
-			echo json_encode(array('error' => $this->language->get('error_product_id')));
+		if (!isset($data['room_id'])) {
+			echo json_encode(array('error' => $this->language->get('error_room_id')));
 			die();
 		}
 
@@ -364,21 +364,21 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$links = $this->openbay->etsy->getLinks($data['product_id'], 1);
+		$links = $this->openbay->etsy->getLinks($data['room_id'], 1);
 
 		if ($links != false) {
 			echo json_encode(array('error' => $this->language->get('error_link_exists')));
 			die();
 		}
 
-		$product = $this->model_catalog_product->getProduct($data['product_id']);
+		$room = $this->model_catalog_room->getRoom($data['room_id']);
 
-		if (!$product) {
-			echo json_encode(array('error' => $this->language->get('error_product')));
+		if (!$room) {
+			echo json_encode(array('error' => $this->language->get('error_room')));
 			die();
 		}
 
-		if ($product['quantity'] <= 0) {
+		if ($room['quantity'] <= 0) {
 			echo json_encode(array('error' => $this->language->get('error_stock')));
 			die();
 		}
@@ -390,9 +390,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			echo json_encode(array('error' => $this->language->get('error_etsy') . $get_response['data']['error']));
 			die();
 		} else {
-			if ((int)$get_response['quantity'] != (int)$product['quantity']) {
+			if ((int)$get_response['quantity'] != (int)$room['quantity']) {
 				// if the stock is different than the item being linked update the etsy stock level
-				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity'], $get_response['state']);
+				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $room['quantity'], $get_response['state']);
 
 				if (isset($update_response['data']['error'])) {
 					echo json_encode(array('error' => $this->language->get('error_etsy') . $update_response['data']['error']));
@@ -401,7 +401,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			}
 		}
 
-		$this->model_openbay_etsy_product->addLink($data['product_id'], $data['etsy_id'], 1);
+		$this->model_openbay_etsy_room->addLink($data['room_id'], $data['etsy_id'], 1);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(array('error' => false)));
@@ -424,7 +424,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function links() {
-		$this->load->model('openbay/etsy_product');
+		$this->load->model('openbay/etsy_room');
 
 		$data = $this->load->language('openbay/etsy_links');
 
@@ -451,16 +451,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/etsy_room/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['return']       = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL');
-		//$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', 'SSL');
+		//$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&room_id=', 'SSL');
 		//$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];
 
-		$total_linked = $this->model_openbay_etsy_product->totalLinked();
+		$total_linked = $this->model_openbay_etsy_room->totalLinked();
 
 		if (isset($this->request->get['page'])){
 			$page = (int)$this->request->get['page'];
@@ -483,7 +483,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['items'] = $this->model_openbay_etsy_product->loadLinked($limit, $page);
+		$data['items'] = $this->model_openbay_etsy_room->loadLinked($limit, $page);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -498,7 +498,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$this->load->model('openbay/etsy_product');
+		$this->load->model('openbay/etsy_room');
 
 		$data['token'] = $this->session->data['token'];
 
@@ -520,7 +520,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/etsy_room/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -550,7 +550,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['filter'] = $filter;
 
-		$listing_response = $this->openbay->etsy->call('product/getListings?' . http_build_query($filter), 'GET');
+		$listing_response = $this->openbay->etsy->call('room/getListings?' . http_build_query($filter), 'GET');
 		unset($filter['page']);
 
 		if (isset($listing_response['data']['error'])) {
@@ -562,7 +562,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$listings = array();
 
 			foreach($listing_response['data']['results'] as $listing) {
-				$product_link = $this->openbay->etsy->getLinkedProduct($listing['listing_id']);
+				$room_link = $this->openbay->etsy->getLinkedRoom($listing['listing_id']);
 
 				$actions = array();
 
@@ -575,16 +575,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 					$actions[] = 'deactivate_item';
 				}
 
-				if ($filter['status'] == 'active' && empty($product_link)) {
+				if ($filter['status'] == 'active' && empty($room_link)) {
 					$actions[] = 'add_link';
 				}
 
-				if (!empty($product_link)) {
+				if (!empty($room_link)) {
 					$actions[] = 'delete_link';
 				}
 
-				if ($product_link != false) {
-					$listings[] = array('link' => $product_link, 'listing' => $listing, 'actions' => $actions);
+				if ($room_link != false) {
+					$listings[] = array('link' => $room_link, 'listing' => $listing, 'actions' => $actions);
 				} else {
 					$listings[] = array('link' => '', 'listing' => $listing, 'actions' => $actions);
 				}
@@ -596,7 +596,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$pagination->total = $listing_response['data']['count'];
 			$pagination->page = $listing_response['data']['pagination']['effective_page'];
 			$pagination->limit = $listing_response['data']['pagination']['effective_limit'];
-			$pagination->url = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'] . '&page={page}&' . http_build_query($filter), 'SSL');
+			$pagination->url = $this->url->link('openbay/etsy_room/listings', 'token=' . $this->session->data['token'] . '&page={page}&' . http_build_query($filter), 'SSL');
 
 			$data['pagination'] = $pagination->render();
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($listing_response['data']['count']) ? (($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + 1 : 0, ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) > ($listing_response['data']['count'] - $listing_response['data']['pagination']['effective_limit'])) ? $listing_response['data']['count'] : ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + $listing_response['data']['pagination']['effective_limit']), $listing_response['data']['count'], ceil($listing_response['data']['count'] / $listing_response['data']['pagination']['effective_limit']));
@@ -647,13 +647,13 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/delete', 'POST', array());
+		$response = $this->openbay->etsy->call('room/listing/' . (int)$data['etsy_item_id'] . '/delete', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));
 			die();
 		} else {
-			$linked_item = $this->openbay->etsy->getLinkedProduct($data['etsy_item_id']);
+			$linked_item = $this->openbay->etsy->getLinkedRoom($data['etsy_item_id']);
 
 			if ($linked_item != false) {
 				$this->openbay->etsy->deleteLink($linked_item['etsy_listing_id']);
@@ -674,13 +674,13 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/inactive', 'POST', array());
+		$response = $this->openbay->etsy->call('room/listing/' . (int)$data['etsy_item_id'] . '/inactive', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));
 			die();
 		} else {
-			$linked_item = $this->openbay->etsy->getLinkedProduct($data['etsy_item_id']);
+			$linked_item = $this->openbay->etsy->getLinkedRoom($data['etsy_item_id']);
 
 			if ($linked_item != false) {
 				$this->openbay->etsy->deleteLink($linked_item['etsy_listing_id']);
@@ -703,7 +703,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/active', 'POST', array());
+		$response = $this->openbay->etsy->call('room/listing/' . (int)$data['etsy_item_id'] . '/active', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));

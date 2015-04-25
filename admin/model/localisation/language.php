@@ -124,20 +124,20 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->cache->delete('order_status');
 
-		// Product
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		// Room
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "room_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		foreach ($query->rows as $product) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product['product_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($product['name']) . "', meta_description = '" . $this->db->escape($product['meta_description']) . "', meta_keyword = '" . $this->db->escape($product['meta_keyword']) . "', description = '" . $this->db->escape($product['description']) . "', tag = '" . $this->db->escape($product['tag']) . "'");
+		foreach ($query->rows as $room) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "room_description SET room_id = '" . (int)$room['room_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($room['name']) . "', meta_description = '" . $this->db->escape($room['meta_description']) . "', meta_keyword = '" . $this->db->escape($room['meta_keyword']) . "', description = '" . $this->db->escape($room['description']) . "', tag = '" . $this->db->escape($room['tag']) . "'");
 		}
 
-		$this->cache->delete('product');
+		$this->cache->delete('room');
 
-		// Product Attribute
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_attribute WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		// Room Attribute
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "room_attribute WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		foreach ($query->rows as $product_attribute) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_attribute['product_id'] . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_attribute['text']) . "'");
+		foreach ($query->rows as $room_attribute) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "room_attribute SET room_id = '" . (int)$room_attribute['room_id'] . "', attribute_id = '" . (int)$room_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($room_attribute['text']) . "'");
 		}
 
 		// Return Action
@@ -234,10 +234,10 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->cache->delete('order_status');
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE language_id = '" . (int)$language_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "room_attribute WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "room_description WHERE language_id = '" . (int)$language_id . "'");
 
-		$this->cache->delete('product');
+		$this->cache->delete('room');
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_action WHERE language_id = '" . (int)$language_id . "'");
 

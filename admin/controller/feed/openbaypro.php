@@ -58,8 +58,8 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
-		$this->model_extension_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
+		$this->model_extension_event->addEvent('openbay', 'post.room.delete', 'extension/openbay/eventDeleteRoom');
+		$this->model_extension_event->addEvent('openbay', 'post.room.edit', 'extension/openbay/eventEditRoom');
 	}
 
 	public function uninstall() {

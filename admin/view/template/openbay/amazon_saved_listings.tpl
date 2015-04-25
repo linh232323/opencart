@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <?php if (!empty($saved_products)) { ?>
+            <?php if (!empty($saved_rooms)) { ?>
             <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
             <?php } ?>
           </div>
@@ -35,14 +35,14 @@
         </tr>
       </thead>
       <tbody>
-        <?php if (!empty($saved_products)) { ?>
-        <?php foreach ($saved_products as $saved_product) { ?>
+        <?php if (!empty($saved_rooms)) { ?>
+        <?php foreach ($saved_rooms as $saved_room) { ?>
         <tr>
-          <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
-          <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-          <td class="text-center"><?php echo $saved_product['product_sku']; ?></td>
-          <td class="text-center"><?php echo $saved_product['amazon_sku']; ?></td>
-          <td class="text-right"><a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a></td>
+          <td class="text-left"><?php echo $saved_room['room_name']; ?></td>
+          <td class="text-left"><?php echo $saved_room['room_model']; ?></td>
+          <td class="text-center"><?php echo $saved_room['room_sku']; ?></td>
+          <td class="text-center"><?php echo $saved_room['amazon_sku']; ?></td>
+          <td class="text-right"><a class="btn btn-primary" href="<?php echo $saved_room['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_room['room_id']; ?>', '<?php echo $saved_room['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a></td>
         </tr>
         <?php } ?>
         <?php } else { ?>
@@ -62,7 +62,7 @@
     $.ajax({
       url: '<?php echo html_entity_decode($deleteSavedAjax); ?>',
       type: 'get',
-      data: 'product_id=' + id + '&var=' + option_var,
+      data: 'room_id=' + id + '&var=' + option_var,
       beforeSend: function () {
         $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

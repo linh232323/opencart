@@ -440,19 +440,19 @@ class ControllerOpenbayEbay extends Controller {
 
 	public function searchEbayCatalog() {
 		$this->load->language('openbay/ebay');
-		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_room');
 
-		$response = $this->model_openbay_ebay_product->searchEbayCatalog($this->request->post['search'], $this->request->post['category_id']);
+		$response = $this->model_openbay_ebay_room->searchEbayCatalog($this->request->post['search'], $this->request->post['category_id']);
 
 		if (isset($response['ack'])) {
 			if ($response['ack'] == 'Success') {
 				$json['error'] = false;
 				$json['error_message'] = '';
 
-				$json['results'] = (int)$response['productSearchResult']['paginationOutput']['totalEntries'];
-				$json['page'] = (int)$response['productSearchResult']['paginationOutput']['pageNumber'];
-				$json['page_total'] = (int)$response['productSearchResult']['paginationOutput']['totalPages'];
-				$json['products'] = $response['productSearchResult']['products'];
+				$json['results'] = (int)$response['roomSearchResult']['paginationOutput']['totalEntries'];
+				$json['page'] = (int)$response['roomSearchResult']['paginationOutput']['pageNumber'];
+				$json['page_total'] = (int)$response['roomSearchResult']['paginationOutput']['totalPages'];
+				$json['rooms'] = $response['roomSearchResult']['rooms'];
 			} else {
 				$json['error'] = true;
 
@@ -529,7 +529,7 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function viewItemImport() {
-		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_room');
 
 		$data = $this->load->language('openbay/ebay_import');
 
@@ -562,7 +562,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data['validation'] = $this->openbay->ebay->validate();
 		$data['token'] = $this->session->data['token'];
 		$data['maintenance'] = $this->config->get('config_maintenance');
-		$data['image_import'] = $this->model_openbay_ebay_product->countImportImages();
+		$data['image_import'] = $this->model_openbay_ebay_room->countImportImages();
 		$data['image_import_link'] = $this->url->link('openbay/ebay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -598,25 +598,25 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getProductStock() {
+	public function getRoomStock() {
 		$this->load->model('openbay/ebay');
 
-		$json = $this->model_openbay_ebay->getProductStock($this->request->get['pid']);
+		$json = $this->model_openbay_ebay->getRoomStock($this->request->get['pid']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function setProductStock() {
+	public function setRoomStock() {
 		$this->load->model('openbay/ebay');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		$product = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		$room = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 
 		$json = array();
 
-		if ($product['subtract'] == 1) {
-			$this->openbay->ebay->productUpdateListen($this->request->get['product_id'], $product);
+		if ($room['subtract'] == 1) {
+			$this->openbay->ebay->roomUpdateListen($this->request->get['room_id'], $room);
 
 			$json['error'] = false;
 			$json['msg'] = 'ok';
@@ -854,7 +854,7 @@ class ControllerOpenbayEbay extends Controller {
 		);
 
 		$data['return']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', 'SSL');
+		$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&room_id=', 'SSL');
 		$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];
 
@@ -902,7 +902,7 @@ class ControllerOpenbayEbay extends Controller {
 	public function removeItemLink() {
 		$this->load->language('openbay/ebay');
 
-		$this->openbay->ebay->removeItemByProductId($this->request->get['product_id']);
+		$this->openbay->ebay->removeItemByRoomId($this->request->get['room_id']);
 
 		$json = array('error' => false, 'msg' => $this->language->get('item_link_removed'));
 
@@ -987,23 +987,23 @@ class ControllerOpenbayEbay extends Controller {
 
 	public function edit() {
 		if ($this->checkConfig() == true) {
-			if (!empty($this->request->get['product_id'])) {
+			if (!empty($this->request->get['room_id'])) {
 				$data = $this->load->language('openbay/ebay_edit');
 
-				$this->load->model('catalog/product');
+				$this->load->model('catalog/room');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/manufacturer');
 				$this->load->model('openbay/ebay');
-				$this->load->model('openbay/ebay_product');
+				$this->load->model('openbay/ebay_room');
 
 				$this->document->setTitle($data['heading_title']);
 				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
 				$data['cancel']       = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
-				$data['view_link']    = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
+				$data['view_link']    = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['room_id']);
 				$data['token']        = $this->session->data['token'];
-				$data['product_id']   = $this->request->get['product_id'];
+				$data['room_id']   = $this->request->get['room_id'];
 
 				$data['breadcrumbs'] = array();
 
@@ -1023,7 +1023,7 @@ class ControllerOpenbayEbay extends Controller {
 				);
 
 				$data['breadcrumbs'][] = array(
-					'href' => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
+					'href' => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'], 'SSL'),
 					'text' => $this->language->get('heading_title'),
 				);
 
@@ -1039,35 +1039,35 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function editLoad() {
-		$this->load->model('catalog/product');
-		$this->load->model('openbay/ebay_product');
+		$this->load->model('catalog/room');
+		$this->load->model('openbay/ebay_room');
 		$this->load->model('tool/image');
 
-		$item_id = $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
+		$item_id = $this->openbay->ebay->getEbayItemId($this->request->get['room_id']);
 
 		if (!empty($item_id)) {
 			$listings   = $this->openbay->ebay->getEbayListing($item_id);
-			$stock      = $this->openbay->ebay->getProductStockLevel($this->request->get['product_id']);
-			$reserve    = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id);
+			$stock      = $this->openbay->ebay->getRoomStockLevel($this->request->get['room_id']);
+			$reserve    = $this->openbay->ebay->getReserve($this->request->get['room_id'], $item_id);
 			$options    = array();
 
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+			$room_info = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 
-			if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
+			if ($this->openbay->addonLoad('openstock') && $room_info['has_option'] == 1) {
 				$this->load->model('openstock/openstock');
 				$data['addon']['openstock'] = true;
-				$product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
-				$product_info['option_grp'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
+				$room_info['options'] = $this->model_openstock_openstock->getRoomOptionStocks($this->request->get['room_id']);
+				$room_info['option_grp'] = $this->model_openbay_ebay_room->getRoomOptions($this->request->get['room_id']);
 
 				$t = array();
 				$t_rel = array();
 
-				foreach($product_info['option_grp'] as $grp) {
+				foreach($room_info['option_grp'] as $grp) {
 					$t_tmp = array();
 
-					foreach($grp['product_option_value'] as $grp_node) {
+					foreach($grp['room_option_value'] as $grp_node) {
 						$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
-						$t_rel[$grp_node['product_option_value_id']] = $grp['name'];
+						$t_rel[$grp_node['room_option_value_id']] = $grp['name'];
 					}
 
 					$t[] = array('name' => $grp['name'], 'child' => $t_tmp);
@@ -1077,13 +1077,13 @@ class ControllerOpenbayEbay extends Controller {
 					$listings['variations']['Variation'] = array($listings['variations']['Variation']);
 				}
 
-				foreach($product_info['options'] as $option) {
+				foreach($room_info['options'] as $option) {
 					$option['base64'] = base64_encode(serialize($option['opts']));
-					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['room_id'], $item_id, $option['var']);
 					if ($option_reserve == false) {
 						$option['reserve'] = 0;
 					} else {
-						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['room_id'], $item_id, $option['var']);
 					}
 
 					$ebay_listing = '';
@@ -1128,7 +1128,7 @@ class ControllerOpenbayEbay extends Controller {
 				$variant = array('variant' => 0, 'data' => '');
 			}
 
-			$data['product'] = $product_info;
+			$data['room'] = $room_info;
 
 			if ($reserve == false) {
 				$reserve = 0;
@@ -1170,15 +1170,15 @@ class ControllerOpenbayEbay extends Controller {
 
 	public function create() {
 		if ($this->checkConfig() == true) {
-			if (!empty($this->request->get['product_id'])) {
+			if (!empty($this->request->get['room_id'])) {
 				$data = $this->load->language('openbay/ebay_new');
 
-				$this->load->model('catalog/product');
+				$this->load->model('catalog/room');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/manufacturer');
 				$this->load->model('openbay/ebay');
 				$this->load->model('openbay/ebay_template');
-				$this->load->model('openbay/ebay_product');
+				$this->load->model('openbay/ebay_room');
 				$this->load->model('openbay/ebay_profile');
 
 				$this->document->setTitle($data['heading_title']);
@@ -1203,11 +1203,11 @@ class ControllerOpenbayEbay extends Controller {
 				);
 
 				$data['breadcrumbs'][] = array(
-					'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
+					'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'], 'SSL'),
 					'text'      => $this->language->get('heading_title'),
 				);
 
-				$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+				$room_info = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 
 				$setting = array();
 
@@ -1235,108 +1235,108 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['setting'] = $setting;
 
-				if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
+				if ($this->openbay->addonLoad('openstock') && $room_info['has_option'] == 1) {
 					$this->load->model('openstock/openstock');
 					$data['addon']['openstock'] = true;
-					$product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
-					$product_info['option_grp'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
+					$room_info['options'] = $this->model_openstock_openstock->getRoomOptionStocks($this->request->get['room_id']);
+					$room_info['option_grp'] = $this->model_openbay_ebay_room->getRoomOptions($this->request->get['room_id']);
 				}
 
-				// get the product tax rate from opencart
-				if (isset($product_info['tax_class_id'])) {
-					$product_info['defaults']['tax'] = $this->model_openbay_ebay_product->getTaxRate($product_info['tax_class_id']);
+				// get the room tax rate from opencart
+				if (isset($room_info['tax_class_id'])) {
+					$room_info['defaults']['tax'] = $this->model_openbay_ebay_room->getTaxRate($room_info['tax_class_id']);
 				} else {
-					$product_info['defaults']['tax'] = 0.00;
+					$room_info['defaults']['tax'] = 0.00;
 				}
 
 				//get the popular categories the user has used
-				$product_info['popular_cats'] = $this->model_openbay_ebay->getPopularCategories();
+				$room_info['popular_cats'] = $this->model_openbay_ebay->getPopularCategories();
 
 				//get shipping profiles
-				$product_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
+				$room_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
 				//get default shipping profile
-				$product_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
+				$room_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
 
 				//get returns profiles
-				$product_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
+				$room_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
 				//get default returns profile
-				$product_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
+				$room_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
 				$data['data']['shipping_international_zones']     = $this->model_openbay_ebay->getShippingLocations();
 
 				//get theme profiles
-				$product_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
+				$room_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
 				//get default returns profile
-				$product_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
+				$room_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
 
 				//get generic profiles
-				$product_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
+				$room_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
 				//get default generic profile
-				$product_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
+				$room_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
 
-				//product attributes - this is just a direct pass through used with the template tag
-				$product_info['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getProductAttributes($this->request->get['product_id'])));
+				//room attributes - this is just a direct pass through used with the template tag
+				$room_info['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getRoomAttributes($this->request->get['room_id'])));
 
 				//post edit link
-				$product_info['edit_link'] = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL');
+				$room_info['edit_link'] = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $this->request->get['room_id'], 'SSL');
 
 				//images
-				$product_images = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
-				$product_info['product_images'] = array();
+				$room_images = $this->model_catalog_room->getRoomImages($this->request->get['room_id']);
+				$room_info['room_images'] = array();
 
-				if (!empty($product_info['image'])) {
-					$img_info = getimagesize(DIR_IMAGE . $product_info['image']);
+				if (!empty($room_info['image'])) {
+					$img_info = getimagesize(DIR_IMAGE . $room_info['image']);
 
-					$product_info['product_images'][] = array(
-						'image' => $product_info['image'],
-						'preview' => $this->model_tool_image->resize($product_info['image'], 100, 100),
-						'full' => HTTPS_CATALOG . 'image/' . $product_info['image'],
+					$room_info['room_images'][] = array(
+						'image' => $room_info['image'],
+						'preview' => $this->model_tool_image->resize($room_info['image'], 100, 100),
+						'full' => HTTPS_CATALOG . 'image/' . $room_info['image'],
 						'width' => $img_info[0],
 						'height' => $img_info[1],
 					);
 				}
 
-				foreach ($product_images as $product_image) {
-					if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
-						$img_info = getimagesize(DIR_IMAGE . $product_image['image']);
+				foreach ($room_images as $room_image) {
+					if ($room_image['image'] && file_exists(DIR_IMAGE . $room_image['image'])) {
+						$img_info = getimagesize(DIR_IMAGE . $room_image['image']);
 
-						$product_info['product_images'][] = array(
-							'image' => $product_image['image'],
-							'preview' => $this->model_tool_image->resize($product_image['image'], 100, 100),
-							'full' => HTTPS_CATALOG . 'image/' . $product_image['image'],
+						$room_info['room_images'][] = array(
+							'image' => $room_image['image'],
+							'preview' => $this->model_tool_image->resize($room_image['image'], 100, 100),
+							'full' => HTTPS_CATALOG . 'image/' . $room_image['image'],
 							'width' => $img_info[0],
 							'height' => $img_info[1],
 						);
 					}
 				}
 
-				$product_info['manufacturers']                      = $this->model_catalog_manufacturer->getManufacturers();
-				$product_info['payments']                           = $this->model_openbay_ebay->getPaymentTypes();
-				$product_info['templates']                          = $this->model_openbay_ebay_template->getAll();
-				$product_info['store_cats']                         = $this->model_openbay_ebay->getSellerStoreCategories();
+				$room_info['manufacturers']                      = $this->model_catalog_manufacturer->getManufacturers();
+				$room_info['payments']                           = $this->model_openbay_ebay->getPaymentTypes();
+				$room_info['templates']                          = $this->model_openbay_ebay_template->getAll();
+				$room_info['store_cats']                         = $this->model_openbay_ebay->getSellerStoreCategories();
 
-				$product_info['defaults']['cod_surcharge'] = 0;
+				$room_info['defaults']['cod_surcharge'] = 0;
 
-				foreach($product_info['payments'] as $payment) {
+				foreach($room_info['payments'] as $payment) {
 					if ($payment['ebay_name'] == 'COD') {
-						$product_info['defaults']['cod_surcharge'] = 1;
+						$room_info['defaults']['cod_surcharge'] = 1;
 					}
 				}
 
-				$product_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
-				$product_info['defaults']['paypal_address']         = $this->config->get('ebay_payment_paypal_address');
-				$product_info['defaults']['payment_instruction']    = $this->config->get('ebay_payment_instruction');
-				$product_info['defaults']['ebay_payment_immediate'] = $this->config->get('ebay_payment_immediate');
+				$room_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
+				$room_info['defaults']['paypal_address']         = $this->config->get('ebay_payment_paypal_address');
+				$room_info['defaults']['payment_instruction']    = $this->config->get('ebay_payment_instruction');
+				$room_info['defaults']['ebay_payment_immediate'] = $this->config->get('ebay_payment_immediate');
 
-				$product_info['defaults']['gallery_height']         = '400';
-				$product_info['defaults']['gallery_width']          = '400';
-				$product_info['defaults']['thumb_height']           = '100';
-				$product_info['defaults']['thumb_width']            = '100';
+				$room_info['defaults']['gallery_height']         = '400';
+				$room_info['defaults']['gallery_width']          = '400';
+				$room_info['defaults']['thumb_height']           = '100';
+				$room_info['defaults']['thumb_width']            = '100';
 
-				$product_info['defaults']['ebay_measurement'] = $this->config->get('ebay_measurement');
+				$room_info['defaults']['ebay_measurement'] = $this->config->get('ebay_measurement');
 
-				$product_info['defaults']['listing_duration'] = $this->config->get('ebay_duration');
-				if ($product_info['defaults']['listing_duration'] == '') {
-					$product_info['defaults']['listing_duration'] = 'Days_30';
+				$room_info['defaults']['listing_duration'] = $this->config->get('ebay_duration');
+				if ($room_info['defaults']['listing_duration'] == '') {
+					$room_info['defaults']['listing_duration'] = 'Days_30';
 				}
 
 				if (isset($this->error['warning'])) {
@@ -1345,17 +1345,17 @@ class ControllerOpenbayEbay extends Controller {
 					$data['error_warning'] = '';
 				}
 
-				if ($product_info['quantity'] < 1 && (!isset($product_info['has_option']) || $product_info['has_option'] == 0)) {
+				if ($room_info['quantity'] < 1 && (!isset($room_info['has_option']) || $room_info['has_option'] == 0)) {
 					$data['error_warning'] = $this->language->get('error_no_stock');
 				}
 
 				$data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-				$weight_parts = explode('.', $product_info['weight']);
-				$product_info['weight_major'] = (int)$weight_parts[0];
-				$product_info['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
+				$weight_parts = explode('.', $room_info['weight']);
+				$room_info['weight_major'] = (int)$weight_parts[0];
+				$room_info['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
 
-				$data['product'] = $product_info;
+				$data['room'] = $room_info;
 
 				$data['header'] = $this->load->controller('common/header');
 				$data['column_left'] = $this->load->controller('common/column_left');
@@ -1373,7 +1373,7 @@ class ControllerOpenbayEbay extends Controller {
 			if (!empty($this->request->post['selected'])) {
 				$data = $this->load->language('openbay/ebay_newbulk');
 
-				$this->load->model('catalog/product');
+				$this->load->model('catalog/room');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/manufacturer');
 				$this->load->model('openbay/ebay');
@@ -1405,7 +1405,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$active_list = $this->model_openbay_ebay->getLiveListingArray();
 
-				$products = array();
+				$rooms = array();
 
 				if ($this->openbay->addonLoad('openstock')) {
 					$openstock = 1;
@@ -1413,10 +1413,10 @@ class ControllerOpenbayEbay extends Controller {
 					$openstock = 0;
 				}
 
-				foreach ($this->request->post['selected'] as $product_id) {
-					if (!array_key_exists($product_id, $active_list)) {
+				foreach ($this->request->post['selected'] as $room_id) {
+					if (!array_key_exists($room_id, $active_list)) {
 
-						$prod = $this->model_catalog_product->getProduct($product_id);
+						$prod = $this->model_catalog_room->getRoom($room_id);
 
 						if ($openstock == 1 && isset($prod['has_option']) && $prod['has_option'] == 1) {
 							$data['error_warning']['os'] = $this->language->get('text_error_variants');
@@ -1428,7 +1428,7 @@ class ControllerOpenbayEbay extends Controller {
 									$prod['image'] = $this->model_tool_image->resize('no_image.png', 80, 80);
 								}
 
-								$products[] = $prod;
+								$rooms[] = $prod;
 							} else {
 								$data['error_warning']['stock'] = $this->language->get('text_error_stock');
 							}
@@ -1438,7 +1438,7 @@ class ControllerOpenbayEbay extends Controller {
 					}
 				}
 
-				$data['count'] = count($products);
+				$data['count'] = count($rooms);
 				$data['token'] = $this->session->data['token'];
 				$data['listing_link'] = $this->config->get('ebay_itm_link');
 
@@ -1446,7 +1446,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				if ($plan['plan']['listing_bulk'] == 1) {
 					if ($data['count'] == 0) {
-						$data['error_fail'][] = $this->language->get('text_error_no_product');
+						$data['error_fail'][] = $this->language->get('text_error_no_room');
 					} else {
 						if (($plan['plan']['listing_limit'] == 0) || (($plan['usage']['items'] + $data['count']) <= $plan['plan']['listing_limit'])) {
 							if ($data['count'] > 5) {
@@ -1476,61 +1476,61 @@ class ControllerOpenbayEbay extends Controller {
 							$data['setting'] = $setting;
 
 							//get generic profiles
-							$product_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
+							$room_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
 							//get default generic profile
-							$product_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
-							if ($product_info['profiles_generic_def'] === false) {
+							$room_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
+							if ($room_info['profiles_generic_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_generic_profile');
 							}
 
 							//get shipping profiles
-							$product_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
+							$room_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
 							//get default shipping profile
-							$product_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
+							$room_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
 							//check it has a default profile
-							if ($product_info['profiles_shipping_def'] === false) {
+							if ($room_info['profiles_shipping_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_ship_profile');
 							}
 
 							//get returns profiles
-							$product_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
+							$room_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
 							//get default returns profile
-							$product_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
+							$room_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
 							//check it has a default profile
-							if ($product_info['profiles_returns_def'] === false) {
+							if ($room_info['profiles_returns_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_return_profile');
 							}
 
 							//get returns profiles
-							$product_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
+							$room_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
 							//get default returns profile
-							$product_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
+							$room_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
 							//check it has a default profile
-							if ($product_info['profiles_theme_def'] === false) {
+							if ($room_info['profiles_theme_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_theme_profile');
 							}
 
-							// get the product tax rate
-							if (isset($product_info['tax_class_id'])) {
-								$product_info['defaults']['tax'] = $this->model_openbay_ebay_product->getTaxRate($product_info['tax_class_id']);
+							// get the room tax rate
+							if (isset($room_info['tax_class_id'])) {
+								$room_info['defaults']['tax'] = $this->model_openbay_ebay_room->getTaxRate($room_info['tax_class_id']);
 							} else {
-								$product_info['defaults']['tax'] = 0.00;
+								$room_info['defaults']['tax'] = 0.00;
 							}
 
-							$data['products'] = $products;
+							$data['rooms'] = $rooms;
 
-							$product_info['manufacturers']  = $this->model_catalog_manufacturer->getManufacturers();
-							$product_info['payments']       = $this->model_openbay_ebay->getPaymentTypes();
-							$product_info['store_cats']     = $this->model_openbay_ebay->getSellerStoreCategories();
+							$room_info['manufacturers']  = $this->model_catalog_manufacturer->getManufacturers();
+							$room_info['payments']       = $this->model_openbay_ebay->getPaymentTypes();
+							$room_info['store_cats']     = $this->model_openbay_ebay->getSellerStoreCategories();
 
-							$product_info['defaults']['ebay_template'] = $this->config->get('ebay_template');
+							$room_info['defaults']['ebay_template'] = $this->config->get('ebay_template');
 
-							$product_info['defaults']['listing_duration'] = $this->config->get('ebay_duration');
-							if ($product_info['defaults']['listing_duration'] == '') {
-								$product_info['defaults']['listing_duration'] = 'Days_30';
+							$room_info['defaults']['listing_duration'] = $this->config->get('ebay_duration');
+							if ($room_info['defaults']['listing_duration'] == '') {
+								$room_info['defaults']['listing_duration'] = 'Days_30';
 							}
 
-							$data['default'] = $product_info;
+							$data['default'] = $room_info;
 						} else {
 							$data['error_fail']['plan'] = sprintf($this->language->get('text_item_limit'), $this->url->link('openbay/ebay/subscription', 'token=' . $this->session->data['token'], 'SSL'));
 						}
@@ -1559,13 +1559,13 @@ class ControllerOpenbayEbay extends Controller {
 	public function verify() {
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if ($this->checkConfig() == true) {
 				$this->model_openbay_ebay->logCategoryUsed($this->request->post['finalCat']);
 
-				$item_id = $this->openbay->ebay->getEbayItemId($this->request->post['product_id']);
+				$item_id = $this->openbay->ebay->getEbayItemId($this->request->post['room_id']);
 
 				if ($item_id == false) {
 					$data = $this->request->post;
@@ -1596,12 +1596,12 @@ class ControllerOpenbayEbay extends Controller {
 						$data['img_tpl_thumb'] = $tmp_thumbnail_array;
 					}
 
-					$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$data['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+					$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) LEFT JOIN " . DB_PREFIX . "room_to_store p2s ON (p.room_id = p2s.room_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.room_id = '" . (int)$data['room_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-					$data['product_info'] = $query->row;
+					$data['room_info'] = $query->row;
 
-					if (!empty($data['product_info']['sku'])){
-						$data['sku'] = $data['product_info']['sku'];
+					if (!empty($data['room_info']['sku'])){
+						$data['sku'] = $data['room_info']['sku'];
 					}
 
 					$json = $this->model_openbay_ebay->ebayVerifyAddItem($data, $this->request->get['options']);
@@ -1622,7 +1622,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('tool/image');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -1638,30 +1638,30 @@ class ControllerOpenbayEbay extends Controller {
 
 				$payments                   = $this->model_openbay_ebay->getPaymentTypes();
 				$payments_accepted          = $this->config->get('ebay_payment_types');
-				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
+				$room_info               = $this->model_catalog_room->getRoom($post['room_id']);
 
 				// set shipping data
 				$data['national'] = $profile_shipping['data']['national'];
 				$data['international'] = $profile_shipping['data']['international'];
 
-				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) LEFT JOIN " . DB_PREFIX . "room_to_store p2s ON (p.room_id = p2s.room_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.room_id = '" . (int)$post['room_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-				$data['product_info'] 		= $query->row;
+				$data['room_info'] 		= $query->row;
 
-				$data['description']        = $product_info['description'];
+				$data['description']        = $room_info['description'];
 				$data['name']               = $post['title'];
 				$data['sub_name']           = '';
 				$data['bestoffer']          = 0;
 				$data['finalCat']           = $post['finalCat'];
 				$data['price'][0]           = $post['price'];
 				$data['qty'][0]             = (int)$post['qty'];
-				$data['product_id']         = (int)$post['product_id'];
+				$data['room_id']         = (int)$post['room_id'];
 
 				$data['feat']           	= $post['feat'];
 				$data['featother']          = $post['featother'];
 
-				if (!empty($product_info['sku'])){
-					$data['sku'] = $product_info['sku'];
+				if (!empty($room_info['sku'])){
+					$data['sku'] = $room_info['sku'];
 				}
 
 				$data['auction_duration']   = $post['duration'];
@@ -1716,8 +1716,8 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['private_listing']    = $profile_generic['data']['private_listing'];
 
-				//product attributes - this is just a direct pass through used with the template tag
-				$data['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getProductAttributes($post['product_id'])));
+				//room attributes - this is just a direct pass through used with the template tag
+				$data['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getRoomAttributes($post['room_id'])));
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
@@ -1729,18 +1729,18 @@ class ControllerOpenbayEbay extends Controller {
 				$data['main_image'] = 0;
 				$data['img'] = array();
 
-				$product_images = $this->model_catalog_product->getProductImages($post['product_id']);
+				$room_images = $this->model_catalog_room->getRoomImages($post['room_id']);
 
-				$product_info['product_images'] = array();
+				$room_info['room_images'] = array();
 
-				if (!empty($product_info['image'])) {
-					$data['img'][] = $product_info['image'];
+				if (!empty($room_info['image'])) {
+					$data['img'][] = $room_info['image'];
 				}
 
 				if (isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
-					foreach ($product_images as $product_image) {
-						if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
-							$data['img'][] =  $product_image['image'];
+					foreach ($room_images as $room_image) {
+						if ($room_image['image'] && file_exists(DIR_IMAGE . $room_image['image'])) {
+							$data['img'][] =  $room_image['image'];
 						}
 					}
 				}
@@ -1752,13 +1752,13 @@ class ControllerOpenbayEbay extends Controller {
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
 					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[0] = $this->model_tool_image->resize($room_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($room_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 						$key_offset = 1;
 					}
 
-					//loop through the product images and add them.
-					foreach ($product_images as $k => $v) {
+					//loop through the room images and add them.
+					foreach ($room_images as $k => $v) {
 						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
 						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 					}
@@ -1791,7 +1791,7 @@ class ControllerOpenbayEbay extends Controller {
 	public function listItem() {
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
 		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
 			$data = $this->request->post;
@@ -1822,12 +1822,12 @@ class ControllerOpenbayEbay extends Controller {
 				$data['img_tpl_thumb'] = $tmp_thumbnail_array;
 			}
 
-			$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$data['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+			$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) LEFT JOIN " . DB_PREFIX . "room_to_store p2s ON (p.room_id = p2s.room_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.room_id = '" . (int)$data['room_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-			$data['product_info'] = $query->row;
+			$data['room_info'] = $query->row;
 
-			if (!empty($data['product_info']['sku'])){
-				$data['sku'] = $data['product_info']['sku'];
+			if (!empty($data['room_info']['sku'])){
+				$data['sku'] = $data['room_info']['sku'];
 			}
 
 			$json = $this->model_openbay_ebay->ebayAddItem($data, $this->request->get['options']);
@@ -1843,7 +1843,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('tool/image');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -1858,30 +1858,30 @@ class ControllerOpenbayEbay extends Controller {
 				$profile_generic            = $this->model_openbay_ebay_profile->get($post['generic_profile']);
 				$payments                   = $this->model_openbay_ebay->getPaymentTypes();
 				$payments_accepted           = $this->config->get('ebay_payment_types');
-				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
+				$room_info               = $this->model_catalog_room->getRoom($post['room_id']);
 
 				// set shipping data
 				$data['national'] = $profile_shipping['data']['national'];
 				$data['international'] = $profile_shipping['data']['international'];
 
-				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "room p LEFT JOIN " . DB_PREFIX . "room_description pd ON (p.room_id = pd.room_id) LEFT JOIN " . DB_PREFIX . "room_to_store p2s ON (p.room_id = p2s.room_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.room_id = '" . (int)$post['room_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-				$data['product_info']       = $query->row;
+				$data['room_info']       = $query->row;
 
-				$data['description']        = $product_info['description'];
+				$data['description']        = $room_info['description'];
 				$data['name']               = $post['title'];
 				$data['sub_name']           = '';
 				$data['bestoffer']          = 0;
 				$data['finalCat']           = $post['finalCat'];
 				$data['price'][0]           = $post['price'];
 				$data['qty'][0]             = $post['qty'];
-				$data['product_id']         = $post['product_id'];
+				$data['room_id']         = $post['room_id'];
 
 				$data['feat']           	= $post['feat'];
 				$data['featother']          = $post['featother'];
 
-				if (!empty($product_info['sku'])){
-					$data['sku'] = $product_info['sku'];
+				if (!empty($room_info['sku'])){
+					$data['sku'] = $room_info['sku'];
 				}
 
 				$data['auction_duration']   = $post['duration'];
@@ -1936,8 +1936,8 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['private_listing']    = $profile_generic['data']['private_listing'];
 
-				//product attributes - this is just a direct pass through used with the template tag
-				$data['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getProductAttributes($post['product_id'])));
+				//room attributes - this is just a direct pass through used with the template tag
+				$data['attributes'] = base64_encode(json_encode($this->model_openbay_ebay->getRoomAttributes($post['room_id'])));
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
@@ -1949,18 +1949,18 @@ class ControllerOpenbayEbay extends Controller {
 				$data['main_image'] = 0;
 				$data['img'] = array();
 
-				$product_images = $this->model_catalog_product->getProductImages($post['product_id']);
+				$room_images = $this->model_catalog_room->getRoomImages($post['room_id']);
 
-				$product_info['product_images'] = array();
+				$room_info['room_images'] = array();
 
-				if (!empty($product_info['image'])) {
-					$data['img'][] = $product_info['image'];
+				if (!empty($room_info['image'])) {
+					$data['img'][] = $room_info['image'];
 				}
 
 				if (isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
-					foreach ($product_images as $product_image) {
-						if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
-							$data['img'][] =  $product_image['image'];
+					foreach ($room_images as $room_image) {
+						if ($room_image['image'] && file_exists(DIR_IMAGE . $room_image['image'])) {
+							$data['img'][] =  $room_image['image'];
 						}
 					}
 				}
@@ -1972,13 +1972,13 @@ class ControllerOpenbayEbay extends Controller {
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
 					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[0] = $this->model_tool_image->resize($room_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($room_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 						$key_offset = 1;
 					}
 
-					//loop through the product images and add them.
-					foreach ($product_images as $k => $v) {
+					//loop through the room images and add them.
+					foreach ($room_images as $k => $v) {
 						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
 						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 					}
@@ -2019,9 +2019,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function repairLinks() {
-		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_room');
 
-		$this->model_openbay_ebay_product->repairLinks();
+		$this->model_openbay_ebay_room->repairLinks();
 
 		$json = array('msg' => 'Links repaired');
 

@@ -417,7 +417,7 @@ class ControllerDesignLayout extends Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/information');
 
@@ -432,10 +432,10 @@ class ControllerDesignLayout extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
-			$product_total = $this->model_catalog_product->getTotalProductsByLayoutId($layout_id);
+			$room_total = $this->model_catalog_room->getTotalRoomsByLayoutId($layout_id);
 
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+			if ($room_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_room'), $room_total);
 			}
 
 			$category_total = $this->model_catalog_category->getTotalCategoriesByLayoutId($layout_id);

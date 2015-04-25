@@ -19,10 +19,10 @@ class ControllerCommonColumnLeft extends Controller {
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
 		}
 
-		if ($route == 'product/proparent' && isset($this->request->get['proparent_id'])) {
-			$this->load->model('catalog/proparent');
+		if ($route == 'product/hotel' && isset($this->request->get['hotel_id'])) {
+			$this->load->model('catalog/hotel');
 			
-			$layout_id = $this->model_catalog_proparent->getProparentLayoutId($this->request->get['proparent_id']);
+			$layout_id = $this->model_catalog_hotel->gethotelLayoutId($this->request->get['hotel_id']);
 		}
 
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {

@@ -9,8 +9,8 @@ $_['text_success']         			= 'You have saved your changes to the Etsy extensi
 $_['text_heading_settings']         = 'Settings';
 $_['text_heading_sync']             = 'Syncronise';
 $_['text_heading_register']         = 'Register here';
-$_['text_heading_products']        	= 'Product links';
-$_['text_heading_proparents']        	= 'Proparent links';
+$_['text_heading_rooms']        	= 'Room links';
+$_['text_heading_hotels']        	= 'Hotel links';
 $_['text_heading_listings']        	= 'Etsy listings';
 
 // Errors

@@ -28,13 +28,13 @@ class ModelCheckoutCoupon extends Model {
 				}
 			}
 
-			// Products
-			$coupon_product_data = array();
+			// Rooms
+			$coupon_room_data = array();
 
-			$coupon_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
+			$coupon_room_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_room` WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
-			foreach ($coupon_product_query->rows as $product) {
-				$coupon_product_data[] = $product['product_id'];
+			foreach ($coupon_room_query->rows as $room) {
+				$coupon_room_data[] = $room['room_id'];
 			}
 
 			// Categories
@@ -46,28 +46,28 @@ class ModelCheckoutCoupon extends Model {
 				$coupon_category_data[] = $category['category_id'];
 			}
 
-			$product_data = array();
+			$room_data = array();
 
-			if ($coupon_product_data || $coupon_category_data) {
-				foreach ($this->cart->getProducts() as $product) {
-					if (in_array($product['product_id'], $coupon_product_data)) {
-						$product_data[] = $product['product_id'];
+			if ($coupon_room_data || $coupon_category_data) {
+				foreach ($this->cart->getRooms() as $room) {
+					if (in_array($room['room_id'], $coupon_room_data)) {
+						$room_data[] = $room['room_id'];
 
 						continue;
 					}
 
 					foreach ($coupon_category_data as $category_id) {
-						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND category_id = '" . (int)$category_id . "'");
+						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "room_to_category` WHERE `room_id` = '" . (int)$room['room_id'] . "' AND category_id = '" . (int)$category_id . "'");
 
 						if ($coupon_category_query->row['total']) {
-							$product_data[] = $product['product_id'];
+							$room_data[] = $room['room_id'];
 
 							continue;
 						}
 					}
 				}
 
-				if (!$product_data) {
+				if (!$room_data) {
 					$status = false;
 				}
 			}
@@ -84,7 +84,7 @@ class ModelCheckoutCoupon extends Model {
 				'discount'      => $coupon_query->row['discount'],
 				'shipping'      => $coupon_query->row['shipping'],
 				'total'         => $coupon_query->row['total'],
-				'product'       => $product_data,
+				'room'       => $room_data,
 				'date_start'    => $coupon_query->row['date_start'],
 				'date_end'      => $coupon_query->row['date_end'],
 				'uses_total'    => $coupon_query->row['uses_total'],

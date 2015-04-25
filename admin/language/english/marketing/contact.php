@@ -13,8 +13,8 @@ $_['text_customer_group']  = 'Customer Group';
 $_['text_customer']        = 'Customers';
 $_['text_affiliate_all']   = 'All Affiliates';
 $_['text_affiliate']       = 'Affiliates';
-$_['text_product']         = 'Products';
-$_['text_proparent']       = 'Proparents';
+$_['text_room']         = 'Rooms';
+$_['text_hotel']           = 'Hotels';
 
 // Entry
 $_['entry_store']          = 'From';
@@ -22,16 +22,16 @@ $_['entry_to']             = 'To';
 $_['entry_customer_group'] = 'Customer Group';
 $_['entry_customer']       = 'Customer';
 $_['entry_affiliate']      = 'Affiliate';
-$_['entry_product']        = 'Products';
-$_['entry_proparent']      = 'Proparent';
+$_['entry_room']        = 'Rooms';
+$_['entry_hotel']          = 'Hotel';
 $_['entry_subject']        = 'Subject';
 $_['entry_message']        = 'Message';
 
 // Help
 $_['help_customer']       = 'Autocomplete';
 $_['help_affiliate']      = 'Autocomplete';
-$_['help_product']        = 'Send only to customers who have ordered products in the list. (Autocomplete)';
-$_['help_proparent']      = 'Send only to customers who have ordered proparents in the list. (Autocomplete)';
+$_['help_room']        = 'Send only to customers who have ordered rooms in the list. (Autocomplete)';
+$_['help_hotel']      = 'Send only to customers who have ordered hotels in the list. (Autocomplete)';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to send E-Mails!';

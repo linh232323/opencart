@@ -5,21 +5,21 @@ class ControllerFeedGoogleSitemap extends Controller {
 			$output  = '<?xml version="1.0" encoding="UTF-8"?>';
 			$output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
 
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/room');
 			$this->load->model('tool/image');
 
-			$products = $this->model_catalog_product->getProducts();
+			$rooms = $this->model_catalog_room->getrooms();
 
-			foreach ($products as $product) {
-				if ($product['image']) {
+			foreach ($rooms as $room) {
+				if ($room['image']) {
 					$output .= '<url>';
-					$output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
+					$output .= '<loc>' . $this->url->link('product/room', 'room_id=' . $room['room_id']) . '</loc>';
 					$output .= '<changefreq>weekly</changefreq>';
 					$output .= '<priority>1.0</priority>';
 					$output .= '<image:image>';
-					$output .= '<image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')) . '</image:loc>';
-					$output .= '<image:caption>' . $product['name'] . '</image:caption>';
-					$output .= '<image:title>' . $product['name'] . '</image:title>';
+					$output .= '<image:loc>' . $this->model_tool_image->resize($room['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')) . '</image:loc>';
+					$output .= '<image:caption>' . $room['name'] . '</image:caption>';
+					$output .= '<image:title>' . $room['name'] . '</image:title>';
 					$output .= '</image:image>';
 					$output .= '</url>';
 				}
@@ -40,11 +40,11 @@ class ControllerFeedGoogleSitemap extends Controller {
 				$output .= '<priority>0.7</priority>';
 				$output .= '</url>';
 
-				$products = $this->model_catalog_product->getProducts(array('filter_manufacturer_id' => $manufacturer['manufacturer_id']));
+				$rooms = $this->model_catalog_room->getrooms(array('filter_manufacturer_id' => $manufacturer['manufacturer_id']));
 
-				foreach ($products as $product) {
+				foreach ($rooms as $room) {
 					$output .= '<url>';
-					$output .= '<loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&amp;product_id=' . $product['product_id']) . '</loc>';
+					$output .= '<loc>' . $this->url->link('product/room', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&amp;room_id=' . $room['room_id']) . '</loc>';
 					$output .= '<changefreq>weekly</changefreq>';
 					$output .= '<priority>1.0</priority>';
 					$output .= '</url>';
@@ -88,11 +88,11 @@ class ControllerFeedGoogleSitemap extends Controller {
 			$output .= '<priority>0.7</priority>';
 			$output .= '</url>';
 
-			$products = $this->model_catalog_product->getProducts(array('filter_category_id' => $result['category_id']));
+			$rooms = $this->model_catalog_room->getrooms(array('filter_category_id' => $result['category_id']));
 
-			foreach ($products as $product) {
+			foreach ($rooms as $room) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->url->link('product/product', 'path=' . $new_path . '&amp;product_id=' . $product['product_id']) . '</loc>';
+				$output .= '<loc>' . $this->url->link('product/room', 'path=' . $new_path . '&amp;room_id=' . $room['room_id']) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>1.0</priority>';
 				$output .= '</url>';

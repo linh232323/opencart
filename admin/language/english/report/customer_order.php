@@ -12,9 +12,9 @@ $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
 $_['column_status']         = 'Status';
 $_['column_orders']         = 'No. Orders';
-$_['column_products']       = 'No. Products';
-$_['column_proparents']     = 'No. Proparents';
-$_['column_proparents']     = 'No. Proparents';
+$_['column_rooms']       = 'No. Rooms';
+$_['column_hotels']     = 'No. hotels';
+$_['column_hotels']     = 'No. hotels';
 $_['column_total']          = 'Total';
 $_['column_action']         = 'Action';
 

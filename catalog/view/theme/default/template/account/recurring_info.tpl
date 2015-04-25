@@ -32,8 +32,8 @@
             <p><b><?php echo $text_payment_method; ?></b> <?php echo $recurring['payment_method']; ?></p>
           </td>
           <td class="left" style="width: 50%; vertical-align: top;">
-            <p><b><?php echo $text_product; ?></b><a href="<?php echo $recurring['product_link']; ?>"><?php echo $recurring['product_name']; ?></a></p>
-            <p><b><?php echo $text_quantity; ?></b> <?php echo $recurring['product_quantity']; ?></p>
+            <p><b><?php echo $text_room; ?></b><a href="<?php echo $recurring['room_link']; ?>"><?php echo $recurring['room_name']; ?></a></p>
+            <p><b><?php echo $text_quantity; ?></b> <?php echo $recurring['room_quantity']; ?></p>
             <p><b><?php echo $text_order; ?></b><a href="<?php echo $recurring['order_link']; ?>">#<?php echo $recurring['order_id']; ?></a></p>
           </td>
         </tr>

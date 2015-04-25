@@ -48,35 +48,35 @@
           </tr>
         </thead>
         <tbody>
-          <?php if (!empty($products)) { ?>
-          <?php foreach ($products as $product) { ?>
+          <?php if (!empty($rooms)) { ?>
+          <?php foreach ($rooms as $room) { ?>
           <tr>
-            <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
-            <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
-            <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-            <td class="text-right"><?php echo $product['model'] ?></td>
-            <td class="text-right"><?php echo $product['search_status'] ?></td>
-            <td class="text-right"><?php if ($product['matches'] !== null) { ?>
-              <?php echo $product['matches'] ?>
+            <td class="text-center"><input class="amazon-listing" type="checkbox" name="room_ids[]" value="<?php echo $room['room_id'] ?>"/></td>
+            <td class="text-center"><img src="<?php echo $room['image'] ?>"/></td>
+            <td class="text-left"><a href="<?php echo $room['href'] ?>" target="_blank"><?php echo $room['name'] ?></a></td>
+            <td class="text-right"><?php echo $room['model'] ?></td>
+            <td class="text-right"><?php echo $room['search_status'] ?></td>
+            <td class="text-right"><?php if ($room['matches'] !== null) { ?>
+              <?php echo $room['matches'] ?>
               <?php } else { ?>
               -
               <?php } ?></td>
-            <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
+            <td class="text-left" id="result-<?php echo $room['room_id'] ?>"><?php if ($room['matches'] !== null) { ?>
               <?php $checked = false; ?>
-              <?php if ($product['matches'] > 0) { ?>
-              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+              <?php if ($room['matches'] > 0) { ?>
+              <input class="amazon-listing" type="radio" name="rooms[<?php echo $room['room_id'] ?>]" value=""/>
               <?php echo $text_dont_list ?><br/>
-              <?php foreach ($product['search_results'] as $search_result) { ?>
+              <?php foreach ($room['search_results'] as $search_result) { ?>
               <?php if (!$checked) { ?>
-              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+              <input class="amazon-listing" checked="checked" type="radio" name="rooms[<?php echo $room['room_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
               <?php $checked = true; ?>
               <?php } else { ?>
-              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+              <input class="amazon-listing" type="radio" name="rooms[<?php echo $room['room_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
               <?php } ?>
               <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
               <?php } ?>
               <?php } else { ?>
-              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+              <input class="amazon-listing" checked="checked" type="radio" name="rooms[<?php echo $room['room_id'] ?>]" value=""/>
               <?php echo $text_dont_list ?><br/>
               <?php } ?>
               <?php } ?></td>
@@ -141,8 +141,8 @@
   </div>
   <script type="text/javascript"><!--
   $(document).ready(function () {
-    $('#product-form table thead input[type="checkbox"]').change(function () {
-      var checkboxes = $('input[name="product_ids[]"]');
+    $('#room-form table thead input[type="checkbox"]').change(function () {
+      var checkboxes = $('input[name="room_ids[]"]');
       if ($(this).is(':checked')) {
         checkboxes.attr('checked', 'checked');
       } else {
@@ -150,15 +150,15 @@
       }
     });
 
-    $('input[name="product_ids[]"]').change(function () {
+    $('input[name="room_ids[]"]').change(function () {
       if (!$(this).is(':checked')) {
-        $('#product-form table thead input[type="checkbox"]').removeAttr('checked');
+        $('#room-form table thead input[type="checkbox"]').removeAttr('checked');
       }
     });
   });
 
   $('#button-filter').bind('click', function() {
-    url = 'index.php?route=openbay/amazon/bulkListProducts&token=<?php echo $token ?>';
+    url = 'index.php?route=openbay/amazon/bulkListRooms&token=<?php echo $token ?>';
     url += '&filter_marketplace=' + $("select[name='filter_marketplace']").val();
     location = url;
   });
@@ -213,7 +213,7 @@
   $('#button-search').bind('click', function(e) {
     e.preventDefault();
 
-    var request_data = $('input[name="product_ids[]"]:checked').serialize();
+    var request_data = $('input[name="room_ids[]"]:checked').serialize();
 
     if (request_data != '') {
       request_data += '&marketplace=<?php echo $filter_marketplace; ?>';
@@ -235,7 +235,7 @@
               element.html('<div class="alert alert-success">' + value.success + '</span>');
             }
 
-            $('input[name="product_ids[]"]').removeAttr('checked');
+            $('input[name="room_ids[]"]').removeAttr('checked');
           });
         },
         error: function(xhr, ajaxOptions, thrownError) {

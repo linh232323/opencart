@@ -43,8 +43,8 @@ $_['column_result'] 				= 'Result';
 $_['button_list'] 					= 'List';
 
 // Error
-$_['error_product_sku'] 			= 'Product must have an SKU';
-$_['error_proparent_sku'] 			= 'Proparent must have an SKU';
-$_['error_searchable_fields'] 		= 'Product must have ISBN, EAN, UPC or JAN field populated';
+$_['error_room_sku'] 			= 'Room must have an SKU';
+$_['error_hotel_sku'] 			= 'Hotel must have an SKU';
+$_['error_searchable_fields'] 		= 'Room must have ISBN, EAN, UPC or JAN field populated';
 $_['error_bulk_listing_permission'] = 'Bulk listing is not allowed on your plan, please upgrade';
 $_['error_select_items'] 			= 'You must select at least 1 item to search';

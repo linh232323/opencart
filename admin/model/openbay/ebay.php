@@ -68,22 +68,22 @@ class ModelOpenbayEbay extends Model{
 					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing` (
 					  `ebay_listing_id` int(11) NOT NULL AUTO_INCREMENT,
 					  `ebay_item_id` char(100) NOT NULL,
-					  `product_id` int(11) NOT NULL,
+					  `room_id` int(11) NOT NULL,
 					  `variant` int(11) NOT NULL,
 					  `status` SMALLINT(3) NOT NULL DEFAULT '1',
 					  PRIMARY KEY (`ebay_listing_id`),
-  						KEY `product_id` (`product_id`)
+  						KEY `room_id` (`room_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 		;
 		$this->db->query("
 					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing_pending` (
 					  `ebay_listing_pending_id` int(11) NOT NULL AUTO_INCREMENT,
 					  `ebay_item_id` char(25) NOT NULL,
-					  `product_id` int(11) NOT NULL,
+					  `room_id` int(11) NOT NULL,
 					  `key` char(50) NOT NULL,
 					  `variant` int(11) NOT NULL,
 					  PRIMARY KEY (`ebay_listing_pending_id`),
-  						KEY `product_id` (`product_id`)
+  						KEY `room_id` (`room_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
@@ -123,7 +123,7 @@ class ModelOpenbayEbay extends Model{
 					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_transaction` (
 						`ebay_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
 						`order_id` int(11) NOT NULL,
-						`product_id` int(11) NOT NULL,
+						`room_id` int(11) NOT NULL,
 						`sku` varchar(100) NOT NULL,
 						`txn_id` varchar(100) NOT NULL,
 						`item_id` varchar(100) NOT NULL,
@@ -134,7 +134,7 @@ class ModelOpenbayEbay extends Model{
 						`created` DATETIME NOT NULL,
 						`modified` DATETIME NOT NULL,
 					PRIMARY KEY (`ebay_transaction_id`),
-  						KEY `product_id` (`product_id`),
+  						KEY `room_id` (`room_id`),
   						KEY `order_id` (`order_id`),
   						KEY `smp_id` (`smp_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
@@ -179,7 +179,7 @@ class ModelOpenbayEbay extends Model{
 				  `image_original` text NOT NULL,
 				  `image_new` text NOT NULL,
 				  `name` text NOT NULL,
-				  `product_id` int(11) NOT NULL,
+				  `room_id` int(11) NOT NULL,
 				  `imgcount` int(11) NOT NULL,
 				  PRIMARY KEY (`id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
@@ -196,12 +196,12 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_stock_reserve` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `product_id` int(11) NOT NULL,
+				  `room_id` int(11) NOT NULL,
 				  `variant_id` varchar(100) NOT NULL,
 				  `item_id` varchar(100) NOT NULL,
 				  `reserve` int(11) NOT NULL,
 				  PRIMARY KEY (`id`),
-  					KEY `product_id` (`product_id`)
+  					KEY `room_id` (`room_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		$this->db->query("
@@ -247,10 +247,10 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function totalLinked() {
-		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total
+		$sql = "SELECT COUNT(DISTINCT p.room_id) AS total
 				FROM `" . DB_PREFIX . "ebay_listing` `el`
-				LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
-				LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
+				LEFT JOIN `" . DB_PREFIX . "room` `p` ON (`el`.`room_id` = `p`.`room_id`)
+				LEFT JOIN `" . DB_PREFIX . "room_description` `pd` ON (`p`.`room_id` = `pd`.`room_id`)
 				WHERE `el`.`status` = '1'
 				AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -274,16 +274,16 @@ class ModelOpenbayEbay extends Model{
 		SELECT
 			" . $has_option . "
 			`el`.`ebay_item_id`,
-			`p`.`product_id`,
+			`p`.`room_id`,
 			`p`.`sku`,
 			`p`.`model`,
 			`p`.`quantity`,
 			`pd`.`name`,
 			`esr`.`reserve`
 		FROM `" . DB_PREFIX . "ebay_listing` `el`
-		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
-		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
-		LEFT JOIN `" . DB_PREFIX . "ebay_stock_reserve` `esr` ON (`esr`.`product_id` = `p`.`product_id`)
+		LEFT JOIN `" . DB_PREFIX . "room` `p` ON (`el`.`room_id` = `p`.`room_id`)
+		LEFT JOIN `" . DB_PREFIX . "room_description` `pd` ON (`p`.`room_id` = `pd`.`room_id`)
+		LEFT JOIN `" . DB_PREFIX . "ebay_stock_reserve` `esr` ON (`esr`.`room_id` = `p`.`room_id`)
 		WHERE `el`.`status` = '1'
 		AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -295,12 +295,12 @@ class ModelOpenbayEbay extends Model{
 		if ($qry->num_rows) {
 			foreach ($qry->rows as $row) {
 				$data[$row['ebay_item_id']] = array(
-					'product_id'    => $row['product_id'],
+					'room_id'    => $row['room_id'],
 					'sku'           => $row['sku'],
 					'model'         => $row['model'],
 					'qty'           => $row['quantity'],
 					'name'          => $row['name'],
-					'link_edit'     => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
+					'link_edit'     => $this->url->link('catalog/room/update', 'token=' . $this->session->data['token'] . '&room_id=' . $row['room_id'], 'SSL'),
 					'link_ebay'     => $this->config->get('ebay_itm_link') . $row['ebay_item_id'],
 					'reserve'       => (int)$row['reserve'],
 				);
@@ -308,12 +308,12 @@ class ModelOpenbayEbay extends Model{
 				$data[$row['ebay_item_id']]['options'] = 0;
 
 				if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock')) {
-					$data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
+					$data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getRoomOptionStocks((int)$row['room_id']);
 				}
 
 				//get the allocated stock - items that have been bought but not assigned to an order
 				if ($this->config->get('ebay_stock_allocate') == 0) {
-					$data[$row['ebay_item_id']]['allocated'] = $this->openbay->ebay->getAllocatedStock($row['product_id']);
+					$data[$row['ebay_item_id']]['allocated'] = $this->openbay->ebay->getAllocatedStock($row['room_id']);
 				} else {
 					$data[$row['ebay_item_id']]['allocated'] = 0;
 				}
@@ -350,7 +350,7 @@ class ModelOpenbayEbay extends Model{
 			}
 
 			foreach ($response['items'] as $item_id => $item) {
-				if ($this->openbay->ebay->getProductId($item_id, 1) == false) {
+				if ($this->openbay->ebay->getRoomId($item_id, 1) == false) {
 					$unlinked[$item_id] = $item;
 				}
 			}
@@ -399,9 +399,9 @@ class ModelOpenbayEbay extends Model{
 		$this->openbay->ebay->createLink($data['pid'], $data['itemId'], $data['variants']);
 
 		if (($data['qty'] != $data['ebayqty']) || $data['variants'] == 1) {
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/room');
 			$this->openbay->ebay->log('Updating eBay with new qty');
-			$this->openbay->ebay->productUpdateListen($data['pid'], $this->model_catalog_product->getProduct($data['pid']));
+			$this->openbay->ebay->roomUpdateListen($data['pid'], $this->model_catalog_room->getRoom($data['pid']));
 		} else {
 			$this->openbay->ebay->log('Qty on eBay is the same as our stock, no update needed');
 			return array('msg' => 'ok', 'error' => false);
@@ -598,7 +598,7 @@ class ModelOpenbayEbay extends Model{
 		$data2['msg']    = $this->openbay->ebay->lastmsg;
 
 		if (!empty($response['ItemID'])) {
-			$this->openbay->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
+			$this->openbay->ebay->createLink($data['room_id'], $response['ItemID'], $variant);
 			$this->openbay->ebay->addReserve($data, $response['ItemID'], $variant);
 
 			$data2['data']['viewLink']  = html_entity_decode($this->config->get('ebay_itm_link') . $response['ItemID']);
@@ -649,14 +649,14 @@ class ModelOpenbayEbay extends Model{
 		}
 	}
 
-	public function getProductStock($id) {
-		$res = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . $this->db->escape($id) . "' LIMIT 1");
+	public function getRoomStock($id) {
+		$res = $this->db->query("SELECT * FROM `" . DB_PREFIX . "room` WHERE `room_id` = '" . $this->db->escape($id) . "' LIMIT 1");
 
 		if (isset($res->row['has_option']) && $res->row['has_option'] == 1) {
 			if ($this->openbay->addonLoad('openstock')) {
 				$this->load->model('openstock/openstock');
 				$this->load->model('tool/image');
-				$variant = $this->model_openstock_openstock->getProductOptionStocks((int)$id);
+				$variant = $this->model_openstock_openstock->getRoomOptionStocks((int)$id);
 			} else {
 				$variant = 0;
 			}
@@ -685,12 +685,12 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getLiveListingArray() {
-		$qry = $this->db->query("SELECT `product_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = 1");
+		$qry = $this->db->query("SELECT `room_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = 1");
 
 		$data = array();
 		if ($qry->num_rows) {
 			foreach ($qry->rows as $row) {
-				$data[$row['product_id']] = $row['ebay_item_id'];
+				$data[$row['room_id']] = $row['ebay_item_id'];
 			}
 		}
 
@@ -719,17 +719,17 @@ class ModelOpenbayEbay extends Model{
 	public function editSave($data) {
 		$this->openbay->ebay->log('editSave() - start..');
 
-		//get product id
-		$product_id = $this->openbay->ebay->getProductId($data['itemId']);
+		//get room id
+		$room_id = $this->openbay->ebay->getRoomId($data['itemId']);
 
-		$this->openbay->ebay->log('editSave() - product_id: ' . $product_id);
+		$this->openbay->ebay->log('editSave() - room_id: ' . $room_id);
 
 		if ($data['variant'] == 0) {
 			//save the reserve level
-			$this->openbay->ebay->updateReserve($product_id, $data['itemId'], $data['qty_reserve']);
+			$this->openbay->ebay->updateReserve($room_id, $data['itemId'], $data['qty_reserve']);
 
 			//get the stock info
-			$stock = $this->openbay->ebay->getProductStockLevel($product_id);
+			$stock = $this->openbay->ebay->getRoomStockLevel($room_id);
 
 			//do the stock sync
 			$this->openbay->ebay->putStockUpdate($data['itemId'], $stock['quantity']);
@@ -741,11 +741,11 @@ class ModelOpenbayEbay extends Model{
 
 			$variant_data = array();
 			$this->load->model('tool/image');
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/room');
 			$this->load->model('openstock/openstock');
 
-			//get the options list for this product
-			$opts = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			//get the options list for this room
+			$opts = $this->model_openstock_openstock->getRoomOptionStocks($room_id);
 			reset($opts);
 			$variant_data['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
 
@@ -757,10 +757,10 @@ class ModelOpenbayEbay extends Model{
 
 			foreach ($data['opt'] as $k => $opt) {
 				//update the variant reserve level
-				$this->openbay->ebay->updateReserve($product_id, $data['itemId'], $opt['reserve'], $opt['sku'], 1);
+				$this->openbay->ebay->updateReserve($room_id, $data['itemId'], $opt['reserve'], $opt['sku'], 1);
 
 				//get the stock info
-				$stock = $this->openbay->ebay->getProductStockLevel($product_id, $opt['sku']);
+				$stock = $this->openbay->ebay->getRoomStockLevel($room_id, $opt['sku']);
 
 				$this->openbay->ebay->log('editSave() - stock: ' . serialize($stock));
 
@@ -768,8 +768,8 @@ class ModelOpenbayEbay extends Model{
 					$stock_flag = true;
 				}
 
-				// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
-				$reserve = $this->openbay->ebay->getReserve($product_id, $data['itemId'], $opt['sku']);
+				// room RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
+				$reserve = $this->openbay->ebay->getReserve($room_id, $data['itemId'], $opt['sku']);
 
 				$this->openbay->ebay->log('editSave() - reserve level: ' . $reserve);
 
@@ -802,31 +802,31 @@ class ModelOpenbayEbay extends Model{
 		}
 	}
 
-	public function getProductAttributes($product_id) {
-		$product_attribute_group_data = array();
+	public function getRoomAttributes($room_id) {
+		$room_attribute_group_data = array();
 
-		$product_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.product_id = '" . (int)$product_id . "' AND agd.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
+		$room_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "room_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.room_id = '" . (int)$room_id . "' AND agd.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
 
-		foreach ($product_attribute_group_query->rows as $product_attribute_group) {
-			$product_attribute_data = array();
+		foreach ($room_attribute_group_query->rows as $room_attribute_group) {
+			$room_attribute_data = array();
 
-			$product_attribute_query = $this->db->query("SELECT a.attribute_id, ad.name, pa.text FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_description ad ON (a.attribute_id = ad.attribute_id) WHERE pa.product_id = '" . (int)$product_id . "' AND a.attribute_group_id = '" . (int)$product_attribute_group['attribute_group_id'] . "' AND ad.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY a.sort_order, ad.name");
+			$room_attribute_query = $this->db->query("SELECT a.attribute_id, ad.name, pa.text FROM " . DB_PREFIX . "room_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_description ad ON (a.attribute_id = ad.attribute_id) WHERE pa.room_id = '" . (int)$room_id . "' AND a.attribute_group_id = '" . (int)$room_attribute_group['attribute_group_id'] . "' AND ad.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY a.sort_order, ad.name");
 
-			foreach ($product_attribute_query->rows as $product_attribute) {
-				$product_attribute_data[] = array(
-					'attribute_id' => $product_attribute['attribute_id'],
-					'name'         => $product_attribute['name'],
-					'text'         => $product_attribute['text']
+			foreach ($room_attribute_query->rows as $room_attribute) {
+				$room_attribute_data[] = array(
+					'attribute_id' => $room_attribute['attribute_id'],
+					'name'         => $room_attribute['name'],
+					'text'         => $room_attribute['text']
 				);
 			}
 
-			$product_attribute_group_data[] = array(
-				'attribute_group_id' => $product_attribute_group['attribute_group_id'],
-				'name'               => $product_attribute_group['name'],
-				'attribute'          => $product_attribute_data
+			$room_attribute_group_data[] = array(
+				'attribute_group_id' => $room_attribute_group['attribute_group_id'],
+				'name'               => $room_attribute_group['name'],
+				'attribute'          => $room_attribute_data
 			);
 		}
 
-		return $product_attribute_group_data;
+		return $room_attribute_group_data;
 	}
 }

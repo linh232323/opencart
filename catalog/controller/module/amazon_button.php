@@ -8,7 +8,7 @@ class ControllerModuleAmazonButton extends Controller {
 		if ($this->config->get('amazon_checkout_allowed_ips') && !in_array($this->request->server['REMOTE_ADDR'], $this->config->get('amazon_checkout_allowed_ips'))) {
 			$status = false;
 			
-		} elseif (!$this->cart->hasProducts() || !empty($this->session->data['vouchers']) || $this->cart->hasRecurringProducts()) {
+		} elseif (!$this->cart->hasrooms() || !empty($this->session->data['vouchers']) || $this->cart->hasRecurringrooms()) {
 			$status = false;
 		}		
 		

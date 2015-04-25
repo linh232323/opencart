@@ -161,11 +161,11 @@ class ControllerAccountReturn extends Controller {
 			$data['text_telephone'] = $this->language->get('text_telephone');
 			$data['text_status'] = $this->language->get('text_status');
 			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_product'] = $this->language->get('text_product');
+			$data['text_room'] = $this->language->get('text_room');
 			$data['text_comment'] = $this->language->get('text_comment');
 			$data['text_history'] = $this->language->get('text_history');
 
-			$data['column_product'] = $this->language->get('column_product');
+			$data['column_room'] = $this->language->get('column_room');
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_opened'] = $this->language->get('column_opened');
@@ -185,7 +185,7 @@ class ControllerAccountReturn extends Controller {
 			$data['lastname'] = $return_info['lastname'];
 			$data['email'] = $return_info['email'];
 			$data['telephone'] = $return_info['telephone'];
-			$data['product'] = $return_info['product'];
+			$data['room'] = $return_info['room'];
 			$data['model'] = $return_info['model'];
 			$data['quantity'] = $return_info['quantity'];
 			$data['reason'] = $return_info['reason'];
@@ -332,7 +332,7 @@ class ControllerAccountReturn extends Controller {
 
 		$data['text_description'] = $this->language->get('text_description');
 		$data['text_order'] = $this->language->get('text_order');
-		$data['text_product'] = $this->language->get('text_product');
+		$data['text_room'] = $this->language->get('text_room');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 
@@ -342,7 +342,7 @@ class ControllerAccountReturn extends Controller {
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_room'] = $this->language->get('entry_room');
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_reason'] = $this->language->get('entry_reason');
@@ -389,10 +389,10 @@ class ControllerAccountReturn extends Controller {
 			$data['error_telephone'] = '';
 		}
 
-		if (isset($this->error['product'])) {
-			$data['error_product'] = $this->error['product'];
+		if (isset($this->error['room'])) {
+			$data['error_room'] = $this->error['room'];
 		} else {
-			$data['error_product'] = '';
+			$data['error_room'] = '';
 		}
 
 		if (isset($this->error['model'])) {
@@ -421,10 +421,10 @@ class ControllerAccountReturn extends Controller {
 			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/room');
 
-		if (isset($this->request->get['product_id'])) {
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		if (isset($this->request->get['room_id'])) {
+			$room_info = $this->model_catalog_room->getRoom($this->request->get['room_id']);
 		}
 
 		if (isset($this->request->post['order_id'])) {
@@ -475,18 +475,18 @@ class ControllerAccountReturn extends Controller {
 			$data['telephone'] = $this->customer->getTelephone();
 		}
 
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
-		} elseif (!empty($product_info)) {
-			$data['product'] = $product_info['name'];
+		if (isset($this->request->post['room'])) {
+			$data['room'] = $this->request->post['room'];
+		} elseif (!empty($room_info)) {
+			$data['room'] = $room_info['name'];
 		} else {
-			$data['product'] = '';
+			$data['room'] = '';
 		}
 
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
-		} elseif (!empty($product_info)) {
-			$data['model'] = $product_info['model'];
+		} elseif (!empty($room_info)) {
+			$data['model'] = $room_info['model'];
 		} else {
 			$data['model'] = '';
 		}
@@ -615,8 +615,8 @@ class ControllerAccountReturn extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
-			$this->error['product'] = $this->language->get('error_product');
+		if ((utf8_strlen($this->request->post['room']) < 1) || (utf8_strlen($this->request->post['room']) > 255)) {
+			$this->error['room'] = $this->language->get('error_room');
 		}
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {

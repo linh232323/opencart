@@ -23,7 +23,7 @@
           <?php if ($shipping_method) { ?>
           <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
           <?php } ?>
-          <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
+          <li><a href="#tab-room" data-toggle="tab"><?php echo $tab_room; ?></a></li>
           <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
           <?php if ($payment_action) { ?>
           <li><a href="#tab-action" data-toggle="tab"><?php echo $tab_action; ?></a></li>
@@ -296,11 +296,11 @@
             </table>
           </div>
           <?php } ?>
-          <div class="tab-pane" id="tab-product">
+          <div class="tab-pane" id="tab-room">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_room; ?></td>
                   <td class="text-left"><?php echo $column_model; ?></td>
                   <td class="text-left"><?php echo $column_check_in; ?></td>
                   <td class="text-left"><?php echo $column_check_out; ?></td>
@@ -311,10 +311,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($products as $product) { ?>
+                <?php foreach ($rooms as $room) { ?>
                 <tr>
-                  <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                    <?php foreach ($product['option'] as $option) { ?>
+                  <td class="text-left"><a href="<?php echo $room['href']; ?>"><?php echo $room['name']; ?></a>
+                    <?php foreach ($room['option'] as $option) { ?>
                     <br />
                     <?php if ($option['type'] != 'file') { ?>
                     &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
@@ -322,13 +322,13 @@
                     &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
                     <?php } ?>
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $product['model']; ?></td>
-                  <td class="text-right"><?php echo $product['check_in']; ?></td>
-                  <td class="text-right"><?php echo $product['check_out']; ?></td>
-                  <td class="text-right"><?php echo $product['night']; ?></td>
-                  <td class="text-right"><?php echo $product['quantity']; ?></td>
-                  <td class="text-right"><?php echo $product['price']; ?></td>
-                  <td class="text-right"><?php echo $product['total']; ?></td>
+                  <td class="text-left"><?php echo $room['model']; ?></td>
+                  <td class="text-right"><?php echo $room['check_in']; ?></td>
+                  <td class="text-right"><?php echo $room['check_out']; ?></td>
+                  <td class="text-right"><?php echo $room['night']; ?></td>
+                  <td class="text-right"><?php echo $room['quantity']; ?></td>
+                  <td class="text-right"><?php echo $room['price']; ?></td>
+                  <td class="text-right"><?php echo $room['total']; ?></td>
                 </tr>
                 <?php } ?>
                 <?php foreach ($vouchers as $voucher) { ?>

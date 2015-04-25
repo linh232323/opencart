@@ -115,20 +115,20 @@ class ModelAccountOrder extends Model {
 		return $query->rows;
 	}
 
-	public function getOrderProduct($order_id, $order_product_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+	public function getOrderRoom($order_id, $order_room_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$order_room_id . "'");
 
 		return $query->row;
 	}
 
-	public function getOrderProducts($order_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+	public function getOrderRooms($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getOrderOptions($order_id, $order_product_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+	public function getOrderOptions($order_id, $order_room_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_room_id = '" . (int)$order_room_id . "'");
 
 		return $query->rows;
 	}
@@ -157,8 +157,8 @@ class ModelAccountOrder extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalOrderProductsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+	public function getTotalOrderRoomsByOrderId($order_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_room WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}

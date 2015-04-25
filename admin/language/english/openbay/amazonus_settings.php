@@ -38,8 +38,8 @@ $_['entry_string1']              		= 'Encryption String 1';
 $_['entry_string2']              		= 'Encryption String 2';
 $_['entry_import_tax']              	= 'Tax for imported items';
 $_['entry_customer_group']          	= 'Customer Group';
-$_['entry_tax_percentage']           	= 'Percentage added to default product\'s price';
-$_['entry_default_condition']        	= 'Default product condition type';
+$_['entry_tax_percentage']           	= 'Percentage added to default room\'s price';
+$_['entry_default_condition']        	= 'Default room condition type';
 $_['entry_notify_admin']             	= 'Notify admin of new order';
 $_['entry_default_shipping']         	= 'Default shipping';
 
@@ -52,4 +52,4 @@ $_['tab_orders']                   		= 'Orders';
 $_['help_import_tax']          			= 'Used if Amazon does not return tax information';
 $_['help_customer_group']      			= 'Select a customer group to assign to imported orders';
 $_['help_default_shipping']    			= 'Used as the pre-selected option in the bulk order update';
-$_['help_tax_percentage']           	= 'Percentage added to default product price';
+$_['help_tax_percentage']           	= 'Percentage added to default room price';

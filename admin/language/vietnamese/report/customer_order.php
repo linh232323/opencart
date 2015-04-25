@@ -11,7 +11,7 @@ $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Nhóm khách hàng';
 $_['column_status']         = 'Trạng thái';
 $_['column_orders']         = 'Số đơn hàng';
-$_['column_products']       = 'Số sản phẩm';
+$_['column_rooms']       = 'Số sản phẩm';
 $_['column_total']          = 'Tổng cộng';
 $_['column_action']         = 'Thao tác';
 

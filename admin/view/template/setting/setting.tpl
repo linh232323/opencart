@@ -309,9 +309,9 @@
             </div>
             <div class="tab-pane" id="tab-option">
               <fieldset>
-                <legend><?php echo $text_product; ?></legend>
+                <legend><?php echo $text_room; ?></legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><?php echo $entry_product_count; ?></span></label>
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_room_count; ?>"><?php echo $entry_room_count; ?></span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       <?php if ($config_product_count) { ?>
@@ -334,20 +334,20 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="<?php echo $help_product_limit; ?>"><?php echo $entry_product_limit; ?></span></label>
+                  <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="<?php echo $help_room_limit; ?>"><?php echo $entry_room_limit; ?></span></label>
                   <div class="col-sm-10">
-                    <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
-                    <?php if ($error_product_limit) { ?>
-                    <div class="text-danger"><?php echo $error_product_limit; ?></div>
+                    <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_room_limit; ?>" id="input-catalog-limit" class="form-control" />
+                    <?php if ($error_room_limit) { ?>
+                    <div class="text-danger"><?php echo $error_room_limit; ?></div>
                     <?php } ?>
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-list-description-limit"><span data-toggle="tooltip" title="<?php echo $help_product_description_length; ?>"><?php echo $entry_product_description_length; ?></span></label>
+                  <label class="col-sm-2 control-label" for="input-list-description-limit"><span data-toggle="tooltip" title="<?php echo $help_room_description_length; ?>"><?php echo $entry_room_description_length; ?></span></label>
                   <div class="col-sm-10">
-                    <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
-                    <?php if ($error_product_description_length) { ?>
-                    <div class="text-danger"><?php echo $error_product_description_length; ?></div>
+                    <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_room_description_length; ?>" id="input-list-description-limit" class="form-control" />
+                    <?php if ($error_room_description_length) { ?>
+                    <div class="text-danger"><?php echo $error_room_description_length; ?></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -1075,18 +1075,18 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
+                <label class="col-sm-2 control-label" for="input-image-room-width"><?php echo $entry_image_room; ?></label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-6">
-                      <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
+                      <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-room-width" class="form-control" />
                     </div>
                     <div class="col-sm-6">
                       <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                     </div>
                   </div>
-                  <?php if ($error_image_product) { ?>
-                  <div class="text-danger"><?php echo $error_image_product; ?></div>
+                  <?php if ($error_image_room) { ?>
+                  <div class="text-danger"><?php echo $error_image_room; ?></div>
                   <?php } ?>
                 </div>
               </div>

@@ -19,8 +19,8 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function express() {
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->log->write('No product redirect');
+		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$this->log->write('No room redirect');
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -31,7 +31,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['paypal']['guest'] = false;
 			unset($this->session->data['guest']);
 		} else {
-			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringProducts()) {
+			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringRooms()) {
 				/**
 				 * If the guest checkout is allowed (config ok, no login for price and doesn't have downloads)
 				 */
@@ -407,9 +407,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getProducts() as $product) {
-			if ($product['points']) {
-				$points_total += $product['points'];
+		foreach ($this->cart->getRooms() as $room) {
+			if ($room['points']) {
+				$points_total += $room['points'];
 			}
 		}
 
@@ -437,30 +437,30 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
 
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getRooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
-				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+			if ($room['minimum'] > $room_total) {
+				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $room['name'], $room['minimum']);
 			}
 
-			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+			if ($room['image']) {
+				$image = $this->model_tool_image->resize($room['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			} else {
 				$image = '';
 			}
 
 			$option_data = array();
 
-			foreach ($product['option'] as $option) {
+			foreach ($room['option'] as $option) {
 				if ($option['type'] != 'file') {
 					$value = $option['option_value'];
 				} else {
@@ -477,21 +477,21 @@ class ControllerPaymentPPExpress extends Controller {
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				$price = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')));
 			} else {
 				$price = false;
 			}
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']);
+				$total = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')) * $room['quantity']);
 			} else {
 				$total = false;
 			}
 
 			$recurring_description = '';
 
-			if ($product['recurring']) {
+			if ($room['recurring']) {
 				$frequencies = array(
 					'day'        => $this->language->get('text_day'),
 					'week'       => $this->language->get('text_week'),
@@ -500,35 +500,35 @@ class ControllerPaymentPPExpress extends Controller {
 					'year'       => $this->language->get('text_year'),
 				);
 
-				if ($product['recurring']['trial']) {
-					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-					$recurring_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+				if ($room['recurring']['trial']) {
+					$recurring_price = $this->currency->format($this->tax->calculate($room['recurring']['trial_price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax')));
+					$recurring_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $room['recurring']['trial_cycle'], $frequencies[$room['recurring']['trial_frequency']], $room['recurring']['trial_duration']) . ' ';
 				}
 
-				$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+				$recurring_price = $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax')));
 
-				if ($product['recurring']['duration']) {
-					$recurring_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				if ($room['recurring']['duration']) {
+					$recurring_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 				} else {
-					$recurring_description .= sprintf($this->language->get('text_payment_cancel'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					$recurring_description .= sprintf($this->language->get('text_payment_cancel'), $recurring_price, $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 				}
 			}
 
-			$data['products'][] = array(
-				'key'                 => $product['key'],
+			$data['rooms'][] = array(
+				'key'                 => $room['key'],
 				'thumb'               => $image,
-				'name'                => $product['name'],
-				'model'               => $product['model'],
+				'name'                => $room['name'],
+				'model'               => $room['model'],
 				'option'              => $option_data,
-				'quantity'            => $product['quantity'],
-				'stock'               => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'              => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'quantity'            => $room['quantity'],
+				'stock'               => $room['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'              => ($room['reward'] ? sprintf($this->language->get('text_points'), $room['reward']) : ''),
 				'price'               => $price,
 				'total'               => $total,
-				'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
-				'recurring'           => $product['recurring'],
-				'recurring_name'        => (isset($product['recurring']['recurring_name']) ? $product['recurring']['recurring_name'] : ''),
+				'href'                => $this->url->link('product/room', 'room_id=' . $room['room_id']),
+				'remove'              => $this->url->link('checkout/cart', 'remove=' . $room['key']),
+				'recurring'           => $room['recurring'],
+				'recurring_name'        => (isset($room['recurring']['recurring_name']) ? $room['recurring']['recurring_name'] : ''),
 				'recurring_description' => $recurring_description
 			);
 		}
@@ -775,24 +775,24 @@ class ControllerPaymentPPExpress extends Controller {
 			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has rooms and has stock.
+		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$redirect = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$rooms = $this->cart->getRooms();
 
-		foreach ($products as $product) {
-			$product_total = 0;
+		foreach ($rooms as $room) {
+			$room_total = 0;
 
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
+			foreach ($rooms as $room_2) {
+				if ($room_2['room_id'] == $room['room_id']) {
+					$room_total += $room_2['quantity'];
 				}
 			}
 
-			if ($product['minimum'] > $product_total) {
+			if ($room['minimum'] > $room_total) {
 				$redirect = $this->url->link('checkout/cart');
 
 				break;
@@ -943,12 +943,12 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['shipping_code'] = '';
 			}
 
-			$product_data = array();
+			$room_data = array();
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($this->cart->getRooms() as $room) {
 				$option_data = array();
 
-				foreach ($product['option'] as $option) {
+				foreach ($room['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['option_value'];
 					} else {
@@ -956,8 +956,8 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 
 					$option_data[] = array(
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
+						'room_option_id'       => $option['room_option_id'],
+						'room_option_value_id' => $option['room_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],
 						'name'                    => $option['name'],
@@ -966,18 +966,18 @@ class ControllerPaymentPPExpress extends Controller {
 					);
 				}
 
-				$product_data[] = array(
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
+				$room_data[] = array(
+					'room_id' => $room['room_id'],
+					'name'       => $room['name'],
+					'model'      => $room['model'],
 					'option'     => $option_data,
-					'download'   => $product['download'],
-					'quantity'   => $product['quantity'],
-					'subtract'   => $product['subtract'],
-					'price'      => $product['price'],
-					'total'      => $product['total'],
-					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'     => $product['reward']
+					'download'   => $room['download'],
+					'quantity'   => $room['quantity'],
+					'subtract'   => $room['subtract'],
+					'price'      => $room['price'],
+					'total'      => $room['total'],
+					'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
+					'reward'     => $room['reward']
 				);
 			}
 
@@ -1000,7 +1000,7 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 			}
 
-			$data['products'] = $product_data;
+			$data['rooms'] = $room_data;
 			$data['vouchers'] = $voucher_data;
 			$data['totals'] = $total_data;
 			$data['comment'] = $this->session->data['comment'];
@@ -1153,10 +1153,10 @@ class ControllerPaymentPPExpress extends Controller {
 
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
-				$recurring_products = $this->cart->getRecurringProducts();
+				$recurring_rooms = $this->cart->getRecurringRooms();
 
-				//loop through any products that are recurring items
-				if ($recurring_products) {
+				//loop through any rooms that are recurring items
+				if ($recurring_rooms) {
 					$this->language->load('payment/pp_express');
 
 					$this->load->model('checkout/recurring');
@@ -1169,7 +1169,7 @@ class ControllerPaymentPPExpress extends Controller {
 						'year'       => 'Year'
 					);
 
-					foreach($recurring_products as $item) {
+					foreach($recurring_rooms as $item) {
 						$data = array(
 							'METHOD'             => 'CreateRecurringPaymentsProfile',
 							'TOKEN'              => $this->session->data['paypal']['token'],
@@ -1259,7 +1259,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function checkout() {
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -1437,10 +1437,10 @@ class ControllerPaymentPPExpress extends Controller {
 			);
 			$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
-			$recurring_products = $this->cart->getRecurringProducts();
+			$recurring_rooms = $this->cart->getRecurringRooms();
 
-			//loop through any products that are recurring items
-			if ($recurring_products) {
+			//loop through any rooms that are recurring items
+			if ($recurring_rooms) {
 				$this->load->model('checkout/recurring');
 
 				$billing_period = array(
@@ -1451,7 +1451,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'year'       => 'Year'
 				);
 
-				foreach ($recurring_products as $item) {
+				foreach ($recurring_rooms as $item) {
 					$data = array(
 						'METHOD'             => 'CreateRecurringPaymentsProfile',
 						'TOKEN'              => $this->session->data['paypal']['token'],
@@ -1946,9 +1946,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getProducts() as $product) {
-			if ($product['points']) {
-				$points_total += $product['points'];
+		foreach ($this->cart->getRooms() as $room) {
+			if ($room['points']) {
+				$points_total += $room['points'];
 			}
 		}
 
