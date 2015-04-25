@@ -29,6 +29,6 @@
 </p>
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
   </div>
 </div>

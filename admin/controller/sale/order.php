@@ -114,8 +114,46 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 		}
+                
+                $this->load->model('user/user');
 
-		$this->getForm();
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
+                
+                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                
+                foreach ($orders as $order){
+                    
+                }
+                    
+                $product_id = 0;
+                if (isset($order)){
+                     $product_id = $order['product_id'];
+                }
+                
+                $check = FALSE;
+                
+                foreach ($products as $product){
+                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                        $check = TRUE;
+                    }
+                }
+                
+                if($check == TRUE){
+                    $this->getForm();
+                }else{
+                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
+                    exit;
+                }
 	}
 
 	public function delete() {
@@ -124,7 +162,44 @@ class ControllerSaleOrder extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
+                
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
+                
+                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                
+                foreach ($orders as $order){
+                    
+                }
+                    
+                $product_id = 0;
+                if (isset($order)){
+                     $product_id = $order['product_id'];
+                }
+                
+                $check = FALSE;
+                
+                foreach ($products as $product){
+                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                        $check = TRUE;
+                    }
+                }
+                
+                if($check == FALSE){
+                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
+                    exit;
+                }
 		unset($this->session->data['cookie']);
 
 		if (isset($this->request->get['order_id']) && $this->validate()) {
@@ -365,7 +440,7 @@ class ControllerSaleOrder extends Controller {
 
 		$filter_data = array(
 			'filter_order_id'      => $filter_order_id,
-			'filter_customer'	   => $filter_customer,
+			'filter_customer'      => $filter_customer,
 			'filter_order_status'  => $filter_order_status,
 			'filter_total'         => $filter_total,
 			'filter_date_added'    => $filter_date_added,
@@ -379,8 +454,33 @@ class ControllerSaleOrder extends Controller {
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
 		$results = $this->model_sale_order->getOrders($filter_data);
+                
+                $this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
 
 		foreach ($results as $result) {
+                        
+                        $check = FALSE;
+                        
+                        foreach($products as $product){
+                            if($product['product_id'] == $result['product_id'] || $user_id == 1){
+                                $check = TRUE;
+                            }
+                        }
+                        if($check == FALSE){
+                            continue;
+                        }
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
@@ -408,6 +508,9 @@ class ControllerSaleOrder extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_date_modified'] = $this->language->get('column_date_modified');
+		$data['column_check_in'] = $this->language->get('column_check_in');
+		$data['column_check_out'] = $this->language->get('column_check_out');
+		$data['column_night'] = $this->language->get('column_night');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_return_id'] = $this->language->get('entry_return_id');
@@ -610,6 +713,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
+		$data['column_check_in'] = $this->language->get('column_check_in');
+		$data['column_check_out'] = $this->language->get('column_check_out');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
 
@@ -756,8 +861,10 @@ class ControllerSaleOrder extends Controller {
 					'model'      => $product['model'],
 					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']),
 					'quantity'   => $product['quantity'],
-					'price'      => $product['price'],
-					'total'      => $product['total'],
+					'price'      => $this->currency->format($product['price']),
+					'check_in'   => $product['check_in'],
+					'check_out'  => $product['check_out'],
+					'total'      => $this->currency->format($product['total']),
 					'reward'     => $product['reward']
 				);
 			}
@@ -903,8 +1010,47 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function info() {
+                
 		$this->load->model('sale/order');
+                                 
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
+                
+                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                
+                foreach ($orders as $order){
+                    
+                }
+                    
+                $product_id = 0;
+                if (isset($order)){
+                     $product_id = $order['product_id'];
+                }
+                
+                $check = FALSE;
+                
+                foreach ($products as $product){
+                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                        $check = TRUE;
+                    }
+                }
+                
+                if($check == FALSE){
+                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
+                    exit;
+                }
+                
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];
 		} else {
@@ -942,8 +1088,6 @@ class ControllerSaleOrder extends Controller {
 			$data['text_accept_language'] = $this->language->get('text_accept_language');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
-			$data['text_check_in'] = $this->language->get('text_check_in');
-			$data['text_check_out'] = $this->language->get('text_check_out');
 			$data['text_firstname'] = $this->language->get('text_firstname');
 			$data['text_lastname'] = $this->language->get('text_lastname');
 			$data['text_company'] = $this->language->get('text_company');
@@ -1062,6 +1206,9 @@ class ControllerSaleOrder extends Controller {
 
 			$data['column_product'] = $this->language->get('column_product');
 			$data['column_model'] = $this->language->get('column_model');
+			$data['column_check_in'] = $this->language->get('column_check_in');
+			$data['column_check_out'] = $this->language->get('column_check_out');
+			$data['column_night'] = $this->language->get('column_night');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
@@ -1277,8 +1424,6 @@ class ControllerSaleOrder extends Controller {
 			$data['accept_language'] = $order_info['accept_language'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
-			$data['date'] = date($this->language->get('date_format_short'), strtotime($order_info['check_in']));
-			$data['date_out'] = date($this->language->get('date_format_short'), strtotime($order_info['check_out']));
 			
 			// Payment
 			$data['payment_firstname'] = $order_info['payment_firstname'];
@@ -1439,6 +1584,9 @@ class ControllerSaleOrder extends Controller {
 					'product_id'       => $product['product_id'],
 					'name'    	 	   => $product['name'],
 					'model'    		   => $product['model'],
+					'check_in'    		   => $product['check_in'],
+					'check_out'    		   => $product['check_out'],
+					'night'    		   => ( strtotime($product['check_out']) - strtotime($product['check_in']) )/24/3600 ,
 					'option'   		   => $option_data,
 					'quantity'		   => $product['quantity'],
 					'price'    		   => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
@@ -1773,7 +1921,7 @@ class ControllerSaleOrder extends Controller {
 
 	public function createInvoiceNo() {
 		$this->load->language('sale/order');
-
+                
 		$json = array();
 
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
@@ -2006,7 +2154,47 @@ class ControllerSaleOrder extends Controller {
 
 	public function invoice() {
 		$this->load->language('sale/order');
+                
+                $this->load->model('user/user');
+                
+                $this->load->model('sale/order');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
+                
+                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                
+                foreach ($orders as $order){
+                    
+                }
+                    
+                $product_id = 0;
+                if (isset($order)){
+                     $product_id = $order['product_id'];
+                }
+                
+                $check = FALSE;
+                
+                foreach ($products as $product){
+                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                        $check = TRUE;
+                    }
+                }
+                
+                if($check == FALSE){
+                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
+                    exit;
+                }
+                
 		$data['title'] = $this->language->get('text_invoice');
 
 		if ($this->request->server['HTTPS']) {
@@ -2237,7 +2425,47 @@ class ControllerSaleOrder extends Controller {
 
 	public function shipping() {
 		$this->load->language('sale/order');
+                
+                $this->load->model('sale/order');
+                
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+                
+                $filter_products = array(
+                        'filter_user_id'  => $user_id
+		);
+                
+                $this->load->model('catalog/product');
+                
+		$products = $this->model_catalog_product->getProducts($filter_products);
+                
+                $orders = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+                
+                foreach ($orders as $order){
+                    
+                }
+                    
+                $product_id = 0;
+                if (isset($order)){
+                     $product_id = $order['product_id'];
+                }
+                
+                $check = FALSE;
+                
+                foreach ($products as $product){
+                    if($product['product_id'] ==  $product_id || $user_id == 1){
+                        $check = TRUE;
+                    }
+                }
+                
+                if($check == FALSE){
+                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
+                    exit;
+                }
+                
 		$data['title'] = $this->language->get('text_shipping');
 
 		if ($this->request->server['HTTPS']) {

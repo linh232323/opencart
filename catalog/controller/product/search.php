@@ -24,7 +24,8 @@ class ControllerProductSearch extends Controller {
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-
+        $this->document->addScript('http://maps.google.com/maps/api/js?sensor=false');
+        
         if (isset($this->request->post['search'])) {
             $data['title_search'] = $this->request->post['search'];
         } else {
@@ -37,24 +38,47 @@ class ControllerProductSearch extends Controller {
             $search = '';
         }
         
-        if (empty($this->request->post['date-in'])) {
-            $this->session->data['date']=date('Y-m-d');
+        if (empty($this->request->post['check_in'])) {
+            $this->session->data['check_in']=date('Y-m-d');
         }else{
-            $this->session->data['date']=$this->request->post['date-in'];
+            $this->session->data['check_in']=$this->request->post['check_in'];
         }
         
-        if (empty($this->request->post['date-out'])) {
+        if (empty($this->request->post['night'])) {
+            $this->session->data['night']= 1 ;
+        }else{
+            $this->session->data['night']=$this->request->post['night'];
+        }
+        
+        if (empty($this->request->post['check_out'])) {
             $date2=date('d')+2;
-            $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+            $this->session->data['check_out'] = date('Y').'-'.date('m').'-'.$date2;
         }else{
-            $this->session->data['date-out'] = $this->request->post['date-out'];
+            $this->session->data['check_out'] = $this->request->post['check_out'];
         }
         
+        if (!empty($this->request->post['guest'])) {
+           $this->session->data['guest'] = $this->request->post['guest'];
+        }else{
+            $this->session->data['guest'] = "";
+        }
         
         if (empty($this->request->post['adults'])) {
             $this->session->data['adults'] = '1';
         }else{
             $this->session->data['adults'] = $this->request->post['adults'];
+        }
+        
+        if (empty($this->request->post['room'])) {
+            $this->session->data['room'] = '1';
+        }else{
+            $this->session->data['room'] = $this->request->post['room'];
+        }
+        
+        if (empty($this->request->post['children'])) {
+            $this->session->data['children'] = '0';
+        }else{
+            $this->session->data['children'] = $this->request->post['children'];
         }
 
         if (isset($this->request->get['tag'])) {
@@ -203,9 +227,17 @@ class ControllerProductSearch extends Controller {
         $data['text_rate_bad'] = $this->language->get('text_rate_bad');
         $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
         $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
-        $data['text_labelguest'] = $this->language->get('text_labelguest');
+        $data['text_label_guest'] = $this->language->get('text_label_guest');
+        $data['text_label_night'] = $this->language->get('text_label_night');
+        $data['text_label_room'] = $this->language->get('text_label_room');
+        $data['text_label_adults'] = $this->language->get('text_label_adults');
+        $data['text_label_children'] = $this->language->get('text_label_children');
+        $data['text_1adult'] = $this->language->get('text_1adult');
+        $data['text_2adults'] = $this->language->get('text_2adults');
+        $data['text_more'] = $this->language->get('text_more');
 
-        $data['entry_search'] = $this->language->get('entry_search');
+        $data['label_search'] = $this->language->get('label_search');
+        
         $data['entry_description'] = $this->language->get('entry_description');
 
         $data['button_search'] = $this->language->get('button_search');
@@ -278,9 +310,9 @@ class ControllerProductSearch extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_product_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_product_width'));
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -324,7 +356,6 @@ class ControllerProductSearch extends Controller {
                 if ($products== null){
                     continue;
                 }
-                
                 $data['proparents'][$i] = array(
                     'proparent_id' => $result['proparent_id'],
                     'thumbp' => $image,
@@ -340,19 +371,23 @@ class ControllerProductSearch extends Controller {
                     'product_total' => $product_total,
                     'hrefp' => $this->url->link('product/proparent', 'proparent_id=' . $result['proparent_id'] . $url)
                 );
-                
+                $data['maps'][]= array(
+                    'namep' => $result['name'],
+                    'maps_apil' => $result['maps_apil'],
+                    'maps_apir' => $result['maps_apir']
+                );
                 $product_total = 0 ;
                 
                 foreach ($products as $product) {
                     
-                    if ($this->session->data['adults'] >= $product['maxadults']){
+                    if ($this->session->data['adults'] > $product['maxadults']){
                         continue;
                     }
 
                     if ($product['image']) {
-                        $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                        $image = $this->model_tool_image->resizetoWidth($product['image'], $this->config->get('config_image_product_width'));
                     } else {
-                        $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                        $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_product_width'));
                     }
 
                     if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -384,7 +419,7 @@ class ControllerProductSearch extends Controller {
                     $had_price = FALSE;
                     
                     foreach ($product_prices as $value) {
-                        if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
+                        if ((strtotime($this->session->data['check_in'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['check_in'])<=strtotime($value['product_date']['2']['date']))){
                             $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product['tax_class_id'], $this->config->get('config_tax')));
                             $had_price = TRUE;
                         }else{

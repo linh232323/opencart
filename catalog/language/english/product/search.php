@@ -32,8 +32,15 @@ $_['text_found']        = 'We found ';
 $_['text_hotelin']      = ' hotels with availability in ';
 $_['text_labeldate_in'] = 'Check in:';
 $_['text_labeldate_out'] = 'Check out:';
-$_['text_labelguest']   = 'Max:';
+$_['text_label_night'] = 'Night:';
+$_['text_label_guest']   = 'Guest:';
+$_['text_1adult']       = '1 adult';
+$_['text_2adults']      = '2 adults (1 room)';
+$_['text_more']         = 'More option...';
+$_['text_label_room']         = 'Room:';
+$_['text_label_children']     = 'Children (2-11):';
+$_['text_label_adults']       = 'Adults';
 
 // Entry
-$_['entry_search']      = 'Where would you like to go?';
+$_['label_search']      = 'Where would you like to go?';
 $_['entry_description'] = 'Search in product descriptions';

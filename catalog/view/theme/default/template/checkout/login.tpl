@@ -23,7 +23,7 @@
     </div>
     <?php } ?>
     <p><?php echo $text_register_account; ?></p>
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-account" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-account" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
   </div>
   <div class="col-sm-6">
     <h2><?php echo $text_returning_customer; ?></h2>
@@ -36,6 +36,6 @@
       <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
       <input type="password" name="password" value="" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
       <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></div>
-    <input type="button" value="<?php echo $button_login; ?>" id="button-login" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_login; ?>" id="button-login" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
   </div>
 </div>

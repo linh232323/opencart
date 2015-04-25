@@ -2,18 +2,28 @@
 class ControllerCommonFileManager extends Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
+                
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+               
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $this->request->get['filter_name']), '/');
 		} else {
 			$filter_name = null;
 		}
-
+                
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+                    if($user_id == 1){
+                        $directory = DIR_IMAGE . 'catalog';
+                    }else{
+			$directory = DIR_IMAGE . 'catalog/' . $user_id;
+                    }
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -48,19 +58,10 @@ class ControllerCommonFileManager extends Controller {
 
 		// Split the array based on current page number and max number of items per page of 10
 		$images = array_splice($images, ($page - 1) * 16, 16);
-                
-                $this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUser($this->user->getId());
-                
-                $user_id = $user_info['user_group_id'];
-                
-                $data['author_id'] = $user_id;
-                
 		foreach ($images as $image) {
-                    $user_name =basename($image);
-                    if($user_name == $user_id || $user_id == 1 || !is_numeric($user_name)){
 			$name = str_split(basename($image), 14);
+
 			if (is_dir($image)) {
 				$url = '';
 
@@ -95,7 +96,6 @@ class ControllerCommonFileManager extends Controller {
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 				);
 			}
-                    }
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -212,7 +212,13 @@ class ControllerCommonFileManager extends Controller {
 		$this->load->language('common/filemanager');
 
 		$json = array();
+   
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+               
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -220,9 +226,17 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
+                    if($user_id == 1){
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+                    }else{
+                        $directory = rtrim(DIR_IMAGE . 'catalog/'. $user_id . "/"  . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+                    }
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+			if($user_id == 1){
+                        $directory = DIR_IMAGE . 'catalog';
+                    }else{
+			$directory = DIR_IMAGE . 'catalog/' . $user_id;
+                    }
 		}
 
 		// Check its a directory
@@ -293,7 +307,13 @@ class ControllerCommonFileManager extends Controller {
 
 	public function folder() {
 		$this->load->language('common/filemanager');
+   
+                $this->load->model('user/user');
 
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+               
 		$json = array();
 
 		// Check user has permission
@@ -303,9 +323,17 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+                      if($user_id == 1){
+                          $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+                      }else{
+                          $directory = rtrim(DIR_IMAGE . 'catalog/' . $user_id . "/" . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+                      }
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+			if($user_id == 1){
+                        $directory = DIR_IMAGE . 'catalog';
+                    }else{
+			$directory = DIR_IMAGE . 'catalog/' . $user_id;
+                    }
 		}
 
 		// Check its a directory

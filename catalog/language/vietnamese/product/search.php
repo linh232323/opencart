@@ -35,10 +35,18 @@ $_['text_found']        = 'Tìm thấy ';
 $_['text_hotelin']      = ' khách sạn ở ';
 $_['text_labeldate_in'] = 'Ngày nhận phòng:';
 $_['text_labeldate_out']= 'Ngày trả phòng:';
-$_['text_labelguest']   = 'Tối đa :';
+$_['text_label_night']= 'Đêm:';
+$_['text_label_guest']   = 'Khách:';
+$_['text_labeldate_night'] = 'Đêm:';
+$_['text_1adult']       = '1 người lớn';
+$_['text_2adults']      = '2 người lớn (1 phòng)';
+$_['text_more']         = 'Lựu chọn khác...';
+$_['text_label_room']         = 'Phòng:';
+$_['text_label_children']     = 'Trẻ em (2-11):';
+$_['text_label_adults']       = 'Ng.lớn';
 
 
 // Entry
-$_['entry_search']      = 'Bạn đang tìm khách sạn ở đâu?';
+$_['label_search']      = 'Bạn đang tìm khách sạn ở đâu?';
 $_['entry_description'] = 'Tìm trong phần miêu tả sản phẩm';
 ?>

@@ -1151,19 +1151,22 @@ class ControllerCatalogProParent extends Controller {
 		} elseif (isset($this->request->get['proparent_id'])) {
 			$proparent_attributes = $this->model_catalog_proparent->getProparentAttributes($this->request->get['proparent_id']);
 		} else {
-			$proparent_attributes = array();
+			$proparent_attributes =  $this->model_catalog_attribute->getAttributes();
 		}
-
 		$data['proparent_attributes'] = array();
 
 		foreach ($proparent_attributes as $proparent_attribute) {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($proparent_attribute['attribute_id']);
-
+                        if(!isset($proparent_attribute['proparent_attribute_description'])){
+                            $proparent_attribute_description = "";
+                        }else{
+                            $proparent_attribute_description = $proparent_attribute['proparent_attribute_description'];
+                        }
 			if ($attribute_info) {
 				$data['proparent_attributes'][] = array(
 					'attribute_id'                  => $proparent_attribute['attribute_id'],
 					'name'                          => $attribute_info['name'],
-					'proparent_attribute_description' => $proparent_attribute['proparent_attribute_description']
+					'proparent_attribute_description' => $proparent_attribute_description
 				);
 			}
 		}

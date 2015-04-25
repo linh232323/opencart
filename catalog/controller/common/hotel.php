@@ -33,5 +33,4 @@ class ControllerCommonHotel extends Controller {
             $this->response->setOutput($this->load->view('default/template/common/hotel.tpl', $data));
         }
     }
-
 }

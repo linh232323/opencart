@@ -201,7 +201,7 @@
   </div>
   <div class="buttons clearfix">
     <div class="pull-right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
     </div>
   </div>
 </form>

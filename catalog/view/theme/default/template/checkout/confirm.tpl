@@ -7,6 +7,7 @@
         <td class="text-left"><?php echo $column_model; ?></td>
         <td class="text-right"><?php echo $column_quantity; ?></td>
         <td class="text-right"><?php echo $column_price; ?></td>
+        <td class="text-right"><?php echo $column_night; ?></td>
         <td class="text-right"><?php echo $column_total; ?></td>
       </tr>
     </thead>
@@ -25,6 +26,7 @@
         <td class="text-left"><?php echo $product['model']; ?></td>
         <td class="text-right"><?php echo $product['quantity']; ?></td>
         <td class="text-right"><?php echo $product['price']; ?></td>
+        <td class="text-right"><?php echo $product['night']; ?></td>
         <td class="text-right"><?php echo $product['total']; ?></td>
       </tr>
       <?php } ?>
@@ -41,7 +43,7 @@
     <tfoot>
       <?php foreach ($totals as $total) { ?>
       <tr>
-        <td colspan="4" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
+        <td colspan="5" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
         <td class="text-right"><?php echo $total['text']; ?></td>
       </tr>
       <?php } ?>

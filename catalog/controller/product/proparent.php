@@ -13,20 +13,31 @@ class ControllerProductProparent extends Controller {
         
         $this->load->language('proparent/search');
         
-        if (isset($this->request->post['date-in'])){
-            $this->session->data['date']=$this->request->post['date-in'];
+        $this->load->language('product/search');
+        
+        if (isset($this->request->post['check_in'])){
+            $this->session->data['check_in']=$this->request->post['check_in'];
         }else{
-             if (empty($this->session->data['date'])){
-                  $this->session->data['date'] = date('Y-m-d');
+             if (empty($this->session->data['check_in'])){
+                  $this->session->data['check_in'] = date('Y-m-d');
              }
         }
         
-        if (isset($this->request->post['date-out'])){
-            $this->session->data['date-out']=$this->request->post['date-out'];
+        if (isset($this->request->post['check_out'])){
+            $this->session->data['check_out']=$this->request->post['check_out'];
         }else{
-             if (empty($this->session->data['date-out'])){
+             if (empty($this->session->data['check_out'])){
                 $date2=date('d')+2;
-                $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+                $this->session->data['check_out'] = date('Y').'-'.date('m').'-'.$date2;
+             }
+        }
+        
+        
+        if (isset($this->request->post['night'])){
+            $this->session->data['night']=$this->request->post['night'];
+        }else{
+             if (empty($this->session->data['night'])){
+                $this->session->data['night'] = 1;
              }
         }
         
@@ -36,6 +47,30 @@ class ControllerProductProparent extends Controller {
              if (empty($this->session->data['adults'])){
                   $this->session->data['adults'] = 1;
              }
+        }
+        
+        if (isset($this->request->post['room'])){
+            $this->session->data['room']=$this->request->post['room'];
+        }else{
+             if (empty($this->session->data['room'])){
+                  $this->session->data['room'] = 1;
+             }
+        }
+        
+        if (isset($this->request->post['children'])){
+            $this->session->data['children']=$this->request->post['children'];
+        }else{
+             if (empty($this->session->data['children'])){
+                  $this->session->data['children'] = 0;
+             }
+        }
+        
+        if (isset($this->request->post['guest'])){
+            $this->session->data['guest']=$this->request->post['guest'];
+        }else{
+            if (empty($this->session->data['guest'])){
+                $this->session->data['guest']= "";
+            }
         }
         
         $data['breadcrumbs'] = array();
@@ -336,8 +371,15 @@ class ControllerProductProparent extends Controller {
             $data['text_wifi'] = $this->language->get('text_wifi');
             $data['text_search'] = $this->language->get('text_search');
             $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
-            $data['text_labelguest'] = $this->language->get('text_labelguest');
+            $data['text_label_guest'] = $this->language->get('text_label_guest');
             $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
+            $data['text_label_night'] = $this->language->get('text_label_night');
+            $data['text_label_children'] = $this->language->get('text_label_children');
+            $data['text_label_room'] = $this->language->get('text_label_room');
+            $data['text_label_adults'] = $this->language->get('text_label_adults');
+            $data['text_2adults'] = $this->language->get('text_2adults');
+            $data['text_1adult'] = $this->language->get('text_1adult');
+            $data['text_more'] = $this->language->get('text_more');
             $data['text_change_date'] = $this->language->get('text_change_date');
             
             $data['entry_qty'] = $this->language->get('entry_qty');
@@ -357,6 +399,7 @@ class ControllerProductProparent extends Controller {
             $data['button_list'] = $this->language->get('button_list');
             $data['button_grid'] = $this->language->get('button_grid');
             $data['button_search'] = $this->language->get('button_search');
+            $data['button_check_rate'] = $this->language->get('button_check_rate');
 
             $this->load->model('catalog/review');
 
@@ -385,14 +428,14 @@ class ControllerProductProparent extends Controller {
             $this->load->model('tool/image');
 
             if ($proparent_info['image']) {
-                $data['popup'] = $this->model_tool_image->resize($proparent_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                $data['popup'] = $this->model_tool_image->resizetoWidth($proparent_info['image'], $this->config->get('config_image_popup_width'));
             } else {
                 $data['popup'] = '';
             }
 
             if ($proparent_info['image']) {
-                $data['thumb'] = $this->model_tool_image->resize($proparent_info['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_width'));
-                $data['thumbc'] = $this->model_tool_image->resize($proparent_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
+                $data['thumb'] = $this->model_tool_image->resizetoWidth($proparent_info['image'], $this->config->get('config_image_product_width'));
+                $data['thumbc'] = $this->model_tool_image->resizetoWidth($proparent_info['image'], $this->config->get('config_image_category_width'));
             } else {
                 $data['thumb'] = "";
                 $data['thumbc'] = "";
@@ -404,13 +447,13 @@ class ControllerProductProparent extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], 740,400);
-                    $thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
-                    $popup = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_popup_width'));
+                    $thumb = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_category_width'));
+                    $popup = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_popup_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png',  740,400);
-                    $thumb = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
-                    $popup = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_popup_width'));
+                    $thumb = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_category_width'));
+                    $popup = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_popup_width'));
                 }
                 $data['images'][] = array(
                     'popup' => $popup,
@@ -465,7 +508,7 @@ class ControllerProductProparent extends Controller {
                             'proparent_option_value_id' => $option_value['proparent_option_value_id'],
                             'option_value_id' => $option_value['option_value_id'],
                             'name' => $option_value['name'],
-                            'image' => $this->model_tool_image->resize($option_value['image'], 50, 50),
+                            'image' => $this->model_tool_image->resizetoWidth($option_value['image'], 50),
                             'price' => $price,
                             'price_prefix' => $option_value['price_prefix']
                         );
@@ -527,9 +570,9 @@ class ControllerProductProparent extends Controller {
 
              foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_related_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_related_width'));
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -755,9 +798,9 @@ class ControllerProductProparent extends Controller {
 
             foreach ($products as $product) {
                 if ($product['image']) {
-                    $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
+                    $image = $this->model_tool_image->resizetoWidth($product['image'], $this->config->get('config_image_category_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_category_width'));
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -789,7 +832,7 @@ class ControllerProductProparent extends Controller {
                 $had_price = FALSE;
 
                 foreach ($product_prices as $value) {
-                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
+                    if ((strtotime($this->session->data['check_in'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['check_in'])<=strtotime($value['product_date']['2']['date']))){
                          $price_cost = $this->currency->format($this->tax->calculate($value['product_price_gross'], $proparent_info['tax_class_id'], $this->config->get('config_tax')));
                          $had_price = TRUE;
                     }else{
@@ -821,9 +864,11 @@ class ControllerProductProparent extends Controller {
                 );
             }
             
-            
-            $product_total = count($data['products']);
-            
+            if(!empty($data['products'])){
+                $product_total = count($data['products']);
+            }else{
+                $product_total = 0;
+            }
             $pagination = new Pagination();
             $pagination->total = $product_total;
             $pagination->page = $page;

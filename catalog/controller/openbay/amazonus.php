@@ -40,7 +40,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$order_id = $this->model_openbay_amazonus_order->getOrderId($amazonus_order_id);
 
-		// If the order already exists on opencart, ignore it.
+		// If the order already exists on Genuine Tours, ignore it.
 		if ($order_id) {
 			$logger->write("Duplicate order $amazonus_order_id. Terminating.");
 			$this->response->setOutput('Ok');

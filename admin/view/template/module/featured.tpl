@@ -35,13 +35,13 @@
             </div>
           </div>          
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+            <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_category; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-              <div id="featured-product" class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($products as $product) { ?>
-                <div id="featured-product<?php echo $product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
-                  <input type="hidden" name="product[]" value="<?php echo $product['product_id']; ?>" />
+              <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
+              <div id="featured-category" class="well well-sm" style="height: 150px; overflow: auto;">
+                <?php foreach ($categorys as $category) { ?>
+                <div id="featured-category<?php echo $category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category['name']; ?>
+                  <input type="hidden" name="category[]" value="<?php echo $category['category_id']; ?>" />
                 </div>
                 <?php } ?>
               </div>
@@ -90,31 +90,31 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('input[name=\'category\']').autocomplete({
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['product_id']
+						value: item['category_id']
 					}
 				}));
 			}
 		});
 	},
 	select: function(item) {
-		$('input[name=\'product\']').val('');
+		$('input[name=\'category\']').val('');
 		
-		$('#featured-product' + item['value']).remove();
+		$('#featured-category' + item['value']).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+		$('#featured-category').append('<div id="featured-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 	
-$('#featured-product').delegate('.fa-minus-circle', 'click', function() {
+$('#featured-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script></div>

@@ -13,20 +13,20 @@ class ControllerProductProduct extends Controller {
         
         $this->load->language('proparent/category');
         
-        if (isset($this->request->post['date-in'])){
-            $this->session->data['date']=$this->request->post['date-in'];
+        if (isset($this->request->post['check_in'])){
+            $this->session->data['check_in']=$this->request->post['check_in'];
         }else{
-             if (empty($this->session->data['date'])){
-                  $this->session->data['date'] = date('Y-m-d');
+             if (empty($this->session->data['check_in'])){
+                  $this->session->data['check_in'] = date('Y-m-d');
              }
         }
         
-        if (isset($this->request->post['date-out'])){
-            $this->session->data['date-out']=$this->request->post['date-out'];
+        if (isset($this->request->post['check_out'])){
+            $this->session->data['check_out']=$this->request->post['check_out'];
         }else{
-             if (empty($this->session->data['date-out'])){
+             if (empty($this->session->data['check_out'])){
                 $date2=date('d')+2;
-                $this->session->data['date-out'] = date('Y').'-'.date('m').'-'.$date2;
+                $this->session->data['check_out'] = date('Y').'-'.date('m').'-'.$date2;
              }
         }
         
@@ -189,30 +189,35 @@ class ControllerProductProduct extends Controller {
 
         $this->load->model('catalog/product');
         
-        
         $product_prices = $this->model_catalog_product->getProductPrices($product_id);  
-        
         
         $product_info = $this->model_catalog_product->getProduct($product_id);
         
-        foreach ($product_prices as $value) {
-                    if ((strtotime($this->session->data['date'])>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['date'])<=strtotime($value['product_date']['2']['date']))){
-                         $price = $this->currency->format($this->tax->calculate($value['product_price_gross'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-                         $price_session = $value['product_price_gross'];
-                    }else{
-                         $price='';
-                    }
-                    $price_null = $this->currency->format(0, $product_info['tax_class_id'], $this->config->get('config_tax'));
-                    $price_session_null = '';
-                    if (!empty($price_session)){ $this->session->data['price'] = $price_session; } else { $this->session->data['price'] = $price_session_null; }
-                    $data['product_prices'][] =array(
-                     'product_price_value'   => $price,
-                     'product_price_null'    => $price_null,
+        $data['night'] = (strtotime($this->session->data['check_out']) - strtotime($this->session->data['check_in']))/24/3600;
+
+        $datenext = 0;
+        $total=0;
+        for($i=1;$i<=$data['night'];$i++){
+            foreach ($product_prices as $value) {
+                if ((strtotime($this->session->data['check_in'])+$datenext>=strtotime($value['product_date']['1']['date']))&&(strtotime($this->session->data['check_in'])+$datenext<=strtotime($value['product_date']['2']['date']))){
+                     $price = $value['product_price_gross'];
+                     $price_session = $value['product_price_gross'];
+                }else{
+                         $price=0;
+                }
+            }
+            $total += $price;
+            $datenext += 3600*24;
+        }
+        $cost = $this->currency->format($this->tax->calculate($total, $product_info['tax_class_id'], $this->config->get('config_tax')));
+        $price_session_null = '';
+        if (!empty($price_session)){ $this->session->data['price'] = $price_session; } else { $this->session->data['price'] = $price_session_null; }
+        $data['product_prices'][] =array(
+                     'product_price_value'   => $cost,
                      'product_date'          => $value['product_date'],
                      'product_id'            => $value['product_id']
-                    ); 
-                    $price='';
-                }
+        ); 
+       
         
         if ($product_info) {
             $url = '';
@@ -303,7 +308,8 @@ class ControllerProductProduct extends Controller {
             $data['text_search'] = $this->language->get('text_search');
             $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
             $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
-            $data['text_labelguest'] = $this->language->get('text_labelguest');
+            $data['text_label_night'] = $this->language->get('text_label_night');
+            $data['text_label_guest'] = $this->language->get('text_label_guest');
             $data['text_features'] = $this->language->get('text_features');
 
             $data['entry_qty'] = $this->language->get('entry_qty');
@@ -344,15 +350,15 @@ class ControllerProductProduct extends Controller {
             $this->load->model('tool/image');
 
             if ($product_info['image']) {
-                $data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                $data['popup'] = $this->model_tool_image->resizetoWidth($product_info['image'], $this->config->get('config_image_popup_width'));
             } else {
                 $data['popup'] = '';
             }
 
             if ($product_info['image']) {
-                $data['thumb'] = $this->model_tool_image->resize($product_info['image'], 860, 540);
+                $data['thumb'] = $this->model_tool_image->resizetoWidth($product_info['image'], $this->config->get('config_image_popup_width'));
             } else {
-                $data['thumb'] = $this->model_tool_image->resize('placeholder.png', 860, 540);
+                $data['thumb'] = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_popup_width'));
             }
 
             $data['images'] = array();
@@ -361,13 +367,13 @@ class ControllerProductProduct extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], 740,400);
-                    $thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
-                    $popup = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_popup_width'));
+                    $thumb = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_category_width'));
+                    $popup = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_popup_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png',  740,400);
-                    $thumb = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_category_width'), $this->config->get('config_image_category_width'));
-                    $popup = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_popup_width'));
+                    $thumb = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_category_width'));
+                    $popup = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_popup_width'));
                 }
                 $data['images'][] = array(
                     'popup' => $popup,
@@ -422,7 +428,7 @@ class ControllerProductProduct extends Controller {
                             'product_option_value_id' => $option_value['product_option_value_id'],
                             'option_value_id' => $option_value['option_value_id'],
                             'name' => $option_value['name'],
-                            'image' => $this->model_tool_image->resize($option_value['image'], 50, 50),
+                            'image' => $this->model_tool_image->resizetoWidth($option_value['image'], 50),
                             'price' => $price,
                             'price_prefix' => $option_value['price_prefix']
                         );
@@ -471,9 +477,9 @@ class ControllerProductProduct extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_related_width'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_related_width'));
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {

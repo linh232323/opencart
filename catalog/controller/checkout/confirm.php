@@ -57,7 +57,6 @@ class ControllerCheckoutConfirm extends Controller {
 			$order_data = array();
 
 			$order_data['totals'] = array();
-                        
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
 
@@ -220,10 +219,12 @@ class ControllerCheckoutConfirm extends Controller {
 					'download'   => $product['download'],
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
-					'price'      => $this->session->data['price'],
-					'total'      => $this->session->data['price']*$product['quantity'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'     => $product['reward']
+					'reward'     => $product['reward'],
+					'check_in'   => $product['check_in'],
+					'check_out'  => $product['check_out']
 				);
 			}
 
@@ -247,6 +248,7 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$order_data['comment'] = $this->session->data['comment'];
+			$order_data['total'] = $total;
 
 			if (isset($this->request->cookie['tracking'])) {
 				$order_data['tracking'] = $this->request->cookie['tracking'];
@@ -310,6 +312,8 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$this->load->model('checkout/order');
+                        
+			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
 			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
@@ -318,6 +322,7 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
+			$data['column_night'] = $this->language->get('column_night');
 			$data['column_total'] = $this->language->get('column_total');
 
 			$this->load->model('tool/upload');
@@ -367,6 +372,7 @@ class ControllerCheckoutConfirm extends Controller {
 						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					}
 				}
+
 				$data['products'][] = array(
 					'key'        => $product['key'],
 					'product_id' => $product['product_id'],
@@ -376,18 +382,12 @@ class ControllerCheckoutConfirm extends Controller {
 					'recurring'  => $recurring,
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
-					'price'      => $this->currency->format($this->tax->calculate($this->session->data['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'      => $this->currency->format($this->tax->calculate($this->session->data['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+					'night'      => $product['night'],
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'] * $product['night']),
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
 				);
-                                $order_data['total'] = $this->session->data['price']* $product['quantity'];
 			}
-                        
-                        $order_data['date'] = $this->session->data['date'];
-                        
-                        $order_data['date-out'] = $this->session->data['date-out'];
-                        
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
 			// Gift Voucher
 			$data['vouchers'] = array();
@@ -402,7 +402,7 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$data['totals'] = array();
-                        
+
 			foreach ($order_data['totals'] as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],

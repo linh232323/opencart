@@ -28,13 +28,13 @@ class ControllerModuleFeatured extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		
 		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_category'] = $this->language->get('entry_category');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
 
-		$data['help_product'] = $this->language->get('help_product');
+		$data['help_category'] = $this->language->get('help_category');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -98,7 +98,7 @@ class ControllerModuleFeatured extends Controller {
 		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
 		}
-		
+                
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['name'])) {
@@ -109,25 +109,25 @@ class ControllerModuleFeatured extends Controller {
 			$data['name'] = '';
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/category');
 		
-		$data['products'] = array();
-		
-		if (isset($this->request->post['product'])) {
-			$products = $this->request->post['product'];
+		$data['categorys'] = array();
+                
+		if (isset($this->request->post['category'])) {
+			$categorys = $this->request->post['category'];
 		} elseif (!empty($module_info)) {
-			$products = $module_info['product'];
+			$categorys = $module_info['category'];
 		} else {
-			$products = array();
+			$categorys = array();
 		}	
 		
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		foreach ($categorys as $category_id) {
+			$category_info = $this->model_catalog_category->getCategory($category_id);
 
-			if ($product_info) {
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
+			if ($category_info) {
+				$data['categorys'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'       => $category_info['name']
 				);
 			}
 		}

@@ -1486,7 +1486,7 @@ class ControllerCatalogProduct extends Controller {
 			if (!is_numeric($value['product_price_net'])) {
 				$this->error['product_price_net'] = $this->language->get('error_product_price_net');
 			}
-                        if(isset($value['product_price_percent'])){
+                        if(!empty($value['product_price_percent'])){
                             if (!is_numeric($value['product_price_percent'])) {
                                     $this->error['product_price_net'] = $this->language->get('error_product_price_percent');
                             }
@@ -1494,12 +1494,12 @@ class ControllerCatalogProduct extends Controller {
 			if (!is_numeric($value['product_extra_net'])) {
 				$this->error['product_extra_net'] = $this->language->get('error_product_extra_net');
 			}
-                        if(isset($value['product_extra_percent'])){
+                        if(!empty($value['product_extra_percent'])){
                             if (!is_numeric($value['product_extra_percent'])) {
                                     $this->error['product_extra_percent'] = $this->language->get('error_product_extra_percent');
                             }
                         }
-                        if(isset($value['product_price_discount'])){
+                        if(!empty($value['product_price_discount'])){
                             if (!is_numeric($value['product_price_discount'])) {
                                     $this->error['product_price_discount'] = $this->language->get('error_product_price_discount');
                             }

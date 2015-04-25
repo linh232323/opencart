@@ -31,6 +31,7 @@ $_['column_name']            = 'Tên sản phẩm';
 $_['column_model']           = 'Kiểu';
 $_['column_quantity']        = 'Số lượng';
 $_['column_price']           = 'Đơn Giá';
+$_['column_nihgt']           = 'Đêm';
 $_['column_total']           = 'Tổng cộng';
 
 // Entry

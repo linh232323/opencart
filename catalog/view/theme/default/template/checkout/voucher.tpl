@@ -8,7 +8,7 @@
       <div class="input-group">
         <input type="text" name="voucher" value="<?php echo $voucher; ?>" placeholder="<?php echo $entry_voucher; ?>" id="input-voucher" class="form-control" />
         <span class="input-group-btn">
-        <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-primary" />
+        <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-blue" />
         </span> </div>
       <script type="text/javascript"><!--
 $('#button-voucher').on('click', function() {

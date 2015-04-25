@@ -8,7 +8,7 @@
       <div class="input-group">
         <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="<?php echo $entry_reward; ?>" id="input-reward" class="form-control" />
         <span class="input-group-btn">
-        <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-primary" />
+        <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-blue" />
         </span></div>
       <script type="text/javascript"><!--
 $('#button-reward').on('click', function() {

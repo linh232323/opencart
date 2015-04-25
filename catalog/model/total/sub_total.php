@@ -2,9 +2,9 @@
 class ModelTotalSubTotal extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		$this->load->language('total/sub_total');
-
-		$sub_total = $this->cart->getSubTotal();
-
+                
+                $sub_total = $this->cart->getSubTotal();
+                
 		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
 			foreach ($this->session->data['vouchers'] as $voucher) {
 				$sub_total += $voucher['amount'];

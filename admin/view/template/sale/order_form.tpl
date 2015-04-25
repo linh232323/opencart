@@ -230,6 +230,8 @@
                     <tr>
                       <td class="text-left"><?php echo $column_product; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
+                      <td class="text-left"><?php echo $column_check_in; ?></td>
+                      <td class="text-left"><?php echo $column_check_out; ?></td>
                       <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-right"><?php echo $column_price; ?></td>
                       <td class="text-right"><?php echo $column_total; ?></td>
@@ -256,10 +258,12 @@
                         <?php } ?>
                         <?php } ?></td>
                       <td class="text-left"><?php echo $order_product['model']; ?></td>
+                      <td class="text-left"><?php echo $order_product['check_in']; ?></td>
+                      <td class="text-left"><?php echo $order_product['check_out']; ?></td>
                       <td class="text-right"><?php echo $order_product['quantity']; ?>
                         <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
+                      <td class="text-right"><?php echo $order_product['price']; ?></td>
+                      <td class="text-right"><?php echo $order_product['total']; ?></td>
                       <td class="text-center"></td>
                     </tr>
                     <?php $product_row++; ?>
@@ -815,6 +819,8 @@
                     <tr>
                       <td class="text-left"><?php echo $column_product; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
+                      <td class="text-left"><?php echo $column_check_in; ?></td>
+                      <td class="text-left"><?php echo $column_check_out; ?></td>
                       <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-right"><?php echo $column_price; ?></td>
                       <td class="text-right"><?php echo $column_total; ?></td>
@@ -822,7 +828,7 @@
                   </thead>
                   <tbody id="total">
                     <tr>
-                      <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                      <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -940,183 +946,6 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 });
 			
 // Add all products to the cart using the api
-$('#button-refresh').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		dataType: 'json',
-		success: function(json) {
-			$('.alert-danger, .text-danger').remove();
-			
-			// Check for errors
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-									
-				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
-				}
-								
-				if (json['error']['minimum']) {
-					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-					}
-				}
-			}				
-			
-			var shipping = false;
-			
-			html = '';
-			
-			if (json['products']) {
-				for (i = 0; i < json['products'].length; i++) {
-					product = json['products'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-					html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
-					
-					if (product['option']) {
-						for (j = 0; j < product['option'].length; j++) {
-							option = product['option'][j];
-							
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-							
-							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
-								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
-							}
-							
-							if (option['type'] == 'checkbox') {
-								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
-							}
-							
-							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-							}
-						}
-					}
-					
-					html += '</td>';
-					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" /></td>';
-					html += '  <td class="text-right">' + product['price'] + '</td>';
-					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-					html += '</tr>';
-					
-					if (product['shipping'] != 0) {
-						shipping = true;
-					}
-				}
-			} 
-			
-			if (!shipping) {
-				$('select[name=\'shipping_method\'] option').removeAttr('selected');
-				$('select[name=\'shipping_method\']').prop('disabled', true);
-				$('#button-shipping-method').prop('disabled', true);
-			} else {
-				$('select[name=\'shipping_method\']').prop('disabled', false);
-				$('#button-shipping-method').prop('disabled', false);				
-			}
-					
-			if (json['vouchers']) {
-				for (i in json['vouchers']) {
-					voucher = json['vouchers'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'];
-                    html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
-					html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
-                    html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
-					html += '  </td>';
-					html += '  <td class="text-left"></td>';
-					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-					html += '</tr>';	
-				}
-			}
-			
-			if (json['products'] == '' && json['vouchers'] == '') {				
-				html += '<tr>';
-				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-			}
-
-			$('#cart').html(html);
-
-			// Totals
-			html = '';
-			
-			if (json['products']) {
-				for (i = 0; i < json['products'].length; i++) {
-					product = json['products'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-					
-					if (product['option']) {
-						for (j = 0; j < product['option'].length; j++) {
-							option = product['option'][j];
-							
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-						}
-					}
-					
-					html += '  </td>';
-					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
-					html += '  <td class="text-right">' + product['price'] + '</td>';
-					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '</tr>';
-				}				
-			}
-			
-			if (json['vouchers']) {
-				for (i in json['vouchers']) {
-					voucher = json['vouchers'][i];
-					 
-					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'] + '</td>';
-					html += '  <td class="text-left"></td>';
-					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '</tr>';	
-				}	
-			}
-			
-			if (json['totals']) {
-				for (i in json['totals']) {
-					total = json['totals'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-					html += '  <td class="text-right">' + total['text'] + '</td>';
-					html += '</tr>';
-				}
-			}
-			
-			if (!json['totals'] && !json['products'] && !json['vouchers']) {				
-				html += '<tr>';
-				html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-			}
-						
-			$('#total').html(html);
-		},	
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
 
 // Customer
 $('input[name=\'customer\']').autocomplete({

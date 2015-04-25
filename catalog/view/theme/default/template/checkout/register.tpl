@@ -299,13 +299,13 @@
 <div class="buttons clearfix">
   <div class="pull-right"><?php echo $text_agree; ?> &nbsp;
     <input type="checkbox" name="agree" value="1" />
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons clearfix">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-blue" />
   </div>
 </div>
 <?php } ?>

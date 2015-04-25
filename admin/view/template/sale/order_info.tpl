@@ -166,14 +166,6 @@
                 <td><?php echo $text_date_modified; ?></td>
                 <td><?php echo $date_modified; ?></td>
               </tr>
-              <tr>
-                <td><?php echo $text_check_in; ?></td>
-                <td><?php echo $date; ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $text_check_out; ?></td>
-                <td><?php echo $date_out; ?></td>
-              </tr>
             </table>
           </div>
           <div class="tab-pane" id="tab-payment">
@@ -310,6 +302,9 @@
                 <tr>
                   <td class="text-left"><?php echo $column_product; ?></td>
                   <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-left"><?php echo $column_check_in; ?></td>
+                  <td class="text-left"><?php echo $column_check_out; ?></td>
+                  <td class="text-left"><?php echo $column_night; ?></td>
                   <td class="text-right"><?php echo $column_quantity; ?></td>
                   <td class="text-right"><?php echo $column_price; ?></td>
                   <td class="text-right"><?php echo $column_total; ?></td>
@@ -328,6 +323,9 @@
                     <?php } ?>
                     <?php } ?></td>
                   <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-right"><?php echo $product['check_in']; ?></td>
+                  <td class="text-right"><?php echo $product['check_out']; ?></td>
+                  <td class="text-right"><?php echo $product['night']; ?></td>
                   <td class="text-right"><?php echo $product['quantity']; ?></td>
                   <td class="text-right"><?php echo $product['price']; ?></td>
                   <td class="text-right"><?php echo $product['total']; ?></td>
@@ -344,7 +342,7 @@
                 <?php } ?>
                 <?php foreach ($totals as $totals) { ?>
                 <tr>
-                  <td colspan="4" class="text-right"><?php echo $totals['title']; ?>:</td>
+                    <td colspan="7" class="text-right"><strong><?php echo $totals['title']; ?>:</strong></td>
                   <td class="text-right"><?php echo $totals['text']; ?></td>
                 </tr>
                 <?php } ?>

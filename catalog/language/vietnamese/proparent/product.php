@@ -54,4 +54,8 @@ $_['error_captcha']     = 'Lỗi: Mã kiểm tra không chính xác!';
 $_['error_upload']      = 'Cần tải lên tập tin!';
 $_['error_filename']    = 'Tên tập tin từ 3 đến 128 kí tự!';
 $_['error_filetype']    = 'Kiểu file không hợp lệ!';
+
+//Button
+$_['button_check_rate'] = 'Kiểm tra!';
+
 ?>
