@@ -64,11 +64,11 @@ class ControllerProductHotel extends Controller {
              }
         }
         
-        if (isset($this->request->post['guest'])){
-            $this->session->data['guest']=$this->request->post['guest'];
+        if (isset($this->request->post['guestsl'])){
+            $this->session->data['guestsl']=$this->request->post['guestsl'];
         }else{
-            if (empty($this->session->data['guest'])){
-                $this->session->data['guest']= "";
+            if (empty($this->session->data['guestsl'])){
+                $this->session->data['guestsl']= "";
             }
         }
         
@@ -416,14 +416,6 @@ class ControllerProductHotel extends Controller {
             $data['address'] = $hotel_info['address'];
             $data['points'] = $hotel_info['points'];
 
-            if ($hotel_info['quantity'] <= 0) {
-                $data['stock'] = $hotel_info['stock_status'];
-            } elseif ($this->config->get('config_stock_display')) {
-                $data['stock'] = $hotel_info['quantity'];
-            } else {
-                $data['stock'] = $this->language->get('text_instock');
-            }
-
             $this->load->model('tool/image');
 
             if ($hotel_info['image']) {
@@ -461,76 +453,6 @@ class ControllerProductHotel extends Controller {
                 );
             }
 
-            if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                $data['price'] = $this->currency->format($this->tax->calculate($hotel_info['price'], $hotel_info['tax_class_id'], $this->config->get('config_tax')));
-            } else {
-                $data['price'] = false;
-            }
-
-            if ((float) $hotel_info['special']) {
-                $data['special'] = $this->currency->format($this->tax->calculate($hotel_info['special'], $hotel_info['tax_class_id'], $this->config->get('config_tax')));
-            } else {
-                $data['special'] = false;
-            }
-
-            if ($this->config->get('config_tax')) {
-                $data['tax'] = $this->currency->format((float) $hotel_info['special'] ? $hotel_info['special'] : $hotel_info['price']);
-            } else {
-                $data['tax'] = false;
-            }
-
-            $discounts = $this->model_catalog_hotel->getHotelDiscounts($this->request->get['hotel_id']);
-
-            $data['discounts'] = array();
-
-            foreach ($discounts as $discount) {
-                $data['discounts'][] = array(
-                    'quantity' => $discount['quantity'],
-                    'price' => $this->currency->format($this->tax->calculate($discount['price'], $hotel_info['tax_class_id'], $this->config->get('config_tax')))
-                );
-            }
-
-            $data['options'] = array();
-
-            foreach ($this->model_catalog_hotel->getHotelOptions($this->request->get['hotel_id']) as $option) {
-                $hotel_option_value_data = array();
-
-                foreach ($option['hotel_option_value'] as $option_value) {
-                    if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
-                        if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float) $option_value['price']) {
-                            $price = $this->currency->format($this->tax->calculate($option_value['price'], $hotel_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false));
-                        } else {
-                            $price = false;
-                        }
-
-                        $hotel_option_value_data[] = array(
-                            'hotel_option_value_id' => $option_value['hotel_option_value_id'],
-                            'option_value_id' => $option_value['option_value_id'],
-                            'name' => $option_value['name'],
-                            'image' => $this->model_tool_image->resizetoWidth($option_value['image'], 50),
-                            'price' => $price,
-                            'price_prefix' => $option_value['price_prefix']
-                        );
-                    }
-                }
-
-                $data['options'][] = array(
-                    'hotel_option_id' => $option['hotel_option_id'],
-                    'hotel_option_value' => $hotel_option_value_data,
-                    'option_id' => $option['option_id'],
-                    'name' => $option['name'],
-                    'type' => $option['type'],
-                    'value' => $option['value'],
-                    'required' => $option['required']
-                );
-            }
-
-            if ($hotel_info['minimum']) {
-                $data['minimum'] = $hotel_info['minimum'];
-            } else {
-                $data['minimum'] = 1;
-            }
-
             if ($hotel_info['maps_apir']) {
                 $data['maps_apir'] = $hotel_info['maps_apir'];
             } else {
@@ -565,53 +487,6 @@ class ControllerProductHotel extends Controller {
 
             $data['hotels'] = array();
 
-            $results = $this->model_catalog_hotel->getHotelRelated($this->request->get['hotel_id']);
-
-             foreach ($results as $result) {
-                if ($result['image']) {
-                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_related_width'));
-                } else {
-                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_related_width'));
-                }
-
-                if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                    $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $price = false;
-                }
-
-                if ((float) $result['special']) {
-                    $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $special = false;
-                }
-
-                if ($this->config->get('config_tax')) {
-                    $tax = $this->currency->format((float) $result['special'] ? $result['special'] : $result['price']);
-                } else {
-                    $tax = false;
-                }
-
-                if ($this->config->get('config_hotelreview_status')) {
-                    $rating = (int) $result['rating'];
-                } else {
-                    $rating = false;
-                }
-
-                $data['hotels'][] = array(
-                    'hotel_id' => $result['hotel_id'],
-                    'thumb' => $image,
-                    'name' => $result['name'],
-                    'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_hotel_description_length')) . '..',
-                    'short_description' => utf8_substr(strip_tags(html_entity_decode($result['short_description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_hotel_description_length')) . '..',
-                    'price' => $price,
-                    'wifi' => $wifi,
-                    'special' => $special,
-                    'tax' => $tax,
-                    'rating' => $rating,
-                    'href' => $this->url->link('product/hotel', 'hotel_id=' . $result['hotel_id'])
-                );
-            }
 
             $data['tags'] = array();
 
@@ -625,9 +500,6 @@ class ControllerProductHotel extends Controller {
                     );
                 }
             }
-
-            $data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
-            $data['recurrings'] = $this->model_catalog_hotel->getProfiles($this->request->get['hotel_id']);
 
             $this->model_catalog_hotel->updateViewed($this->request->get['hotel_id']);
 
@@ -802,18 +674,6 @@ class ControllerProductHotel extends Controller {
                     $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_category_width'));
                 }
 
-                if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                    $price = $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $price = false;
-                }
-
-                if ((float) $room['special']) {
-                    $special = $this->currency->format($this->tax->calculate($room['special'], $room['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $special = false;
-                }
-
                 if ($this->config->get('config_tax')) {
                     $tax = $this->currency->format((float) $room['special'] ? $room['special'] : $room['price']);
                 } else {
@@ -844,7 +704,7 @@ class ControllerProductHotel extends Controller {
                     ); 
                 }
 
-                if ($this->session->data['adults'] > $room['maxadults'] || $had_price == FALSE){
+                if ($had_price == FALSE){
                     continue;
                 }
 
@@ -853,11 +713,8 @@ class ControllerProductHotel extends Controller {
                     'thumb' => $image,
                     'name' => $room['name'],
                     'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-                    'price' => $price,
                     'quantity' => $room['quantity'],
                     'maxadults' => $room['maxadults'],
-                    'special' => $special,
-                    'tax' => $tax,
                     'rating' => $room['rating'],
                     'href' => $this->url->link('product/room', 'path=' . $part . '&room_id=' . $room['room_id'] . $url)
                 );
@@ -975,7 +832,9 @@ class ControllerProductHotel extends Controller {
     }
 
     public function hotelreview() {
-        $this->load->language('hotel/room');
+        $this->load->language('product/hotel');
+        
+        $this->load->language('product/room');
 
         $this->load->model('catalog/review');
 
@@ -1018,68 +877,10 @@ class ControllerProductHotel extends Controller {
         }
     }
 
-    public function getRecurringDescription() {
-        $this->language->load('hotel/hotel');
-        $this->load->model('catalog/hotel');
-
-        if (isset($this->request->post['hotel_id'])) {
-            $hotel_id = $this->request->post['hotel_id'];
-        } else {
-            $hotel_id = 0;
-        }
-
-        if (isset($this->request->post['recurring_id'])) {
-            $recurring_id = $this->request->post['recurring_id'];
-        } else {
-            $recurring_id = 0;
-        }
-
-        if (isset($this->request->post['quantity'])) {
-            $quantity = $this->request->post['quantity'];
-        } else {
-            $quantity = 1;
-        }
-
-        $hotel_info = $this->model_catalog_hotel->getHotel($hotel_id);
-        $recurring_info = $this->model_catalog_hotel->getProfile($hotel_id, $recurring_id);
-        
-        $json = array();
-
-        if ($hotel_info && $recurring_info) {
-            if (!$json) {
-                $frequencies = array(
-                    'day' => $this->language->get('text_day'),
-                    'week' => $this->language->get('text_week'),
-                    'semi_month' => $this->language->get('text_semi_month'),
-                    'month' => $this->language->get('text_month'),
-                    'year' => $this->language->get('text_year'),
-                );
-
-                if ($recurring_info['trial_status'] == 1) {
-                    $price = $this->currency->format($this->tax->calculate($recurring_info['trial_price'] * $quantity, $hotel_info['tax_class_id'], $this->config->get('config_tax')));
-                    $trial_text = sprintf($this->language->get('text_trial_description'), $price, $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
-                } else {
-                    $trial_text = '';
-                }
-
-                $price = $this->currency->format($this->tax->calculate($recurring_info['price'] * $quantity, $hotel_info['tax_class_id'], $this->config->get('config_tax')));
-
-                if ($recurring_info['duration']) {
-                    $text = $trial_text . sprintf($this->language->get('text_payment_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
-                } else {
-                    $text = $trial_text . sprintf($this->language->get('text_payment_cancel'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
-                }
-
-                $json['success'] = $text;
-            }
-        }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
-
     public function write() {
-        $this->load->language('hotel/room');
+        $this->load->language('product/room');
+        
+        $this->load->language('product/hotel');
 
         $json = array();
 

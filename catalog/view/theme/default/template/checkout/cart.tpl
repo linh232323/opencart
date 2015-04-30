@@ -64,10 +64,6 @@
                                     <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                                     <?php } ?>
                                     <?php } ?>
-                                    <?php if ($room['reward']) { ?>
-                                    <br />
-                                    <small><?php echo $room['reward']; ?></small>
-                                    <?php } ?>
                                     <?php if ($room['recurring']) { ?>
                                     <br />
                                     <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $room['recurring']; ?></small>

@@ -10,7 +10,7 @@ class ModelCheckoutOrder extends Model {
 		// Rooms
 		if (isset($data['rooms'])) {
 			foreach ($data['rooms'] as $room) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', tax = '" . (float)$room['tax'] . "', reward = '" . (int)$room['reward'] . "', check_in = '" . $room['check_in'] . "', check_out = '" . $room['check_out'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', tax = '" . (float)$room['tax'] . "', check_in = '" . $room['check_in'] . "', check_out = '" . $room['check_out'] . "'");
 	
 				$order_room_id = $this->db->getLastId();
 	
@@ -62,7 +62,7 @@ class ModelCheckoutOrder extends Model {
 		// Rooms
 		if (isset($data['rooms'])) {
 			foreach ($data['rooms'] as $room) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', tax = '" . (float)$room['tax'] . "', reward = '" . (int)$room['reward'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_room SET order_id = '" . (int)$order_id . "', room_id = '" . (int)$room['room_id'] . "', name = '" . $this->db->escape($room['name']) . "', model = '" . $this->db->escape($room['model']) . "', quantity = '" . (int)$room['quantity'] . "', price = '" . (float)$room['price'] . "', total = '" . (float)$room['total'] . "', check_in = '" . $room['check_in'] . "', check_out = '" . $room['check_out'] . "', tax = '" . (float)$room['tax'] . "'");
 	
 				$order_room_id = $this->db->getLastId();
 	

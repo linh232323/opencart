@@ -49,7 +49,7 @@ class ModelCheckoutCoupon extends Model {
 			$room_data = array();
 
 			if ($coupon_room_data || $coupon_category_data) {
-				foreach ($this->cart->getRooms() as $room) {
+				foreach ($this->cart->getProducts() as $room) {
 					if (in_array($room['room_id'], $coupon_room_data)) {
 						$room_data[] = $room['room_id'];
 

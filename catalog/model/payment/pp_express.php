@@ -154,7 +154,7 @@ class ModelPaymentPPExpress extends Model {
 		$i = 0;
 		$item_total = 0;
 
-		foreach ($this->cart->getrooms() as $item) {
+		foreach ($this->cart->getProducts() as $item) {
 			$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
 
 			$option_count = 0;
@@ -274,7 +274,7 @@ class ModelPaymentPPExpress extends Model {
 
 		$z = 0;
 
-		$recurring_rooms = $this->cart->getRecurringrooms();
+		$recurring_rooms = $this->cart->getRecurringProducts();
 
 		if ($recurring_rooms) {
 			$this->language->load('payment/pp_express');

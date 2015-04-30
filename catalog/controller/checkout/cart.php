@@ -17,7 +17,7 @@ class ControllerCheckoutCart extends Controller {
 			'text' => $this->language->get('heading_title')
 		);
 
-		if ($this->cart->hasRooms() || !empty($this->session->data['vouchers'])) {
+		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			$data['heading_title'] = $this->language->get('heading_title');
 
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
@@ -71,20 +71,20 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
+			$this->load->model('catalog/room');
 
 			$data['rooms'] = array();
 
-			$rooms = $this->cart->getRooms();
-
+			$rooms = $this->cart->getProducts();
 			foreach ($rooms as $room) {
 				$room_total = 0;
-
+                                
 				foreach ($rooms as $room_2) {
 					if ($room_2['room_id'] == $room['room_id']) {
 						$room_total += $room_2['quantity'];
 					}
 				}
-
+                                
 				if ($room['minimum'] > $room_total) {
 					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $room['name'], $room['minimum']);
 				}
@@ -94,7 +94,25 @@ class ControllerCheckoutCart extends Controller {
 				} else {
 					$image = '';
 				}
-
+                                
+                                foreach ($room['option'] as $date) {
+                                    if($date['option_id']=13){
+                                        $date_in = date_create($date['value']);
+                                    }
+                                    if($date['option_id']=14){
+                                       $date_out = date_create($date['value']);
+                                    }                                    
+                                }
+                                
+                                $check_in = date_format($date_in, 'Ymd');
+                                $check_out = date_format($date_out, 'Ymd');
+    
+                                $stock = $this->model_catalog_room->getStock($room['room_id'],$check_in,$check_out);
+                                $room_stock = $this->model_catalog_room->getRoom($room['room_id']);
+                                $quantity = $room_stock['quantity'] - $stock;
+                                if($quantity < $room['quantity']){
+                                    $data['error_warning'] = $this->language->get('error_stock');
+                                }
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {
@@ -157,6 +175,8 @@ class ControllerCheckoutCart extends Controller {
 					'thumb'     => $image,
 					'name'      => $room['name'],
 					'model'     => $room['model'],
+					'check_in'  => $room['check_in'],
+					'check_out' => $room['check_out'],
 					'option'    => $option_data,
 					'recurring' => $recurring,
 					'quantity'  => $room['quantity'],
@@ -380,7 +400,7 @@ class ControllerCheckoutCart extends Controller {
 					array_multisort($sort_order, SORT_ASC, $total_data);
 				}
 
-				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countRooms() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 			} else {
 				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/room', 'room_id=' . $this->request->post['room_id']));
 			}
@@ -469,7 +489,7 @@ class ControllerCheckoutCart extends Controller {
 				array_multisort($sort_order, SORT_ASC, $total_data);
 			}
 
-			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countRooms() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

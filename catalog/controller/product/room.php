@@ -201,10 +201,10 @@ class ControllerProductRoom extends Controller {
                      $price = $value['room_price_gross'];
                      $price_session = $value['room_price_gross'];
                 }else{
-                         $price=0;
+                     $price=0;
                 }
-            }
             $total += $price;
+            }
             $datenext += 3600*24;
         }
         $cost = $this->currency->format($this->tax->calculate($total, $room_info['tax_class_id'], $this->config->get('config_tax')));
@@ -667,10 +667,10 @@ class ControllerProductRoom extends Controller {
 
         $data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/room/review.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/room/review.tpl', $data));
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/review.tpl')) {
+            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/review.tpl', $data));
         } else {
-            $this->response->setOutput($this->load->view('default/template/room/review.tpl', $data));
+            $this->response->setOutput($this->load->view('default/template/product/review.tpl', $data));
         }
     }
 

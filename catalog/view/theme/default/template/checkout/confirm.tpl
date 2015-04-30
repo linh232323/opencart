@@ -5,9 +5,11 @@
       <tr>
         <td class="text-left"><?php echo $column_name; ?></td>
         <td class="text-left"><?php echo $column_model; ?></td>
+        <td class="text-left"><?php echo $column_check_in; ?></td>
+        <td class="text-left"><?php echo $column_check_out; ?></td>
+        <td class="text-right"><?php echo $column_night; ?></td>
         <td class="text-right"><?php echo $column_quantity; ?></td>
         <td class="text-right"><?php echo $column_price; ?></td>
-        <td class="text-right"><?php echo $column_night; ?></td>
         <td class="text-right"><?php echo $column_total; ?></td>
       </tr>
     </thead>
@@ -24,9 +26,11 @@
           <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $room['recurring']; ?></small>
           <?php } ?></td>
         <td class="text-left"><?php echo $room['model']; ?></td>
+        <td class="text-left"><?php echo $room['check_in']; ?></td>
+        <td class="text-left"><?php echo $room['check_out']; ?></td>
+        <td class="text-right"><?php echo $room['night']; ?></td>
         <td class="text-right"><?php echo $room['quantity']; ?></td>
         <td class="text-right"><?php echo $room['price']; ?></td>
-        <td class="text-right"><?php echo $room['night']; ?></td>
         <td class="text-right"><?php echo $room['total']; ?></td>
       </tr>
       <?php } ?>
@@ -43,7 +47,7 @@
     <tfoot>
       <?php foreach ($totals as $total) { ?>
       <tr>
-        <td colspan="5" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
+        <td colspan="7" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
         <td class="text-right"><?php echo $total['text']; ?></td>
       </tr>
       <?php } ?>

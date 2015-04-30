@@ -30,12 +30,12 @@ class ControllerCheckoutConfirm extends Controller {
 		}
 
 		// Validate cart has rooms and has stock.
-		if ((!$this->cart->hasrooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$redirect = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$rooms = $this->cart->getrooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;
@@ -196,7 +196,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$order_data['rooms'] = array();
 
-			foreach ($this->cart->getrooms() as $room) {
+			foreach ($this->cart->getProducts() as $room) {
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {
@@ -210,21 +210,24 @@ class ControllerCheckoutConfirm extends Controller {
 						'type'                    => $option['type']
 					);
 				}
-
+                                
+                                $date_in = date_create($room['check_in']);
+                                $check_in = date_format($date_in,"Y/m/d");
+                                $date_out = date_create($room['check_out']);
+                                $check_out = date_format($date_out,"Y/m/d");
+                                
 				$order_data['rooms'][] = array(
 					'room_id' => $room['room_id'],
 					'name'       => $room['name'],
 					'model'      => $room['model'],
 					'option'     => $option_data,
-					'download'   => $room['download'],
 					'quantity'   => $room['quantity'],
 					'subtract'   => $room['subtract'],
 					'price'      => $room['price'],
 					'total'      => $room['total'],
 					'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
-					'reward'     => $room['reward'],
-					'check_in'   => $room['check_in'],
-					'check_out'  => $room['check_out']
+					'check_in'   => $check_in,
+					'check_out'  => $check_out
 				);
 			}
 
@@ -320,6 +323,8 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$data['column_name'] = $this->language->get('column_name');
 			$data['column_model'] = $this->language->get('column_model');
+			$data['column_check_in'] = $this->language->get('column_check_in');
+			$data['column_check_out'] = $this->language->get('column_check_out');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_night'] = $this->language->get('column_night');
@@ -328,8 +333,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->load->model('tool/upload');
 
 			$data['rooms'] = array();
-
-			foreach ($this->cart->getrooms() as $room) {
+                        
+			foreach ($this->cart->getProducts() as $room) {
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {
@@ -347,6 +352,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 					$option_data[] = array(
 						'name'  => $option['name'],
+						'option_id'  => $option['option_id'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					);
 				}
@@ -372,7 +378,12 @@ class ControllerCheckoutConfirm extends Controller {
 						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($room['recurring']['price'] * $room['quantity'], $room['tax_class_id'], $this->config->get('config_tax'))), $room['recurring']['cycle'], $frequencies[$room['recurring']['frequency']], $room['recurring']['duration']);
 					}
 				}
-
+                                
+                                $date_in = date_create($room['check_in']);
+                                $check_in = date_format($date_in,"Y/m/d");
+                                $date_out = date_create($room['check_out']);
+                                $check_out = date_format($date_out,"Y/m/d");
+                                
 				$data['rooms'][] = array(
 					'key'        => $room['key'],
 					'room_id' => $room['room_id'],
@@ -383,6 +394,8 @@ class ControllerCheckoutConfirm extends Controller {
 					'quantity'   => $room['quantity'],
 					'subtract'   => $room['subtract'],
 					'night'      => $room['night'],
+					'check_in'   => $check_in,
+					'check_out'  => $check_out,
 					'price'      => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax'))),
 					'total'      => $this->currency->format($this->tax->calculate($room['price'], $room['tax_class_id'], $this->config->get('config_tax')) * $room['quantity'] * $room['night']),
 					'href'       => $this->url->link('product/room', 'room_id=' . $room['room_id']),

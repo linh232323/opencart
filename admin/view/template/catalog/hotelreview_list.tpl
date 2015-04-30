@@ -105,20 +105,20 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($Hotelreviews) { ?>
-                <?php foreach ($Hotelreviews as $Hotelreview) { ?>
+                <?php if ($hotelreviews) { ?>
+                <?php foreach ($hotelreviews as $hotelreview) { ?>
                 <tr>
-                  <td class="text-center"><?php if (in_array($Hotelreview['Hotelreview_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $Hotelreview['Hotelreview_id']; ?>" checked="checked" />
+                  <td class="text-center"><?php if (in_array($hotelreview['hotelreview_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $hotelreview['hotelreview_id']; ?>" checked="checked" />
                     <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $Hotelreview['Hotelreview_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="<?php echo $hotelreview['hotelreview_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $Hotelreview['name']; ?></td>
-                  <td class="text-left"><?php echo $Hotelreview['author']; ?></td>
-                  <td class="text-right"><?php echo $Hotelreview['rating']; ?></td>
-                  <td class="text-left"><?php echo $Hotelreview['status']; ?></td>
-                  <td class="text-left"><?php echo $Hotelreview['date_added']; ?></td>
-                  <td class="text-right"><a href="<?php echo $Hotelreview['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left"><?php echo $hotelreview['name']; ?></td>
+                  <td class="text-left"><?php echo $hotelreview['author']; ?></td>
+                  <td class="text-right"><?php echo $hotelreview['rating']; ?></td>
+                  <td class="text-left"><?php echo $hotelreview['status']; ?></td>
+                  <td class="text-left"><?php echo $hotelreview['date_added']; ?></td>
+                  <td class="text-right"><a href="<?php echo $hotelreview['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -139,7 +139,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=catalog/Hotelreview&token=<?php echo $token; ?>';
+	url = 'index.php?route=catalog/hotelreview&token=<?php echo $token; ?>';
 	
 	var filter_hotel = $('input[name=\'filter_hotel\']').val();
 	

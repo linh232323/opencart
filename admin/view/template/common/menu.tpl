@@ -5,6 +5,7 @@
       <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
       <li><a href="<?php echo $room; ?>"><?php echo $text_room; ?></a></li>
       <li><a href="<?php echo $hotel; ?>"><?php echo $text_hotel; ?></a></li>
+      <li><a href="<?php echo $tour; ?>"><?php echo $text_tour; ?></a></li>
       <li><a href="<?php echo $recurring; ?>"><?php echo $text_recurring; ?></a></li>
       <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
       <li><a class="parent"><?php echo $text_attribute; ?></a>

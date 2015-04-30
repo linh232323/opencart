@@ -34,14 +34,6 @@ class ControllerCatalogHotel extends Controller {
 				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
-
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -96,14 +88,6 @@ class ControllerCatalogHotel extends Controller {
                                         $url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
                                 }
 
-                                if (isset($this->request->get['filter_price'])) {
-                                        $url .= '&filter_price=' . $this->request->get['filter_price'];
-                                }
-
-                                if (isset($this->request->get['filter_quantity'])) {
-                                        $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-                                }
-
                                 if (isset($this->request->get['filter_status'])) {
                                         $url .= '&filter_status=' . $this->request->get['filter_status'];
                                 }
@@ -152,14 +136,6 @@ class ControllerCatalogHotel extends Controller {
 				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
-
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -206,14 +182,6 @@ class ControllerCatalogHotel extends Controller {
 				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
-
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -256,18 +224,6 @@ class ControllerCatalogHotel extends Controller {
 			$filter_model = null;
 		}
 
-		if (isset($this->request->get['filter_price'])) {
-			$filter_price = $this->request->get['filter_price'];
-		} else {
-			$filter_price = null;
-		}
-
-		if (isset($this->request->get['filter_quantity'])) {
-			$filter_quantity = $this->request->get['filter_quantity'];
-		} else {
-			$filter_quantity = null;
-		}
-
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
@@ -300,14 +256,6 @@ class ControllerCatalogHotel extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
-		}
-
-		if (isset($this->request->get['filter_quantity'])) {
-			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -347,8 +295,6 @@ class ControllerCatalogHotel extends Controller {
 		$filter_data = array(
 			'filter_name'	  => $filter_name,
 			'filter_model'	  => $filter_model,
-			'filter_price'	  => $filter_price,
-			'filter_quantity' => $filter_quantity,
 			'filter_status'   => $filter_status,
 			'filter_user_id'  => $user_id,
 			'sort'            => $sort,
@@ -370,26 +316,11 @@ class ControllerCatalogHotel extends Controller {
 				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
 			}
 
-			$special = false;
-
-			$hotel_specials = $this->model_catalog_hotel->getHotelSpecials($result['hotel_id']);
-
-			foreach ($hotel_specials  as $hotel_special) {
-				if (($hotel_special['date_start'] == '0000-00-00' || strtotime($hotel_special['date_start']) < time()) && ($hotel_special['date_end'] == '0000-00-00' || strtotime($hotel_special['date_end']) > time())) {
-					$special = $hotel_special['price'];
-
-					break;
-				}
-			}
-
 			$data['hotels'][] = array(
 				'hotel_id' => $result['hotel_id'],
 				'image'      => $image,
 				'name'       => $result['name'],
 				'model'      => $result['model'],
-				'price'      => $result['price'],
-				'special'    => $special,
-				'quantity'   => $result['quantity'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/hotel/edit', 'token=' . $this->session->data['token'] . '&hotel_id=' . $result['hotel_id'] . $url, 'SSL')
 			);
@@ -406,15 +337,11 @@ class ControllerCatalogHotel extends Controller {
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');
-		$data['column_price'] = $this->language->get('column_price');
-		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_price'] = $this->language->get('entry_price');
-		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_copy'] = $this->language->get('button_copy');
@@ -455,14 +382,6 @@ class ControllerCatalogHotel extends Controller {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
-		}
-
-		if (isset($this->request->get['filter_quantity'])) {
-			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-		}
-
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -479,8 +398,6 @@ class ControllerCatalogHotel extends Controller {
 
 		$data['sort_name'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
 		$data['sort_model'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
-		$data['sort_price'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=p.price' . $url, 'SSL');
-		$data['sort_quantity'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=p.quantity' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
 		$data['sort_order'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
 
@@ -493,15 +410,6 @@ class ControllerCatalogHotel extends Controller {
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
-		}
-
-		if (isset($this->request->get['filter_quantity'])) {
-			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-		}
-
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -526,8 +434,6 @@ class ControllerCatalogHotel extends Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
-		$data['filter_price'] = $filter_price;
-		$data['filter_quantity'] = $filter_quantity;
 		$data['filter_status'] = $filter_status;
 
 		$data['sort'] = $sort;
@@ -568,31 +474,8 @@ class ControllerCatalogHotel extends Controller {
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$data['entry_keyword'] = $this->language->get('entry_keyword');
 		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_sku'] = $this->language->get('entry_sku');
-		$data['entry_upc'] = $this->language->get('entry_upc');
-		$data['entry_ean'] = $this->language->get('entry_ean');
-		$data['entry_jan'] = $this->language->get('entry_jan');
-		$data['entry_isbn'] = $this->language->get('entry_isbn');
-		$data['entry_mpn'] = $this->language->get('entry_mpn');
-		$data['entry_location'] = $this->language->get('entry_location');
-		$data['entry_minimum'] = $this->language->get('entry_minimum');
-		$data['entry_shipping'] = $this->language->get('entry_shipping');
 		$data['entry_star'] = $this->language->get('entry_star');
 		$data['entry_date_available'] = $this->language->get('entry_date_available');
-		$data['entry_quantity'] = $this->language->get('entry_quantity');
-		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
-		$data['entry_price'] = $this->language->get('entry_price');
-		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$data['entry_points'] = $this->language->get('entry_points');
-		$data['entry_option_points'] = $this->language->get('entry_option_points');
-		$data['entry_subtract'] = $this->language->get('entry_subtract');
-		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
-		$data['entry_weight'] = $this->language->get('entry_weight');
-		$data['entry_dimension'] = $this->language->get('entry_dimension');
-		$data['entry_length_class'] = $this->language->get('entry_length_class');
-		$data['entry_length'] = $this->language->get('entry_length');
-		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
@@ -618,45 +501,20 @@ class ControllerCatalogHotel extends Controller {
 		$data['entry_maps_api'] = $this->language->get('entry_maps_api');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
-		$data['help_sku'] = $this->language->get('help_sku');
-		$data['help_upc'] = $this->language->get('help_upc');
-		$data['help_ean'] = $this->language->get('help_ean');
-		$data['help_jan'] = $this->language->get('help_jan');
-		$data['help_isbn'] = $this->language->get('help_isbn');
-		$data['help_mpn'] = $this->language->get('help_mpn');
-		$data['help_minimum'] = $this->language->get('help_minimum');
 		$data['help_manufacturer'] = $this->language->get('help_manufacturer');
-		$data['help_stock_status'] = $this->language->get('help_stock_status');
-		$data['help_points'] = $this->language->get('help_points');
 		$data['help_category'] = $this->language->get('help_category');
-		$data['help_filter'] = $this->language->get('help_filter');
-		$data['help_download'] = $this->language->get('help_download');
-		$data['help_related'] = $this->language->get('help_related');
 		$data['help_tag'] = $this->language->get('help_tag');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_attribute_add'] = $this->language->get('button_attribute_add');
-		$data['button_option_add'] = $this->language->get('button_option_add');
-		$data['button_option_value_add'] = $this->language->get('button_option_value_add');
-		$data['button_discount_add'] = $this->language->get('button_discount_add');
-		$data['button_special_add'] = $this->language->get('button_special_add');
 		$data['button_image_add'] = $this->language->get('button_image_add');
 		$data['button_remove'] = $this->language->get('button_remove');
-		$data['button_recurring_add'] = $this->language->get('button_recurring_add');
-
+                
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
-		$data['tab_option'] = $this->language->get('tab_option');
-		$data['tab_recurring'] = $this->language->get('tab_recurring');
-		$data['tab_discount'] = $this->language->get('tab_discount');
-		$data['tab_special'] = $this->language->get('tab_special');
 		$data['tab_image'] = $this->language->get('tab_image');
-		$data['tab_links'] = $this->language->get('tab_links');
-		$data['tab_reward'] = $this->language->get('tab_reward');
-		$data['tab_design'] = $this->language->get('tab_design');
-		$data['tab_openbay'] = $this->language->get('tab_openbay');
 		$data['tab_maps'] = $this->language->get('tab_maps');
                 
                 $this->load->model('user/user');
@@ -723,14 +581,6 @@ class ControllerCatalogHotel extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
-		}
-
-		if (isset($this->request->get['filter_quantity'])) {
-			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -822,54 +672,6 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['address'] = '';
 		}
-
-		if (isset($this->request->post['sku'])) {
-			$data['sku'] = $this->request->post['sku'];
-		} elseif (!empty($hotel_info)) {
-			$data['sku'] = $hotel_info['sku'];
-		} else {
-			$data['sku'] = '';
-		}
-
-		if (isset($this->request->post['upc'])) {
-			$data['upc'] = $this->request->post['upc'];
-		} elseif (!empty($hotel_info)) {
-			$data['upc'] = $hotel_info['upc'];
-		} else {
-			$data['upc'] = '';
-		}
-
-		if (isset($this->request->post['ean'])) {
-			$data['ean'] = $this->request->post['ean'];
-		} elseif (!empty($hotel_info)) {
-			$data['ean'] = $hotel_info['ean'];
-		} else {
-			$data['ean'] = '';
-		}
-
-		if (isset($this->request->post['jan'])) {
-			$data['jan'] = $this->request->post['jan'];
-		} elseif (!empty($hotel_info)) {
-			$data['jan'] = $hotel_info['jan'];
-		} else {
-			$data['jan'] = '';
-		}
-
-		if (isset($this->request->post['isbn'])) {
-			$data['isbn'] = $this->request->post['isbn'];
-		} elseif (!empty($hotel_info)) {
-			$data['isbn'] = $hotel_info['isbn'];
-		} else {
-			$data['isbn'] = '';
-		}
-
-		if (isset($this->request->post['mpn'])) {
-			$data['mpn'] = $this->request->post['mpn'];
-		} elseif (!empty($hotel_info)) {
-			$data['mpn'] = $hotel_info['mpn'];
-		} else {
-			$data['mpn'] = '';
-		}
                 
 		if (isset($this->request->post['wifi'])) {
 			$data['wifi'] = $this->request->post['wifi'];
@@ -878,15 +680,6 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['wifi'] = 0;
 		}
-
-		if (isset($this->request->post['location'])) {
-			$data['location'] = $this->request->post['location'];
-		} elseif (!empty($hotel_info)) {
-			$data['location'] = $hotel_info['location'];
-		} else {
-			$data['location'] = '';
-		}
-
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -906,15 +699,6 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['keyword'] = '';
 		}
-
-		if (isset($this->request->post['shipping'])) {
-			$data['shipping'] = $this->request->post['shipping'];
-		} elseif (!empty($hotel_info)) {
-			$data['shipping'] = $hotel_info['shipping'];
-		} else {
-			$data['shipping'] = 1;
-		}
-                
 		if (isset($this->request->post['star'])) {
 			$data['star'] = $this->request->post['star'];
 		} elseif (!empty($hotel_info)) {
@@ -922,69 +706,13 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['star'] = 0;
 		}
-
-		if (isset($this->request->post['price'])) {
-			$data['price'] = $this->request->post['price'];
-		} elseif (!empty($hotel_info)) {
-			$data['price'] = $hotel_info['price'];
-		} else {
-			$data['price'] = '';
-		}
-
-		$this->load->model('catalog/recurring');
-
-		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
-
-		if (isset($this->request->post['hotel_recurrings'])) {
-			$data['hotel_recurrings'] = $this->request->post['hotel_recurrings'];
-		} elseif (!empty($hotel_info)) {
-			$data['hotel_recurrings'] = $this->model_catalog_hotel->getRecurrings($hotel_info['hotel_id']);
-		} else {
-			$data['hotel_recurrings'] = array();
-		}
-
-		$this->load->model('localisation/tax_class');
-
-		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-
-		if (isset($this->request->post['tax_class_id'])) {
-			$data['tax_class_id'] = $this->request->post['tax_class_id'];
-		} elseif (!empty($hotel_info)) {
-			$data['tax_class_id'] = $hotel_info['tax_class_id'];
-		} else {
-			$data['tax_class_id'] = 0;
-		}
-
+                
 		if (isset($this->request->post['date_available'])) {
 			$data['date_available'] = $this->request->post['date_available'];
 		} elseif (!empty($hotel_info)) {
 			$data['date_available'] = ($hotel_info['date_available'] != '0000-00-00') ? $hotel_info['date_available'] : '';
 		} else {
 			$data['date_available'] = date('Y-m-d');
-		}
-
-		if (isset($this->request->post['quantity'])) {
-			$data['quantity'] = $this->request->post['quantity'];
-		} elseif (!empty($hotel_info)) {
-			$data['quantity'] = $hotel_info['quantity'];
-		} else {
-			$data['quantity'] = 1;
-		}
-
-		if (isset($this->request->post['minimum'])) {
-			$data['minimum'] = $this->request->post['minimum'];
-		} elseif (!empty($hotel_info)) {
-			$data['minimum'] = $hotel_info['minimum'];
-		} else {
-			$data['minimum'] = 1;
-		}
-
-		if (isset($this->request->post['subtract'])) {
-			$data['subtract'] = $this->request->post['subtract'];
-		} elseif (!empty($hotel_info)) {
-			$data['subtract'] = $hotel_info['subtract'];
-		} else {
-			$data['subtract'] = 1;
 		}
 
 		if (isset($this->request->post['sort_order'])) {
@@ -995,17 +723,6 @@ class ControllerCatalogHotel extends Controller {
 			$data['sort_order'] = 1;
 		}
 
-		$this->load->model('localisation/stock_status');
-
-		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
-
-		if (isset($this->request->post['stock_status_id'])) {
-			$data['stock_status_id'] = $this->request->post['stock_status_id'];
-		} elseif (!empty($hotel_info)) {
-			$data['stock_status_id'] = $hotel_info['stock_status_id'];
-		} else {
-			$data['stock_status_id'] = 0;
-		}
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
@@ -1014,63 +731,7 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-
-		if (isset($this->request->post['weight'])) {
-			$data['weight'] = $this->request->post['weight'];
-		} elseif (!empty($hotel_info)) {
-			$data['weight'] = $hotel_info['weight'];
-		} else {
-			$data['weight'] = '';
-		}
-
-		$this->load->model('localisation/weight_class');
-
-		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
-
-		if (isset($this->request->post['weight_class_id'])) {
-			$data['weight_class_id'] = $this->request->post['weight_class_id'];
-		} elseif (!empty($hotel_info)) {
-			$data['weight_class_id'] = $hotel_info['weight_class_id'];
-		} else {
-			$data['weight_class_id'] = $this->config->get('config_weight_class_id');
-		}
-
-		if (isset($this->request->post['length'])) {
-			$data['length'] = $this->request->post['length'];
-		} elseif (!empty($hotel_info)) {
-			$data['length'] = $hotel_info['length'];
-		} else {
-			$data['length'] = '';
-		}
-
-		if (isset($this->request->post['width'])) {
-			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($hotel_info)) {
-			$data['width'] = $hotel_info['width'];
-		} else {
-			$data['width'] = '';
-		}
-
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($hotel_info)) {
-			$data['height'] = $hotel_info['height'];
-		} else {
-			$data['height'] = '';
-		}
-
-		$this->load->model('localisation/length_class');
-
-		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
-
-		if (isset($this->request->post['length_class_id'])) {
-			$data['length_class_id'] = $this->request->post['length_class_id'];
-		} elseif (!empty($hotel_info)) {
-			$data['length_class_id'] = $hotel_info['length_class_id'];
-		} else {
-			$data['length_class_id'] = $this->config->get('config_length_class_id');
-		}
-
+                
 		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->post['manufacturer_id'])) {
@@ -1457,6 +1118,13 @@ class ControllerCatalogHotel extends Controller {
 	}
 
 	public function autocomplete() {
+              
+                $this->load->model('user/user');
+                 
+                $user_info = $this->model_user_user->getUser($this->user->getId());
+                
+                $user_id = $user_info['user_group_id'];
+               
 		$json = array();
 
 		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_model'])) {
@@ -1484,6 +1152,7 @@ class ControllerCatalogHotel extends Controller {
 			$filter_data = array(
 				'filter_name'  => $filter_name,
 				'filter_model' => $filter_model,
+				'filter_user_id' => $user_id,
 				'start'        => 0,
 				'limit'        => $limit
 			);

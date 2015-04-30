@@ -151,8 +151,7 @@ class ControllerSaleOrder extends Controller {
                 if($check == TRUE){
                     $this->getForm();
                 }else{
-                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
-                    exit;
+                    $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
                 }
 	}
 
@@ -197,8 +196,7 @@ class ControllerSaleOrder extends Controller {
                 }
                 
                 if($check == FALSE){
-                    header("Location: index.php?route=sale/order&token=".$this->session->data['token']);
-                    exit;
+                    $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
                 }
 		unset($this->session->data['cookie']);
 

@@ -41,12 +41,12 @@ class ControllerApiOrder extends Controller {
 			}
 
 			// Cart
-			if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 				$json['error'] = $this->language->get('error_stock');
 			}
 
 			// Validate minimum quantity requirements.
-			$rooms = $this->cart->getRooms();
+			$rooms = $this->cart->getProducts();
 
 			foreach ($rooms as $room) {
 				$room_total = 0;
@@ -158,7 +158,7 @@ class ControllerApiOrder extends Controller {
 				// Rooms
 				$order_data['rooms'] = array();
 
-				foreach ($this->cart->getRooms() as $room) {
+				foreach ($this->cart->getProducts() as $room) {
 					$option_data = array();
 
 					foreach ($room['option'] as $option) {
@@ -171,6 +171,20 @@ class ControllerApiOrder extends Controller {
 							'value'                   => $option['value'],
 							'type'                    => $option['type']
 						);
+                                                if($option['option_id'] == 14){
+                                                    $date_out = date_create($option['value']);
+                                                    $check_out = date_format($date_out,"Y/m/d");
+                                                }
+                                                if($option['option_id'] == 13){
+                                                    $date_in = date_create($option['value']);
+                                                    $check_in = date_format($date_in,"Y/m/d");
+                                                }
+                                                if($option['option_id'] == 15){
+                                                    $price = $option['value'];
+                                                }
+                                                if($option['option_id'] == 16){
+                                                    $total = $option['value'];
+                                                }
 					}
 
 					$order_data['rooms'][] = array(
@@ -181,10 +195,12 @@ class ControllerApiOrder extends Controller {
 						'download'   => $room['download'],
 						'quantity'   => $room['quantity'],
 						'subtract'   => $room['subtract'],
-						'price'      => $room['price'],
-						'total'      => $room['total'],
+						'price'      => $price,
+						'total'      => $total*$room['quantity'],
 						'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
-						'reward'     => $room['reward']
+						'reward'     => $room['reward'],
+						'check_in'   => $check_in,
+						'check_out'  => $check_out
 					);
 				}
 
@@ -373,12 +389,12 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Cart
-				if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+				if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 					$json['error'] = $this->language->get('error_stock');
 				}
 
 				// Validate minimum quantity requirements.
-				$rooms = $this->cart->getRooms();
+				$rooms = $this->cart->getProducts();
 
 				foreach ($rooms as $room) {
 					$room_total = 0;
@@ -489,8 +505,9 @@ class ControllerApiOrder extends Controller {
 
 					// Rooms
 					$order_data['rooms'] = array();
-
-					foreach ($this->cart->getRooms() as $room) {
+                                        $total_all =0;
+					foreach ($this->cart->getProducts() as $room) {
+                                           
 						$option_data = array();
 
 						foreach ($room['option'] as $option) {
@@ -503,6 +520,20 @@ class ControllerApiOrder extends Controller {
 								'value'                   => $option['value'],
 								'type'                    => $option['type']
 							);
+                                                        if($option['option_id'] == 15){
+                                                            $price = $option['value'];
+                                                        }
+                                                        if($option['option_id'] == 14){
+                                                            $date_out = date_create($option['value']);
+                                                            $check_out = date_format($date_out,"Y/m/d");
+                                                        }
+                                                        if($option['option_id'] == 13){
+                                                            $date_in = date_create($option['value']);
+                                                            $check_in = date_format($date_in,"Y/m/d");
+                                                        }
+                                                        if($option['option_id'] == 16){
+                                                            $total = $option['value'];
+                                                        }
 						}
 
 						$order_data['rooms'][] = array(
@@ -513,13 +544,16 @@ class ControllerApiOrder extends Controller {
 							'download'   => $room['download'],
 							'quantity'   => $room['quantity'],
 							'subtract'   => $room['subtract'],
-							'price'      => $room['price'],
-							'total'      => $room['total'],
+							'price'      => $price,
+							'total'      => $total*$room['quantity'],
 							'tax'        => $this->tax->getTax($room['price'], $room['tax_class_id']),
-							'reward'     => $room['reward']
+							'reward'     => $room['reward'],
+							'check_in'   => $check_in,
+							'check_out'  => $check_out
 						);
+                                                $total_all += $total*$room['quantity'];
 					}
-
+                                        
 					// Gift Voucher
 					$order_data['vouchers'] = array();
 
@@ -543,7 +577,7 @@ class ControllerApiOrder extends Controller {
 					$this->load->model('extension/extension');
 
 					$order_data['totals'] = array();
-					$total = 0;
+					$total_price = 0;
 					$taxes = $this->cart->getTaxes();
 
 					$sort_order = array();
@@ -560,7 +594,7 @@ class ControllerApiOrder extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('total/' . $result['code']);
 
-							$this->{'model_total_' . $result['code']}->getTotal($order_data['totals'], $total, $taxes);
+							$this->{'model_total_' . $result['code']}->getTotal($order_data['totals'], $total_price, $taxes);
 						}
 					}
 
@@ -578,7 +612,7 @@ class ControllerApiOrder extends Controller {
 						$order_data['comment'] = '';
 					}
 
-					$order_data['total'] = $total;
+					$order_data['total'] = $total_all;
 
 					if (isset($this->request->post['affiliate_id'])) {
 						$subtotal = $this->cart->getSubTotal();

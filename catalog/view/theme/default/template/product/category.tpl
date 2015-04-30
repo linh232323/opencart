@@ -55,10 +55,10 @@
                             <div class="row">
                                 <div class="col-lg-8 form-group" id="guest">
                                     <label class="control-label" for="input-option217"><?php echo $text_label_guest; ?></label>
-                                    <select name="guest" id = "adults" class="form-control">
-                                        <option value="1" <?php if ($_SESSION['guest'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
-                                        <option value="2"<?php if ($_SESSION['guest'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
-                                        <option value="" <?php if ($_SESSION['guest'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
+                                    <select name="guestsl" id = "adults" class="form-control">
+                                        <option value="1" <?php if ($_SESSION['guestsl'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
+                                        <option value="2"<?php if ($_SESSION['guestsl'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
+                                        <option value="" <?php if ($_SESSION['guestsl'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
                                     </select>
                                 </div>
                             </div>
@@ -191,7 +191,6 @@
                 <br />
                 <div class="row">
                     <?php foreach ($hotels as $hotel) { ?>
-                    <?php if (isset($hotel[0])) { ?>
                     <div id="room" class="room-layout room-list col-xs-12">
                         <div class="room-thumb">
                             <div class="image"><a href="<?php echo $hotel['hrefp']; ?>"><img src="<?php echo $hotel['thumbp']; ?>" alt="<?php echo $hotel['namep']; ?>" title="<?php echo $hotel['namep']; ?>" class="img-responsive" /></a></div>
@@ -237,7 +236,7 @@
                                         <?php } ?>
                                     </h4>
                                     <div>
-                                        <?php echo $hotel['Hotelreviews']; ?>
+                                        <?php echo $hotel['hotelreviews']; ?>
                                     </div>
                                 </div>
                                 <div class="col-xs-9"><strong><?php if ($hotel['wifi'] == 1) { ?>
@@ -292,7 +291,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
                     <?php } ?>
                 </div>
                 <div class="row">

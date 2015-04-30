@@ -36,7 +36,7 @@ $_['column_night']             = 'Night';
 $_['column_total']             = 'Total';
 
 // Error
-$_['error_stock']              = 'rooms marked with *** are not available in the desired quantity or not in stock!';
+$_['error_stock']              = 'Rooms marked with *** are not available in the desired quantity !';
 $_['error_minimum']            = 'Minimum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
 $_['error_room']            = 'Warning: There are no rooms in your cart!';

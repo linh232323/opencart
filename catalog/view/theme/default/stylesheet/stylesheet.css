@@ -79,6 +79,16 @@ div.required .control-label:before {
 	background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
 	background-repeat: repeat-x;
 }
+/* header */
+header{
+    background: -moz-linear-gradient(top,  rgba(168,168,168,0.65) 0%, rgba(25,25,25,0) 84%, rgba(0,0,0,0) 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(168,168,168,0.65)), color-stop(84%,rgba(25,25,25,0)), color-stop(99%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(168,168,168,0.65) 0%,rgba(25,25,25,0) 84%,rgba(0,0,0,0) 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(168,168,168,0.65) 0%,rgba(25,25,25,0) 84%,rgba(0,0,0,0) 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(168,168,168,0.65) 0%,rgba(25,25,25,0) 84%,rgba(0,0,0,0) 99%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(168,168,168,0.65) 0%,rgba(25,25,25,0) 84%,rgba(0,0,0,0) 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6a8a8a8', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+}
 /* top */
 #top {
 	background-color: #fff;
@@ -129,26 +139,30 @@ div.required .control-label:before {
 }
 .nav .list-inline li{
     padding: 10px;
-    padding-bottom: 35px;
-    padding-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .nav .list-inline li ul li{
     padding: 5px
 }
 .header-language{
-    border-left: 1px solid #d6d6d6;
 }
 .header-account{
-    border-right: 1px solid #d6d6d6;
-    border-left: 1px solid #d6d6d6;
+    border-left: 1px dotted rgb(179, 179, 179);
 }
 .header-currency{
-    border-left: 1px solid #d6d6d6;
+    border-left: 1px dotted rgb(179, 179, 179);
 }
 /* logo */
 #logo {
-	margin: 5px 0 5px 0;
+	margin: 0px 0 5px 0;
+        position: absolute;
+        background: #fff;
+        padding: 0px 15px 10px 15px;
+        box-shadow: 2px 0px 8px 1px rgba(0,0,0,.3);
+        border-bottom-left-radius: 65px 15px;
+        border-bottom-right-radius: 65px 15px;
 }
 /* panel */
 .search-panel-wrapper{

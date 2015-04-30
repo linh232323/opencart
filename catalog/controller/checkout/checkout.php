@@ -1,13 +1,14 @@
 <?php
 class ControllerCheckoutCheckout extends Controller {
 	public function index() {
+                $this->load->model('catalog/room');
 		// Validate cart has rooms and has stock.
-		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		// Validate minimum quantity requirements.
-		$rooms = $this->cart->getRooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;
@@ -17,7 +18,24 @@ class ControllerCheckoutCheckout extends Controller {
 					$room_total += $room_2['quantity'];
 				}
 			}
-
+                        foreach ($room['option'] as $date) {
+                                    if($date['option_id']=13){
+                                        $date_in = date_create($date['value']);
+                                    }
+                                    if($date['option_id']=14){
+                                       $date_out = date_create($date['value']);
+                                    }                                    
+                                }
+                                
+                                $check_in = date_format($date_in, 'Ymd');
+                                $check_out = date_format($date_out, 'Ymd');
+    
+                                $stock = $this->model_catalog_room->getStock($room['room_id'],$check_in,$check_out);
+                                $room_stock = $this->model_catalog_room->getRoom($room['room_id']);
+                                $quantity = $room_stock['quantity'] - $stock;
+                                if($quantity < $room['quantity']){
+                                    $this->response->redirect($this->url->link('checkout/cart'));
+                                }
 			if ($room['minimum'] > $room_total) {
 				$this->response->redirect($this->url->link('checkout/cart'));
 			}

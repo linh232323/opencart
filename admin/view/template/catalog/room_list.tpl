@@ -44,10 +44,6 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-price"><?php echo $entry_price; ?></label>
-                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
-              </div>
-              <div class="form-group">
                 <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                 <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
               </div>
@@ -90,11 +86,6 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'p.price') { ?>
-                    <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
-                    <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
                     <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
                     <?php } else { ?>
@@ -124,12 +115,6 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $room['name']; ?></td>
                   <td class="text-left"><?php echo $room['model']; ?></td>
-                  <td class="text-left"><?php if ($room['special']) { ?>
-                    <span style="text-decoration: line-through;"><?php echo $room['price']; ?></span><br/>
-                    <div class="text-danger"><?php echo $room['special']; ?></div>
-                    <?php } else { ?>
-                    <?php echo $room['price']; ?>
-                    <?php } ?></td>
                   <td class="text-right"><?php if ($room['quantity'] <= 0) { ?>
                     <span class="label label-warning"><?php echo $room['quantity']; ?></span>
                     <?php } elseif ($room['quantity'] <= 5) { ?>

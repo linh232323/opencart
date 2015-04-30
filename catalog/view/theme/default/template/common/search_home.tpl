@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-lg-4" id="guest">
                     <label class="control-label" for="input-option217"><?php echo $text_labelguest; ?></label>
-                    <select name="guest" id = "adults" class="form-control">
+                    <select name="guestsl" id = "adults" class="form-control">
                         <option value="1"><?php echo $text_1adult?></option>
                         <option value="2" selected="selected"><?php echo $text_2adults?></option>
                         <option value=""><?php echo $text_more?></option>

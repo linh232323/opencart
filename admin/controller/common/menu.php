@@ -50,6 +50,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_room'] = $this->language->get('text_room');
 		$data['text_hotel'] = $this->language->get('text_hotel');
+		$data['text_tour'] = $this->language->get('text_tour');
 		$data['text_reports'] = $this->language->get('text_reports');
 		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
 		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
@@ -145,6 +146,7 @@ class ControllerCommonMenu extends Controller {
 		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
 		$data['room'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'], 'SSL');
 		$data['hotel'] = $this->url->link('catalog/hotel', 'token=' . $this->session->data['token'], 'SSL');
+		$data['tour'] = $this->url->link('catalog/tour', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], 'SSL');
 		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], 'SSL');

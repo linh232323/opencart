@@ -300,7 +300,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			}
 
 			if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
-				$recurring_rooms = $this->cart->getRecurringRooms();
+				$recurring_rooms = $this->cart->getRecurringProducts();
 
 				//loop through any rooms that are recurring items
 				foreach ($recurring_rooms as $item) {
@@ -391,7 +391,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 				}
 
 				if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
-					$recurring_rooms = $this->cart->getRecurringRooms();
+					$recurring_rooms = $this->cart->getRecurringProducts();
 
 					//loop through any rooms that are recurring items
 					foreach ($recurring_rooms as $item) {

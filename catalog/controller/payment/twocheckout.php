@@ -44,7 +44,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 
 		$data['rooms'] = array();
 
-		$rooms = $this->cart->getRooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$data['rooms'][] = array(

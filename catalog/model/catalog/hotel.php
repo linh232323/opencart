@@ -5,7 +5,7 @@ class ModelCatalogHotel extends Model {
 	}
 
 	public function getHotel($hotel_id) {
-		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "hotel_discount pd2 WHERE pd2.hotel_id = p.hotel_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "hotel_special ps WHERE ps.hotel_id = p.hotel_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "hotel_reward pr WHERE pr.hotel_id = p.hotel_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "hotelreview r1 WHERE r1.hotel_id = p.hotel_id AND r1.status = '1' GROUP BY r1.hotel_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "hotelreview r2 WHERE r2.hotel_id = p.hotel_id AND r2.status = '1' GROUP BY r2.hotel_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "hotel p LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (p.hotel_id = pd.hotel_id) LEFT JOIN " . DB_PREFIX . "hotel_to_store p2s ON (p.hotel_id = p2s.hotel_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.hotel_id = '" . (int)$hotel_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "hotel_discount pd2 WHERE pd2.hotel_id = p.hotel_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "hotel_special ps WHERE ps.hotel_id = p.hotel_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "hotel_reward pr WHERE pr.hotel_id = p.hotel_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "hotelreview r1 WHERE r1.hotel_id = p.hotel_id AND r1.status = '1' GROUP BY r1.hotel_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "hotelreview r2 WHERE r2.hotel_id = p.hotel_id AND r2.status = '1' GROUP BY r2.hotel_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "hotel p LEFT JOIN " . DB_PREFIX . "hotel_description pd ON (p.hotel_id = pd.hotel_id) LEFT JOIN " . DB_PREFIX . "hotel_to_store p2s ON (p.hotel_id = p2s.hotel_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.hotel_id = '" . (int)$hotel_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
 			return array(
@@ -28,8 +28,6 @@ class ModelCatalogHotel extends Model {
 				'isbn'             => $query->row['isbn'],
 				'mpn'              => $query->row['mpn'],
 				'location'         => $query->row['location'],
-				'quantity'         => $query->row['quantity'],
-				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],
 				'manufacturer_id'  => $query->row['manufacturer_id'],
 				'manufacturer'     => $query->row['manufacturer'],
@@ -63,7 +61,7 @@ class ModelCatalogHotel extends Model {
 	}
 
 	public function getHotels($data = array()) {
-		$sql = "SELECT p.hotel_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "hotelreview r1 WHERE r1.hotel_id = p.hotel_id AND r1.status = '1' GROUP BY r1.hotel_id) AS rating, (SELECT price FROM " . DB_PREFIX . "hotel_discount pd2 WHERE pd2.hotel_id = p.hotel_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "hotel_special ps WHERE ps.hotel_id = p.hotel_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
+		$sql = "SELECT p.hotel_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "hotelreview r1 WHERE r1.hotel_id = p.hotel_id AND r1.status = '1' GROUP BY r1.hotel_id) AS rating";
 
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {
@@ -102,8 +100,7 @@ class ModelCatalogHotel extends Model {
 				$sql .= " AND pf.filter_id IN (" . implode(',', $implode) . ")";
 			}
 		}
-
-		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
+                if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";
 
 			if (!empty($data['filter_name'])) {
@@ -145,34 +142,8 @@ class ModelCatalogHotel extends Model {
 			$sql .= ")";
 		}
 
-		if (!empty($data['filter_manufacturer_id'])) {
-			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
-
 		$sql .= " GROUP BY p.hotel_id";
 
-		$sort_data = array(
-			'pd.name',
-			'p.model',
-			'p.star',
-			'p.quantity',
-			'p.price',
-			'rating',
-			'p.sort_order',
-			'p.date_added'
-		);
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
-			} elseif ($data['sort'] == 'p.price') {
-				$sql .= " ORDER BY (CASE WHEN special IS NOT NULL THEN special WHEN discount IS NOT NULL THEN discount ELSE p.price END)";
-			} else {
-				$sql .= " ORDER BY " . $data['sort'];
-			}
-		} else {
-			$sql .= " ORDER BY p.sort_order";
-		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC, LCASE(pd.name) DESC";
@@ -327,67 +298,10 @@ class ModelCatalogHotel extends Model {
 		return $hotel_attribute_group_data;
 	}
 
-	public function getHotelOptions($hotel_id) {
-		$hotel_option_data = array();
-
-		$hotel_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "hotel_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.hotel_id = '" . (int)$hotel_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.sort_order");
-
-		foreach ($hotel_option_query->rows as $hotel_option) {
-			$hotel_option_value_data = array();
-
-			$hotel_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "hotel_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.hotel_id = '" . (int)$hotel_id . "' AND pov.hotel_option_id = '" . (int)$hotel_option['hotel_option_id'] . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order");
-
-			foreach ($hotel_option_value_query->rows as $hotel_option_value) {
-				$hotel_option_value_data[] = array(
-					'hotel_option_value_id' => $hotel_option_value['hotel_option_value_id'],
-					'option_value_id'         => $hotel_option_value['option_value_id'],
-					'name'                    => $hotel_option_value['name'],
-					'image'                   => $hotel_option_value['image'],
-					'quantity'                => $hotel_option_value['quantity'],
-					'subtract'                => $hotel_option_value['subtract'],
-					'price'                   => $hotel_option_value['price'],
-					'price_prefix'            => $hotel_option_value['price_prefix'],
-					'weight'                  => $hotel_option_value['weight'],
-					'weight_prefix'           => $hotel_option_value['weight_prefix']
-				);
-			}
-
-			$hotel_option_data[] = array(
-				'hotel_option_id'    => $hotel_option['hotel_option_id'],
-				'hotel_option_value' => $hotel_option_value_data,
-				'option_id'            => $hotel_option['option_id'],
-				'name'                 => $hotel_option['name'],
-				'type'                 => $hotel_option['type'],
-				'value'                => $hotel_option['value'],
-				'required'             => $hotel_option['required']
-			);
-		}
-
-		return $hotel_option_data;
-	}
-
-	public function getHotelDiscounts($hotel_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "hotel_discount WHERE hotel_id = '" . (int)$hotel_id . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND quantity > 1 AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity ASC, priority ASC, price ASC");
-
-		return $query->rows;
-	}
-
 	public function getHotelImages($hotel_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "hotel_image WHERE hotel_id = '" . (int)$hotel_id . "' ORDER BY sort_order ASC");
 
 		return $query->rows;
-	}
-
-	public function getHotelRelated($hotel_id) {
-		$hotel_data = array();
-
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "hotel_related pr LEFT JOIN " . DB_PREFIX . "hotel p ON (pr.related_id = p.hotel_id) LEFT JOIN " . DB_PREFIX . "hotel_to_store p2s ON (p.hotel_id = p2s.hotel_id) WHERE pr.hotel_id = '" . (int)$hotel_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
-
-		foreach ($query->rows as $result) {
-			$hotel_data[$result['related_id']] = $this->getHotel($result['related_id']);
-		}
-
-		return $hotel_data;
 	}
 
 	public function getHotelLayoutId($hotel_id) {

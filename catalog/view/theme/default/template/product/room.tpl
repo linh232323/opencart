@@ -162,7 +162,6 @@
                         <div id="room">
                             <?php if ($options) { ?>
                             <hr>
-                            <h3><?php echo $text_option; ?></h3>
                             <?php foreach ($options as $option) { ?>
                             <?php if ($option['type'] == 'select') { ?>
                             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
@@ -233,11 +232,11 @@
                                 </div>
                             </div>
                             <?php } ?>
-                            <?php if ($option['type'] == 'text') { ?>
-                            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
-                                <label class="control-label" for="input-option<?php echo $option['room_option_id']; ?>"><?php echo $option['name']; ?></label>
-                                <input type="text" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $option['value']; ?>" placeholder="<?php echo $option['name']; ?>" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" />
-                            </div>
+                            <?php if ($option['option_id'] == 15) { ?>
+                                <input type="hidden" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $_SESSION['price']; ?>" placeholder="<?php echo $option['name']; ?>" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" disabled/>
+                            <?php } ?>
+                            <?php if ($option['option_id'] == 16) { ?>
+                                <input type="hidden" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $_SESSION['price']*$_SESSION['night']; ?>" placeholder="<?php echo $option['name']; ?>" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" />
                             <?php } ?>
                             <?php if ($option['type'] == 'textarea') { ?>
                             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
@@ -252,15 +251,11 @@
                                 <input type="hidden" name="option[<?php echo $option['room_option_id']; ?>]" value="" id="input-option<?php echo $option['room_option_id']; ?>" />
                             </div>
                             <?php } ?>
-                            <?php if ($option['type'] == 'date') { ?>
-                            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
-                                <label class="control-label" for="input-option<?php echo $option['room_option_id']; ?>"><?php echo $option['name']; ?></label>
-                                <div class="input-group date">
-                                    <input type="text" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-date-format="YYYY-MM-DD" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                                    </span></div>
-                            </div>
+                            <?php if ($option['option_id'] == 13) { ?>
+                                    <input type="hidden" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $_SESSION['check_in']; ?>" data-date-format="YYYY-MM-DD" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" />
+                            <?php } ?>
+                            <?php if ($option['option_id'] == 14) { ?>
+                                    <input type="hidden" name="option[<?php echo $option['room_option_id']; ?>]" value="<?php echo $_SESSION['check_out']; ?>" data-date-format="YYYY-MM-DD" id="input-option<?php echo $option['room_option_id']; ?>" class="form-control" />
                             <?php } ?>
                             <?php if ($option['type'] == 'datetime') { ?>
                             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">

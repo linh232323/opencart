@@ -184,7 +184,7 @@ class ControllerApiPayment extends Controller {
 
 				$results = $this->model_extension_extension->getExtensions('payment');
 
-				$recurring = $this->cart->hasRecurringrooms();
+				$recurring = $this->cart->hasRecurringProducts();
 
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {

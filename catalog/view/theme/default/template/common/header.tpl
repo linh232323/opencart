@@ -72,8 +72,8 @@
                                     </div>
                                 </form>
                         </li>
-                        <li class="header-language pull-right"><?php echo $language; ?></li>
                         <li class="header-currency pull-right"><?php echo $currency; ?></li>
+                        <li class="header-language pull-right"><?php echo $language; ?></li>
                     </ul>
                 </div>
             </div>

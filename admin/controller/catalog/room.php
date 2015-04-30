@@ -271,13 +271,6 @@ class ControllerCatalogRoom extends Controller {
 		} else {
 			$filter_model = null;
 		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$filter_price = $this->request->get['filter_price'];
-		} else {
-			$filter_price = null;
-		}
-
 		if (isset($this->request->get['filter_quantity'])) {
 			$filter_quantity = $this->request->get['filter_quantity'];
 		} else {
@@ -322,10 +315,6 @@ class ControllerCatalogRoom extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
 
 		if (isset($this->request->get['filter_quantity'])) {
@@ -373,7 +362,6 @@ class ControllerCatalogRoom extends Controller {
 		$filter_data = array(
 			'filter_name'	  => $filter_name,
 			'filter_model'	  => $filter_model,
-			'filter_price'	  => $filter_price,
 			'filter_quantity' => $filter_quantity,
 			'filter_maxadults'=> $filter_maxadults,
 			'filter_status'   => $filter_status,
@@ -397,25 +385,11 @@ class ControllerCatalogRoom extends Controller {
 				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
 			}
 
-			$special = false;
-
-			$room_specials = $this->model_catalog_room->getRoomSpecials($result['room_id']);
-
-			foreach ($room_specials  as $room_special) {
-				if (($room_special['date_start'] == '0000-00-00' || strtotime($room_special['date_start']) < time()) && ($room_special['date_end'] == '0000-00-00' || strtotime($room_special['date_end']) > time())) {
-					$special = $room_special['price'];
-
-					break;
-				}
-			}
-
 			$data['rooms'][] = array(
 				'room_id' => $result['room_id'],
 				'image'      => $image,
 				'name'       => $result['name'],
 				'model'      => $result['model'],
-				'price'      => $result['price'],
-				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'maxadults'   => $result['maxadults'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
@@ -434,7 +408,6 @@ class ControllerCatalogRoom extends Controller {
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');
-		$data['column_price'] = $this->language->get('column_price');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_maxadults'] = $this->language->get('column_maxadults');
 		$data['column_status'] = $this->language->get('column_status');
@@ -446,7 +419,6 @@ class ControllerCatalogRoom extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_maxadults'] = $this->language->get('entry_maxadults');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_price'] = $this->language->get('entry_price');
 
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_add'] = $this->language->get('button_add');
@@ -486,10 +458,6 @@ class ControllerCatalogRoom extends Controller {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
-		}
-
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
@@ -514,7 +482,6 @@ class ControllerCatalogRoom extends Controller {
 
 		$data['sort_name'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
 		$data['sort_model'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
-		$data['sort_price'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=p.price' . $url, 'SSL');
 		$data['sort_quantity'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=p.quantity' . $url, 'SSL');
 		$data['sort_maxadults'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=p.maxadults' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('catalog/room', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
@@ -528,10 +495,6 @@ class ControllerCatalogRoom extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_price'])) {
-			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
 
 		if (isset($this->request->get['filter_quantity'])) {
@@ -566,7 +529,6 @@ class ControllerCatalogRoom extends Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
-		$data['filter_price'] = $filter_price;
 		$data['filter_quantity'] = $filter_quantity;
 		$data['filter_maxadults'] = $filter_maxadults;
 		$data['filter_status'] = $filter_status;
@@ -885,62 +847,6 @@ class ControllerCatalogRoom extends Controller {
 			$data['model'] = '';
 		}
 
-		if (isset($this->request->post['sku'])) {
-			$data['sku'] = $this->request->post['sku'];
-		} elseif (!empty($room_info)) {
-			$data['sku'] = $room_info['sku'];
-		} else {
-			$data['sku'] = '';
-		}
-
-		if (isset($this->request->post['upc'])) {
-			$data['upc'] = $this->request->post['upc'];
-		} elseif (!empty($room_info)) {
-			$data['upc'] = $room_info['upc'];
-		} else {
-			$data['upc'] = '';
-		}
-
-		if (isset($this->request->post['ean'])) {
-			$data['ean'] = $this->request->post['ean'];
-		} elseif (!empty($room_info)) {
-			$data['ean'] = $room_info['ean'];
-		} else {
-			$data['ean'] = '';
-		}
-
-		if (isset($this->request->post['jan'])) {
-			$data['jan'] = $this->request->post['jan'];
-		} elseif (!empty($room_info)) {
-			$data['jan'] = $room_info['jan'];
-		} else {
-			$data['jan'] = '';
-		}
-
-		if (isset($this->request->post['isbn'])) {
-			$data['isbn'] = $this->request->post['isbn'];
-		} elseif (!empty($room_info)) {
-			$data['isbn'] = $room_info['isbn'];
-		} else {
-			$data['isbn'] = '';
-		}
-
-		if (isset($this->request->post['mpn'])) {
-			$data['mpn'] = $this->request->post['mpn'];
-		} elseif (!empty($room_info)) {
-			$data['mpn'] = $room_info['mpn'];
-		} else {
-			$data['mpn'] = '';
-		}
-
-		if (isset($this->request->post['location'])) {
-			$data['location'] = $this->request->post['location'];
-		} elseif (!empty($room_info)) {
-			$data['location'] = $room_info['location'];
-		} else {
-			$data['location'] = '';
-		}
-
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -967,38 +873,6 @@ class ControllerCatalogRoom extends Controller {
 			$data['shipping'] = $room_info['shipping'];
 		} else {
 			$data['shipping'] = 1;
-		}
-
-		if (isset($this->request->post['price'])) {
-			$data['price'] = $this->request->post['price'];
-		} elseif (!empty($room_info)) {
-			$data['price'] = $room_info['price'];
-		} else {
-			$data['price'] = '';
-		}
-
-		$this->load->model('catalog/recurring');
-
-		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
-
-		if (isset($this->request->post['room_recurrings'])) {
-			$data['room_recurrings'] = $this->request->post['room_recurrings'];
-		} elseif (!empty($room_info)) {
-			$data['room_recurrings'] = $this->model_catalog_room->getRecurrings($room_info['room_id']);
-		} else {
-			$data['room_recurrings'] = array();
-		}
-
-		$this->load->model('localisation/tax_class');
-
-		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-
-		if (isset($this->request->post['tax_class_id'])) {
-			$data['tax_class_id'] = $this->request->post['tax_class_id'];
-		} elseif (!empty($room_info)) {
-			$data['tax_class_id'] = $room_info['tax_class_id'];
-		} else {
-			$data['tax_class_id'] = 0;
 		}
 
 		if (isset($this->request->post['date_available'])) {
@@ -1033,14 +907,6 @@ class ControllerCatalogRoom extends Controller {
 			$data['minimum'] = 1;
 		}
 
-		if (isset($this->request->post['subtract'])) {
-			$data['subtract'] = $this->request->post['subtract'];
-		} elseif (!empty($room_info)) {
-			$data['subtract'] = $room_info['subtract'];
-		} else {
-			$data['subtract'] = 1;
-		}
-
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($room_info)) {
@@ -1067,62 +933,6 @@ class ControllerCatalogRoom extends Controller {
 			$data['status'] = $room_info['status'];
 		} else {
 			$data['status'] = true;
-		}
-
-		if (isset($this->request->post['weight'])) {
-			$data['weight'] = $this->request->post['weight'];
-		} elseif (!empty($room_info)) {
-			$data['weight'] = $room_info['weight'];
-		} else {
-			$data['weight'] = '';
-		}
-
-		$this->load->model('localisation/weight_class');
-
-		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
-
-		if (isset($this->request->post['weight_class_id'])) {
-			$data['weight_class_id'] = $this->request->post['weight_class_id'];
-		} elseif (!empty($room_info)) {
-			$data['weight_class_id'] = $room_info['weight_class_id'];
-		} else {
-			$data['weight_class_id'] = $this->config->get('config_weight_class_id');
-		}
-
-		if (isset($this->request->post['length'])) {
-			$data['length'] = $this->request->post['length'];
-		} elseif (!empty($room_info)) {
-			$data['length'] = $room_info['length'];
-		} else {
-			$data['length'] = '';
-		}
-
-		if (isset($this->request->post['width'])) {
-			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($room_info)) {
-			$data['width'] = $room_info['width'];
-		} else {
-			$data['width'] = '';
-		}
-
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($room_info)) {
-			$data['height'] = $room_info['height'];
-		} else {
-			$data['height'] = '';
-		}
-
-		$this->load->model('localisation/length_class');
-
-		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
-
-		if (isset($this->request->post['length_class_id'])) {
-			$data['length_class_id'] = $this->request->post['length_class_id'];
-		} elseif (!empty($room_info)) {
-			$data['length_class_id'] = $room_info['length_class_id'];
-		} else {
-			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
 		$this->load->model('catalog/manufacturer');
@@ -1269,7 +1079,42 @@ class ControllerCatalogRoom extends Controller {
 		} else {
 			$room_options = array();
 		}
-
+                
+                $room_options =  array(
+                            array(
+                                'room_option_id' => '',
+                                'name' => 'Checkin Date',
+                                'option_id' => 13,
+                                'type' => 'date',
+                                'required' => 0,
+                                'value' => ''
+                            ),
+                            array(
+                                'room_option_id' => '',
+                                'name' => 'Checkout Date',
+                                'option_id' => 14,
+                                'type' => 'date',
+                                'required' => 0,
+                                'value' => ''
+                            ),
+                            array(
+                                'room_option_id' => '',
+                                'name' => 'Price',
+                                'option_id' => 15,
+                                'type' => 'text',
+                                'required' => 0,
+                                'value' => ''
+                            ),
+                            array(
+                                'room_option_id' => '',
+                                'name' => 'Total',
+                                'option_id' => 16,
+                                'type' => 'text',
+                                'required' => 0,
+                                'value' => ''
+                            ),
+                        );
+                
 		$data['room_options'] = array();
 
 		foreach ($room_options as $room_option) {
@@ -1483,17 +1328,24 @@ class ControllerCatalogRoom extends Controller {
 		}
                 
 		foreach ($this->request->post['room_price'] as $value) {
-			if (!is_numeric($value['room_price_net'])) {
-				$this->error['room_price_net'] = $this->language->get('error_room_price_net');
-			}
+			if (!empty($value['room_price_net'])){
+                            if (!is_numeric($value['room_price_net'])) {
+                                    $this->error['room_price_net'] = $this->language->get('error_room_price_net');
+                            }
+                        }
+                        
                         if(!empty($value['room_price_percent'])){
                             if (!is_numeric($value['room_price_percent'])) {
                                     $this->error['room_price_net'] = $this->language->get('error_room_price_percent');
                             }
                         }
-			if (!is_numeric($value['room_extra_net'])) {
-				$this->error['room_extra_net'] = $this->language->get('error_room_extra_net');
-			}
+                        
+                        if (!empty($value['room_extra_net'])){
+                            if (!is_numeric($value['room_extra_net'])) {
+                                    $this->error['room_extra_net'] = $this->language->get('error_room_extra_net');
+                            }
+                        }
+                        
                         if(!empty($value['room_extra_percent'])){
                             if (!is_numeric($value['room_extra_percent'])) {
                                     $this->error['room_extra_percent'] = $this->language->get('error_room_extra_percent');

@@ -55,10 +55,10 @@ class ControllerProductSearch extends Controller {
             $this->session->data['check_out'] = $this->request->post['check_out'];
         }
         
-        if (!empty($this->request->post['guest'])) {
-           $this->session->data['guest'] = $this->request->post['guest'];
+        if (!empty($this->request->post['guestsl'])) {
+           $this->session->data['guestsl'] = $this->request->post['guestsl'];
         }else{
-            $this->session->data['guest'] = "";
+            $this->session->data['guestsl'] = "";
         }
         
         if (empty($this->request->post['adults'])) {
@@ -299,10 +299,10 @@ class ControllerProductSearch extends Controller {
                 'start' => ($page - 1) * $limit,
                 'limit' => $limit
             );
-
+            
             $hotel_total = $this->model_catalog_hotel->getTotalhotels($filter_data);
            
-            $results = $this->model_catalog_hotel->gethotels($filter_data);
+            $results = $this->model_catalog_hotel->getHotels($filter_data);
 
             $i = 0;
 
@@ -430,7 +430,14 @@ class ControllerProductSearch extends Controller {
                         ); 
                     }
                     
-                    if ($this->session->data['adults'] > $room['maxadults'] || $had_price == FALSE){
+                    $date_in = date_create($this->session->data['check_in']);
+                    $check_in = date_format($date_in, 'Ymd');
+                    $date_out = date_create($this->session->data['check_out']);
+                    $check_out = date_format($date_out, 'Ymd');
+                    
+                    $stock= $this->model_catalog_room->getStock($room['room_id'],$check_in,$check_out);
+                    
+                    if (($room['quantity'] - $stock)  <= 0 || $had_price == FALSE){
                         continue;
                     }
                     
@@ -440,7 +447,7 @@ class ControllerProductSearch extends Controller {
                         'name' => $room['name'],
                         'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
-                        'quantity' => $room['quantity'],
+                        'quantity' => $room['quantity'] - $stock,
                         'maxadults' => $room['maxadults'],
                         'special' => $special,
                         'tax' => $tax,

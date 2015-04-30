@@ -226,11 +226,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-                    if($user_id == 1){
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
-                    }else{
-                        $directory = rtrim(DIR_IMAGE . 'catalog/'. $user_id . "/"  . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
-                    }
 		} else {
 			if($user_id == 1){
                         $directory = DIR_IMAGE . 'catalog';

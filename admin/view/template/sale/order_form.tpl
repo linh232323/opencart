@@ -230,9 +230,9 @@
                     <tr>
                       <td class="text-left"><?php echo $column_room; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
+                      <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-left"><?php echo $column_check_in; ?></td>
                       <td class="text-left"><?php echo $column_check_out; ?></td>
-                      <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-right"><?php echo $column_price; ?></td>
                       <td class="text-right"><?php echo $column_total; ?></td>
                       <td></td>
@@ -819,9 +819,9 @@
                     <tr>
                       <td class="text-left"><?php echo $column_room; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
+                      <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-left"><?php echo $column_check_in; ?></td>
                       <td class="text-left"><?php echo $column_check_out; ?></td>
-                      <td class="text-right"><?php echo $column_quantity; ?></td>
                       <td class="text-right"><?php echo $column_price; ?></td>
                       <td class="text-right"><?php echo $column_total; ?></td>
                     </tr>
@@ -946,6 +946,200 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 });
 			
 // Add all rooms to the cart using the api
+$('#button-refresh').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/rooms&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		dataType: 'json',
+		success: function(json) {
+			$('.alert-danger, .text-danger').remove();
+			
+			// Check for errors
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+									
+				if (json['error']['stock']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+				}
+								
+				if (json['error']['minimum']) {
+					for (i in json['error']['minimum']) {
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+				}
+			}				
+			
+			var shipping = false;
+			
+			html = '';
+			
+			if (json['rooms']) {
+				for (i = 0; i < json['rooms'].length; i++) {
+					room = json['rooms'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + room['name'] + ' ' + (!room['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					html += '  <input type="hidden" name="room[' + i + '][room_id]" value="' + room['room_id'] + '" />';
+					
+					if (room['option']) {
+						for (j = 0; j < room['option'].length; j++) {
+							option = room['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+							
+							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+								html += '<input type="hidden" name="room[' + i + '][option][' + option['room_option_id'] + ']" value="' + option['room_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'checkbox') {
+								html += '<input type="hidden" name="room[' + i + '][option][' + option['room_option_id'] + '][]" value="' + option['room_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+								html += '<input type="hidden" name="room[' + i + '][option][' + option['room_option_id'] + ']" value="' + option['value'] + '" />';
+							}
+                                                        if(option['name'] == 'Checkin Date'){
+								var check_in = option['value'];
+							}
+                                                        if(option['name'] == 'Checkout Date'){
+								var check_out = option['value'];
+							}
+                                                        if(option['name'] == 'Price'){
+                                                                var price = option['value'];
+							}
+                                                        if(option['name'] == 'Total'){
+                                                                var total = option['value'];
+							}
+						}
+					}
+					
+					html += '</td>';
+					html += '  <td class="text-left">' + room['model'] + '</td>';
+					html += '  <td class="text-right">' + room['quantity'] + '<input type="hidden" name="room[' + i + '][quantity]" value="' + room['quantity'] + '" /></td>';
+                                        html += '  <td class="text-left">' + check_in + '</td>';
+                                        html += '  <td class="text-left">' + check_out + '</td>';
+                                        html += '  <td class="text-right">' + price + '</td>';
+                                        html += '  <td class="text-right">' + total*room['quantity'] + '</td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + room['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '</tr>';
+					
+					if (room['shipping'] != 0) {
+						shipping = true;
+					}
+				}
+			} 
+			
+			if (!shipping) {
+				$('select[name=\'shipping_method\'] option').removeAttr('selected');
+				$('select[name=\'shipping_method\']').prop('disabled', true);
+				$('#button-shipping-method').prop('disabled', true);
+			} else {
+				$('select[name=\'shipping_method\']').prop('disabled', false);
+				$('#button-shipping-method').prop('disabled', false);				
+			}
+					
+			if (json['vouchers']) {
+				for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'];
+                    html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
+					html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
+					html += '  </td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-right">1</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '</tr>';	
+				}
+			}
+			
+			if (json['rooms'] == '' && json['vouchers'] == '') {				
+				html += '<tr>';
+				html += '  <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '</tr>';	
+			}
+
+			$('#cart').html(html);
+
+			// Totals
+			html = '';
+			
+			if (json['rooms']) {
+				for (i = 0; i < json['rooms'].length; i++) {
+					room = json['rooms'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + room['name'] + ' ' + (!room['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					
+					if (room['option']) {
+						for (j = 0; j < room['option'].length; j++) {
+							option = room['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+                                                             if(option['name'] == 'Checkin Date'){
+								var check_in = option['value'];
+							}
+                                                        if(option['name'] == 'Checkout Date'){
+								var check_out = option['value'];
+							}
+                                                        if(option['name'] == 'Price'){
+                                                                var price = option['value'];
+							}
+                                                        if(option['name'] == 'Total'){
+                                                                var total = option['value'];
+							}
+						}
+					}
+					
+					html += '  </td>';
+					html += '  <td class="text-left">' + room['model'] + '</td>';
+					html += '  <td class="text-right">' + room['quantity'] + '<input type="hidden" name="room[' + i + '][quantity]" value="' + room['quantity'] + '" /></td>';
+                                        html += '  <td class="text-left">' + check_in + '</td>';
+                                        html += '  <td class="text-left">' + check_out + '</td>';
+                                        html += '  <td class="text-right">' + price + '</td>';
+                                        html += '  <td class="text-right">' + total*room['quantity'] + '</td>';
+					html += '</tr>';
+				}				
+			}
+			
+			if (json['vouchers']) {
+				for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
+					 
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'] + '</td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-right">1</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '</tr>';	
+				}	
+			}
+			
+			if (!json['totals'] && !json['rooms'] && !json['vouchers']) {				
+				html += '<tr>';
+				html += '  <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '</tr>';	
+			}
+						
+			$('#total').html(html);
+		},	
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
 // Customer
 $('input[name=\'customer\']').autocomplete({

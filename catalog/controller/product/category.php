@@ -39,8 +39,8 @@ class ControllerProductCategory extends Controller {
              $this->session->data['adults'] = 1;
         }
         
-        if (empty($this->session->data['guest'])){
-                $this->session->data['guest']= "";
+        if (empty($this->session->data['guestsl'])){
+                $this->session->data['guestsl']= "";
         }
         
         if (empty($this->session->data['children'])){
@@ -167,7 +167,7 @@ class ControllerProductCategory extends Controller {
             $data['text_rate_verygood'] = $this->language->get('text_rate_verygood');
             $data['text_rate_good'] = $this->language->get('text_rate_good');
             $data['text_rate_bad'] = $this->language->get('text_rate_bad');
-            $data['text_Hotelreviews'] = $this->language->get('text_Hotelreviews');
+            $data['text_hotelreviews'] = $this->language->get('text_hotelreviews');
             $data['text_labeldate_in'] = $this->language->get('text_labeldate_in');
             $data['text_labeldate_out'] = $this->language->get('text_labeldate_out');
             $data['text_label_night'] = $this->language->get('text_label_night');
@@ -263,7 +263,7 @@ class ControllerProductCategory extends Controller {
 
             $hotel_total = $this->model_catalog_hotel->getTotalhotels($filter_data);
 
-            $results = $this->model_catalog_hotel->gethotels($filter_data);
+            $results = $this->model_catalog_hotel->getHotels($filter_data);
 
             $i = 0;
             
@@ -312,9 +312,6 @@ class ControllerProductCategory extends Controller {
 
                 $rooms = $this->model_catalog_room->getRooms($filter_dataa);
                 
-                if ($rooms== null){
-                    continue;
-                }
                 
                 $data['hotels'][$i] = array(
                     'hotel_id' => $result['hotel_id'],
@@ -388,17 +385,24 @@ class ControllerProductCategory extends Controller {
                         ); 
                     }
                     
-                    if ($this->session->data['adults'] > $room['maxadults'] || $had_price == FALSE){
+                    $date_in = date_create($this->session->data['check_in']);
+                    $check_in = date_format($date_in, 'Ymd');
+                    $date_out = date_create($this->session->data['check_out']);
+                    $check_out = date_format($date_out, 'Ymd');
+                    
+                    $stock= $this->model_catalog_room->getStock($room['room_id'],$check_in,$check_out);
+
+                    if (($room['quantity'] - $stock)  <= 0 || $had_price == FALSE){
                         continue;
                     }
-                    
+
                     $data['hotels'][$i][] = array(
                         'room_id' => $room['room_id'],
                         'thumb' => $image,
                         'name' => $room['name'],
                         'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
-                        'quantity' => $room['quantity'],
+                        'quantity' => $room['quantity'] - $stock,
                         'maxadults' => $room['maxadults'],
                         'special' => $special,
                         'tax' => $tax,
@@ -407,12 +411,7 @@ class ControllerProductCategory extends Controller {
                     );
                     $room_total++;
                 }
-                $data['hotels'][$i]['room_total'] = $room_total;
-                if($room_total == 0){
-                    unset($data['hotels'][$i]);
-                }else{
-                    ++$i;
-                }
+                $i++;
             }
 
             $url = '';

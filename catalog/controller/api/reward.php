@@ -15,9 +15,9 @@ class ControllerApiReward extends Controller {
 
 			$points_total = 0;
 
-			foreach ($this->cart->getRooms() as $room) {
-				if ($room['points']) {
-					$points_total += $room['points'];
+			foreach ($this->cart->getProducts() as $product) {
+				if ($product['points']) {
+					$points_total += $product['points'];
 				}
 			}
 			
@@ -54,9 +54,9 @@ class ControllerApiReward extends Controller {
 		} else {
 			$json['maximum'] = 0;
 
-			foreach ($this->cart->getRooms() as $room) {
-				if ($room['points']) {
-					$json['maximum'] += $room['points'];
+			foreach ($this->cart->getProducts() as $product) {
+				if ($product['points']) {
+					$json['maximum'] += $product['points'];
 				}
 			}
 		}

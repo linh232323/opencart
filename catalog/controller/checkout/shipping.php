@@ -61,7 +61,7 @@ class ControllerCheckoutShipping extends Controller {
 
 		$json = array();
 
-		if (!$this->cart->hasrooms()) {
+		if (!$this->cart->hasProducts()) {
 			$json['error']['warning'] = $this->language->get('error_room');
 		}
 

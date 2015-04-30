@@ -119,7 +119,7 @@ class ControllerApiCart extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function rooms() {
+	public function Rooms() {
 		$this->load->language('api/cart');
 
 		$json = array();
@@ -135,7 +135,7 @@ class ControllerApiCart extends Controller {
 			// Rooms
 			$json['rooms'] = array();
 
-			$rooms = $this->cart->getRooms();
+			$rooms = $this->cart->getProducts();
 
 			foreach ($rooms as $room) {
 				$room_total = 0;

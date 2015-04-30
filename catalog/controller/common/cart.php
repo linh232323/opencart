@@ -43,7 +43,7 @@ class ControllerCommonCart extends Controller {
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countRooms() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_remove'] = $this->language->get('button_remove');
@@ -53,7 +53,7 @@ class ControllerCommonCart extends Controller {
 
 		$data['rooms'] = array();
 
-		foreach ($this->cart->getrooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			if ($room['image']) {
 				$image = $this->model_tool_image->resize($room['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			} else {

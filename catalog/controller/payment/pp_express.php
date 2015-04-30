@@ -19,7 +19,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function express() {
-		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->log->write('No room redirect');
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
@@ -31,7 +31,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['paypal']['guest'] = false;
 			unset($this->session->data['guest']);
 		} else {
-			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringRooms()) {
+			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringProducts()) {
 				/**
 				 * If the guest checkout is allowed (config ok, no login for price and doesn't have downloads)
 				 */
@@ -407,7 +407,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getRooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			if ($room['points']) {
 				$points_total += $room['points'];
 			}
@@ -437,7 +437,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
 
-		$rooms = $this->cart->getRooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;
@@ -776,12 +776,12 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		// Validate cart has rooms and has stock.
-		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$redirect = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$rooms = $this->cart->getRooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;
@@ -945,7 +945,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$room_data = array();
 
-			foreach ($this->cart->getRooms() as $room) {
+			foreach ($this->cart->getProducts() as $room) {
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {
@@ -1153,7 +1153,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
-				$recurring_rooms = $this->cart->getRecurringRooms();
+				$recurring_rooms = $this->cart->getRecurringProducts();
 
 				//loop through any rooms that are recurring items
 				if ($recurring_rooms) {
@@ -1259,7 +1259,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function checkout() {
-		if ((!$this->cart->hasRooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -1437,7 +1437,7 @@ class ControllerPaymentPPExpress extends Controller {
 			);
 			$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
-			$recurring_rooms = $this->cart->getRecurringRooms();
+			$recurring_rooms = $this->cart->getRecurringProducts();
 
 			//loop through any rooms that are recurring items
 			if ($recurring_rooms) {
@@ -1946,7 +1946,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getRooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			if ($room['points']) {
 				$points_total += $room['points'];
 			}

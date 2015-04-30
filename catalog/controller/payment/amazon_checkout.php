@@ -18,7 +18,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->document->addScript($amazon_payment_js);
 
 		// CBA supports up to 50 distinct rooms
-		if (count($this->cart->getRooms()) > 50) {
+		if (count($this->cart->getProducts()) > 50) {
 			$this->response->redirect($this->url->link('common/home'));
 		}
 
@@ -158,7 +158,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 
 		// Validate cart has rooms and has stock.
-		if (!empty($this->session->data['vouchers']) || !$this->cart->hasRooms() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!empty($this->session->data['vouchers']) || !$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -171,7 +171,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		// Validate minimum quantity requirements.
-		$rooms = $this->cart->getRooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;
@@ -345,7 +345,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$room_data = array();
 
-		foreach ($this->cart->getRooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			$option_data = array();
 
 			foreach ($room['option'] as $option) {
@@ -461,7 +461,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
 		$data['process_order'] = $this->url->link('payment/amazon_checkout/processorder', '', 'SSL');
 
-		foreach ($this->cart->getRooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {

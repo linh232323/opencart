@@ -5,7 +5,7 @@ class ControllerCheckoutReward extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getrooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			if ($room['points']) {
 				$points_total += $room['points'];
 			}
@@ -45,7 +45,7 @@ class ControllerCheckoutReward extends Controller {
 
 		$points_total = 0;
 
-		foreach ($this->cart->getrooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			if ($room['points']) {
 				$points_total += $room['points'];
 			}

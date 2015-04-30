@@ -44,16 +44,6 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-price"><?php echo $entry_price; ?></label>
-                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
-                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value="*"></option>
@@ -90,16 +80,6 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'p.price') { ?>
-                    <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
-                    <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
-                    <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_quantity; ?>"><?php echo $column_quantity; ?></a>
-                    <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'p.status') { ?>
                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                     <?php } else { ?>
@@ -124,19 +104,6 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $hotel['name']; ?></td>
                   <td class="text-left"><?php echo $hotel['model']; ?></td>
-                  <td class="text-left"><?php if ($hotel['special']) { ?>
-                    <span style="text-decoration: line-through;"><?php echo $hotel['price']; ?></span><br/>
-                    <div class="text-danger"><?php echo $hotel['special']; ?></div>
-                    <?php } else { ?>
-                    <?php echo $hotel['price']; ?>
-                    <?php } ?></td>
-                  <td class="text-right"><?php if ($hotel['quantity'] <= 0) { ?>
-                    <span class="label label-warning"><?php echo $hotel['quantity']; ?></span>
-                    <?php } elseif ($hotel['quantity'] <= 5) { ?>
-                    <span class="label label-danger"><?php echo $hotel['quantity']; ?></span>
-                    <?php } else { ?>
-                    <span class="label label-success"><?php echo $hotel['quantity']; ?></span>
-                    <?php } ?></td>
                   <td class="text-left"><?php echo $hotel['status']; ?></td>
                   <td class="text-right"><a href="<?php echo $hotel['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>

@@ -55,10 +55,10 @@
                             <div class="row">
                                 <div class="col-lg-8 form-group" id="guest">
                                     <label class="control-label" for="input-option217"><?php echo $text_label_guest; ?></label>
-                                    <select name="guest" id = "adults" class="form-control">
-                                        <option value="1" <?php if ($_SESSION['guest'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
-                                        <option value="2"<?php if ($_SESSION['guest'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
-                                        <option value="" <?php if ($_SESSION['guest'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
+                                    <select name="guestsl" id = "adults" class="form-control">
+                                        <option value="1" <?php if ($_SESSION['guestsl'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
+                                        <option value="2"<?php if ($_SESSION['guestsl'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
+                                        <option value="" <?php if ($_SESSION['guestsl'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
                                     </select>
                                 </div>
                             </div>

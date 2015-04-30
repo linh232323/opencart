@@ -88,12 +88,12 @@ class ControllerCheckoutShippingAddress extends Controller {
 		}
 
 		// Validate cart has rooms and has stock.
-		if ((!$this->cart->hasrooms() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
 		// Validate minimum quantity requirements.
-		$rooms = $this->cart->getrooms();
+		$rooms = $this->cart->getProducts();
 
 		foreach ($rooms as $room) {
 			$room_total = 0;

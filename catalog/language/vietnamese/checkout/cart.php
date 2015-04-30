@@ -43,7 +43,7 @@ $_['entry_zone']             = 'Vùng / Tiểu bang:';
 $_['entry_postcode']         = 'Mã bưu điện:';
 
 // Error
-$_['error_stock']            = 'Sản phẩm đánh dấu *** không có đủ số lượng trong kho!';
+$_['error_stock']            = 'Sản phẩm đánh dấu *** không có đủ số lượng!';
 $_['error_minimum']          = 'Số lượng đặt tối thiểu cho %s là %s!';	
 $_['error_required']         = '%s không được bỏ trống!';	
 $_['error_room']          = 'Cảnh báo: Không có sản phẩm trong giỏ hàng của bạn!';	

@@ -36,7 +36,7 @@ class ControllerPaymentSkrill extends Controller {
 
 		$rooms = '';
 
-		foreach ($this->cart->getRooms() as $room) {
+		foreach ($this->cart->getProducts() as $room) {
 			$rooms .= $room['quantity'] . ' x ' . $room['name'] . ', ';
 		}
 

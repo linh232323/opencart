@@ -16,7 +16,7 @@ class ModelTotalCoupon extends Model {
 				} else {
 					$sub_total = 0;
 
-					foreach ($this->cart->getrooms() as $room) {
+					foreach ($this->cart->getProducts() as $room) {
 						if (in_array($room['room_id'], $coupon_info['room'])) {
 							$sub_total += $room['total'];
 						}
@@ -27,7 +27,7 @@ class ModelTotalCoupon extends Model {
 					$coupon_info['discount'] = min($coupon_info['discount'], $sub_total);
 				}
 
-				foreach ($this->cart->getrooms() as $room) {
+				foreach ($this->cart->getProducts() as $room) {
 					$discount = 0;
 
 					if (!$coupon_info['room']) {

@@ -160,7 +160,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$this->model_payment_sagepay_server->addOrder($order_info);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
-				$recurring_rooms = $this->cart->getRecurringRooms();
+				$recurring_rooms = $this->cart->getRecurringProducts();
 
 				//loop through any rooms that are recurring items
 				foreach ($recurring_rooms as $item) {

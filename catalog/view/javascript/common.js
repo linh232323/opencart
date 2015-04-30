@@ -27,11 +27,11 @@ $(document).ready(function () {
     cols1 = $('#column-right, #column-left').length;
 
     if (cols1 == 2) {
-        $('#content .room-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
+        $('#content .product-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
     } else if (cols1 == 1) {
-        $('#content .room-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
+        $('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
     } else {
-        $('#content .room-layout:nth-child(3n+3)').after('<div class="clearfix"></div>');
+        $('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix"></div>');
     }
 
     // Highlight any found errors
@@ -153,7 +153,7 @@ $(document).ready(function () {
             .change();
     $("#hide").hide();
     $(document).change(function () {
-        var n = $("#guest select[name=\'guest\']").val();
+        var n = $("#guest select[name=\'guestsl\']").val();
         if (n == "") {
             $("#hide").show();
         } else {
@@ -162,7 +162,7 @@ $(document).ready(function () {
     });
     $("#guest")
             .change(function () {
-                var n = $("#guest select[name=\'guest\']").val();
+                var n = $("#guest select[name=\'guestsl\']").val();
                 if (n != "") {
                     $("#hide select[name=\'room\']").val(1);
                     $("#hide select[name=\'adults\']").val(Number(n));
@@ -184,24 +184,24 @@ $(document).ready(function () {
         }
     });
 
-    // room List
+    // Product List
     $('#list-view').click(function () {
-        $('#content .room-layout > .clearfix').remove();
+        $('#content .product-layout > .clearfix').remove();
 
-        $('#content .room-layout').attr('class', 'room-layout room-list col-xs-12');
+        $('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
 
         localStorage.setItem('display', 'list');
     });
 
-    // room Grid
+    // Product Grid
     $('#grid-view').click(function () {
-        $('#content .room-layout > .clearfix').remove();
+        $('#content .product-layout > .clearfix').remove();
 
         // What a shame bootstrap does not take into account dynamically loaded columns
         cols = $('#column-right, #column-left').length;
 
 
-        $('#content .room-layout').attr('class', 'room-layout room-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
+        $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
 
     });
 
@@ -222,11 +222,11 @@ $(document).ready(function () {
 
 // Cart add remove functions
 var cart = {
-    'add': function (room_id, quantity) {
+    'add': function (product_id, quantity) {
         $.ajax({
             url: 'index.php?route=checkout/cart/add',
             type: 'post',
-            data: 'room_id=' + room_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
+            data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
             dataType: 'json',
             beforeSend: function () {
                 $('#cart > button').button('loading');
@@ -328,11 +328,11 @@ var voucher = {
 }
 
 var wishlist = {
-    'add': function (room_id) {
+    'add': function (product_id) {
         $.ajax({
             url: 'index.php?route=account/wishlist/add',
             type: 'post',
-            data: 'room_id=' + room_id,
+            data: 'product_id=' + product_id,
             dataType: 'json',
             success: function (json) {
                 $('.alert').remove();
@@ -357,11 +357,11 @@ var wishlist = {
 }
 
 var compare = {
-    'add': function (room_id) {
+    'add': function (product_id) {
         $.ajax({
-            url: 'index.php?route=room/compare/add',
+            url: 'index.php?route=product/compare/add',
             type: 'post',
-            data: 'room_id=' + room_id,
+            data: 'product_id=' + product_id,
             dataType: 'json',
             success: function (json) {
                 $('.alert').remove();

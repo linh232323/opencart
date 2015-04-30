@@ -11,7 +11,7 @@ class ModelTotalReward extends Model {
 
 				$points_total = 0;
 
-				foreach ($this->cart->getrooms() as $room) {
+				foreach ($this->cart->getProducts() as $room) {
 					if ($room['points']) {
 						$points_total += $room['points'];
 					}
@@ -19,7 +19,7 @@ class ModelTotalReward extends Model {
 
 				$points = min($points, $points_total);
 
-				foreach ($this->cart->getrooms() as $room) {
+				foreach ($this->cart->getProducts() as $room) {
 					$discount = 0;
 
 					if ($room['points']) {

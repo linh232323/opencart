@@ -80,10 +80,10 @@
                                         <div class="row">
                                             <div class="col-xs-12 form-group" id="guest">
                                                 <label class="control-label" for="input-option217"><?php echo $text_label_guest; ?></label>
-                                                <select name="guest" id = "adults" class="form-control">
-                                                    <option value="1" <?php if ($_SESSION['guest'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
-                                                    <option value="2"<?php if ($_SESSION['guest'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
-                                                    <option value="" <?php if ($_SESSION['guest'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
+                                                <select name="guestsl" id = "adults" class="form-control">
+                                                    <option value="1" <?php if ($_SESSION['guestsl'] == 1){ echo "selected";}?>><?php echo $text_1adult?></option>
+                                                    <option value="2"<?php if ($_SESSION['guestsl'] == 2){ echo "selected";}?>><?php echo $text_2adults?></option>
+                                                    <option value="" <?php if ($_SESSION['guestsl'] == ""){ echo "selected";}?>><?php echo $text_more?></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -139,7 +139,7 @@
                                     <?php } ?>
                                 </span>
                             </h1>
-                            <span class ="col-lg-4 pull-right text-right text-primary">
+                            <h1 class ="col-lg-4 pull-right text-right text-primary">
                                 <?php if ($hotelreview_status) { ?>
                                 <?php
                                 switch ($rating) {
@@ -168,7 +168,7 @@
                                 ?>
                                 <?php echo $text_rating.' '.$rating; ?>
                                 <?php } ?>
-                            </span>
+                            </h1>
 
                         </div>
                         <div class="pull-right text-primary text-right">
@@ -430,61 +430,7 @@
                             <?php } ?>
                         </div>
                     </div>
-
                 </div>
-                <?php if ($hotels) { ?>
-                <h3><?php echo $text_related; ?></h3>
-                <div class="row">
-                    <?php $i = 0; ?>
-                    <?php foreach ($hotels as $hotel) { ?>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="hotel-thumb transition">
-                            <div class="image"><a href="<?php echo $hotel['href']; ?>"><img src="<?php echo $hotel['thumb']; ?>" alt="<?php echo $hotel['name']; ?>" title="<?php echo $hotel['name']; ?>" class="img-responsive" /></a></div>
-                            <div class="caption">
-                                <h4><a href="<?php echo $hotel['href']; ?>"><?php echo $hotel['name']; ?></a></h4>
-                                <p class="col-lg-12"><?php echo $hotel['description']; ?></p>
-                                <?php if ($hotel['rating']) { ?>
-                                <div class="rating">
-                                    <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <?php if ($hotel['rating'] < $i) { ?>
-                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                    <?php } else { ?>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                    <?php } ?>
-                                    <?php } ?>
-                                </div>
-                                <?php } ?>
-                                <?php if ($hotel['price']) { ?>
-                                <p class="price">
-                                    <?php if (!$hotel['special']) { ?>
-                                    <?php echo $hotel['price']; ?>
-                                    <?php } else { ?>
-                                    <span class="price-new"><?php echo $hotel['special']; ?></span> <span class="price-old"><?php echo $hotel['price']; ?></span>
-                                    <?php } ?>
-                                    <?php if ($hotel['tax']) { ?>
-                                    <span class="price-tax"><?php echo $text_tax; ?> <?php echo $hotel['tax']; ?></span>
-                                    <?php } ?>
-                                </p>
-                                <?php } ?>
-                            </div>
-                            <div class="button-group">
-                                <button type="button" onclick="cart.add('<?php echo $hotel['hotel_id']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
-                                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $hotel['hotel_id']; ?>');"><i class="fa fa-heart"></i></button>
-                                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $hotel['hotel_id']; ?>');"><i class="fa fa-exchange"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <?php if (($column_left && $column_right) && ($i % 2 == 0)) { ?>
-                    <div class="clearfix visible-md visible-sm"></div>
-                    <?php } elseif (($column_left || $column_right) && ($i % 3 == 0)) { ?>
-                    <div class="clearfix visible-md"></div>
-                    <?php } elseif ($i % 4 == 0) { ?>
-                    <div class="clearfix visible-md"></div>
-                    <?php } ?>
-                    <?php $i++; ?>
-                    <?php } ?>
-                </div>
-                <?php } ?>
                 <?php if ($tags) { ?>
                 <p><?php echo $text_tags; ?>
                     <?php for ($i = 0; $i < count($tags); $i++) { ?>

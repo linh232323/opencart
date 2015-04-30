@@ -24,7 +24,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 			$data['rooms'] = array();
 
-			foreach ($this->cart->getRooms() as $room) {
+			foreach ($this->cart->getProducts() as $room) {
 				$option_data = array();
 
 				foreach ($room['option'] as $option) {
