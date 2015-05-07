@@ -699,6 +699,7 @@ class ControllerCatalogHotel extends Controller {
 		} else {
 			$data['keyword'] = '';
 		}
+                
 		if (isset($this->request->post['star'])) {
 			$data['star'] = $this->request->post['star'];
 		} elseif (!empty($hotel_info)) {

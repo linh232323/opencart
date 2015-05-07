@@ -1,4 +1,6 @@
 <?php echo $header; ?>
+<img src="http://cdn0.agoda.net/images/ABTest/ABTest5692/home-1920x560-oia-village-santorini-greece.jpg" class="img-absolute"/>
+<div class="img-overlay"></div>
 <div class="container">
     <div class="row">
         <div class="container">

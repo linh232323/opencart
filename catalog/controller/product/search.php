@@ -36,8 +36,14 @@ class ControllerProductSearch extends Controller {
             $search = '';
         }
         
+        if (isset($this->request->get['search'])) {
+            $search = $this->request->get['search'];
+        } else {
+            $search = '';
+        }
+        
         if (empty($this->request->post['check_in'])) {
-            $this->session->data['check_in']=date('Y-m-d');
+            $this->session->data['check_in']=date('D M m Y');
         }else{
             $this->session->data['check_in']=$this->request->post['check_in'];
         }
@@ -129,8 +135,8 @@ class ControllerProductSearch extends Controller {
             $limit = $this->config->get('config_product_limit');
         }
 
-        if (isset($this->request->post['search'])) {
-            $this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->request->post['search']);
+        if (isset($search)) {
+            $this->document->setTitle($this->language->get('heading_title') . ' - ' . $search);
         } elseif (isset($this->request->get['tag'])) {
             $this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
         } else {
@@ -146,8 +152,8 @@ class ControllerProductSearch extends Controller {
 
         $url = '';
 
-        if (isset($this->request->post['search'])) {
-            $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
+        if (isset($search)) {
+            $url .= '&search=' . urlencode(html_entity_decode($search, ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['tag'])) {
@@ -188,8 +194,8 @@ class ControllerProductSearch extends Controller {
         );
         
         
-        if (isset($this->request->post['search'])) {
-            $data['heading_title'] = $this->language->get('heading_title') . ' - ' . $this->request->post['search'];
+        if (isset($search)) {
+            $data['heading_title'] = $this->language->get('heading_title') . ' - ' . $search;
         } else {
             $data['heading_title'] = $this->language->get('heading_title');
         }
@@ -287,7 +293,7 @@ class ControllerProductSearch extends Controller {
 
         $data['hotels'] = array();
 
-        if (isset($this->request->post['search']) || isset($this->request->get['tag'])) {
+        if (isset($search) || isset($this->request->get['tag'])) {
             $filter_data = array(
                 'filter_name' => $search,
                 'filter_tag' => $tag,
@@ -446,6 +452,7 @@ class ControllerProductSearch extends Controller {
                         'thumb' => $image,
                         'name' => $room['name'],
                         'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+                        'room_deal' => utf8_substr(strip_tags(html_entity_decode($room['room_deal'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
                         'quantity' => $room['quantity'] - $stock,
                         'maxadults' => $room['maxadults'],
@@ -466,8 +473,8 @@ class ControllerProductSearch extends Controller {
             
             $url = '';
 
-            if (isset($this->request->post['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($search)) {
+                $url .= '&search=' . urlencode(html_entity_decode($search, ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {
@@ -510,6 +517,18 @@ class ControllerProductSearch extends Controller {
                 'href' => $this->url->link('product/search', 'sort=pd.name&order=DESC' . $url)
             );
             
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_star_asc'),
+                'value' => 'pd.star-ASC',
+                'href' => $this->url->link('product/search', 'sort=p.star&order=ASC' . $url)
+            );
+
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_star_desc'),
+                'value' => 'pd.star-DESC',
+                'href' => $this->url->link('product/search', 'sort=p.star&order=DESC' . $url)
+            );
+            
             if ($this->config->get('config_review_status')) {
                 $data['sorts'][] = array(
                     'text' => $this->language->get('text_rating_desc'),
@@ -525,8 +544,8 @@ class ControllerProductSearch extends Controller {
             }
             $url = '';
 
-            if (isset($this->request->post['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($search)) {
+                $url .= '&search=' . urlencode(html_entity_decode($search, ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {
@@ -569,8 +588,8 @@ class ControllerProductSearch extends Controller {
 
             $url = '';
 
-            if (isset($this->request->post['search'])) {
-                $url .= '&search=' . urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
+            if (isset($search)) {
+                $url .= '&search=' . urlencode(html_entity_decode($search, ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['tag'])) {

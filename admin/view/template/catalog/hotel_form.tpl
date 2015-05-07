@@ -278,7 +278,6 @@
                                     <thead>
                                         <tr>
                                             <td class="text-left"><?php echo $entry_attribute; ?></td>
-                                            <td class="text-left"><?php echo $entry_text; ?></td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -286,13 +285,8 @@
                                         <?php $attribute_row = 0; ?>
                                         <?php foreach ($hotel_attributes as $hotel_attribute) { ?>
                                         <tr id="attribute-row<?php echo $attribute_row; ?>">
-                                            <td class="text-left" style="width: 40%;"><input type="text" name="hotel_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $hotel_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" class="form-control" />
+                                            <td class="text-left"><input type="text" name="hotel_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $hotel_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" class="form-control" />
                                                 <input type="hidden" name="hotel_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $hotel_attribute['attribute_id']; ?>" /></td>
-                                            <td class="text-left"><?php foreach ($languages as $language) { ?>
-                                                <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                                    <textarea name="hotel_attribute[<?php echo $attribute_row; ?>][hotel_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"><?php echo isset($hotel_attribute['hotel_attribute_description'][$language['language_id']]) ? $hotel_attribute['hotel_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
-                                                </div>
-                                                <?php } ?></td>
                                             <td class="text-left"><button type="button" onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                         </tr>
                                         <?php $attribute_row++; ?>
@@ -300,7 +294,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="2"></td>
+                                            <td colspan="1"></td>
                                             <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="<?php echo $button_attribute_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                         </tr>
                                     </tfoot>
@@ -516,12 +510,7 @@
   var attribute_row = <?php echo $attribute_row; ?> ;
                 function addAttribute() {
                     html = '<tr id="attribute-row' + attribute_row + '">';
-                    html += '  <td class="text-left" style="width: 20%;"><input type="text" name="hotel_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="hotel_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
-                    html += '  <td class="text-left">';
-                            <?php foreach ($languages as $language) { ?>
-                            html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="hotel_attribute[' + attribute_row + '][hotel_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
-                            <?php } ?>
-                            html += '  </td>';
+                    html += '  <td class="text-left" ><input type="text" name="hotel_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="hotel_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
                     html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
                     html += '</tr>';
 

@@ -12,7 +12,7 @@ class ModelCatalogRoom extends Model {
 		}
 
 		foreach ($data['room_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "room_description SET room_id = '" . (int)$room_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "room_description SET room_id = '" . (int)$room_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', room_deal = '" . $this->db->escape($value['room_deal']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		if (isset($data['room_store'])) {
@@ -151,7 +151,7 @@ class ModelCatalogRoom extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "room_description WHERE room_id = '" . (int)$room_id . "'");
 
 		foreach ($data['room_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "room_description SET room_id = '" . (int)$room_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "room_description SET room_id = '" . (int)$room_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', room_deal = '" . $this->db->escape($value['room_deal']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "room_to_store WHERE room_id = '" . (int)$room_id . "'");
@@ -465,6 +465,7 @@ class ModelCatalogRoom extends Model {
 			$room_description_data[$result['language_id']] = array(
 				'name'             => $result['name'],
 				'description'      => $result['description'],
+				'room_deal'        => $result['room_deal'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],

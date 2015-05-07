@@ -28,7 +28,6 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
-                        <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <li><a href="#tab-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
                     </ul>
@@ -49,6 +48,12 @@
                                             <?php if (isset($error_name[$language['language_id']])) { ?>
                                             <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                                             <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="input-description1<?php echo $language['language_id']; ?>"><?php echo $entry_room_deal; ?></label>
+                                        <div class="col-sm-10">
+                                            <textarea name="room_description[<?php echo $language['language_id']; ?>][room_deal]" placeholder="<?php echo $entry_room_deal; ?>" id="input-description1<?php echo $language['language_id']; ?>"><?php echo isset($room_description[$language['language_id']]) ? $room_description[$language['language_id']]['room_deal'] : ''; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -813,7 +818,8 @@
     <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
                 $('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
-                <?php } ?>
+                $('#input-description1<?php echo $language['language_id']; ?>').summernote({height: 200});
+<?php } ?>
 //--></script> 
     <script type="text/javascript"><!--
   // Manufacturer

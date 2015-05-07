@@ -9,9 +9,10 @@ class ModelCatalogRoom extends Model {
 
 		if ($query->num_rows) {
 			return array(
-				'room_id'       => $query->row['room_id'],
+				'room_id'          => $query->row['room_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
+				'room_deal'        => $query->row['room_deal'],
 				'meta_title'       => $query->row['meta_title'],
 				'meta_description' => $query->row['meta_description'],
 				'meta_keyword'     => $query->row['meta_keyword'],

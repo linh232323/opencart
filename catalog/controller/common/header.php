@@ -140,18 +140,6 @@ class ControllerCommonHeader extends Controller {
 			$data['class'] = 'common-home';
 		}
                 
-                // Background //
-                if((isset($_GET["route"]) == NULL) || (($_GET["route"])=="common/home") || (($_GET["route"])=="common/hotel")){
-                    $data['background']=TRUE;
-                }  else {
-                    $data['background']=FALSE;
-                }
-                // ScriptHome //
-                if((isset($_GET["route"]) == NULL) || (($_GET["route"])=="common/home")){
-                    $data['scriptHome']=TRUE;
-                }  else {
-                    $data['scriptHome']=FALSE;
-                }
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {

@@ -33,6 +33,8 @@ $_['text_semi_month']          = 'half-month';
 $_['text_month']               = 'month';
 $_['text_year']                = 'year';
 $_['text_change_date']         = 'Change date';
+$_['text_maxadults_asc']       = 'Max adults (Lowest)';
+$_['text_maxadults_desc']      = 'Max adults (Highest)';
 
 // Entry
 $_['entry_qty']                = 'Qty';

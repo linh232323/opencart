@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                     <label class="control-label" for="search"><?php echo $text_labelname; ?></label>
-                    <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_labelname; ?>" class="form-control input-group" />
+                    <input id="search-name" type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_labelname; ?>" class="form-control input-group" />
                 </div>
             </div>
             <div class="row">

@@ -245,7 +245,7 @@
                                         <?php echo $text_nowifi; ?> <img src="catalog/view/theme/default/image/icon_nowifi.png"/>
                                         <?php } ?>
                                     </strong></div>
-                                <div class="col-xs-9"><?php echo $hotel['descriptionp']; ?></div>
+                                <!-- <div class="col-xs-9"><?php echo $hotel['descriptionp']; ?></div> -->
                                 <div class="pull-bottom-right">
                                     <a href="<?php echo $hotel['hrefp']; ?>" ><button type="button" class= "btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i><strong> <?php echo $text_book; ?> </strong></button></a>
                                 </div>
@@ -258,7 +258,7 @@
                                     <div class="list-group">
                                         <a href="<?php echo $hotel[$i]['href'];?>" class="col-xs-12">
                                             <span class="col-lg-2 col-xs-12 text-primary"><?php echo $hotel[$i]['name'];?></span>
-                                            <span class="col-lg-4 col-xs-12 text-info"><strong><?php echo $hotel[$i]['description'];?></strong></span>
+                                            <span class="col-lg-4 col-xs-12 text-info"><strong><?php echo $hotel[$i]['room_deal'];?></strong></span>
                                             <?php if ($hotel[$i]['quantity'] == 1){ ?>
                                             <span class="col-lg-3 col-xs-12 text-danger"><strong><?php echo $text_ourlastroom; ?></strong></span>
                                             <?php } else { if ($hotel[$i]['quantity'] <= 5) { ?>

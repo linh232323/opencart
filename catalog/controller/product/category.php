@@ -401,6 +401,7 @@ class ControllerProductCategory extends Controller {
                         'thumb' => $image,
                         'name' => $room['name'],
                         'description' => utf8_substr(strip_tags(html_entity_decode($room['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+                        'room_deal' => utf8_substr(strip_tags(html_entity_decode($room['room_deal'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
                         'price' => $price,
                         'quantity' => $room['quantity'] - $stock,
                         'maxadults' => $room['maxadults'],
