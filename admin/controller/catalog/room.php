@@ -1009,27 +1009,27 @@ class ControllerCatalogRoom extends Controller {
 		}
 
 		// Attributes
-		$this->load->model('catalog/attribute');
+		$this->load->model('catalog/attribute_room');
 
 		if (isset($this->request->post['room_attribute'])) {
 			$room_attributes = $this->request->post['room_attribute'];
 		} elseif (isset($this->request->get['room_id'])) {
 			$room_attributes = $this->model_catalog_room->getRoomAttributes($this->request->get['room_id']);
 		} else {
-			$room_attributes = array();
+			$room_attributes = $this->model_catalog_attribute_room->getAttributes();
 		}
 
 		$data['room_attributes'] = array();
 
 		foreach ($room_attributes as $room_attribute) {
-			$attribute_info = $this->model_catalog_attribute->getAttribute($room_attribute['attribute_id']);
+			$attribute_info = $this->model_catalog_attribute_room->getAttribute($room_attribute['attribute_id']);
 
 			if ($attribute_info) {
 				$data['room_attributes'][] = array(
 					'attribute_id'                  => $room_attribute['attribute_id'],
 					'name'                          => $attribute_info['name'],
-					'room_attribute_description' => $room_attribute['room_attribute_description']
-				);
+                                        'room_attribute_description'    => $room_attribute['room_attribute_description']
+                                        );
 			}
 		}
                 

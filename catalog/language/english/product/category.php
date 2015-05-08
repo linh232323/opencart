@@ -12,6 +12,7 @@ $_['text_points']       = 'Reward Points:';
 $_['text_price']        = 'Price:';
 $_['text_tax']          = 'Ex Tax:';
 $_['text_compare']      = 'hotel Compare (%s)';
+$_['text_hotelreviews'] = '%s reviews';
 $_['text_sort']         = 'Sort By:';
 $_['text_default']      = 'Default';
 $_['text_name_asc']     = 'Name (A - Z)';

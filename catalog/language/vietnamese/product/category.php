@@ -12,6 +12,7 @@ $_['text_points']       = 'Điểm thưởng:';
 $_['text_price']        = 'Giá:'; 
 $_['text_tax']          = 'Trước thuế:'; 
 $_['text_reviews']      = 'Dựa trên %s đánh giá.'; 
+$_['text_hotelreviews']    = '%s đánh giá'; 
 $_['text_compare']      = 'So sánh sản phẩm (%s)'; 
 $_['text_display']      = 'Hiển thị:';
 $_['text_list']         = 'Danh sách';

@@ -16,7 +16,7 @@ $_['text_qty']          = 'Số lượng:';
 $_['text_minimum']      = 'Sản phẩm này có số lượng đặt tối thiểu %s';
 $_['text_or']           = '- Hoặc -';
 $_['text_reviews']      = '%s đánh giá'; 
-$_['text_hotelreviews']    = '%s đánh giá'; 
+$_['text_hotelreviews'] = '%s đánh giá'; 
 $_['text_write']        = 'Viết đánh giá';
 $_['text_no_reviews']   = 'Không có đánh giá cho khách sạn này.';
 $_['text_note']         = '<span style="color: #FF0000;">Lưu ý:</span> không hỗ trợ HTML!';

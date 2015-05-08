@@ -2,8 +2,10 @@
 // Text
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_api']                         = 'API';
-$_['text_attribute']                   = 'Attributes';
-$_['text_attribute_group']             = 'Attribute Groups';
+$_['text_attribute']                   = "Attribute's Hotel";
+$_['text_attribute_group']             = 'Attribute Hotel Groups';
+$_['text_attribute_room']              = "Attribute's Room";
+$_['text_attribute_room_group']        = 'Attribute Room Groups';
 $_['text_backup']                      = 'Backup / Restore';
 $_['text_banner']                      = 'Banners';
 $_['text_catalog']                     = 'Catalog';

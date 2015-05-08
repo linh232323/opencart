@@ -30,6 +30,7 @@
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
                         <li><a href="#tab-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+                        <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -256,7 +257,6 @@
                                     <thead>
                                         <tr>
                                             <td class="text-left"><?php echo $entry_attribute; ?></td>
-                                            <td class="text-left"><?php echo $entry_text; ?></td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -264,12 +264,10 @@
                                         <?php $attribute_row = 0; ?>
                                         <?php foreach ($room_attributes as $room_attribute) { ?>
                                         <tr id="attribute-row<?php echo $attribute_row; ?>">
-                                            <td class="text-left" style="width: 40%;"><input type="text" name="room_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $room_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" class="form-control" />
+                                            <td class="text-left" style="width: 80%;"><input type="text" name="room_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $room_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" class="form-control" />
                                                 <input type="hidden" name="room_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $room_attribute['attribute_id']; ?>" /></td>
-                                            <td class="text-left"><?php foreach ($languages as $language) { ?>
-                                                <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                                    <textarea name="room_attribute[<?php echo $attribute_row; ?>][room_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"><?php echo isset($room_attribute['room_attribute_description'][$language['language_id']]) ? $room_attribute['room_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
-                                                </div>
+                                           <?php foreach ($languages as $language) { ?>
+                                                 <input type="hidden" name="room_attribute[<?php echo $attribute_row; ?>][room_attribute_description][<?php echo $language['language_id']; ?>][text]" />
                                                 <?php } ?></td>
                                             <td class="text-left"><button type="button" onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                         </tr>
@@ -278,7 +276,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="2"></td>
+                                            <td colspan="1"></td>
                                             <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="<?php echo $button_attribute_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                         </tr>
                                     </tfoot>
@@ -969,12 +967,10 @@
   var attribute_row = <?php echo $attribute_row; ?> ;
                 function addAttribute() {
                     html = '<tr id="attribute-row' + attribute_row + '">';
-                    html += '  <td class="text-left" style="width: 20%;"><input type="text" name="room_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="room_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
-                    html += '  <td class="text-left">';
+                    html += '  <td class="text-left" style="width: 80%;"><input type="text" name="room_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="room_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
                             <?php foreach ($languages as $language) { ?>
-                            html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="room_attribute[' + attribute_row + '][room_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
+                            html += '<input type="hidden" name="room_attribute[' + attribute_row + '][room_attribute_description][<?php echo $language['language_id']; ?>][text]"/>';
                             <?php } ?>
-                            html += '  </td>';
                     html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
                     html += '</tr>';
 
@@ -989,7 +985,7 @@
             $('input[name=\'room_attribute[' + attribute_row + '][name]\']').autocomplete({
                 'source': function (request, response) {
                     $.ajax({
-                        url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                        url: 'index.php?route=catalog/attribute_room/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
                         dataType: 'json',
                         success: function (json) {
                             response($.map(json, function (item) {

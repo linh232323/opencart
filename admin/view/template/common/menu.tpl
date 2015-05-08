@@ -14,6 +14,12 @@
           <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
         </ul>
       </li>
+      <li><a class="parent"><?php echo $text_attribute_room; ?></a>
+        <ul>
+          <li><a href="<?php echo $attribute_room; ?>"><?php echo $text_attribute_room; ?></a></li>
+          <li><a href="<?php echo $attribute_room_group; ?>"><?php echo $text_attribute_room_group; ?></a></li>
+        </ul>
+      </li>
       <li><a href="<?php echo $option; ?>"><?php echo $text_option; ?></a></li>
       <li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li>
       <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
