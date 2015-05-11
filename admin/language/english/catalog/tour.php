@@ -54,13 +54,18 @@ $_['entry_info']             = 'Tour Info';
 $_['entry_price']            = 'Price';
 $_['entry_date']             = 'Date';
 $_['entry_price']            = 'Price';
-$_['entry_price_net']        = 'Price net';
-$_['entry_price_percent']    = 'Price percent';
-$_['entry_price_gross']      = 'Price gross';
-$_['entry_extra_net']        = 'Extra net';
-$_['entry_extra_percent']    = 'Extra percent';
-$_['entry_extra_gross']      = 'Extra gross';
+$_['entry_adult_net']        = 'Adult';
+$_['entry_adult_percent']    = 'Percent';
+$_['entry_adult_gross']      = 'Adult gross';
+$_['entry_child_net']        = 'Child (5-12)';
+$_['entry_child_percent']    = 'Percent';
+$_['entry_child_gross']      = 'Child gross';
+$_['entry_baby_net']         = 'Child (0-5)';
+$_['entry_baby_percent']     = 'Percent';
+$_['entry_baby_gross']       = 'Child gross';
 $_['entry_discount']         = 'Discount';
+$_['entry_transporter']      = 'Transporter';
+$_['entry_schedule']         = 'Schedule';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
@@ -74,6 +79,7 @@ $_['help_tag']               = 'comma separated';
 
 // Tab
 $_['tab_price']              = 'Price';
+$_['tab_detail']             = 'Detail';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

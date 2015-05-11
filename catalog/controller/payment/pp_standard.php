@@ -95,6 +95,8 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 
 			$data['custom'] = $this->session->data['order_id'];
+                        
+                        $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_standard_pending_status_id'));
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/payment/pp_standard.tpl', $data);
@@ -114,7 +116,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
-
+                
 		if ($order_info) {
 			$request = 'cmd=_notify-validate';
 
@@ -194,7 +196,7 @@ class ControllerPaymentPPStandard extends Controller {
 					case 'Voided':
 						$order_status_id = $this->config->get('pp_standard_voided_status_id');
 						break;
-				}
+                                                }
 
 				if (!$order_info['order_status_id']) {
 					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);

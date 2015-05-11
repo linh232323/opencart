@@ -121,7 +121,6 @@ class ControllerCatalogTour extends Controller {
 
                             $this->response->redirect($this->url->link('catalog/tour', 'token=' . $this->session->data['token'] . $url, 'SSL'));
                     }
-
                     $this->getForm();
                 }else{
                    
@@ -390,6 +389,8 @@ class ControllerCatalogTour extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_tag'] = $this->language->get('entry_tag');
+		$data['entry_transporter'] = $this->language->get('entry_transporter');
+		$data['entry_schedule'] = $this->language->get('entry_schedule');
 
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_add'] = $this->language->get('button_add');
@@ -545,20 +546,27 @@ class ControllerCatalogTour extends Controller {
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
 		$data['entry_price'] = $this->language->get('entry_price');
-		$data['entry_price_net'] = $this->language->get('entry_price_net');
-		$data['entry_price_percent'] = $this->language->get('entry_price_percent');
-		$data['entry_price_gross'] = $this->language->get('entry_price_gross');
-		$data['entry_extra_net'] = $this->language->get('entry_extra_net');
-		$data['entry_extra_percent'] = $this->language->get('entry_extra_percent');
-		$data['entry_extra_gross'] = $this->language->get('entry_extra_gross');
+		$data['entry_adult_net'] = $this->language->get('entry_adult_net');
+		$data['entry_adult_percent'] = $this->language->get('entry_adult_percent');
+		$data['entry_adult_gross'] = $this->language->get('entry_adult_gross');
+		$data['entry_child_net'] = $this->language->get('entry_child_net');
+		$data['entry_child_percent'] = $this->language->get('entry_child_percent');
+		$data['entry_child_gross'] = $this->language->get('entry_child_gross');
+		$data['entry_baby_net'] = $this->language->get('entry_baby_net');
+		$data['entry_baby_percent'] = $this->language->get('entry_baby_percent');
+		$data['entry_baby_gross'] = $this->language->get('entry_baby_gross');
 		$data['entry_discount'] = $this->language->get('entry_discount');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_transporter'] = $this->language->get('entry_transporter');
+		$data['entry_schedule'] = $this->language->get('entry_schedule');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_manufacturer'] = $this->language->get('help_manufacturer');
 		$data['help_tag'] = $this->language->get('help_tag');
+		$data['help_category'] = $this->language->get('help_category');
 
 		$data['button_save'] = $this->language->get('button_save');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_price_add'] = $this->language->get('button_price_add');
 		$data['button_image_add'] = $this->language->get('button_image_add');
@@ -585,28 +593,40 @@ class ControllerCatalogTour extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['tour_price_net'])) {
-			$data['error_tour_price_net'] = $this->error['tour_price_net'];
+		if (isset($this->error['tour_adult_net'])) {
+			$data['error_tour_adult_net'] = $this->error['tour_adult_net'];
 		} else {
-			$data['error_tour_price_net'] = array();
+			$data['error_tour_adult_net'] = array();
 		}
                 
-		if (isset($this->error['tour_extra_net'])) {
-			$data['error_tour_extra_net'] = $this->error['tour_extra_net'];
+		if (isset($this->error['tour_child_net'])) {
+			$data['error_tour_child_net'] = $this->error['tour_child_net'];
 		} else {
-			$data['error_tour_extra_net'] = array();
+			$data['error_tour_child_net'] = array();
 		}
                 
-		if (isset($this->error['tour_extra_percent'])) {
-			$data['error_tour_extra_percent'] = $this->error['tour_extra_percent'];
+		if (isset($this->error['tour_baby_net'])) {
+			$data['error_tour_baby_net'] = $this->error['tour_baby_net'];
 		} else {
-			$data['error_tour_extra_percent'] = array();
+			$data['error_tour_baby_net'] = array();
 		}
                 
-		if (isset($this->error['tour_price_percent'])) {
-			$data['error_tour_price_percent'] = $this->error['tour_price_percent'];
+		if (isset($this->error['tour_child_percent'])) {
+			$data['error_tour_child_percent'] = $this->error['tour_child_percent'];
 		} else {
-			$data['error_tour_price_percent'] = array();
+			$data['error_tour_child_percent'] = array();
+		}
+                
+		if (isset($this->error['tour_baby_percent'])) {
+			$data['error_tour_baby_percent'] = $this->error['tour_baby_percent'];
+		} else {
+			$data['error_tour_baby_percent'] = array();
+		}
+                
+		if (isset($this->error['tour_adult_percent'])) {
+			$data['error_tour_adult_percent'] = $this->error['tour_adult_percent'];
+		} else {
+			$data['error_tour_adult_percent'] = array();
 		}
                 
 		if (isset($this->error['tour_price_discount'])) {
@@ -839,6 +859,8 @@ class ControllerCatalogTour extends Controller {
 
 		// Tour Parent
 		$this->load->model('catalog/category');
+                
+		$this->load->model('catalog/tour');
 
 		if (isset($this->request->post['tour_category'])) {
 			$categories = $this->request->post['tour_category'];
@@ -884,8 +906,17 @@ class ControllerCatalogTour extends Controller {
 				);
 			}
 		}
+               
+                // Detail
+		if (isset($this->request->post['tour_schedule'])) {
+			$data['tour_schedules'] = $this->request->post['tour_schedule'];
+		} elseif (isset($this->request->get['tour_id'])) {
+			$data['tour_schedules'] = $this->model_catalog_tour->getTourSchedules($this->request->get['tour_id']);
+		} else {
+			$data['tour_schedules'] = array();
+		}
 
-                
+
 		// Price
 		$this->load->model('catalog/price');
 
@@ -900,27 +931,38 @@ class ControllerCatalogTour extends Controller {
 		$data['tour_prices'] = array();
                 
                 foreach ($tour_prices as $tour_price) {
-                    if(!isset($tour_price['tour_extra_percent'])){
-                        $tour_price['tour_extra_percent'] = 0;
+                    if(!isset($tour_price['tour_child_percent'])){
+                        $tour_price['tour_child_percent'] = 0;
                     }
-                    $tour_extra_gross = (int)$tour_price['tour_extra_net'] + (((int)$tour_price['tour_extra_net']/100) * (int)$tour_price['tour_extra_percent']);
                     
-                    if(!isset($tour_price['tour_price_percent'])){
-                        $tour_price['tour_price_percent'] =0;
+                    $tour_child_gross = (int)$tour_price['tour_child_net'] + (((int)$tour_price['tour_child_net']/100) * (int)$tour_price['tour_child_percent']);
+                    
+                    if(!isset($tour_price['tour_baby_percent'])){
+                        $tour_price['tour_baby_percent'] = 0;
                     }
-                    $tour_price_gross = (int)$tour_price['tour_price_net'] + (((int)$tour_price['tour_price_net']/100) * (int)$tour_price['tour_price_percent']);
                     
-			$data['tour_prices'][] = array(
-				'price_id'                   => $tour_price['price_id'],
-				'tour_date'               => $tour_price['tour_date'],
-				'tour_price_net'          => $tour_price['tour_price_net'],
-				'tour_price_percent'      => $tour_price['tour_price_percent'],
-				'tour_price_gross'        => $tour_price_gross,
-				'tour_extra_net'          => $tour_price['tour_extra_net'],
-				'tour_extra_percent'      => $tour_price['tour_extra_percent'],
-				'tour_extra_gross'        => $tour_extra_gross,
-				'tour_price_discount'     => $tour_price['tour_price_discount']
-			);
+                    $tour_baby_gross = (int)$tour_price['tour_baby_net'] + (((int)$tour_price['tour_baby_net']/100) * (int)$tour_price['tour_baby_percent']);
+                    
+                    if(!isset($tour_price['tour_adult_percent'])){
+                        $tour_price['tour_adult_percent'] =0;
+                    }
+                    
+                    $tour_adult_gross = (int)$tour_price['tour_adult_net'] + (((int)$tour_price['tour_adult_net']/100) * (int)$tour_price['tour_adult_percent']);
+                    
+                    $data['tour_prices'][] = array(
+                            'price_id'                   => $tour_price['price_id'],
+                            'tour_date'               => $tour_price['tour_date'],
+                            'tour_adult_net'          => $tour_price['tour_adult_net'],
+                            'tour_adult_percent'      => $tour_price['tour_adult_percent'],
+                            'tour_adult_gross'        => $tour_adult_gross,
+                            'tour_child_net'          => $tour_price['tour_child_net'],
+                            'tour_child_percent'      => $tour_price['tour_child_percent'],
+                            'tour_child_gross'        => $tour_child_gross,
+                            'tour_baby_net'          => $tour_price['tour_baby_net'],
+                            'tour_baby_percent'      => $tour_price['tour_baby_percent'],
+                            'tour_baby_gross'        => $tour_baby_gross,
+                            'tour_price_discount'     => $tour_price['tour_price_discount']
+                    );
 		}
 
 		// Images
@@ -976,37 +1018,52 @@ class ControllerCatalogTour extends Controller {
 			}
 		}
                 
-		foreach ($this->request->post['tour_price'] as $value) {
-			if (!empty($value['tour_price_net'])){
-                            if (!is_numeric($value['tour_price_net'])) {
-                                    $this->error['tour_price_net'] = $this->language->get('error_tour_price_net');
+                if (isset($this->request->post['tour_price'])){
+                    foreach ($this->request->post['tour_price'] as $value) {
+                            if (!empty($value['tour_adult_net'])){
+                                if (!is_numeric($value['tour_adult_net'])) {
+                                        $this->error['tour_adult_net'] = $this->language->get('error_tour_adult_net');
+                                }
                             }
-                        }
-                        
-                        if(!empty($value['tour_price_percent'])){
-                            if (!is_numeric($value['tour_price_percent'])) {
-                                    $this->error['tour_price_net'] = $this->language->get('error_tour_price_percent');
-                            }
-                        }
-                        
-                        if (!empty($value['tour_extra_net'])){
-                            if (!is_numeric($value['tour_extra_net'])) {
-                                    $this->error['tour_extra_net'] = $this->language->get('error_tour_extra_net');
-                            }
-                        }
-                        
-                        if(!empty($value['tour_extra_percent'])){
-                            if (!is_numeric($value['tour_extra_percent'])) {
-                                    $this->error['tour_extra_percent'] = $this->language->get('error_tour_extra_percent');
-                            }
-                        }
-                        if(!empty($value['tour_price_discount'])){
-                            if (!is_numeric($value['tour_price_discount'])) {
-                                    $this->error['tour_price_discount'] = $this->language->get('error_tour_price_discount');
-                            }
-                        }
-		}
 
+                            if(!empty($value['tour_adult_percent'])){
+                                if (!is_numeric($value['tour_adult_percent'])) {
+                                        $this->error['tour_adult_net'] = $this->language->get('error_tour_adult_percent');
+                                }
+                            }
+
+                            if (!empty($value['tour_child_net'])){
+                                if (!is_numeric($value['tour_child_net'])) {
+                                        $this->error['tour_child_net'] = $this->language->get('error_tour_child_net');
+                                }
+                            }
+
+                            if (!empty($value['tour_baby_net'])){
+                                if (!is_numeric($value['tour_baby_net'])) {
+                                        $this->error['tour_baby_net'] = $this->language->get('error_tour_baby_net');
+                                }
+                            }
+
+                            if(!empty($value['tour_child_percent'])){
+                                if (!is_numeric($value['tour_child_percent'])) {
+                                        $this->error['tour_child_percent'] = $this->language->get('error_tour_child_percent');
+                                }
+                            }
+
+                            if(!empty($value['tour_baby_percent'])){
+                                if (!is_numeric($value['tour_baby_percent'])) {
+                                        $this->error['tour_baby_percent'] = $this->language->get('error_tour_baby_percent');
+                                }
+                            }
+
+                            if(!empty($value['tour_price_discount'])){
+                                if (!is_numeric($value['tour_price_discount'])) {
+                                        $this->error['tour_price_discount'] = $this->language->get('error_tour_price_discount');
+                                }
+                            }
+                    }
+                }
+                
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
 		}

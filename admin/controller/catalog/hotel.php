@@ -1073,9 +1073,11 @@ class ControllerCatalogHotel extends Controller {
 			}
 		}
                 
-		if ((!is_numeric($this->request->post['maps_apil'])) || (!is_numeric($this->request->post['maps_apir']))) {
-			$this->error['maps_api'] = $this->language->get('error_maps_api');
-		}
+                if (!empty($this->request->post['maps_apil']) && !empty($this->request->post['maps_apir'])){
+                    if ((!is_numeric($this->request->post['maps_apil'])) || (!is_numeric($this->request->post['maps_apir']))) {
+                            $this->error['maps_api'] = $this->language->get('error_maps_api');
+                    }
+                }
 		
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');

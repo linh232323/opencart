@@ -108,7 +108,7 @@ $_['error_warning']          = 'Warning: Please check the form carefully for err
 $_['error_permission']       = 'Warning: You do not have permission to modify hotels!';
 $_['error_name']             = 'Hotel Name must be greater than 3 and less than 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
-$_['error_model']            = 'Hotel Model must be greater than 1 and less than 64 characters!';
+$_['error_model']            = 'Category must be greater than 1 and less than 64 characters!';
 $_['error_maps_api']         = 'API must be a number!';
 $_['error_keyword']          = 'SEO keyword already in use!';
 

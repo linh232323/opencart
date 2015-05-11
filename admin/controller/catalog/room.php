@@ -713,6 +713,11 @@ class ControllerCatalogRoom extends Controller {
 		} else {
 			$data['error_room_price_discount'] = array();
 		}
+		if (isset($this->error['room_price_null'])) {
+			$data['error_room_price_null'] = $this->error['room_price_null'];
+		} else {
+			$data['error_room_price_null'] = array();
+		}
                 
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
@@ -1028,7 +1033,6 @@ class ControllerCatalogRoom extends Controller {
 				$data['room_attributes'][] = array(
 					'attribute_id'                  => $room_attribute['attribute_id'],
 					'name'                          => $attribute_info['name'],
-                                        'room_attribute_description'    => $room_attribute['room_attribute_description']
                                         );
 			}
 		}
@@ -1328,36 +1332,40 @@ class ControllerCatalogRoom extends Controller {
 			}
 		}
                 
-		foreach ($this->request->post['room_price'] as $value) {
-			if (!empty($value['room_price_net'])){
-                            if (!is_numeric($value['room_price_net'])) {
-                                    $this->error['room_price_net'] = $this->language->get('error_room_price_net');
+                if(isset($this->request->post['room_price'])){
+                    foreach ($this->request->post['room_price'] as $value) {
+                            if (!empty($value['room_price_net'])){
+                                if (!is_numeric($value['room_price_net'])) {
+                                        $this->error['room_price_net'] = $this->language->get('error_room_price_net');
+                                }
                             }
-                        }
-                        
-                        if(!empty($value['room_price_percent'])){
-                            if (!is_numeric($value['room_price_percent'])) {
-                                    $this->error['room_price_net'] = $this->language->get('error_room_price_percent');
+
+                            if(!empty($value['room_price_percent'])){
+                                if (!is_numeric($value['room_price_percent'])) {
+                                        $this->error['room_price_net'] = $this->language->get('error_room_price_percent');
+                                }
                             }
-                        }
-                        
-                        if (!empty($value['room_extra_net'])){
-                            if (!is_numeric($value['room_extra_net'])) {
-                                    $this->error['room_extra_net'] = $this->language->get('error_room_extra_net');
+
+                            if (!empty($value['room_extra_net'])){
+                                if (!is_numeric($value['room_extra_net'])) {
+                                        $this->error['room_extra_net'] = $this->language->get('error_room_extra_net');
+                                }
                             }
-                        }
-                        
-                        if(!empty($value['room_extra_percent'])){
-                            if (!is_numeric($value['room_extra_percent'])) {
-                                    $this->error['room_extra_percent'] = $this->language->get('error_room_extra_percent');
+
+                            if(!empty($value['room_extra_percent'])){
+                                if (!is_numeric($value['room_extra_percent'])) {
+                                        $this->error['room_extra_percent'] = $this->language->get('error_room_extra_percent');
+                                }
                             }
-                        }
-                        if(!empty($value['room_price_discount'])){
-                            if (!is_numeric($value['room_price_discount'])) {
-                                    $this->error['room_price_discount'] = $this->language->get('error_room_price_discount');
+                            if(!empty($value['room_price_discount'])){
+                                if (!is_numeric($value['room_price_discount'])) {
+                                        $this->error['room_price_discount'] = $this->language->get('error_room_price_discount');
+                                }
                             }
-                        }
-		}
+                    }
+                }else{
+                    $this->error['room_price_null'] = $this->language->get('error_room_price_null');
+                }
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');

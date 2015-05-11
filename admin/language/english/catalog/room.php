@@ -124,8 +124,9 @@ $_['error_room_price_percent']= 'Price must be a number!';
 $_['error_room_extra_net']= 'Extra must be a number!';
 $_['error_room_extra_percent']= 'Extra must be a number!';
 $_['error_room_price_discount'] = 'Discount must be a number!';
+$_['error_room_price_null'] = 'Enter the price!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
-$_['error_model']            = 'Room Model must be greater than 1 and less than 64 characters!';
+$_['error_model']            = 'Hotel must be greater than 1 and less than 64 characters!';
 $_['error_keyword']          = 'SEO keyword already in use!';
 
 // Button

@@ -3,7 +3,7 @@ class ModelCatalogTour extends Model {
 	public function addTour($data) {
 		$this->event->trigger('pre.admin.tour.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "tour SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', author_id = '" . (int)$data['author_id'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "tour SET model = '" . $this->db->escape($data['model']) . "', quantity = '" . (int)$data['quantity'] . "', author_id = '" . (int)$data['author_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', shipping = '" . (int)$data['shipping'] . "', date_added = NOW()");
 
 		$tour_id = $this->db->getLastId();
 
@@ -12,7 +12,7 @@ class ModelCatalogTour extends Model {
 		}
 
 		foreach ($data['tour_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "tour_description SET tour_id = '" . (int)$tour_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) ."', info = '" . $this->db->escape($value['info']) . "', detail = '" . $this->db->escape($value['detail']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "tour_description SET tour_id = '" . (int)$tour_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) ."', info = '" . $this->db->escape($value['info']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		if (isset($data['tour_store'])) {
@@ -20,29 +20,28 @@ class ModelCatalogTour extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_store SET tour_id = '" . (int)$tour_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
-
-		if (isset($data['tour_attribute'])) {
-			foreach ($data['tour_attribute'] as $tour_attribute) {
-				if ($tour_attribute['attribute_id']) {
-					$this->db->query("DELETE FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "' AND attribute_id = '" . (int)$tour_attribute['attribute_id'] . "'");
-
-					foreach ($tour_attribute['tour_attribute_description'] as $language_id => $tour_attribute_description) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "tour_attribute SET tour_id = '" . (int)$tour_id . "', attribute_id = '" . (int)$tour_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($tour_attribute_description['text']) . "'");
-					}
-				}
-			}
-		}
+                
+		if (isset($data['tour_schedule'])) {
+			foreach ($data['tour_schedule'] as $tour_schedule) {
+					$this->db->query("DELETE FROM " . DB_PREFIX . "tour_schedule WHERE tour_id = '" . (int)$tour_id .  "'");
+                            foreach ($tour_schedule['schedule_description'] as $language_id => $schedule_description) {
+                                            $this->db->query("INSERT INTO " . DB_PREFIX . "tour_schedule SET tour_id = '" . (int)$tour_id . "', transporter = '" . (int)$tour_schedule['transporter'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($schedule_description['schedule']) . "'");
+                            }
+                        }
+                }
                 
 		if (isset($data['tour_price'])) {
 			foreach ($data['tour_price'] as $tour_price) {
 				  
-                                $tour_price_gross = $this->db->escape($tour_price['tour_price_net']) + (($this->db->escape($tour_price['tour_price_net'])/100) * $this->db->escape($tour_price['tour_price_percent']));
+                                $tour_adult_gross = $this->db->escape($tour_price['tour_adult_net']) + (($this->db->escape($tour_price['tour_adult_net'])/100) * $this->db->escape($tour_price['tour_adult_percent']));
                 
-                                $tour_extra_gross = $this->db->escape($tour_price['tour_extra_net']) + (($this->db->escape($tour_price['tour_extra_net'])/100) * $this->db->escape($tour_price['tour_extra_percent']));
+                                $tour_child_gross = $this->db->escape($tour_price['tour_child_net']) + (($this->db->escape($tour_price['tour_child_net'])/100) * $this->db->escape($tour_price['tour_child_percent']));
+                                
+                                $tour_baby_gross = $this->db->escape($tour_price['tour_baby_net']) + (($this->db->escape($tour_price['tour_baby_net'])/100) * $this->db->escape($tour_price['tour_baby_percent']));
 
 				$this->db->query("DELETE FROM " . DB_PREFIX . "tour_price WHERE tour_id = '" . (int)$tour_id . "' AND price_id = '" . (int)$tour_price['price_id'] . "'");
 
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_price SET tour_id = '" . (int)$tour_id . "', price_id = '" . (int)$tour_price['price_id'] . "', date_form = '" . $tour_price['tour_date']['1']['date'] . "', date_to = '" . $tour_price['tour_date']['2']['date'] . "', price_net = '" .  $this->db->escape($tour_price['tour_price_net']) . "', price_percent = '" .  $this->db->escape($tour_price['tour_price_percent']) . "', price_gross = '" .  $tour_price_gross . "', extra_net = '" .  $this->db->escape($tour_price['tour_extra_net']) . "', extra_percent = '" .  $this->db->escape($tour_price['tour_extra_percent']) . "', extra_gross = '" .  $tour_extra_gross . "', discount = '" .  $this->db->escape($tour_price['tour_price_discount']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_price SET tour_id = '" . (int)$tour_id . "', price_id = '" . (int)$tour_price['price_id'] . "', date_form = '" . $tour_price['tour_date']['1']['date'] . "', date_to = '" . $tour_price['tour_date']['2']['date'] . "', adult_net = '" .  $this->db->escape($tour_price['tour_adult_net']) . "', adult_percent = '" .  $this->db->escape($tour_price['tour_adult_percent']) . "', adult_gross = '" .  $tour_adult_gross . "', child_net = '" .  $this->db->escape($tour_price['tour_child_net']) . "', child_percent = '" .  $this->db->escape($tour_price['tour_child_percent']) . "', child_gross = '" .  $tour_child_gross . "', baby_net = '" .  $this->db->escape($tour_price['tour_baby_net']) . "', baby_percent = '" .  $this->db->escape($tour_price['tour_baby_percent']) . "', baby_gross = '" .  $tour_baby_gross . "', discount = '" .  $this->db->escape($tour_price['tour_price_discount']) . "'");
 				
 			}
 		}
@@ -89,9 +88,9 @@ class ModelCatalogTour extends Model {
 			}
 		}
 
-		if (isset($data['tour_hotel'])) {
-			foreach ($data['tour_hotel'] as $hotel_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_hotel SET tour_id = '" . (int)$tour_id . "', hotel_id = '" . (int)$hotel_id . "'");
+		if (isset($data['tour_category'])) {
+			foreach ($data['tour_category'] as $category_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_category SET tour_id = '" . (int)$tour_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
 
@@ -142,7 +141,7 @@ class ModelCatalogTour extends Model {
 	public function editTour($tour_id, $data) {
 		$this->event->trigger('pre.admin.tour.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "tour SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE tour_id = '" . (int)$tour_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "tour SET model = '" . $this->db->escape($data['model']) . "', quantity = '" . (int)$data['quantity'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', shipping = '" . (int)$data['shipping'] . "', date_modified = NOW() WHERE tour_id = '" . (int)$tour_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "tour SET image = '" . $this->db->escape($data['image']) . "' WHERE tour_id = '" . (int)$tour_id ."'");
@@ -151,7 +150,7 @@ class ModelCatalogTour extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_description WHERE tour_id = '" . (int)$tour_id . "'");
 
 		foreach ($data['tour_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "tour_description SET tour_id = '" . (int)$tour_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', info = '" . $this->db->escape($value['info']) . "', detail = '" . $this->db->escape($value['detail']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "tour_description SET tour_id = '" . (int)$tour_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', info = '" . $this->db->escape($value['info']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_store WHERE tour_id = '" . (int)$tour_id . "'");
@@ -161,33 +160,30 @@ class ModelCatalogTour extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_store SET tour_id = '" . (int)$tour_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
-
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "'");
-
-		if (!empty($data['tour_attribute'])) {
-			foreach ($data['tour_attribute'] as $tour_attribute) {
-				if ($tour_attribute['attribute_id']) {
-					$this->db->query("DELETE FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "' AND attribute_id = '" . (int)$tour_attribute['attribute_id'] . "'");
-
-					foreach ($tour_attribute['tour_attribute_description'] as $language_id => $tour_attribute_description) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "tour_attribute SET tour_id = '" . (int)$tour_id . "', attribute_id = '" . (int)$tour_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($tour_attribute_description['text']) . "'");
-					}
-				}
-			}
-		}
+                $this->db->query("DELETE FROM " . DB_PREFIX . "tour_schedule WHERE tour_id = '" . (int)$tour_id . "'");
+                
+                if (isset($data['tour_schedule'])) {
+			foreach ($data['tour_schedule'] as $tour_schedule) {
+                            foreach ($tour_schedule['schedule_description'] as $language_id => $schedule_description) {
+                                            $this->db->query("INSERT INTO " . DB_PREFIX . "tour_schedule SET tour_id = '" . (int)$tour_id . "', transporter = '" . (int)$tour_schedule['transporter'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($schedule_description['schedule']) . "'");
+                            }
+                        }
+                }
                 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_price WHERE tour_id = '" . (int)$tour_id . "'");
 
 		if (!empty($data['tour_price'])) {
 			foreach ($data['tour_price'] as $tour_price) {
 					
-                                $tour_price_gross = $this->db->escape($tour_price['tour_price_net']) + (($this->db->escape($tour_price['tour_price_net'])/100) * $this->db->escape($tour_price['tour_price_percent']));
+                                $tour_adult_gross = $this->db->escape($tour_price['tour_adult_net']) + (($this->db->escape($tour_price['tour_adult_net'])/100) * $this->db->escape($tour_price['tour_adult_percent']));
                 
-                                $tour_extra_gross = $this->db->escape($tour_price['tour_extra_net']) + (($this->db->escape($tour_price['tour_extra_net'])/100) * $this->db->escape($tour_price['tour_extra_percent']));
+                                $tour_child_gross = $this->db->escape($tour_price['tour_child_net']) + (($this->db->escape($tour_price['tour_child_net'])/100) * $this->db->escape($tour_price['tour_child_percent']));
+                                
+                                $tour_baby_gross = $this->db->escape($tour_price['tour_baby_net']) + (($this->db->escape($tour_price['tour_baby_net'])/100) * $this->db->escape($tour_price['tour_baby_percent']));
 
 				$this->db->query("DELETE FROM " . DB_PREFIX . "tour_price WHERE tour_id = '" . (int)$tour_id . "' AND price_id = '" . (int)$tour_price['price_id'] . "'");
 
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_price SET tour_id = '" . (int)$tour_id . "', price_id = '" . (int)$tour_price['price_id'] . "', date_form = '" . $tour_price['tour_date']['1']['date'] . "', date_to = '" . $tour_price['tour_date']['2']['date'] . "', price_net = '" .  $this->db->escape($tour_price['tour_price_net']) . "', price_percent = '" .  $this->db->escape($tour_price['tour_price_percent']) . "', price_gross = '" .  $tour_price_gross . "', extra_net = '" .  $this->db->escape($tour_price['tour_extra_net']) . "', extra_percent = '" .  $this->db->escape($tour_price['tour_extra_percent']) . "', extra_gross = '" .  $tour_extra_gross . "', discount = '" .  $this->db->escape($tour_price['tour_price_discount']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_price SET tour_id = '" . (int)$tour_id . "', price_id = '" . (int)$tour_price['price_id'] . "', date_form = '" . $tour_price['tour_date']['1']['date'] . "', date_to = '" . $tour_price['tour_date']['2']['date'] . "', adult_net = '" .  $this->db->escape($tour_price['tour_adult_net']) . "', adult_percent = '" .  $this->db->escape($tour_price['tour_adult_percent']) . "', adult_gross = '" .  $tour_adult_gross . "', child_net = '" .  $this->db->escape($tour_price['tour_child_net']) . "', child_percent = '" .  $this->db->escape($tour_price['tour_child_percent']) . "', child_gross = '" .  $tour_child_gross . "', baby_net = '" .  $this->db->escape($tour_price['tour_baby_net']) . "', baby_percent = '" .  $this->db->escape($tour_price['tour_baby_percent']) . "', baby_gross = '" .  $tour_baby_gross . "', discount = '" .  $this->db->escape($tour_price['tour_price_discount']) . "'");
 				
 			}
 		}
@@ -245,11 +241,11 @@ class ModelCatalogTour extends Model {
 			}
 		}
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_hotel WHERE tour_id = '" . (int)$tour_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_category WHERE tour_id = '" . (int)$tour_id . "'");
 
-		if (isset($data['tour_hotel'])) {
-			foreach ($data['tour_hotel'] as $hotel_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_hotel SET tour_id = '" . (int)$tour_id . "', hotel_id = '" . (int)$hotel_id . "'");
+		if (isset($data['tour_category'])) {
+			foreach ($data['tour_category'] as $category_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "tour_to_category SET tour_id = '" . (int)$tour_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
 
@@ -322,7 +318,6 @@ class ModelCatalogTour extends Model {
 			$data['keyword'] = '';
 			$data['status'] = '0';
 
-			$data = array_merge($data, array('tour_attribute' => $this->getTourAttributes($tour_id)));
 			$data = array_merge($data, array('tour_price' => $this->getTourPrices($tour_id)));
 			$data = array_merge($data, array('tour_description' => $this->getTourDescriptions($tour_id)));
 			$data = array_merge($data, array('tour_discount' => $this->getTourDiscounts($tour_id)));
@@ -332,7 +327,7 @@ class ModelCatalogTour extends Model {
 			$data = array_merge($data, array('tour_related' => $this->getTourRelated($tour_id)));
 			$data = array_merge($data, array('tour_reward' => $this->getTourRewards($tour_id)));
 			$data = array_merge($data, array('tour_special' => $this->getTourSpecials($tour_id)));
-			$data = array_merge($data, array('tour_hotel' => $this->getProductHotels($tour_id)));
+			$data = array_merge($data, array('tour_category' => $this->getProductCategories($tour_id)));
 			$data = array_merge($data, array('tour_download' => $this->getTourDownloads($tour_id)));
 			$data = array_merge($data, array('tour_layout' => $this->getTourLayouts($tour_id)));
 			$data = array_merge($data, array('tour_store' => $this->getTourStores($tour_id)));
@@ -346,7 +341,6 @@ class ModelCatalogTour extends Model {
 		$this->event->trigger('pre.admin.tour.delete', $tour_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour WHERE tour_id = '" . (int)$tour_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_price WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_description WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_discount WHERE tour_id = '" . (int)$tour_id . "'");
@@ -358,7 +352,7 @@ class ModelCatalogTour extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_related WHERE related_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_reward WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_special WHERE tour_id = '" . (int)$tour_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_hotel WHERE tour_id = '" . (int)$tour_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_category WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_download WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_layout WHERE tour_id = '" . (int)$tour_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tour_to_store WHERE tour_id = '" . (int)$tour_id . "'");
@@ -445,8 +439,8 @@ class ModelCatalogTour extends Model {
 		return $query->rows;
 	}
 
-	public function getToursByCategoryId($hotel_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour p LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_hotel p2c ON (p.tour_id = p2c.tour_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.hotel_id = '" . (int)$hotel_id . "' ORDER BY pd.name ASC");
+	public function getToursByCategoryId($category_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour p LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_category p2c ON (p.tour_id = p2c.tour_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id . "' ORDER BY pd.name ASC");
 
 		return $query->rows;
 	}
@@ -460,6 +454,8 @@ class ModelCatalogTour extends Model {
 			$tour_description_data[$result['language_id']] = array(
 				'name'             => $result['name'],
 				'description'      => $result['description'],
+				'info'             => $result['info'],
+				'detail'           => $result['detail'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
@@ -470,16 +466,16 @@ class ModelCatalogTour extends Model {
 		return $tour_description_data;
 	}
 
-	public function getProductHotels($tour_id) {
-		$tour_hotel_data = array();
+	public function getProductCategories($tour_id) {
+		$tour_category_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour_to_hotel WHERE tour_id = '" . (int)$tour_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour_to_category WHERE tour_id = '" . (int)$tour_id . "'");
 
 		foreach ($query->rows as $result) {
-			$tour_hotel_data[] = $result['hotel_id'];
+			$tour_category_data[] = $result['category_id'];
 		}
 
-		return $tour_hotel_data;
+		return $tour_category_data;
 	}
 
 	public function getTourFilters($tour_id) {
@@ -494,29 +490,6 @@ class ModelCatalogTour extends Model {
 		return $tour_filter_data;
 	}
 
-	public function getTourAttributes($tour_id) {
-		$tour_attribute_data = array();
-
-		$tour_attribute_query = $this->db->query("SELECT attribute_id FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "' GROUP BY attribute_id");
-
-		foreach ($tour_attribute_query->rows as $tour_attribute) {
-			$tour_attribute_description_data = array();
-
-			$tour_attribute_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour_attribute WHERE tour_id = '" . (int)$tour_id . "' AND attribute_id = '" . (int)$tour_attribute['attribute_id'] . "'");
-
-			foreach ($tour_attribute_description_query->rows as $tour_attribute_description) {
-				$tour_attribute_description_data[$tour_attribute_description['language_id']] = array('text' => $tour_attribute_description['text']);
-			}
-
-			$tour_attribute_data[] = array(
-				'attribute_id'                  => $tour_attribute['attribute_id'],
-				'tour_attribute_description' => $tour_attribute_description_data
-			);
-		}
-
-		return $tour_attribute_data;
-	}
-        
 	public function getTourPrices($tour_id) {
 		$tour_price_data = array();
 
@@ -537,18 +510,41 @@ class ModelCatalogTour extends Model {
 			$tour_price_data[] = array(
 				'price_id'                  => $tour_price['price_id'],
 				'tour_id'                => $tour_date['tour_id'],
-				'tour_price_net'         => $tour_date['price_net'],
-				'tour_price_percent'     => $tour_date['price_percent'],
-				'tour_price_gross'       => $tour_date['price_gross'],
+				'tour_adult_net'         => $tour_date['adult_net'],
+				'tour_adult_percent'     => $tour_date['adult_percent'],
+				'tour_adult_gross'       => $tour_date['adult_gross'],
 				'tour_price_discount'    => $tour_date['discount'],
-				'tour_extra_net'         => $tour_date['extra_net'],
-				'tour_extra_percent'     => $tour_date['extra_percent'],
-				'tour_extra_gross'       => $tour_date['extra_gross'],
+				'tour_child_net'         => $tour_date['child_net'],
+				'tour_child_percent'     => $tour_date['child_percent'],
+				'tour_child_gross'       => $tour_date['child_gross'],
+				'tour_baby_net'         => $tour_date['baby_net'],
+				'tour_baby_percent'     => $tour_date['baby_percent'],
+				'tour_baby_gross'       => $tour_date['baby_gross'],
 				'tour_date'              => $tour_date_data
 			);
 		}
 
 		return $tour_price_data;
+	}
+        
+	public function getTourSchedules($tour_id) {
+		$tour_schedule_data = array();
+
+		$tour_schedule_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tour_schedule WHERE tour_id = '" . (int)$tour_id . "'");
+                $i=0;
+		foreach ($tour_schedule_query->rows as $tour_schedule) {
+                    $tour_schedule_data[$i]['transporter'] = $tour_schedule['transporter'];
+                    if($tour_schedule['language_id']==2){
+			$tour_schedule_data[$i]['schedule_description'][2]['schedule'] = $tour_schedule['text'];
+                    }else{
+                        $tour_schedule_data[$i]['schedule_description'][1]['schedule'] = $tour_schedule['text'];
+                    $i++;
+                    }
+                    
+                    
+		}
+
+		return $tour_schedule_data;
 	}
 
 	public function getTourOptions($tour_id) {
@@ -745,11 +741,6 @@ class ModelCatalogTour extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalToursByAttributeId($attribute_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "tour_attribute WHERE attribute_id = '" . (int)$attribute_id . "'");
-
-		return $query->row['total'];
-	}
         
 	public function getTotalToursByPriceId($price_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "tour_price WHERE price_id = '" . (int)$price_id . "'");

@@ -1,5 +1,10 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
+    <?php 
+echo "<pre>";
+print_r ($_POST);
+echo "</pre>";
+?>
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
@@ -27,6 +32,7 @@
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-tour" class="form-horizontal">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+                        <li><a href="#tab-detail" data-toggle="tab"><?php echo $tab_detail; ?></a></li>
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
                         <li><a href="#tab-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
@@ -62,12 +68,6 @@
                                                 <textarea name="tour_description[<?php echo $language['language_id']; ?>][info]" placeholder="<?php echo $entry_info; ?>" id="input-info<?php echo $language['language_id']; ?>"><?php echo isset($tour_description[$language['language_id']]) ? $tour_description[$language['language_id']]['info'] : ''; ?></textarea>
                                             </div>
                                     </div>
-                                    <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-detail<?php echo $language['language_id']; ?>"><?php echo $entry_info; ?></label>
-                                            <div class="col-sm-10">
-                                                <textarea name="tour_description[<?php echo $language['language_id']; ?>][detail]" placeholder="<?php echo $entry_detail; ?>" id="input-detail<?php echo $language['language_id']; ?>"><?php echo isset($tour_description[$language['language_id']]) ? $tour_description[$language['language_id']]['info'] : ''; ?></textarea>
-                                            </div>
-                                    </div>
                                     <div class="form-group required">
                                         <label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
                                         <div class="col-sm-10">
@@ -97,6 +97,45 @@
                                     </div>
                                 </div>
                                 <?php } ?>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-detail">
+                            <div class="table-responsive">
+                                <table id="schedule" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-left"><?php echo $entry_transporter; ?></td>
+                                            <?php foreach ($languages as $language) { ?>
+                                            <td class="text-left"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $entry_schedule; ?> </td>
+                                            <?php } ?>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $schedule_row = 0; ?>
+                                        <?php foreach ($tour_schedules as $tour_schedule) { ?>
+                                        <tr id="schedule-row<?php echo $schedule_row; ?>">
+                                            <td class="text-left" style="width: 20%;"><select name="tour_schedule[<?php echo $schedule_row;?>][transporter]" class="form-control" >
+                                                       <option value="1">Train</option>
+                                                       <option value="2">Fly</option>
+                                                       <option value="3">Bus</option>
+                                                        </select></td>
+                                                <input type="hidden" name="tour_schedule[<?php echo $schedule_row; ?>][schedule_id]" value="<?php echo $tour_schedule['schedule_id']; ?>" /></td>
+                                           <?php foreach ($languages as $language) { ?>
+                                           <td style="width: 35%;"><textarea name="tour_schedule[<?php echo $schedule_row; ?>][schedule_description][<?php echo $language['language_id']; ?>][schedule]" placeholder="<?php echo $entry_schedule; ?>" id="input-schedule<?php echo $language['language_id']; ?>" cols="50" rows="15"><?php echo isset($tour_schedules[$schedule_row]['schedule_description'][$language['language_id']]) ? $tour_schedules[$schedule_row]['schedule_description'][$language['language_id']]['schedule'] : ''; ?></textarea></td>
+                                                <?php } ?>
+                                            <td class="text-left"><button type="button" onclick="$('#schedule-row<?php echo $schedule_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                        </tr>
+                                        <?php $schedule_row++; ?>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-left"><button type="button" onclick="addSchedule();" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary" id="detail"><i class="fa fa-plus-circle"></i></button></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-data">
@@ -164,6 +203,7 @@
                                 <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                                    <input type="hidden" name="author_id" value="<?php echo $author_id;?>"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -238,17 +278,23 @@
                         <div class="tab-pane" id="tab-price">
                             <div class="table-responsive">
                                 <div class="col-sm-10">
-                                    <?php if ($error_tour_price_net) { ?>
-                                    <div class="text-danger"><?php echo ($error_tour_price_net) ?></div>
+                                    <?php if ($error_tour_adult_net) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_adult_net) ?></div>
                                     <?php } ?> 
-                                    <?php if ($error_tour_extra_net) { ?>
-                                    <div class="text-danger"><?php echo ($error_tour_extra_net) ?></div>
+                                    <?php if ($error_tour_child_net) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_child_net) ?></div>
                                     <?php } ?> 
-                                    <?php if ($error_tour_price_percent) { ?>
-                                    <div class="text-danger"><?php echo ($error_tour_price_percent) ?></div>
+                                    <?php if ($error_tour_baby_net) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_baby_net) ?></div>
                                     <?php } ?> 
-                                    <?php if ($error_tour_extra_percent) { ?>
-                                    <div class="text-danger"><?php echo ($error_tour_extra_percent) ?></div>
+                                    <?php if ($error_tour_adult_percent) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_adult_percent) ?></div>
+                                    <?php } ?> 
+                                    <?php if ($error_tour_child_percent) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_child_percent) ?></div>
+                                    <?php } ?>
+                                    <?php if ($error_tour_baby_percent) { ?>
+                                    <div class="text-danger"><?php echo ($error_tour_baby_percent) ?></div>
                                     <?php } ?>
                                     <?php if ($error_tour_price_discount) { ?>
                                     <div class="text-danger"><?php echo ($error_tour_price_discount) ?></div>
@@ -257,12 +303,12 @@
                                 <table id="price" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <td class="text-left"><?php echo $entry_price_net; ?></td>
-                                            <td class="text-left col-md-1"><?php echo $entry_price_percent; ?></td>
-                                            <td class="text-left"><?php echo $entry_price_gross; ?></td>
-                                            <td class="text-left"><?php echo $entry_extra_net; ?></td>
-                                            <td class="text-left col-md-1"><?php echo $entry_extra_percent; ?></td>
-                                            <td class="text-left"><?php echo $entry_extra_gross; ?></td>
+                                            <td class="text-left"><?php echo $entry_adult_net; ?></td>
+                                            <td class="text-left col-md-1"><?php echo $entry_adult_percent; ?></td>
+                                            <td class="text-left"><?php echo $entry_child_net; ?></td>
+                                            <td class="text-left col-md-1"><?php echo $entry_child_percent; ?></td>
+                                            <td class="text-left"><?php echo $entry_baby_net; ?></td>
+                                            <td class="text-left col-md-1"><?php echo $entry_baby_percent; ?></td>
                                             <td class="text-left col-md-1"><?php echo $entry_discount; ?></td>
                                             <td class="text-left col-md-3"><?php echo $entry_date; ?></td>
                                             <td width="40px"></td>
@@ -271,14 +317,14 @@
                                     <tbody>
                                         <?php $price_row = 0; ?>
                                         <?php foreach ($tour_prices as $tour_price) { ?>
-                                        <tr id="price-row<?php echo $price_row; ?>">
-                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_price_net]" value="<?php echo $tour_price['tour_price_net']; ?>" placeholder="<?php echo $entry_price_net; ?>" class="form-control" />
+                                        <tr class="price-row<?php echo $price_row; ?>">
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_adult_net]" value="<?php echo $tour_price['tour_adult_net']; ?>" placeholder="<?php echo $entry_adult_net; ?>" class="form-control" />
                                                 <input type="hidden" name="tour_price[<?php echo $price_row; ?>][price_id]" value="<?php echo $tour_price['price_id']; ?>" /></td>
-                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_price_percent]" value="<?php echo $tour_price['tour_price_percent']; ?>" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
-                                            <td class="text-left"><input type="text" placeholder="<?php echo $tour_price['tour_price_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
-                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_extra_net]" value="<?php echo $tour_price['tour_extra_net']; ?>" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>
-                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_extra_percent]" value="<?php echo $tour_price['tour_extra_percent']; ?>" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
-                                            <td class="text-left"><input type="text" placeholder="<?php echo $tour_price['tour_extra_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_adult_percent]" value="<?php echo $tour_price['tour_adult_percent']; ?>" placeholder="<?php echo $entry_adult_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_child_net]" value="<?php echo $tour_price['tour_child_net']; ?>" placeholder="<?php echo $entry_child_net; ?>" class="form-control" /></td>
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_child_percent]" value="<?php echo $tour_price['tour_child_percent']; ?>" placeholder="<?php echo $entry_child_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_baby_net]" value="<?php echo $tour_price['tour_baby_net']; ?>" placeholder="<?php echo $entry_baby_net; ?>" class="form-control" /></td>
+                                            <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_baby_percent]" value="<?php echo $tour_price['tour_baby_percent']; ?>" placeholder="<?php echo $entry_baby_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?> /></td>
                                             <td class="text-left"><input type="text" name="tour_price[<?php echo $price_row; ?>][tour_price_discount]" value="<?php echo $tour_price['tour_price_discount']; ?>" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>
                                             <td class="text-left">
                                                 <div class="input-group"><span class="input-group-addon">Date_form</span>
@@ -288,7 +334,15 @@
                                                     <input type="date" name="tour_price[<?php echo $price_row; ?>][tour_date][2][date]" rows="1" class="form-control" value="<?php echo isset($tour_price['tour_date']['2']['date']) ? $tour_price['tour_date']['2']['date'] : ''; ?>"/>  
                                                 </div>
                                             </td>
-                                            <td class="text-left"><button type="button" onclick="$('#price-row<?php echo $price_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                            <td class="text-left"><button type="button" onclick="$('.price-row<?php echo $price_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                        </tr>
+                                        <tr class="price-row<?php echo $price_row; ?>">
+                                            <td class="text-left"><?php echo $entry_adult_gross; ?></td>
+                                            <td class="text-left"><input type="text" placeholder="<?php echo $tour_price['tour_adult_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
+                                            <td class="text-left"><?php echo $entry_child_gross; ?></td>
+                                            <td class="text-left"><input type="text" placeholder="<?php echo $tour_price['tour_child_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
+                                            <td class="text-left"><?php echo $entry_baby_gross; ?></td>
+                                            <td class="text-left"><input type="text" placeholder="<?php echo $tour_price['tour_baby_gross']; ?>" class="form-control" id="disabledInput" disabled/></td>
                                         </tr>
                                         <?php $price_row++; ?>
                                         <?php } ?>
@@ -337,18 +391,16 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript"><!--
+    <script type="text/javascript">
 <?php foreach ($languages as $language) { ?>
-                $('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
-                <?php } ?>
+$('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
+<?php } ?>
 <?php foreach ($languages as $language) { ?>
-                $('#input-detail<?php echo $language['language_id']; ?>').summernote({height: 300});
-                <?php } ?>
-<?php foreach ($languages as $language) { ?>
-                $('#input-info<?php echo $language['language_id']; ?>').summernote({height: 300});
-                <?php } ?>
-//--></script> 
-    <script type="text/javascript"><!--
+$('#input-info<?php echo $language['language_id']; ?>').summernote({height: 300});
+<?php } ?>
+
+</script>  
+    <script type="text/javascript">
   // Manufacturer
                 $('input[name=\'manufacturer\']').autocomplete({
             'source': function (request, response) {
@@ -491,72 +543,53 @@
         $('#tour-related').delegate('.fa-minus-circle', 'click', function () {
             $(this).parent().remove();
         });
-  //--></script> 
-    <script type="text/javascript"><!--
-  var attribute_row = <?php echo $attribute_row; ?> ;
-                function addAttribute() {
-                    html = '<tr id="attribute-row' + attribute_row + '">';
-                    html += '  <td class="text-left" style="width: 20%;"><input type="text" name="tour_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" class="form-control" /><input type="hidden" name="tour_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
-                    html += '  <td class="text-left">';
-                            <?php foreach ($languages as $language) { ?>
-                            html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="tour_attribute[' + attribute_row + '][tour_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="1" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
-                            <?php } ?>
-                            html += '  </td>';
-                    html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-                    html += '</tr>';
+</script> 
+    <script type="text/javascript">
+var schedule_row = <?php echo $schedule_row; ?>;
+function addSchedule() {
+    html  = '<tr class="schedule-row' + schedule_row + '">';
+	html += '  <td class="text-left" ><input type="hidden" name="tour_schedule[' + schedule_row + '][schedule_id]" value="" /><select name="tour_schedule[' + schedule_row + '][transporter]" value="" class="form-control" >';
+	html += '  <option value="1">Bus<option>';
+	html += '  <option value="2">Traino<ption>';
+	html += '  <option value="3">Plane<option></td>';
+	<?php foreach ($languages as $language) { ?>
+        html += '  <td class="text-left" ><textarea name="tour_schedule[' + schedule_row + '][schedule_description][<?php echo $language['language_id']; ?>][schedule]" placeholder="<?php echo $entry_detail; ?>" id="input-schedule<?php echo $language['language_id']; ?>-' + schedule_row + '" cols="50" rows="15"><?php echo isset($tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]) ? $tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]['schedule'] : ''; ?></textarea></td>'
+        <?php } ?>
+	html += '  <td class="text-left"><button type="button" onclick="$(\'.schedule-row' + schedule_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+	$('#schedule tbody').append(html);
+        <?php foreach ($languages as $language) { ?>
+        $('#input-schedule<?php echo $language['language_id']; ?>-' + schedule_row).summernote({height: 300});
+        <?php } ?>
+	schedule_row++;
+}
 
-                    $('#attribute tbody').append(html);
-
-                    attributeautocomplete(attribute_row);
-
-                    attribute_row++;
-                }
-
-        function attributeautocomplete(attribute_row) {
-            $('input[name=\'tour_attribute[' + attribute_row + '][name]\']').autocomplete({
-                'source': function (request, response) {
-                    $.ajax({
-                        url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
-                        dataType: 'json',
-                        success: function (json) {
-                            response($.map(json, function (item) {
-                                return {
-                                    hotel: item.attribute_group,
-                                    label: item.name,
-                                    value: item.attribute_id
-                                }
-                            }));
-                        }
-                    });
-                },
-                'select': function (item) {
-                    $('input[name=\'tour_attribute[' + attribute_row + '][name]\']').val(item['label']);
-                    $('input[name=\'tour_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
-                }
-            });
-        }
-
-        $('#attribute tbody tr').each(function (index, element) {
-            attributeautocomplete(index);
-        });
-  //--></script> 
-    <script type="text/javascript"><!--
+</script> 
+    <script type="text/javascript">
 var price_row = <?php echo $price_row; ?>;
-
 function addPrice() {
-    html  = '<tr id="price-row' + price_row + '">';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_price_net]" value="" placeholder="<?php echo $entry_price_net; ?>" class="form-control" /><input type="hidden" name="tour_price[' + price_row + '][price_id]" value="" /></td>';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_price_percent]" value="" placeholder="<?php echo $entry_price_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_price_gross]" value="" placeholder="<?php echo $entry_price_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_extra_net]" value="" placeholder="<?php echo $entry_extra_net; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_extra_percent]" value="" placeholder="<?php echo $entry_extra_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
-	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_extra_gross]" value="" placeholder="<?php echo $entry_extra_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+    html  = '<tr class="price-row' + price_row + '">';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_adult_net]" value="" placeholder="<?php echo $entry_adult_net; ?>" class="form-control" /><input type="hidden" name="tour_price[' + price_row + '][price_id]" value="" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_adult_percent]" value="" placeholder="<?php echo $entry_adult_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_child_net]" value="" placeholder="<?php echo $entry_child_net; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_child_percent]" value="" placeholder="<?php echo $entry_child_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_baby_net]" value="" placeholder="<?php echo $entry_baby_net; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_baby_percent]" value="" placeholder="<?php echo $entry_baby_percent; ?>" class="form-control" <?php if($author_id != 1) { echo 'id="disabledInput" disabled';} ?>/></td>';
 	html += '  <td class="text-left" ><input type="text" name="tour_price[' + price_row + '][tour_price_discount]" value="" placeholder="<?php echo $entry_discount; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left">';
 	html += '<div class="input-group"><span class="input-group-addon">Date_form</span><input type="date" name="tour_price[' + price_row + '][tour_date][1][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
 	html += '<div class="input-group"><span class="input-group-addon">&nbsp;&nbsp;Date_to&nbsp;&nbsp;&nbsp;</span><input type="date" name="tour_price[' + price_row + '][tour_date][2][date]" rows="1" placeholder="dd/mm/yyyy" class="form-control"/></div>';
 	html += '  </td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#price-row' + price_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'.price-row' + price_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+    html += '<tr  class="price-row' + price_row + '">';
+        html += '  <td class="text-left"><?php echo $entry_adult_gross; ?></td>';
+        html += '  <td class="text-left"><input type="text" name="tour_price[' + price_row + '][tour_adult_gross]" value="" placeholder="<?php echo $entry_adult_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+        html += '  <td class="text-left"><?php echo $entry_child_gross; ?></td>';
+	html += '  <td class="text-left"><input type="text" name="tour_price[' + price_row + '][tour_child_gross]" value="" placeholder="<?php echo $entry_child_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+        html += '  <td class="text-left"><?php echo $entry_baby_gross; ?></td>';
+	html += '  <td class="text-left"><input type="text" name="tour_price[' + price_row + '][tour_baby_gross]" value="" placeholder="<?php echo $entry_baby_gross; ?>" class="form-control" id="disabledInput" disabled/></td>';
+        html += '  <td colspan="3"></td>';
     html += '</tr>';
 	
 	$('#price tbody').append(html);
@@ -575,7 +608,7 @@ function priceautocomplete(price_row) {
 				success: function(json) {
 					response($.map(json, function(item) {
 						return {
-							hotel: item.price_group,
+							tour: item.price_group,
 							label: item.name,
 							value: item.price_id
 						}
@@ -593,8 +626,8 @@ function priceautocomplete(price_row) {
 $('#price tbody tr').each(function(index, element) {
 	priceautocomplete(index);
 });
-//--></script> 
-    <script type="text/javascript"><!--
+</script> 
+    <script type="text/javascript">
   var image_row = <?php echo $image_row; ?> ;
                 function addImage() {
                     html = '<tr id="image-row' + image_row + '">';
@@ -607,11 +640,8 @@ $('#price tbody tr').each(function(index, element) {
 
                     image_row++;
                 }
-  //--></script> 
-    <script type="text/javascript"><!--
-  $('.date').datetimepicker({
-            pickTime: false
-        });
+</script> 
+    <script type="text/javascript">
 
         $('.time').datetimepicker({
             pickDate: false
@@ -621,13 +651,13 @@ $('#price tbody tr').each(function(index, element) {
             pickDate: true,
             pickTime: true
         });
-  //--></script> 
-    <script type="text/javascript"><!--
+</script> 
+    <script type="text/javascript">
   $('#language a:first').tab('show');
         $('#option a:first').tab('show');
   $('#language1 a:first').tab('show');
         $('#option1 a:first').tab('show');
   $('#language2 a:first').tab('show');
         $('#option2 a:first').tab('show');
-  //--></script></div>
+</script></div>
 <?php echo $footer; ?> 

@@ -301,6 +301,9 @@
                                     <?php if ($error_room_price_discount) { ?>
                                     <div class="text-danger"><?php echo ($error_room_price_discount) ?></div>
                                     <?php } ?>
+                                    <?php if ($error_room_price_null) { ?>
+                                    <div class="text-danger"><?php echo ($error_room_price_null) ?></div>
+                                    <?php } ?>
                                 </div>
                                 <table id="price" class="table table-striped table-bordered table-hover">
                                     <thead>
