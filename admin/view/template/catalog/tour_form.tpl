@@ -548,13 +548,15 @@ function addSchedule() {
 	html += '  <option value="2">Traino<ption>';
 	html += '  <option value="3">Plane<option></td>';
 	<?php foreach ($languages as $language) { ?>
-        html += '  <td class="text-left" ><textarea name="tour_schedule[' + schedule_row + '][schedule_description][<?php echo $language['language_id']; ?>][schedule]" placeholder="<?php echo $entry_detail; ?>" id="input-schedule<?php echo $language['language_id']; ?>-' + schedule_row + '" cols="50" rows="15"><?php echo isset($tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]) ? $tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]['schedule'] : ''; ?></textarea></td>'
+        html += '  <td class="text-left" ><textarea name="tour_schedule[' + schedule_row + '][schedule_description][<?php echo $language['language_id']; ?>][schedule]" placeholder="<?php echo $entry_detail; ?>" class="input-wyswyg" id="input-schedule<?php echo $language['language_id']; ?>-' + schedule_row + '" cols="50" rows="15"><?php echo isset($tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]) ? $tour_schedule[' + schedule_row + ']['schedule_description'][$language['language_id']]['schedule'] : ''; ?></textarea></td>'
         <?php } ?>
 	html += '  <td class="text-left"><button type="button" onclick="$(\'.schedule-row' + schedule_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
         html += '</tr>';
 	$('#schedule tbody').append(html);
         <?php foreach ($languages as $language) { ?>
-        $('#input-schedule<?php echo $language['language_id']; ?>-' + schedule_row).summernote({height: 300});
+        $('.input-wyswyg').each(function (index, item){
+            $(item).summernote({height: 300});
+        });
         <?php } ?>
 	schedule_row++;
 }

@@ -7904,3 +7904,7 @@
 2015-05-12 14:43:37 - PHP Notice:  Undefined index: tour in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\tour.tpl on line 264
 2015-05-12 14:44:20 - PHP Notice:  Undefined index: tour in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\tour.tpl on line 269
 2015-05-12 14:48:02 - PHP Notice:  Undefined index: seats in C:\xampp\htdocs\opencart\catalog\view\theme\default\template\product\tour.tpl on line 264
+2015-05-12 15:03:46 - PHP Notice:  Undefined index: schedule_id in /Volumes/Data/Web/genuinet/admin/view/template/catalog/tour_form.tpl on line 118
+2015-05-12 15:03:46 - PHP Notice:  Undefined index: schedule_id in /Volumes/Data/Web/genuinet/admin/view/template/catalog/tour_form.tpl on line 118
+2015-05-12 15:03:46 - PHP Notice:  Undefined index: schedule_id in /Volumes/Data/Web/genuinet/admin/view/template/catalog/tour_form.tpl on line 118
+2015-05-12 15:03:46 - PHP Notice:  Undefined index: schedule_id in /Volumes/Data/Web/genuinet/admin/view/template/catalog/tour_form.tpl on line 118

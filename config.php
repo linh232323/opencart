@@ -1,22 +1,22 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://localhost/opencart/');
+define('HTTP_SERVER', 'http://genuinetour.local/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://localhost/opencart/');
+define('HTTPS_SERVER', 'http://genuinetour.local/');
 
 // DIR
-define('DIR_APPLICATION', 'C:\xampp\htdocs\opencart/catalog/');
-define('DIR_SYSTEM', 'C:\xampp\htdocs\opencart/system/');
-define('DIR_LANGUAGE', 'C:\xampp\htdocs\opencart/catalog/language/');
-define('DIR_TEMPLATE', 'C:\xampp\htdocs\opencart/catalog/view/theme/');
-define('DIR_CONFIG', 'C:\xampp\htdocs\opencart/system/config/');
-define('DIR_IMAGE', 'C:\xampp\htdocs\opencart/image/');
-define('DIR_CACHE', 'C:\xampp\htdocs\opencart/system/cache/');
-define('DIR_DOWNLOAD','C:\xampp\htdocs\opencart/system/download/');
-define('DIR_UPLOAD', 'C:\xampp\htdocs\opencart/system/upload/');
-define('DIR_MODIFICATION', 'C:\xampp\htdocs\opencart/system/modification/');
-define('DIR_LOGS', 'C:\xampp\htdocs\opencart/system/logs/');
+define('DIR_APPLICATION', '/Volumes/Data/Web/genuinet/catalog/');
+define('DIR_SYSTEM', '/Volumes/Data/Web/genuinet/system/');
+define('DIR_LANGUAGE', '/Volumes/Data/Web/genuinet/catalog/language/');
+define('DIR_TEMPLATE', '/Volumes/Data/Web/genuinet/catalog/view/theme/');
+define('DIR_CONFIG', '/Volumes/Data/Web/genuinet/system/config/');
+define('DIR_IMAGE', '/Volumes/Data/Web/genuinet/image/');
+define('DIR_CACHE', '/Volumes/Data/Web/genuinet/system/cache/');
+define('DIR_DOWNLOAD','/Volumes/Data/Web/genuinet/system/download/');
+define('DIR_UPLOAD', '/Volumes/Data/Web/genuinet/system/upload/');
+define('DIR_MODIFICATION', '/Volumes/Data/Web/genuinet/system/modification/');
+define('DIR_LOGS', '/Volumes/Data/Web/genuinet/system/logs/');
 
 // DB
 define('DB_DRIVER', 'mysqli');
