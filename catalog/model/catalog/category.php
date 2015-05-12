@@ -65,4 +65,14 @@ class ModelCatalogCategory extends Model {
 
 		return $query->row['total'];
 	}
+        public function getStock($tour_id,$check_in,$check_out) {
+            $stock = 0 ;
+            $query = $this->db->query("SELECT op.quantity ,op.order_id ,o.order_status_id FROM " . DB_PREFIX . "order_tour op LEFT JOIN  " . DB_PREFIX . "order o ON op.order_id = o.order_id WHERE tour_id = " . $tour_id . " AND (((check_in <=" . $check_in . " ) AND ( check_out >= " . $check_in ." )) OR (( check_in <= " . $check_out . " ) AND ( check_out >= " . $check_out . " ))) ");
+            foreach ($query->rows as $value) {
+                if($value['order_status_id'] == 5){
+                    $stock += $value['quantity'];
+                }
+            }
+            return $stock;
+        }
 }

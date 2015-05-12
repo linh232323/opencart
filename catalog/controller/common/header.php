@@ -85,6 +85,8 @@ class ControllerCommonHeader extends Controller {
 		$this->load->model('catalog/room');
                 
 		$this->load->model('catalog/hotel');
+                
+		$this->load->model('catalog/tour');
 
 		$data['categories'] = array();
 
@@ -102,8 +104,9 @@ class ControllerCommonHeader extends Controller {
 						'filter_category_id'  => $child['category_id'],
 						'filter_sub_category' => true
 					);
+                                        $total = $this->model_catalog_hotel->getTotalhotels($filter_data) + $this->model_catalog_tour->getTotaltours($filter_data);
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_hotel->getTotalhotels($filter_data) . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);
 				}

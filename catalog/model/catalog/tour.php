@@ -5,48 +5,24 @@ class ModelCatalogTour extends Model {
 	}
 
 	public function getTour($tour_id) {
-		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "tour_discount pd2 WHERE pd2.tour_id = p.tour_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "tour_special ps WHERE ps.tour_id = p.tour_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "tour_reward pr WHERE pr.tour_id = p.tour_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.tour_id = p.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.tour_id = p.tour_id AND r2.status = '1' GROUP BY r2.tour_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "tour p LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.tour_id = '" . (int)$tour_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "tour_discount pd2 WHERE pd2.tour_id = p.tour_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "tour_special ps WHERE ps.tour_id = p.tour_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "tour_reward pr WHERE pr.tour_id = p.tour_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "tour_review r1 WHERE r1.tour_id = p.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "tour_review r2 WHERE r2.tour_id = p.tour_id AND r2.status = '1' GROUP BY r2.tour_id) AS tour_reviews, p.sort_order FROM " . DB_PREFIX . "tour p LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.tour_id = '" . (int)$tour_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
 			return array(
 				'tour_id'          => $query->row['tour_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
-				'tour_deal'        => $query->row['tour_deal'],
 				'meta_title'       => $query->row['meta_title'],
 				'meta_description' => $query->row['meta_description'],
 				'meta_keyword'     => $query->row['meta_keyword'],
 				'tag'              => $query->row['tag'],
 				'model'            => $query->row['model'],
-				'sku'              => $query->row['sku'],
-				'upc'              => $query->row['upc'],
-				'ean'              => $query->row['ean'],
-				'jan'              => $query->row['jan'],
-				'isbn'             => $query->row['isbn'],
-				'mpn'              => $query->row['mpn'],
-				'location'         => $query->row['location'],
 				'quantity'         => $query->row['quantity'],
-				'maxadults'        => $query->row['maxadults'],
-				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],
-				'manufacturer_id'  => $query->row['manufacturer_id'],
-				'manufacturer'     => $query->row['manufacturer'],
-				'price'            => ($query->row['discount'] ? $query->row['discount'] : $query->row['price']),
-				'special'          => $query->row['special'],
-				'reward'           => $query->row['reward'],
-				'points'           => $query->row['points'],
-				'tax_class_id'     => $query->row['tax_class_id'],
+                            	'tax_class_id'     => $query->row['tax_class_id'],
+				'rating'           => $query->row['rating'],
 				'date_available'   => $query->row['date_available'],
-				'weight'           => $query->row['weight'],
-				'weight_class_id'  => $query->row['weight_class_id'],
-				'length'           => $query->row['length'],
-				'width'            => $query->row['width'],
-				'height'           => $query->row['height'],
-				'length_class_id'  => $query->row['length_class_id'],
-				'subtract'         => $query->row['subtract'],
-				'rating'           => round($query->row['rating']),
-				'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
-				'minimum'          => $query->row['minimum'],
+				'tour_reviews'     => $query->row['tour_reviews'] ? $query->row['tour_reviews'] : 0,
 				'sort_order'       => $query->row['sort_order'],
 				'status'           => $query->row['status'],
 				'date_added'       => $query->row['date_added'],
@@ -69,11 +45,11 @@ class ModelCatalogTour extends Model {
         }
         
 	public function getTours($data = array()) {
-		$sql = "SELECT p.tour_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.tour_id = p.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating, (SELECT price FROM " . DB_PREFIX . "tour_discount pd2 WHERE pd2.tour_id = p.tour_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "tour_special ps WHERE ps.tour_id = p.tour_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
+		$sql = "SELECT p.tour_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "tour_review r1 WHERE r1.tour_id = p.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating, (SELECT price FROM " . DB_PREFIX . "tour_discount pd2 WHERE pd2.tour_id = p.tour_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "tour_special ps WHERE ps.tour_id = p.tour_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
 
-		if (!empty($data['filter_hotel_id'])) {
-			if (!empty($data['filter_sub_hotel'])) {
-				$sql .= " FROM " . DB_PREFIX . "hotel_path cp LEFT JOIN " . DB_PREFIX . "tour_to_category p2c ON (cp.hotel_id = p2c.hotel_id)";
+		if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "tour_to_category p2c ON (cp.category_id = p2c.category_id)";
 			} else {
 				$sql .= " FROM " . DB_PREFIX . "tour_to_category p2c";
 			}
@@ -89,11 +65,11 @@ class ModelCatalogTour extends Model {
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-		if (!empty($data['filter_hotel_id'])) {
-			if (!empty($data['filter_sub_hotel'])) {
-				$sql .= " AND cp.path_id = '" . (int)$data['filter_hotel_id'] . "'";
+		if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
 			} else {
-				$sql .= " AND p2c.hotel_id = '" . (int)$data['filter_hotel_id'] . "'";
+				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 			}
 
 			if (!empty($data['filter_filter'])) {
@@ -149,10 +125,6 @@ class ModelCatalogTour extends Model {
 			}
 
 			$sql .= ")";
-		}
-
-		if (!empty($data['filter_manufacturer_id'])) {
-			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
 
 		$sql .= " GROUP BY p.tour_id";
@@ -229,13 +201,16 @@ class ModelCatalogTour extends Model {
 			$tour_price_data[] = array(
 				'price_id'                  => $tour_price['price_id'],
 				'tour_id'                => $tour_date['tour_id'],
-				'tour_price_net'         => $tour_date['price_net'],
-				'tour_price_percent'     => $tour_date['price_percent'],
-				'tour_price_gross'       => $tour_date['price_gross'],
+				'tour_adult_net'         => $tour_date['adult_net'],
+				'tour_adult_percent'     => $tour_date['adult_percent'],
+				'tour_adult_gross'       => $tour_date['adult_gross'],
 				'tour_price_discount'    => $tour_date['discount'],
-				'tour_extra_net'         => $tour_date['extra_net'],
-				'tour_extra_percent'     => $tour_date['extra_percent'],
-				'tour_extra_gross'       => $tour_date['extra_gross'],
+				'tour_child_net'         => $tour_date['child_net'],
+				'tour_child_percent'     => $tour_date['child_percent'],
+				'tour_child_gross'       => $tour_date['child_gross'],
+				'tour_baby_net'         => $tour_date['baby_net'],
+				'tour_baby_percent'     => $tour_date['baby_percent'],
+				'tour_baby_gross'       => $tour_date['baby_gross'],
 				'tour_date'              => $tour_date_data
 			);
 		}
@@ -248,7 +223,7 @@ class ModelCatalogTour extends Model {
 	}
 
 	public function getTourSpecials($data = array()) {
-		$sql = "SELECT DISTINCT ps.tour_id, (SELECT AVG(rating) FROM " . DB_PREFIX . "review r1 WHERE r1.tour_id = ps.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating FROM " . DB_PREFIX . "tour_special ps LEFT JOIN " . DB_PREFIX . "tour p ON (ps.tour_id = p.tour_id) LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) GROUP BY ps.tour_id";
+		$sql = "SELECT DISTINCT ps.tour_id, (SELECT AVG(rating) FROM " . DB_PREFIX . "tour_review r1 WHERE r1.tour_id = ps.tour_id AND r1.status = '1' GROUP BY r1.tour_id) AS rating FROM " . DB_PREFIX . "tour_special ps LEFT JOIN " . DB_PREFIX . "tour p ON (ps.tour_id = p.tour_id) LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) GROUP BY ps.tour_id";
 
 		$sort_data = array(
 			'pd.name',
@@ -454,9 +429,9 @@ class ModelCatalogTour extends Model {
 	public function getTotalTours($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT p.tour_id) AS total";
 
-		if (!empty($data['filter_hotel_id'])) {
-			if (!empty($data['filter_sub_hotel'])) {
-				$sql .= " FROM " . DB_PREFIX . "hotel_path cp LEFT JOIN " . DB_PREFIX . "tour_to_category p2c ON (cp.hotel_id = p2c.hotel_id)";
+		if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "tour_to_category p2c ON (cp.category_id = p2c.category_id)";
 			} else {
 				$sql .= " FROM " . DB_PREFIX . "tour_to_category p2c";
 			}
@@ -472,11 +447,11 @@ class ModelCatalogTour extends Model {
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "tour_description pd ON (p.tour_id = pd.tour_id) LEFT JOIN " . DB_PREFIX . "tour_to_store p2s ON (p.tour_id = p2s.tour_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-		if (!empty($data['filter_hotel_id'])) {
-			if (!empty($data['filter_sub_hotel'])) {
-				$sql .= " AND cp.path_id = '" . (int)$data['filter_hotel_id'] . "'";
+		if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
 			} else {
-				$sql .= " AND p2c.hotel_id = '" . (int)$data['filter_hotel_id'] . "'";
+				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 			}
 
 			if (!empty($data['filter_filter'])) {
@@ -560,4 +535,5 @@ class ModelCatalogTour extends Model {
 			return 0;
 		}
 	}
+        
 }

@@ -151,8 +151,8 @@
                 <div class="row">
                     <?php foreach ($hotels as $hotel) { ?>
                     <?php if (isset($hotel[0])) { ?>
-                    <div id = "room" class="room-layout room-list col-xs-12">
-                        <div class="room-thumb">
+                    <div id = "room" class="product-layout room-list col-xs-12">
+                        <div class="product-thumb">
                             <div class="image"><a href="<?php echo $hotel['hrefp']; ?>"><img src="<?php echo $hotel['thumbp']; ?>" alt="<?php echo $hotel['namep']; ?>" title="<?php echo $hotel['namep']; ?>" class="img-responsive" /></a></div>
                             <div class="caption">
                                 <h4 class="col-lg-9 col-md-9 col-sm-9 col-xs-12"><a href="<?php echo $hotel['hrefp']; ?>"><?php echo $hotel['namep']; ?></a><span class="rating">

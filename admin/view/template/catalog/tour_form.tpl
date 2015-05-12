@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-    <?php 
-echo "<pre>";
-print_r ($_POST);
-echo "</pre>";
-?>
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">

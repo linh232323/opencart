@@ -13,6 +13,7 @@ $_['text_price']        = 'Giá:';
 $_['text_tax']          = 'Trước thuế:'; 
 $_['text_reviews']      = 'Dựa trên %s đánh giá.'; 
 $_['text_hotelreviews']    = '%s đánh giá'; 
+$_['text_tour_reviews']    = '%s đánh giá'; 
 $_['text_compare']      = 'So sánh sản phẩm (%s)'; 
 $_['text_display']      = 'Hiển thị:';
 $_['text_list']         = 'Danh sách';
@@ -47,4 +48,5 @@ $_['text_rate_fantastic']= 'Tuyệt vời';
 $_['text_rate_verygood']= 'Rất tốt';
 $_['text_rate_good']    = 'Tốt';
 $_['text_rate_bad']     = 'Tệ';
+$_['text_stock']        = 'Số chỗ còn:';
 ?>

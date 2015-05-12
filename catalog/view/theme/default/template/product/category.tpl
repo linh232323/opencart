@@ -121,8 +121,8 @@
                 <?php if (count($categories) <= 10) { ?>
                 <div class="row">
                     <?php foreach ($categories as $category) { ?>
-                    <div class="room-layout room-list col-xs-12">
-                        <div class="room-thumb">
+                    <div class="product-layout room-list col-xs-12">
+                        <div class="product-thumb">
                             <div class="image">
                                 <a href="<?php echo $category['href']; ?>"><img src = "<?php echo $category['image']; ?>" alt ="<?php echo $category['name']; ?>" title ="<?php echo $category['name']; ?>"/></a>
                             </div>
@@ -191,8 +191,8 @@
                 <br />
                 <div class="row">
                     <?php foreach ($hotels as $hotel) { ?>
-                    <div id="room" class="room-layout room-list col-xs-12">
-                        <div class="room-thumb">
+                    <div id="room" class="product-layout room-list col-xs-12">
+                        <div class="product-thumb">
                             <div class="image"><a href="<?php echo $hotel['hrefp']; ?>"><img src="<?php echo $hotel['thumbp']; ?>" alt="<?php echo $hotel['namep']; ?>" title="<?php echo $hotel['namep']; ?>" class="img-responsive" /></a></div>
                             <div class="caption">
                                 <h4 class="col-lg-9 col-md-9 col-sm-9 col-xs-12"><a href="<?php echo $hotel['hrefp']; ?>"><?php echo $hotel['namep']; ?></a><span class="rating">
@@ -298,7 +298,114 @@
                     <div class="col-sm-6 text-right"><?php echo $results; ?></div>
                 </div>
                 <?php } ?>
-                <?php if (!$categories && !$hotels) { ?>
+                <?php if ($tours) { ?>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="btn-group hidden-xs">
+                            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
+                            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <select id="input-sort" class="form-control" onchange="location = this.value;">
+                            <?php foreach ($sorts as $sorts) { ?>
+                            <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+                            <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <select id="input-limit" class="form-control" onchange="location = this.value;">
+                            <?php foreach ($limits as $limits) { ?>
+                            <?php if ($limits['value'] == $limit) { ?>
+                            <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php foreach ($tours as $tour) { ?>
+                    <div id="tour" class="product-layout room-list col-xs-12">
+                        <div class="product-thumb">
+                            <div class="image"><a href="<?php echo $tour['href']; ?>"><img src="<?php echo $tour['thumb']; ?>" alt="<?php echo $tour['name']; ?>" title="<?php echo $tour['name']; ?>" class="img-responsive" /></a></div>
+                            <div class="caption">
+                                <h4 class="col-lg-9 col-md-9 col-sm-9 col-xs-12"><a href="<?php echo $tour['href']; ?>"><?php echo $tour['name']; ?></a></h4>
+                                <div class="col-xs-3 pull-right text-right text-primary">
+                                    <h4 class="text-primary">
+                                        <?php if ($tour['rating']) { ?>
+                                        <?php
+                                        switch ($tour['rating']) {
+                                        case "10":
+                                        $text_rating = $text_rate_superb;
+                                        break;
+                                        case "9":
+                                        $text_rating = $text_rate_superb;
+                                        break;
+                                        case "8":
+                                        $text_rating = $text_rate_fantastic;
+                                        break;
+                                        case "7":
+                                        $text_rating = $text_rate_verygood;
+                                        break;
+                                        case "6":
+                                        $text_rating = $text_rate_good;
+                                        break;
+                                        case "0":
+                                        $text_rating = '';
+                                        $rating = '';
+                                        break;
+                                        default:
+                                        $text_rating = $text_rate_bad;
+                                        }
+                                        ?>
+                                        <?php echo $text_rating.' '.$tour['rating']; ?>
+                                        <?php } ?>
+                                    </h4>
+                                    <div>
+                                        <?php echo $tour['tour_reviews']; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class = "col-xs-12" >
+                                <h4 class="col-xs-12 text-center text-primary">
+                                        <?php if (isset($tour_prices)) { ?>
+                                        <?php foreach ($tour_prices as $tour_price) { ?>
+                                        <?php if ($tour['tour_id'] == $tour_price['tour_id']) { ?>
+                                        <?php if (!empty($tour_price['tour_price_value'])){ $price_cost = $tour_price['tour_price_value'];} ?>
+                                        <?php } else { ?>
+                                        <?php $cost = ''; ?>
+                                        <?php } ?>
+                                        <?php } ?>
+                                        <?php if(isset($price_cost)) { echo $price_cost;}else{ echo $cost;} ?>
+                                        <?php $price_cost = ''; ?>
+                                        <?php } ?>
+                                </h4>
+                                <p>
+                               <?php echo $text_stock; ?> <?php echo $tour['quantity']; ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                    <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                </div>
+                <?php } ?>
+                <?php if (!$categories && !$hotels && !$tours) { ?>
                 <p><?php echo $text_empty; ?></p>
                 <div class="buttons">
                     <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>

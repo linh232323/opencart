@@ -13,6 +13,7 @@ $_['text_price']        = 'Price:';
 $_['text_tax']          = 'Ex Tax:';
 $_['text_compare']      = 'hotel Compare (%s)';
 $_['text_hotelreviews'] = '%s reviews';
+$_['text_tour_reviews'] = '%s reviews';
 $_['text_sort']         = 'Sort By:';
 $_['text_default']      = 'Default';
 $_['text_name_asc']     = 'Name (A - Z)';
@@ -43,5 +44,6 @@ $_['text_rooms']        = 'rooms';
 $_['text_available']    = 'Available';
 $_['text_freewifi']     = 'Free Wi-Fi';
 $_['text_nowifi']       = 'No Wi-Fi';
+$_['text_stock']        = 'Available seats:';
 
 $_['entry_search']      = 'Search';

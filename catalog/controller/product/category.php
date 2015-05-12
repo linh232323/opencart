@@ -12,6 +12,8 @@ class ControllerProductCategory extends Controller {
         $this->load->model('catalog/hotel');
 
         $this->load->model('catalog/room');
+        
+        $this->load->model('catalog/tour');
 
         $this->load->model('tool/image');
         
@@ -178,6 +180,7 @@ class ControllerProductCategory extends Controller {
             $data['text_label_room'] = $this->language->get('text_label_room');
             $data['text_label_adults'] = $this->language->get('text_label_adults');
             $data['text_label_children'] = $this->language->get('text_label_children');
+            $data['text_stock'] = $this->language->get('text_stock');
  
             $data['entry_search'] = $this->language->get('entry_search');
         
@@ -222,8 +225,16 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
+            $url = '';
             
+            $data['sorts'] = array();
             
+            $data['sorts'][] = array(
+                'text' => $this->language->get('text_default'),
+                'value' => 'p.sort_order-ASC',
+                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.sort_order&order=ASC' . $url)
+            );
+
             $data['categories'] = array();
 
             $results = $this->model_catalog_category->getCategories($category_id);
@@ -266,8 +277,23 @@ class ControllerProductCategory extends Controller {
             $results = $this->model_catalog_hotel->getHotels($filter_data);
 
             $i = 0;
-            
+            if ($results){
+                
+                $data['sorts'][] = array(
+                    'text' => $this->language->get('text_star_asc'),
+                    'value' => 'p.star-ASC',
+                    'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=ASC' . $url)
+                );
+
+                $data['sorts'][] = array(
+                    'text' => $this->language->get('text_star_desc'),
+                    'value' => 'p.star-DESC',
+                    'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=DESC' . $url)
+                );
+
+            }
             foreach ($results as $result) {
+                
                 if ($result['image']) {
                     $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_product_width'));
                 } else {
@@ -415,7 +441,58 @@ class ControllerProductCategory extends Controller {
                 $i++;
             }
 
-            $url = '';
+            $results = $this->model_catalog_tour->getTours($filter_data);
+            
+            $total_tours = $this->model_catalog_tour->getTotalTours($filter_data);
+            
+            $data['tours'] = array();
+            
+            foreach ($results as $result) {
+                if ($result['image']) {
+                    $image = $this->model_tool_image->resizetoWidth($result['image'], $this->config->get('config_image_product_width'));
+                } else {
+                    $image = $this->model_tool_image->resizetoWidth('placeholder.png', $this->config->get('config_image_product_width'));
+                }
+                $tour_prices = $this->model_catalog_tour->getTourPrices($result['tour_id']);  
+                    
+                $had_price = FALSE;
+
+                foreach ($tour_prices as $value) {
+                    if ((strtotime($this->session->data['check_in'])>=strtotime($value['tour_date']['1']['date']))&&(strtotime($this->session->data['check_in'])<=strtotime($value['tour_date']['2']['date']))){
+                        $price_cost = $this->currency->format($this->tax->calculate($value['tour_adult_gross'], $result['tax_class_id'], $this->config->get('config_tax')));
+                        $had_price = TRUE;
+                    }else{
+                        $price_cost='';
+                    }
+                    $data['tour_prices'][] =array(
+                     'tour_price_value'   => $price_cost,
+                     'tour_date'          => $value['tour_date'],
+                     'tour_id'            => $value['tour_id']
+                    ); 
+                }
+
+                $date_in = date_create($this->session->data['check_in']);
+                $check_in = date_format($date_in, 'Ymd');
+                $date_out = date_create($this->session->data['check_out']);
+                $check_out = date_format($date_out, 'Ymd');
+
+                if ($had_price == FALSE){
+                    continue;
+                }
+                
+                $data['tours'][] = array(
+                    'tour_id' => $result['tour_id'],
+                    'thumb' => $image,
+                    'name' => $result['name'],
+                    'quantity' => $result['quantity'],
+                    'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+                    'rating' => $result['rating'],
+                    'tour_reviews' => sprintf($this->language->get('text_tour_reviews'), (int) $result['tour_reviews']),
+                    'href' => $this->url->link('product/tour','path=' . $this->request->get['path'] . '&tour_id=' . $result['tour_id'] . $url)
+                );
+                
+            }
+
 
             if (isset($this->request->get['filter'])) {
                 $url .= '&filter=' . $this->request->get['filter'];
@@ -425,16 +502,6 @@ class ControllerProductCategory extends Controller {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
             
-            
-            
-            $data['sorts'] = array();
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_default'),
-                'value' => 'p.sort_order-ASC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.sort_order&order=ASC' . $url)
-            );
-
             $data['sorts'][] = array(
                 'text' => $this->language->get('text_name_asc'),
                 'value' => 'pd.name-ASC',
@@ -445,18 +512,6 @@ class ControllerProductCategory extends Controller {
                 'text' => $this->language->get('text_name_desc'),
                 'value' => 'pd.name-DESC',
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC' . $url)
-            );
-            
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_star_asc'),
-                'value' => 'p.star-ASC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=ASC' . $url)
-            );
-
-            $data['sorts'][] = array(
-                'text' => $this->language->get('text_star_desc'),
-                'value' => 'p.star-DESC',
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.star&order=DESC' . $url)
             );
             
             if ($this->config->get('config_review_status')) {
@@ -519,18 +574,20 @@ class ControllerProductCategory extends Controller {
             if (isset($this->request->get['limit'])) {
                 $url .= '&limit=' . $this->request->get['limit'];
             }
-            
-            
-            $hotel_total = count($data['hotels']);
+            if( count($data['hotels'])!=0){
+                $total =  count($data['hotels']);
+            }else{
+                $total = $total_tours;
+            }
             $pagination = new Pagination();
-            $pagination->total = $hotel_total;
+            $pagination->total = $total;
             $pagination->page = $page;
             $pagination->limit = $limit;
             $pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
 
             $data['pagination'] = $pagination->render();
 
-            $data['results'] = sprintf($this->language->get('text_pagination'), ($hotel_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($hotel_total - $limit)) ? $hotel_total : ((($page - 1) * $limit) + $limit), $hotel_total, ceil($hotel_total / $limit));
+            $data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, ceil($total / $limit));
 
             $data['sort'] = $sort;
             $data['order'] = $order;
